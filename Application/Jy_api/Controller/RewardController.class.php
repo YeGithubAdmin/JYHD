@@ -74,7 +74,7 @@ class RewardController extends ComController {
             'max(Price) as PriceMax',
         );
         $catUserOrder = M('jy_users_order_info')
-            ->where('playerid = '.$playerid. ' and CallbackTime  < "'.$activityInfo['AddUpEndTime'].'"  and CallbackTime > "'.$activityInfo['AddUpStartTime'].'"')
+            ->where('playerid = '.$playerid. ' and CallbackTime  <= str_to_date("'.$activityInfo['AddUpEndTime'].'")  and CallbackTime >= str_to_date("'.$activityInfo['AddUpStartTime'].'")')
             ->field($catUserOrderField)
             ->select();
         $newUserOder  =  array();
@@ -86,7 +86,7 @@ class RewardController extends ComController {
             'count(activityID) as num'
         );
         $TheawardLog = M('jy_users_activity_theaward_log')
-                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  < "'.$time.'" and  AddUpEndTime < "'.$time.'"')
+                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'") and  AddUpEndTime <= str_to_date("'.$time.'")')
                        ->field($TheawardLogFile)
                        ->select();
 

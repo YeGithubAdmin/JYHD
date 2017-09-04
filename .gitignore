@@ -2,3 +2,8 @@
 Uploads
 #忽略缓存
 Runtime
+#svn
+.svn
+#.idea
+.idea
+
