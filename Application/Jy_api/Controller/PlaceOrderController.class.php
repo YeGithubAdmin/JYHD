@@ -12,6 +12,7 @@ namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
+use Protos\UsrDataOpt;
 use Think\Controller;
 use Think\Model;
 class PlaceOrderController extends ComController {
@@ -171,13 +172,20 @@ class PlaceOrderController extends ComController {
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
+            'Protos/UsrDataOpt.php',
             'RedisProto/RPB_PlayerData.php',
             'RedisProto/RPB_AccountData.php',
 
+
+
         ));
+        //实例化对象
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $UsrDataOpt         = new UsrDataOpt();
+
+
         $PBS_UsrDataOprater->setPlayerid($playerid);
-        $PBS_UsrDataOprater->setOpt(1);
+        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_All);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
@@ -223,7 +231,7 @@ class PlaceOrderController extends ComController {
                             ->table('jy_users_order_info')
                             ->add($dataUsersOrderInfo);
         if($addUsersOrderGoods && $addUsersOrderInfo){
-            $info['Order'] =  $PlatformOrder;
+            $info['PlatformOrder'] =  $PlatformOrder;
             $model->commit();
         }else{
             $model->rollback();

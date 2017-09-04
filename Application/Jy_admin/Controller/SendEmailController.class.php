@@ -113,7 +113,7 @@ class SendEmailController extends ComController {
                 $PB_Email->setCardPwd($CardPwd);
             }elseif ($Type == 2){
                 //金币砖石道具
-                $PB_Email->setType($EmailType::EmailType_Card);
+                $PB_Email->setType($EmailType::EmailType_Sys);
                 if($Diamond != 0){
                     $PB_Email->setDiamond($Diamond);
                 }

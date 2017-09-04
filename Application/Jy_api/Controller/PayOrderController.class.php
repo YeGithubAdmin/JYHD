@@ -25,7 +25,6 @@ class PayOrderController extends ComController {
         $msgArr[4007] = "支付平台不明确！";
         $msgArr[4008] = "没有该订单号！";
         $msgArr[4009] = "渠道信息丢失！";
-        $msgArr[4009] = "渠道信息丢失！";
         $msgArr[5002] = "系统错误，请稍后再试！";
         $result = 2001;
         $info   =  array();
