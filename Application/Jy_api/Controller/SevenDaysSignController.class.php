@@ -157,9 +157,6 @@ class SevenDaysSignController extends ComController {
 
         }
 
-
-
-
         $info['SignInfo']  =   $sevenDaysSign;
         $info['Status']    =   $isSign;
         response:
@@ -205,7 +202,6 @@ class SevenDaysSignController extends ComController {
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
         ));
-
         //实例化对象
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $UsrDataOpt         = new UsrDataOpt();
@@ -345,7 +341,7 @@ class SevenDaysSignController extends ComController {
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
         if($PBS_UsrDataOpraterRespond  == 504){
-            $result = 3002;
+            $result = 3004;
             goto response;
         }
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
@@ -360,19 +356,16 @@ class SevenDaysSignController extends ComController {
         $addUsersGoodsStream    = 1;                              //记录道具流水
         if(!empty($dataUsersCurrencyStream)){
             $addUsersCurrencyStream = M('jy_users_currency_stream')
-                ->addAll($dataUsersCurrencyStream);
+                ->add($dataUsersCurrencyStream);
         }
         if(!empty($dataUsersGoodsStream)){
             $addUsersGoodsStream   = M('jy_users_goods_stream')
-                ->addAll($dataUsersGoodsStream);
+                ->add($dataUsersGoodsStream);
         }
         if(!$addUsersGoodsStream || !$addUsersCurrencyStream){
-            $result = 3002;
+            $result = 3005;
             goto  response;
         }
-
-
-
 
 
 

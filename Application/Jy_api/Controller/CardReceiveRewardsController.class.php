@@ -162,7 +162,6 @@ class CardReceiveRewardsController extends ComController {
                      $dataUsersCurrencyStream[$k]['CurrencyType']   =   1;
                      $dataUsersCurrencyStream[$k]['Income']         =   1;
                      $dataUsersCurrencyStream[$k]['Number']         =   $v['GetNum'];
-
                      break;
                   //砖石
                  case  2 :

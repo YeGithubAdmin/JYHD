@@ -245,21 +245,20 @@ class RewardController extends ComController {
             'GoodsName'=>$GoodsInfo['Name'],
             'activityID'=>$activityInfo['activityID'],
             'Type'=>$activityInfo['Type'],
-            'Number'=>$activityInfo[''],
+            'Number'=>$activityInfo['Number'],
             'AddUpStartTime'=>$activityInfo['AddUpStartTime'],
             'AddUpEndTime'=>$activityInfo['AddUpEndTime'],
         );
         $addUsersActivityTheawardLog = M('jy_users_activity_theaward_log')->add($dataUsersActivityTheawardLog);
         $addUsersCurrencyStream = 1;   //记录金币砖石流水
-        $addUsersGoodsStream    = 1;                              //记录道具流水
-
+        $addUsersGoodsStream    = 1;   //记录道具流水
         if(!empty($dataUsersCurrencyStream)){
             $addUsersCurrencyStream = M('jy_users_currency_stream')
-                ->addAll($dataUsersCurrencyStream);
+                ->add($dataUsersCurrencyStream);
         }
         if(!empty($dataUsersGoodsStream)){
             $addUsersGoodsStream   = M('jy_users_goods_stream')
-                ->addAll($dataUsersGoodsStream);
+                ->add($dataUsersGoodsStream);
         }
         if(!$addUsersActivityTheawardLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
            $result = 3002;

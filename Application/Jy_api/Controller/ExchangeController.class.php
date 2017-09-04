@@ -164,11 +164,11 @@ class ExchangeController extends ComController {
         $addUsersGoodsStream    = 1;                              //记录道具流水
         if(!empty($dataUsersCurrencyStream)){
             $addUsersCurrencyStream = M('jy_users_currency_stream')
-                ->addAll($dataUsersCurrencyStream);
+                ->add($dataUsersCurrencyStream);
         }
         if(!empty($dataUsersGoodsStream)){
             $addUsersGoodsStream   = M('jy_users_goods_stream')
-                ->addAll($dataUsersGoodsStream);
+                ->add($dataUsersGoodsStream);
         }
 
 
