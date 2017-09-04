@@ -3,8 +3,10 @@
 *  爱贝月卡支付回调
 **/
 namespace Jy_ThirdpayIapppay\Controller;
+use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
+use Protos\UsrDataOpt;
 use RedisProto\RPB_PlayerData;
 use Think\Controller;
 use Think\Model;
@@ -126,16 +128,23 @@ class CardBackController extends Controller {
         $ObjFun->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
-            'RedisProto/RPB_PlayerData.php'
-        ));
-        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
-        $PBS_UsrDataOprater->setPlayerid($GoodsInfo['playerid']);
-        $PBS_UsrDataOprater->setOpt(2);
-        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+            'Protos/OptSrc.php',
+            'Protos/UsrDataOpt.php',
+            'RedisProto/RPB_PlayerData.php',
+            'PB_Email.php',
+            'EmailType.php',
 
+        ));
+        //实例化对象
+        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $OptSrc             = new OptSrc();
+        $UsrDataOpt         = new UsrDataOpt();
+        $PBS_UsrDataOprater->setPlayerid($GoodsInfo['playerid']);
+        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
+        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
         $PBS_UsrDataOpraterRespond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$GoodsInfo['playerid']);
-
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3001;
             goto failed;
@@ -188,12 +197,19 @@ class CardBackController extends Controller {
         $PBS_UsrDataOpraterReturn->reset();
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $RPB_PlayerData     = new RPB_PlayerData();
+        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $PBS_UsrDataOprater->setPlayerid($GoodsInfo['playerid']);
-        $PBS_UsrDataOprater->setOpt (5);
+        $PBS_UsrDataOprater->setOpt ($UsrDataOpt::Modify_Player);
         $RPB_PlayerData->setDiamond(100);
         $RPB_PlayerData->setVipExp($UpVipExp);
         if($upgrade == 2){
             $RPB_PlayerData->setVip($VipInfo['level']);
+            $PB_Email    =   new \PB_Email();
+            $EmailType   =   new \EmailType();
+            $PB_Email->setType($EmailType::EmailType_Sys);
+            $PB_Email->setTitle('vip升级通知');
+            $PB_Email->setData('恭喜您，你的vip提升到'.$VipInfo['level']);
+            $PB_Email->setSender('系统');
         }
         $RPB_PlayerData->setIsMc(true);
         $RPB_PlayerData->setMcOvertime($Btime);

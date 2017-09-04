@@ -128,6 +128,10 @@ class MallShopBackController extends Controller {
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
             'RedisProto/RPB_PlayerData.php',
+            'Protos/OptSrc.php',
+            'Protos/UsrDataOpt.php',
+            'PB_Email.php',
+            'EmailType.php',
             'Protos/PBS_ItemOpt.php',
         ));
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
@@ -194,6 +198,12 @@ class MallShopBackController extends Controller {
         $dataUsersShopLog = array();
         if($upgrade == 2){
             $RPB_PlayerData->setVip($VipInfo['level']);
+            $PB_Email    =   new \PB_Email();
+            $EmailType   =   new \EmailType();
+            $PB_Email->setType($EmailType::EmailType_Sys);
+            $PB_Email->setTitle('vip升级通知');
+            $PB_Email->setData('恭喜您，你的vip提升到'.$VipInfo['level']);
+            $PB_Email->setSender('系统');
         }
         $IsAddProp = 1;
         foreach ($GoodsInfo as $k=>$v){
