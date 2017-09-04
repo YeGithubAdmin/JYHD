@@ -24,7 +24,7 @@ class RewardController extends ComController {
         $result = 2001;
         $info   =  array();
         //当前时间
-        $time = date('Y-m-d h:i:s',time());
+        $time = date('Y-m-d H:i:s',time());
         //状态码
         $msgArr[2001] = "领取成功！";
         $msgArr[3002] = "网络错误，请稍后再试！";
@@ -61,7 +61,7 @@ class RewardController extends ComController {
         $activityInfo = M('jy_activity_father_list as a')
                         ->join('jy_activity_son_list as b on a.Id = b.FatherID')
                         ->field($activityInfoFile)
-                        ->where('b.Id = '.$activityID.'  and  a.AddUpStartTime  <  "'.$time.'" and  "'.$time.'"  < a.AddUpEndTime')
+                        ->where('b.Id = '.$activityID.'  and  a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                         ->find();
 
         if(empty($activityInfo)){
@@ -74,7 +74,7 @@ class RewardController extends ComController {
             'max(Price) as PriceMax',
         );
         $catUserOrder = M('jy_users_order_info')
-            ->where('playerid = '.$playerid. ' and CallbackTime  <= str_to_date("'.$activityInfo['AddUpEndTime'].'")  and CallbackTime >= str_to_date("'.$activityInfo['AddUpStartTime'].'")')
+            ->where('playerid = '.$playerid. ' and CallbackTime  <= str_to_date("'.$activityInfo['AddUpEndTime'].'","%Y-%m-%d %H:%i:%s")  and CallbackTime >= str_to_date("'.$activityInfo['AddUpStartTime'].'","%Y-%m-%d %H:%i:%s")')
             ->field($catUserOrderField)
             ->select();
         $newUserOder  =  array();
@@ -86,23 +86,15 @@ class RewardController extends ComController {
             'count(activityID) as num'
         );
         $TheawardLog = M('jy_users_activity_theaward_log')
-                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'") and  AddUpEndTime <= str_to_date("'.$time.'")')
+                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                        ->field($TheawardLogFile)
                        ->select();
 
         $status         = 1;
         $Schedule       = $activityInfo['Schedule'];
-        $PriceNum       = '';
-        $PriceMax       = '';
+        $PriceNum       = !empty($catUserOrder[0]['PriceNum'])? :0;
+        $PriceMax       = !empty($catUserOrder[0]['PriceMax'])? :0;
         $Num            = empty($TheawardLog)? 0: $TheawardLog['num'];
-        if(empty($catUserOrderField)){
-            $PriceNum = 0;
-            $PriceNum = 0;
-        }else{
-            $PriceNum = $activityInfo['PriceNum'];
-            $PriceNum = $activityInfo['PriceMax'];
-        }
-
         switch ($activityInfo['Type']){
             //累计
             case 1:
@@ -112,7 +104,7 @@ class RewardController extends ComController {
                 if($Num != 0){
                     $status = 3;
                 }
-                if($Num == 0 || $Schedule<=$PriceNum){
+                if($Num == 0 && $Schedule<=$PriceNum){
                     $status = 2;
                 }
             break;
@@ -241,14 +233,15 @@ class RewardController extends ComController {
         //记录奖励
         $dataUsersActivityTheawardLog = array(
             'playerid'=>$playerid,
-            'GoodsId'=>$activityInfo['GoodsId'],
+            'GoodsID'=>$activityInfo['GoodsID'],
             'GoodsName'=>$GoodsInfo['Name'],
-            'activityID'=>$activityInfo['activityID'],
+            'activityID'=>$activityInfo['Id'],
             'Type'=>$activityInfo['Type'],
             'Number'=>$activityInfo['Number'],
             'AddUpStartTime'=>$activityInfo['AddUpStartTime'],
             'AddUpEndTime'=>$activityInfo['AddUpEndTime'],
         );
+
         $addUsersActivityTheawardLog = M('jy_users_activity_theaward_log')->add($dataUsersActivityTheawardLog);
         $addUsersCurrencyStream = 1;   //记录金币砖石流水
         $addUsersGoodsStream    = 1;   //记录道具流水

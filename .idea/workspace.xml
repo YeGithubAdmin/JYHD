@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="0cab3356-e354-489b-a3c1-d764ac1bb749" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" afterPath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,21 +21,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ActiveMacroscopicController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php">
+      <file leaf-file-name="RewardController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="77" column="108" lean-forward="false" selection-start-line="77" selection-start-column="94" selection-end-line="77" selection-end-column="108" />
+            <state relative-caret-position="1067">
+              <caret line="132" column="9" lean-forward="false" selection-start-line="132" selection-start-column="9" selection-end-line="132" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SevenDaysSignController.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
+      <file leaf-file-name="ActivityListController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1843">
-              <caret line="66" column="40" lean-forward="false" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
+            <state relative-caret-position="532">
+              <caret line="49" column="80" lean-forward="true" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="99" />
               <folding />
             </state>
           </provider>
@@ -42,9 +45,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>首冲</find>
-      <find>礼包</find>
-      <find>{$responseAdmin}</find>
       <find>$respJson</find>
       <find>PayChannel</find>
       <find>5001</find>
@@ -71,6 +71,9 @@
       <find>$time</find>
       <find>jy_users_activity_log</find>
       <find>jy_users_activity_reward_log</find>
+      <find>str_to_date</find>
+      <find>=&gt;</find>
+      <find>$a</find>
       <find>$activityInfo</find>
     </findStrings>
     <replaceStrings>
@@ -81,8 +84,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Application/Jy_admin/View/UsersInfo/index.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/AdmingroupController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/LoginController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/Index/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/IndexController.class.php" />
@@ -101,9 +102,7 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/VipInfo/edit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/UsersExchangeApplication/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/VipInfo/add.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" />
         <option value="$PROJECT_DIR$/protoPhp/EmailType.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/AlipayEdit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/WechatEdit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirdpayInfoController.class.php" />
@@ -119,19 +118,23 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/edit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/TheFirstPunchBackController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" />
         <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
       </list>
     </option>
   </component>
@@ -513,15 +516,15 @@
       <workItem from="1503454615908" duration="23433000" />
       <workItem from="1503540591676" duration="18430000" />
       <workItem from="1503628921849" duration="20044000" />
-      <workItem from="1503884613857" duration="147827000" />
+      <workItem from="1503884613857" duration="159344000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="542175000" />
+    <option name="totallyTimeSpent" value="553692000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21510416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -592,46 +595,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5chars.ent">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="63" column="10" lean-forward="false" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/core-scripting.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="206" column="18" lean-forward="false" selection-start-line="206" selection-start-column="18" selection-end-line="206" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersExchangeApplication/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersExchangeApplication/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-228">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersExchangeApplication/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-56">
-          <caret line="76" column="44" lean-forward="true" selection-start-line="70" selection-start-column="19" selection-end-line="76" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersExchangeApplication/ToExamine.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="445">
@@ -804,14 +767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1027">
-          <caret line="87" column="87" lean-forward="false" selection-start-line="87" selection-start-column="81" selection-end-line="87" selection-end-column="87" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1167">
@@ -831,56 +786,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersExchangeApplicationController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="26" column="54" lean-forward="false" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="104" column="54" lean-forward="true" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="60" column="123" lean-forward="false" selection-start-line="60" selection-start-column="123" selection-end-line="60" selection-end-column="123" />
-          <folding>
-            <element signature="e#6#311#0#PHP" expanded="true" />
-            <element signature="e#341#377#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/MallExchangeController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-170">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="233" column="32" lean-forward="false" selection-start-line="233" selection-start-column="32" selection-end-line="233" selection-end-column="32" />
-          <folding>
-            <element signature="e#6#313#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -918,14 +828,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2403">
-          <caret line="143" column="54" lean-forward="true" selection-start-line="143" selection-start-column="54" selection-end-line="143" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ActivityListSonController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-30">
@@ -958,38 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="49" column="22" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/TheFirstPunchController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="163" column="85" lean-forward="false" selection-start-line="163" selection-start-column="85" selection-end-line="163" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="166" column="21" lean-forward="false" selection-start-line="166" selection-start-column="21" selection-end-line="166" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1005,14 +875,6 @@
             <marker date="1504513214186" expanded="true" signature="3316:3445" ph="..." />
             <marker date="1504513214186" expanded="true" signature="3363:3426" ph="{...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="234" column="39" lean-forward="false" selection-start-line="234" selection-start-column="39" selection-end-line="234" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1050,16 +912,159 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="77" column="108" lean-forward="false" selection-start-line="77" selection-start-column="94" selection-end-line="77" selection-end-column="108" />
+        <state relative-caret-position="671">
+          <caret line="104" column="38" lean-forward="false" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="673">
+          <caret line="233" column="32" lean-forward="false" selection-start-line="233" selection-start-column="32" selection-end-line="233" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="104" column="54" lean-forward="true" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="73" column="14" lean-forward="false" selection-start-line="73" selection-start-column="14" selection-end-line="73" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersInfoController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#23#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersOrderController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="17" column="6" lean-forward="false" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1843">
+        <state relative-caret-position="-2603">
           <caret line="66" column="40" lean-forward="false" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersExchangeApplicationController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="23" column="100" lean-forward="false" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/TheFirstPunchController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="17" column="6" lean-forward="false" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-114">
+          <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="13" />
+          <folding>
+            <element signature="e#6#315#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2850">
+          <caret line="166" column="21" lean-forward="false" selection-start-line="166" selection-start-column="21" selection-end-line="166" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="43" column="43" lean-forward="true" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="19" />
+          <folding>
+            <element signature="e#6#311#0#PHP" expanded="true" />
+            <element signature="e#341#377#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/MallExchangeController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="66" column="9" lean-forward="false" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="49" column="80" lean-forward="true" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1067">
+          <caret line="132" column="9" lean-forward="false" selection-start-line="132" selection-start-column="9" selection-end-line="132" selection-end-column="9" />
           <folding />
         </state>
       </provider>

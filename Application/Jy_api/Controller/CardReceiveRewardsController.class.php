@@ -43,12 +43,12 @@ class CardReceiveRewardsController extends ComController {
 
         //判断是否拥有月卡
         $UsersCardShopLog = M('jy_users_package_shop_log')
-                            ->field('date_format(DateTime,"%Y-%m-%d")')
+                            ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
                             ->where('playerid = '.$playerid.' and Type = 2')
                             ->order('Id desc')
                             ->find();
         if(empty($UsersCardShopLog)){
-            $result = 4006;
+            $result = 7002;
             goto response;
         }
         //判断月卡是否过期
@@ -57,35 +57,31 @@ class CardReceiveRewardsController extends ComController {
         $CurrentTime        =           strtotime(date('Y-m-d',time()));
         $DayNum             =           ($CurrentTime-$DateTime)/(24*60*60);
         $OneDay             =           24*60*60;
-        $StartTime          =           $CurrentTime+$OneDay;
-        $EndTime            =           $CurrentTime-$OneDay;
-        if($DayNum > 30){
+        $StartTime          =           $CurrentTime-$OneDay;
+        $StartTime          =           date("Y-m-d H:i:s",$StartTime);
+        $EndTime            =           $CurrentTime+$OneDay;
+        $EndTime            =           date("Y-m-d H:i:s",$EndTime);
+        if($DayNum >= 30){
              $result = 7003;
              goto response;
         }
-
-
-
-
         //判断今天是否已经领取过  1 未领取过  2 领取过
         $IsReceive = 1;
         $UsersCardReceive = M('jy_users_card_receive_log')
-                            ->where('playerid = '.$playerid.' and  DateTime <=  UNIX_TIMESTAMP('.$EndTime.') and  DateTime >= ('.$StartTime.')')
+                            ->where('playerid = '.$playerid.' and  DateTime <=  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                             ->find();
+
         if(!empty($UsersCardReceive)){
             $IsReceive = 2;
         }
-
         if($IsReceive == 2){
             $result = 7004;
             goto response;
         }
-
         if($IsReceive == 1 && $DayNum == 30){
             $result = 7005;
             goto response;
         }
-
         //查询奖励
         $GoodsInfoFile = array(
             'GiveInfo',
@@ -99,13 +95,14 @@ class CardReceiveRewardsController extends ComController {
         if(empty($GoodsAll)){
             $result = 5003;
         }
+
         $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
         $GoodID             = array();
         if(empty($GiveInfo)){
             $result = 5004;
             goto  response;
         }
-        foreach ($GoodID as $k=>$v){
+        foreach ($GiveInfo as $k=>$v){
             $GoodID[] = $v['Id'];
         }
 
@@ -217,15 +214,22 @@ class CardReceiveRewardsController extends ComController {
         $addUsersCardReceiveLog =M('jy_users_card_receive_log')
                                 ->add($dataUsersCardReceiveLog);
         $addUsersCurrencyStream = 1;   //记录金币砖石流水
-        $addUsersGoodsStream    = 1;                              //记录道具流水
+        $addUsersGoodsStream    = 1;   //记录道具流水
+
+
         if(!empty($dataUsersCurrencyStream)){
+
+            $dataUsersCurrencyStream = array_values($dataUsersCurrencyStream);
             $addUsersCurrencyStream = M('jy_users_currency_stream')
                                       ->addAll($dataUsersCurrencyStream);
         }
         if(!empty($dataUsersGoodsStream)){
+            $dataUsersGoodsStream = array_values($dataUsersGoodsStream);
             $addUsersGoodsStream   = M('jy_users_goods_stream')
                                     ->addAll($dataUsersGoodsStream);
         }
+
+
         if(!$addUsersCardReceiveLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
             $result = 3002;
             goto  response;

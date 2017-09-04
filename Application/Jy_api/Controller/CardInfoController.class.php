@@ -97,7 +97,7 @@ class CardInfoController extends ComController {
                 $StartTime          =           $CurrentTime+$OneDay;
                 $EndTime            =           $CurrentTime-$OneDay;
                 $UsersCardReceive = M('jy_users_card_receive_log')
-                    ->where('playerid = '.$playerid.' and  DateTime <=  UNIX_TIMESTAMP('.$EndTime.') and  DateTime >= ('.$StartTime.')')
+                    ->where('playerid = '.$playerid.' and  DateTime <=  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                     ->find();
                 if(!empty($UsersCardReceive)){
                     $IsReceive = 2;

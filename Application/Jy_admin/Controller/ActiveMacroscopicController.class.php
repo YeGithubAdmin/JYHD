@@ -85,9 +85,7 @@ class ActiveMacroscopicController extends ComController {
             ->order('a.LastLoginTM asc')
             ->select();
 
-
         $UserComprehensiveData =array();
-
         foreach ($erverDay as $k=>$v){
             $arr = array();
                 $vTime =  date('Y-m-d',$v);
@@ -121,8 +119,6 @@ class ActiveMacroscopicController extends ComController {
                 $UserComprehensiveData[$k]['BankruptcyRate30']    =           0;
             }
             $UserComprehensiveData[$k]['date'] = date('n月j日',$v);
-
-
         }
         $this->assign('datemin',$datemin);
         $this->assign('day',$timeEndDay);
@@ -130,5 +126,6 @@ class ActiveMacroscopicController extends ComController {
         $this->assign('info',$UserComprehensiveData);
         $this->display();
     }
+
 
 }

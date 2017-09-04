@@ -1,6 +1,6 @@
 <?php
 /***
- * 首冲信息
+ * vip 信息
  * @param array   $msgArr  2*  成功  3.* 超时无响应  4.*丢失或参数缺失  5.* 服务器配置问题  6.*来不明  7.* 权限问题 8.* 配置问题
  * @param int     $page         页码
  * @param int     $num          页数

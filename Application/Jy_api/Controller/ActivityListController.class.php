@@ -47,7 +47,7 @@ class ActivityListController extends ComController {
                             ->join('jy_activity_son_list as b on b.FatherID = a.Id','left')
                             ->join('jy_goods_all as c on b.GoodsID  = c.Id')
                             ->field($activityFatherListField)
-                            ->where('a.ShowStartTime <= str_to_date("'.$time.'")  and    str_to_date("'.$time.'") < a.ShowEndTime')
+                            ->where('a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and    str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
 
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
@@ -60,7 +60,7 @@ class ActivityListController extends ComController {
         );
         $catUserOrder = M('jy_activity_father_list as a')
                         ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime  and  b.CallbackTime > a.AddUpStartTime','left')
-                        ->where('b.playerid = '.$playerid. ' and a.AddUpStartTime  <= str_to_date("'.$time.'")  and a.AddUpEndTime > str_to_date("'.$time.'")')
+                        ->where('b.playerid = '.$playerid. ' and a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                         ->group('a.Type')
                         ->field($catUserOrderField)
                         ->select();
@@ -77,7 +77,7 @@ class ActivityListController extends ComController {
                                              );
 
         $catUsersActivityTheawardLog = M('jy_users_activity_theaward_log')
-                                        ->where('playerid = '.$playerid.'  and  AddUpStartTime  <str_to_date("'.$time.'")  and AddUpEndTime  => str_to_date("'.$time.'")')
+                                        ->where('playerid = '.$playerid.'  and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and AddUpEndTime  >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                                         ->field($catUsersActivityTheawardFile)
                                         ->group('ID')
                                         ->select();

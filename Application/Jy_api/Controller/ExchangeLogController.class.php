@@ -22,7 +22,6 @@ class ExchangeLogController extends ComController {
         $msgArr         =       $this->msgArr;
         $page           =       $this->page;
         $num            =       $this->num;
-
         $result = 2001;
         $info   =  array();
         $msgArr[4006] = "用户信息，缺失！";
@@ -47,10 +46,10 @@ class ExchangeLogController extends ComController {
         $info = $UsersExchangeLog;
         response:
             $response = array(
-                'result' => $result,
-                'msg' => $msgArr[$result],
-                'sessionid'=>$DataInfo['sessionid'],
-                'data' => $info,
+                'result'    =>  $result,
+                'msg'       =>  $msgArr[$result],
+                'sessionid' =>  $DataInfo['sessionid'],
+                'data'      =>  $info,
             );
             $this->response($response,'json');
 

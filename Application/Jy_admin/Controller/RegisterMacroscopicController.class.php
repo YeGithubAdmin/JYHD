@@ -70,27 +70,24 @@ class RegisterMacroscopicController extends ComController {
          *  描述 ：注册破产率=破产用户/注册用户。
          ***/
 
-        $whereUserComprehensive = '';
-        if($channel != '' ){
-            $whereUserComprehensive = 'a.channel = '.$channel.' and  ';
-        }
 
-        $whereUserComprehensive  .=   'a.RegisterTM > "'.$timeEndStrtotime.'" and  a.RegisterTM < "'.$timeStartStrtotime.'"';
+        $where  =   'a.RegisterTM > "'.$timeEndStrtotime.'" and  a.RegisterTM < "'.$timeStartStrtotime.'"';
 
-
-        $UserComprehensive = M('tuserinfo as a')
-            ->join('Web_RMBCost as b on a.UserID = b.Users_ids and  b.PaySuccess = 1','LEFT')
-            ->join('web_moneychangelog as c on a.UserID = c.UserID and c.ChangeType  = 1','LEFT')
-            ->join('jy_UserbankruptcyLog as d on d.UserID = a.UserID','LEFT')
-            ->where($whereUserComprehensive)
-            ->field('date_format(a.RegisterTM,"%Y-%m-%d") as t,count(a.UserID) as UserNum,
-                    unix_timestamp(a.RegisterTM) as time,count(distinct b.Users_ids) as UserPayNum,count(distinct b.Users_ids)/count(a.UserID) as UserNumPayRate
-                    ,count(c.ChangeType) as UserGame,count(c.ChangeType)/count(a.UserID) as  UserGameRate 
-                    ,count(b.Users_ids) as PayNum,count(b.PayMoney) as PayMoney,count(b.PayMoney)/count(distinct b.Users_ids) as ARPPU
-                    ,count(distinct d.UserID) as BankruptcyNum,count(distinct d.UserID)/count(a.UserID) as BankruptcyRate')
-            ->group('t')
-            ->order('a.RegisterTM asc')
-            ->select();
+        $RegisterMacrodataFile = array(
+                'UserNum',
+                'UserGame',
+                'UserNum/UserNum as UserGameRate',
+                'UserPayNum',
+                'PayNum',
+                'UserPayNum/UserNum  as UserNumPayRate',
+                'PayMoney',
+                'BankruptcyNum',
+                'BankruptcyNum/UserNum as BankruptcyRate'
+        );
+        $UserComprehensive = M('jy_register_macrodata')
+                              ->where('')
+                              ->field($RegisterMacrodataFile)
+                              ->select();
 
         $UserComprehensiveData =array();
         foreach ($erverDay as $k=>$v){
