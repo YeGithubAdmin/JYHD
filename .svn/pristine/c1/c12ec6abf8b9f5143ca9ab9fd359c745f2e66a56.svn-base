@@ -1,0 +1,64 @@
+
+package RedisProto;
+
+message RPB_AccountData 
+{
+	optional int32		account_type	 = 1; 	// 帐号类型 (1游客，2自定义)
+	optional int32		os_type 		 = 2; 	// 系统类型 (1ios, 2安卓)
+	optional int64      playerid		 = 3;	// 玩家id
+	optional string		mac 			 = 4; 	// mac地址
+	optional string		imei 			 = 5; 	// 手机序列号
+	optional string		imsi 			 = 6; 	// 运营商序列号
+	optional string		uuid 			 = 7; 	// 苹果uuid
+	optional int64		mobile 			 = 8;	// 手机号
+	optional int32 		accountstate 	 = 9; 	// 账户状态(1正常, 2封号, 3已经登录)
+	optional string		regtime 		 = 10;	// 注册时间
+	optional string		lasttime 		 = 11;	// 最后登录时间
+	optional string		block_desc 		 = 12;	// 封号原因
+	optional string 	loginip 		 = 13;	// 登录ip
+	optional string		reg_channel		 = 14;	// 注册渠道号
+	optional string		login_channel	 = 15;	// 登录渠道号
+	optional string		phone_model		 = 16;  // 手机型号
+	optional string		phone_os_ver	 = 17;  // 手机系统版本
+	optional string		game_ver		 = 18;	// 游戏版本号
+	optional string		icon_url		 = 19;	// 头像url
+	optional int64		communiid 		 = 20;	// 通讯id
+	optional string     account_name 	 = 21;	// 账号名
+	optional string		pwd				 = 22;	// 密码
+	optional string		logout_time 	 = 23;	// 最后离线时间
+}
+
+message RPB_PlayerData 
+{
+	optional int64		playerid 		 = 1;	// 玩家id
+	optional string		name 			 = 2;	// 昵称
+	optional int32		sex 			 = 3;	// 1 男 2 女
+	optional int32      vip				 = 4;	// vip 等级
+	optional int32		vip_exp			 = 5;	// vip 经验
+	optional int32		status 			 = 6; 	// 游戏状态（1离线，2在线，3玩牌）
+	optional int32		serverid 		 = 7;	// 所在游戏服务器id
+	optional int32		game_type 		 = 8;	// 所在游戏类型
+	optional int32      room_type 		 = 9;	// 所在房间类型
+	optional int32		level_type		 = 10;  // 所在场次类型
+	optional int32      roomid 		 	 = 11;	// 所在房间id
+	optional int64		gold 			 = 12;	// 金币
+	optional int64		diamond 		 = 13;	// 钻石
+	optional int64		deposit			 = 14;	// 存款
+	optional int64		profit			 = 15;	// 当日盈利
+	optional int32		glevel 			 = 16;	// 游戏等级
+	optional int32  	gexp   			 = 17;	// 游戏经验
+	optional int32		gun_lv			 = 18;	// 炮等级
+	optional int32		sign_day		 = 19;	// 累计签到天数
+	optional int64		sign_time		 = 20;	// 签到时间
+	optional int32		gunid			 = 21;	// 当前炮的id
+	optional bool 		is_mc   		 = 22;	// 是否是月卡用户
+	optional int64 		mc_overtime		 = 23;	// 月卡结束时间
+}
+
+message RPB_ModuleData
+{
+	optional int64      playerid = 1;
+	optional string     name 	 = 2;	// module name(key)
+	//这里面可以存任意数据， 可以是lua table, 也可以是protobuf
+	optional bytes      data     = 3;	// module data(value)
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>管理员</title>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+		系统 <span class="c-gray en">&gt;</span>管理员列表 <a
+			class="btn btn-success radius r mr-20"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="mt-20">
+		<!--搜索 -->
+		<form action="" method="get">
+            <input type="hidden" name="m" value="jy_admin" />
+            <input type="hidden" name="c" value="AdminUsers" />
+            <input type="hidden" name="a" value="index" />
+			<div class="text-c">
+				创建时间： <input type="text"
+					onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
+					id="datemin" value="{$search['datemin']}" name="datemin"
+					class="input-text Wdate" style="width: 120px;"> - <input
+					type="text"
+					onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
+					id="datemax" value="{$search['datemax']}" name="datemax"
+					class="input-text Wdate" style="width: 120px;"> <input
+					type="text" class="input-text" style="width: 250px"
+					placeholder="输入管理员账号" id="" value="{$search['account']}"
+					name="account"> <span style="width: 150px"
+					class="select-box"> <select size="1" name="islock"
+					class="select">
+						<option value="">状态</option>
+						<option value="1"<if  condition= "$search['islock'] eq '1'">selected</if>>正常</option>
+						<option value="2"<if condition="$search['islock'] eq '2'" >selected</if>>锁定</option>
+				</select>
+				</span>
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;"
+				onclick="AdminUsers_add('添加管理员','/jy_admin/AdminUsers/add','','600')"
+				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
+					添加管理员</a>
+			</span>
+		</div>
+		<table
+			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+				    <th width="30">id</th>
+					<th width="60">管理员名称</th>
+					<th width="60">账号</th>
+					<th width="60">所在分组</th>
+					<th width="60">用户类型</th>
+					<th width="60">添加人</th>
+					<th width="60">是否锁定</th>
+					<th width="60">创建时间</th>
+					<th width="100">备注</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name='info' id = 'val'>
+				
+				<tr class="text-c">
+					<td>{$val['id']}</td>
+					<td>{$val['name']}</td>
+					<td>{$val['account']}</td>
+					<td>{$val['admingroup']}</td>
+					<td><eq name ="val['channel']"  value = "1">管理<else/>渠道</eq></td>
+					<td>{$val['addName']}</td>
+					<td class="td-status"><span
+						class="<if condition ="$val['isLock'] eq 0" >label label-success radius</else>label label-defaunt radius</if>"><if
+						   condition="$val['islock'] eq 1">正常<else/>锁定</if></span></td>
+					<td>{$val['mtime']}</td>
+					<td>{$val['remark']}</td>
+					<td class="td-manage"><a style="text-decoration: none"
+						onClick="<if condition="$val['islock'] eq 1" >adminUsers_stop<else/>adminUsers_start</if>(this, '{$val['id']}')"
+						href="javascript:;"
+						title="<if  condition = "$val['islock'] eq 0" >锁定<else/>启用</if>"> <i
+							class="Hui-iconfont"><if condition ="$val['islock'] eq 1" >&#xe631;<else/>&#xe615;</if></i>
+					</a> <a title="编辑" href="javascript:;"
+						onclick="adminUsers_edit('编辑','/jy_admin/AdminUsers/edit/id/{$val['id']}','','510')"
+						class="ml-5" style="text-decoration: none"><i
+							class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"
+						href="javascript:;" onclick="adminUsers_del(this,'{$val['id']}')"
+						class="ml-5" style="text-decoration: none"><i
+							class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+	<div class = "cl">
+
+		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+			 class="dataTables_paginate paging_simple_numbers">{$page}</div>
+	</div>
+
+
+	<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+</body>
+</html>
+<literal>
+<script>
+/*管理员-添加*/
+function AdminUsers_add(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+/*管理员-编辑*/
+function adminUsers_edit(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+/*管理员-停用*/
+function adminUsers_stop(obj, id) {
+    layer.confirm('确认要锁定吗？', function (index) {
+        $.post('/jy_admin/AdminUsers/stop', {'id':id}, function (msg) {
+            if (msg == 1) {
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="adminUsers_start(this,' + id + ')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">锁定</span>');
+                $(obj).remove();
+                layer.msg('已锁定!', {icon: 5, time: 1000});
+            } else {
+                layer.msg('锁定失败!', {icon: 5, time: 1000});
+            }
+        });
+    });
+}
+
+/*管理员-启用*/
+function adminUsers_start(obj, id) {
+    layer.confirm('确认要启用吗？', function (index) {
+        $.post('/jy_admin/AdminUsers/start', {'id':id}, function (msg) {
+            if (msg == 1) {
+                console.log(msg);
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="adminUsers_stop(this,' + id + ')" href="javascript:;" title="锁定"><i class="Hui-iconfont">&#xe631;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">正常</span>');
+                $(obj).remove();
+                layer.msg('已启用!', {icon: 6, time: 1000});
+            } else {
+                layer.msg('启用失败!', {icon: 5, time: 1000});
+            }
+        });
+    });
+}
+ 
+/*管理员-删除*/
+function adminUsers_del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.post('/jy_admin/AdminUsers/del',{'id':id},function(msg){
+			if(msg == 1){
+				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+			}else{
+				layer.msg('删除失败!',{icon:1,time:1000});
+			}
+		});
+		
+	});
+}
+function admin_authority(title,url,id,w,h){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+</script>
+</literal>

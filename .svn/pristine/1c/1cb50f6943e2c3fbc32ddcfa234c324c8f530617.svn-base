@@ -1,0 +1,422 @@
+<?php
+namespace  Common\Lib;
+class func{
+/**
+ * 获取当前页面完整URL地址
+ */
+	public function get_url() {
+			$sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+			$php_self = $_SERVER['PHP_SELF'] ? $this->safe_replace($_SERVER['PHP_SELF']) : $this->safe_replace($_SERVER['SCRIPT_NAME']);
+			$path_info = isset($_SERVER['PATH_INFO']) ? $this->safe_replace($_SERVER['PATH_INFO']) : '';
+			$relate_url = isset($_SERVER['REQUEST_URI']) ? $this->safe_replace($_SERVER['REQUEST_URI']) : $php_self.(isset($_SERVER['QUERY_STRING']) ? '?'.$this->safe_replace($_SERVER['QUERY_STRING']) : $path_info);
+			return $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').$relate_url;
+	}
+	
+	/**
+	 * 获取string中的参数
+	 * @param string $par_data		string
+	 * @return $return_data
+	 */
+	public  function getPar($par_data){
+		$return_data = array();
+		if ($par_data != ''){
+			$tmp = explode('&', $par_data);
+			if ($tmp){
+				foreach ($tmp as $v){
+					if ($v != ''){
+						$arr = explode('=', $v);
+						if ($arr){
+							$return_data[$arr[0]] = isset($arr[1]) ? $arr[1] : '';
+						}
+					}
+
+				}
+			}
+
+		}
+		return $return_data;
+	}
+
+	/**
+	 * 检查手机格式
+	 * @param string $phone
+	 * @return boolean
+	 */
+	public function checkPhone($phone=''){
+		if(!preg_match('/^1[34578]\d{9}$/', $phone)){
+			//手机号码格式不正确
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 检查密码格式
+	 * @param string $pwd
+	 * @return boolean
+	 */
+	public function checkPwd($pwd=''){
+		if (strlen($pwd) != 32){
+			//密码格式md5错误
+			return false;
+		}
+		return true;
+	}
+	/**
+	*记录文本
+	*@param string $file_name 文件路径
+	*@param string $msg       记录类型
+	*/
+	public function record_log($dir,$file_name,$msg){
+		    $separator = '*********************************';
+            if(!file_exists($dir)){
+                @mkdir($dir,0777,true);
+            }
+		    @file_put_contents($dir.$file_name, $separator."\nTime:".date('Y-m-d H:i:s')."\nIP:".$_SERVER['REMOTE_ADDR']."\nUrl:".$this->get_url()."\n$msg\n$separator\n", FILE_APPEND);
+	}
+  /**
+ * function showmessage()			提示信息
+ * @param string $info				信息内容
+ * @param string $url_forward		跳转地址
+ * @param number $ms				等待时间
+ */
+   public function showmessage($info='参数错误', $url_forward='goback', $ms=3){
+        echo
+        '<div class="layui-layer-shade" id="layui-layer-shade1" times="1" style="z-index:19891014; background-color:#000; opacity:0.3; filter:alpha(opacity=30);"></div>
+         <div class="layui-layer layui-anim layui-layer-dialog " id="layui-layer1" type="dialog" times="1" showtime="0" contype="string" style="z-index: 19891015; top: 40%; left: 40%;">
+            <div class="layui-layer-content" style="text-align: center"><a href="###">'.$info.'</a></div>
+            <span class="layui-layer-setwin"></span>
+            <div class="layui-layer-btn">
+             <a class="layui-layer-btn0" onclick="showmessage()">确定</a>
+         </div>
+         </div>';
+        if($url_forward != "goback" ){
+            echo "<script>      
+        function showmessage() {
+            var obj = window.parent.document;obj.location.reload()
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.$('.btn-refresh').click();
+            parent.layer.close(index);
+            }
+          </script>";
+        }else{
+            echo "<script>      
+                function showmessage() {
+                   window.history.back();
+                  }
+          </script>";
+        }
+
+    }
+	 /**
+	 * 安全过滤函数
+	 * @param $string
+	 * @return string
+	 */
+	public function safe_replace($string) {
+			$string = str_replace('%20','',$string);
+			$string = str_replace('%27','',$string);
+			$string = str_replace('%2527','',$string);
+			$string = str_replace('*','',$string);
+			$string = str_replace('"','&quot;',$string);
+			$string = str_replace("'",'',$string);
+			$string = str_replace('"','',$string);
+			$string = str_replace(';','',$string);
+			$string = str_replace('<','&lt;',$string);
+			$string = str_replace('>','&gt;',$string);
+			$string = str_replace("{",'',$string);
+			$string = str_replace('}','',$string);
+			$string = str_replace('\\','',$string);
+			return $string;
+	}
+	/**
+	* 随机整形数字
+	* @param int  $num  随机位数
+	* return string
+	*/
+    public function getrand($num){
+		$data = '';
+		for($i=0;$i<$num;$i++){
+			$data .= rand(0,9);
+		}
+		return $data;
+    }
+	/**
+	*curl
+	* @param string $url 请求地址
+	* @param string $data   null  为gei  有值为 post
+	* return string
+	*/
+	Public function httpsRequest($url, $data = null ) {
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		if (!empty($data)){
+			curl_setopt($curl, CURLOPT_POST, 1);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		}
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		$output = curl_exec($curl);
+		curl_close($curl);
+		return $output;
+	}
+    /**
+    *获取每个月的天数
+    *
+     */
+    Public  function get_days_by_year($year,$month){
+        //首先判断闰年
+        if($year%400 == 0  || ($year%4 == 0 && $year%100 !== 0)){
+            $rday = 29;
+        }else{
+            $rday = 28;
+        }
+        if($month==2){
+            $days = $rday;
+        }else{
+            //判断是大月（31），还是小月（30）
+            $days = (($month - 1)%7%2) ? 30 : 31;
+        }
+        return $days;
+    }
+
+    /**
+     * 计算两点地理坐标之间的距离
+     * @param Decimal $longitude1 起点经度
+     * @param Decimal $latitude1 起点纬度
+     * @param Decimal $longitude2 终点经度
+     * @param Decimal $latitude2 终点纬度
+     * @param Int   $unit    单位 1:米 2:公里
+     * @param Int   $decimal  精度 保留小数位数
+     * @return Decimal
+     */
+    Public function getDistance($longitude1, $latitude1, $longitude2, $latitude2, $unit=2, $decimal=2){
+
+        $EARTH_RADIUS = 6370.996; // 地球半径系数
+        $PI = 3.1415926;
+
+        $radLat1 = $latitude1 * $PI / 180.0;
+        $radLat2 = $latitude2 * $PI / 180.0;
+
+        $radLng1 = $longitude1 * $PI / 180.0;
+        $radLng2 = $longitude2 * $PI /180.0;
+
+        $a = $radLat1 - $radLat2;
+        $b = $radLng1 - $radLng2;
+
+        $distance = 2 * asin(sqrt(pow(sin($a/2),2) + cos($radLat1) * cos($radLat2) * pow(sin($b/2),2)));
+        $distance = $distance * $EARTH_RADIUS * 1000;
+
+        if($unit==2){
+            $distance = $distance / 1000;
+        }
+
+        return round($distance, $decimal);
+
+    }
+    /**
+     * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
+     * 注意：服务器需要开通fopen配置
+     * @param $word 要写入日志里的文本内容 默认值：空值
+     */
+    public  function logResult($word='') {
+        $filename = APP_ROOT.'Log/alipay/log_'.date('Ymd');
+        @file_put_contents($filename, "执行日期：".strftime("%Y%m%d%H%M%S",time())."\n".$word."\n",FILE_APPEND);
+    }
+    /**
+     * curl方法
+     * @param string 	$url
+     * @param string 	$param
+     * @param int 	  $timeOut  超时时间（秒）
+     */
+    public function curl($url, $param, $timeOut=60){
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        curl_setopt($ch, CURLOPT_TIMEOUT,$timeOut);
+        $content=curl_exec($ch);
+        if(curl_errno($ch)){
+            return -2;
+        }
+        curl_close($ch);
+        return $content;
+    }
+    /**
+    * 微信退款
+     * @param string  $transaction_id 微信订单
+     * @param int     $total_fee    订单总价/分
+     * @param int     $refund_fee   退款金额/分
+     */
+    public function wechartRetreat($transactionid,$totalfee,$refundfee){
+        ini_set('date.timezone', 'Asia/Shanghai');
+        require_once APP_ROOT . "thirdpay/wechartRetreat/lib/WxPay.Api.php";
+        require_once APP_ROOT . 'thirdpay/wechartRetreat/example/log.php';
+        //初始化日志
+        $logHandler = new \CLogFileHandler("../logs/" . date('Y-m-d') . '.log');
+        $log = \Log::Init($logHandler, 15);
+
+        function printf_info($data)
+        {
+            foreach ($data as $key => $value) {
+                echo "<font color='#f00;'>$key</font> : $value <br/>";
+            }
+        }
+
+        if (isset($transactionid) && $transactionid != "") {
+            $transaction_id = $transactionid;
+            $total_fee = $totalfee;
+            $refund_fee = $refundfee;
+            $input = new \WxPayRefund();
+            $input->SetTransaction_id($transaction_id);
+            $input->SetTotal_fee($total_fee);
+            $input->SetRefund_fee($refund_fee);
+            $input->SetOut_refund_no(\WxPayConfig::MCHID . date("YmdHis"));
+            $input->SetOp_user_id(\WxPayConfig::MCHID);
+            return \WxPayApi::refund($input);
+        }
+    }
+        //$_REQUEST["out_trade_no"]= "122531270220150304194108";
+        ///$_REQUEST["total_fee"]= "1";
+        //$_REQUEST["refund_fee"] = "1";
+
+    /**
+     * 判断是否微信浏览器登录
+     * @return boolean
+     */
+    public function isWeixin(){
+            if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+            return true;
+        }
+        return false;
+    }
+	/**
+	 *抽奖
+	 * @param array  物品ID  概率
+	 * return number 物品ID
+	 */
+	public function _getRand($proArr) { //计算中奖概率
+		$rs = ''; //z中奖结果
+		$proSum = array_sum($proArr); //概率数组的总概率精度
+		//概率数组循环
+		foreach ($proArr as $key => $proCur) {
+			$randNum = mt_rand(1, $proSum);
+			if ($randNum <= $proCur) {
+				$rs = $key;
+				break;
+			} else {
+				$proSum -= $proCur;
+			}
+		}
+		unset($proArr);
+		return $rs;
+	}
+
+	/***
+	 *  无限极递菜单
+	 * @param  array    $list        全部菜单
+	 * @param  int      $pk          菜单ID
+	 * @param  int      $upid        父级id
+	 * @param  string   $sub_menu    子菜单名
+	 * @param  int      $root        最上级upid
+	 * return  array    返回结果集
+	 ***********/
+	public function make_tree($list,$pk='id',$upid='upid',$sub_menu ='sub_menu',$root=0){
+		$tree=array();
+		foreach($list as $k=>$v){
+			if($v[$upid] == $root){
+				unset($list[$k]);
+				if(!empty($list)){
+					$child= $this->make_tree($list,$pk,$upid,$sub_menu,$v[$pk]);
+					if(!empty($child)){
+						$v[$sub_menu]=$child;
+					}
+				}
+				$tree[]=$v;
+			}
+
+
+		}
+		return $tree;
+	}
+	/***
+	* proto 请求
+	* @param  string  $url    地址
+	* @param  array  $header  头信息
+	* @param  string  $content   proto 体
+	* @param  int  $timeOut   请求超时
+	**/
+	public function tocurl($url, $header, $content,$timeOut = 1){
+		$ch = curl_init();
+		if(substr($url,0,5)=='https'){
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);  // 从证书中检查SSL加密算法是否存在
+		}
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_TIMEOUT , $timeOut);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_POST, true);
+
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+		$response = curl_exec($ch);
+		if($response === false){
+			if(curl_errno($ch) == CURLE_OPERATION_TIMEDOUT){
+				return 504;
+			}
+		}
+		curl_close($ch);
+		return $response;
+	}
+    /**
+    * 引入protobuf 类
+    * @param   $Class  array   protobuf 文件名
+    ***/
+	public function  ProtobufObj($Class){
+        if(!is_array($Class)){
+            return false;
+        }
+        foreach ($Class as $k=>$v){
+            $dir =  PROTOC_PATH.$v;
+            if(file_exists($dir)){
+                include  $dir;
+            }
+        }
+    }
+
+    /***
+    * protobuf发送请求
+    * @param $PBName    string       包名
+    * @param $content   protobuf     包体
+    */
+    public function   ProtobufSend($PBName,$content){
+        $header = array(
+            'PBName:'.$PBName,
+            'PBSize:'.strlen($content),
+        );
+        $TheBagBody = array(
+            'body'=>$content
+        );
+        $Respond = $this->tocurl(SERVER_PROTO,$header,$content);
+        if($Respond  == 504){
+            return  504;
+        }
+    }
+
+
+    /***
+    * protobuf  回应
+    * @param   $ProtobufObj  protobuf 对象
+    */
+    public function  ProtobufRespond($ProtobufObj){
+        if(is_object($ProtobufObj)) return  false;
+        $ProtobufObj->parseFromString();
+        $ReplyCode = $ProtobufObj->getCode();
+        if($ReplyCode != 1){
+            return $ReplyCode;
+        }
+    }
+
+
+}

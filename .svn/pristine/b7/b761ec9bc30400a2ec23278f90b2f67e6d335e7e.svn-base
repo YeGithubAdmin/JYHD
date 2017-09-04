@@ -1,0 +1,158 @@
+<?php
+/****
+*  七天签到奖励
+**/
+namespace Jy_admin\Controller;
+use Think\Controller;
+class SevenDaysSignRewardController extends ComController {
+    public function index(){
+        $obj =  new \Common\Lib\func();
+        $day = I('param.day',0,'intval');
+        if($day<=0){
+            $obj->showmessage('非法操作');
+        }
+        $CatSevenDaysSignReward = M('jy_seven_days_sign_reward as a')
+            ->join('jy_goods_all as b on a.GoodsID = b.Id and IsExceed = 1 and IsDel = 1')
+            ->where('a.Day = '.$day)
+            ->field('a.Id,b.Name,a.Number,a.DateTime')
+            ->select();
+        $this->assign('info',$CatSevenDaysSignReward);
+        $this->assign('day',$day);
+        $this->display('index');
+
+    }
+    //添加
+    public function  add(){
+        $obj = new \Common\Lib\func();
+        $day = I('param.day',0,'intval');
+        if($day<=0){
+            $obj->showmessage('非法操作');
+        }
+        $catGoodsAll = M('jy_goods_all')
+                       ->field('Id,Name,Type')
+                       ->where('IsDel = 1')
+                       ->select();
+
+        if(IS_POST){
+            //数据
+            $GoodsID            =   I('param.GoodsID','','trim');
+            $Type               =   I('param.Type',0,'intval');
+            $Number             =   I('param.Number','','trim');
+            $dataSevenDaysSignReward  = array(
+                    'GoodsID'          =>       $GoodsID,
+                    'Day'               =>       $day,
+                    'IsExceed'          => 1,
+                    'Number'           =>       $Number,
+                    'Type'             =>       $Type,
+
+            );
+
+            //添加
+            $addSevenDaysSignReward = M('jy_seven_days_sign_reward')
+                            ->add($dataSevenDaysSignReward);
+            if($addSevenDaysSignReward){
+                $obj->showmessage('添加成功','/jy_admin/SevenDaysSignReward/index');
+            }else{
+                 $obj->showmessage('添加失败');
+            }
+        }
+        $this->assign('GoodsAll',$catGoodsAll);
+        $this->assign('day',$day);
+        $this->display('add');
+    }
+    //修改
+    public function edit(){
+        $obj = new \Common\Lib\func();
+
+        $id = I('param.id',0,'intval');
+        $catGoodsAll = M('jy_goods_all')
+               ->where('IsDel = 1')
+            ->field('Id,Name,Type')
+            ->select();
+        if($id<=0){
+            $obj->showmessage('非法操作');
+        }
+
+
+        $CatSevenDaysSignReward = M('jy_seven_days_sign_reward')
+                          ->where('Id = '.$id)
+                          ->field('Id,Number,GoodsID,Type')
+                          ->find();
+
+        if(IS_POST){
+            //数据
+            $GoodsID            =   I('param.GoodsID','','trim');
+            $Type               =   I('param.Type',0,'intval');
+            $Number             =   I('param.Number','','trim');
+
+
+            $dataSevenDaysSignReward  = array(
+                'GoodsID'          =>       $GoodsID,
+                'Number'           =>       $Number,
+                'Type'             =>       $Type,
+
+            );
+            //修改
+            $upSevenDaysSignReward = M('jy_seven_days_sign_reward')
+                ->where('Id = '.$id)
+                ->save($dataSevenDaysSignReward);
+            if($upSevenDaysSignReward !== false){
+                $obj->showmessage('修改成功','/jy_admin/SevenDaysSign/index');
+            }else{
+                $obj->showmessage('修改失败');
+            }
+        }
+
+        $this->assign('GoodsAll',$catGoodsAll);
+        $this->assign('info',$CatSevenDaysSignReward);
+        $this->display('edit');
+    }
+
+
+    //删除
+    public function  del(){
+        $id = I('param.id',0,'intval');
+
+        if($id == 0){
+            echo  0;
+        }else{
+            $db = M('jy_seven_days_sign_reward');
+
+            $info = $db
+                ->where('id = '.$id)
+                ->delete();
+            if($info){
+                echo 1;
+            }else{
+                echo 0;
+            }
+
+        }
+        exit();
+    }
+    //验证用户是否存在
+    public function Verification(){
+        $Day =  I('param.Day','','trim');
+        $id = I('param.id',0,'intval');
+        if($Day == ''){
+            echo 0;
+            exit();
+        }
+        $CatsevenDaysSign = M('jy_seven_days_sign')
+            ->where('Day = '.$Day)
+            ->field('Id')
+            ->find();
+        if(empty($CatsevenDaysSign)){
+            echo 1;
+            exit();
+        }else if ($id == $CatsevenDaysSign['Id']){
+            echo 1;
+            exit();
+        }else{
+            echo 2;
+            exit();
+        }
+
+    }
+
+}

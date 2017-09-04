@@ -1,0 +1,737 @@
+<?php
+/**
+ * Auto generated from PB_usr_data.proto at 2017-08-24 23:11:28
+ *
+ * RedisProto package
+ */
+
+namespace RedisProto {
+/**
+ * RPB_AccountData message
+ */
+class RPB_AccountData extends \ProtobufMessage
+{
+    /* Field index constants */
+    const ACCOUNT_TYPE = 1;
+    const OS_TYPE = 2;
+    const PLAYERID = 3;
+    const MAC = 4;
+    const IMEI = 5;
+    const IMSI = 6;
+    const UUID = 7;
+    const MOBILE = 8;
+    const ACCOUNTSTATE = 9;
+    const REGTIME = 10;
+    const LASTTIME = 11;
+    const BLOCK_DESC = 12;
+    const LOGINIP = 13;
+    const REG_CHANNEL = 14;
+    const LOGIN_CHANNEL = 15;
+    const PHONE_MODEL = 16;
+    const PHONE_OS_VER = 17;
+    const GAME_VER = 18;
+    const ICON_URL = 19;
+    const COMMUNIID = 20;
+    const ACCOUNT_NAME = 21;
+    const PWD = 22;
+    const LOGOUT_TIME = 23;
+
+    /* @var array Field descriptors */
+    protected static $fields = array(
+        self::ACCOUNT_TYPE => array(
+            'name' => 'account_type',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::OS_TYPE => array(
+            'name' => 'os_type',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::PLAYERID => array(
+            'name' => 'playerid',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::MAC => array(
+            'name' => 'mac',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::IMEI => array(
+            'name' => 'imei',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::IMSI => array(
+            'name' => 'imsi',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::UUID => array(
+            'name' => 'uuid',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::MOBILE => array(
+            'name' => 'mobile',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::ACCOUNTSTATE => array(
+            'name' => 'accountstate',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::REGTIME => array(
+            'name' => 'regtime',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::LASTTIME => array(
+            'name' => 'lasttime',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::BLOCK_DESC => array(
+            'name' => 'block_desc',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::LOGINIP => array(
+            'name' => 'loginip',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::REG_CHANNEL => array(
+            'name' => 'reg_channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::LOGIN_CHANNEL => array(
+            'name' => 'login_channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::PHONE_MODEL => array(
+            'name' => 'phone_model',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::PHONE_OS_VER => array(
+            'name' => 'phone_os_ver',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::GAME_VER => array(
+            'name' => 'game_ver',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::ICON_URL => array(
+            'name' => 'icon_url',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::COMMUNIID => array(
+            'name' => 'communiid',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::ACCOUNT_NAME => array(
+            'name' => 'account_name',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::PWD => array(
+            'name' => 'pwd',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::LOGOUT_TIME => array(
+            'name' => 'logout_time',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+    );
+
+    /**
+     * Constructs new message container and clears its internal state
+     */
+    public function __construct()
+    {
+        $this->reset();
+    }
+
+    /**
+     * Clears message values and sets default ones
+     *
+     * @return null
+     */
+    public function reset()
+    {
+        $this->values[self::ACCOUNT_TYPE] = null;
+        $this->values[self::OS_TYPE] = null;
+        $this->values[self::PLAYERID] = null;
+        $this->values[self::MAC] = null;
+        $this->values[self::IMEI] = null;
+        $this->values[self::IMSI] = null;
+        $this->values[self::UUID] = null;
+        $this->values[self::MOBILE] = null;
+        $this->values[self::ACCOUNTSTATE] = null;
+        $this->values[self::REGTIME] = null;
+        $this->values[self::LASTTIME] = null;
+        $this->values[self::BLOCK_DESC] = null;
+        $this->values[self::LOGINIP] = null;
+        $this->values[self::REG_CHANNEL] = null;
+        $this->values[self::LOGIN_CHANNEL] = null;
+        $this->values[self::PHONE_MODEL] = null;
+        $this->values[self::PHONE_OS_VER] = null;
+        $this->values[self::GAME_VER] = null;
+        $this->values[self::ICON_URL] = null;
+        $this->values[self::COMMUNIID] = null;
+        $this->values[self::ACCOUNT_NAME] = null;
+        $this->values[self::PWD] = null;
+        $this->values[self::LOGOUT_TIME] = null;
+    }
+
+    /**
+     * Returns field descriptors
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return self::$fields;
+    }
+
+    /**
+     * Sets value of 'account_type' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setAccountType($value)
+    {
+        return $this->set(self::ACCOUNT_TYPE, $value);
+    }
+
+    /**
+     * Returns value of 'account_type' property
+     *
+     * @return integer
+     */
+    public function getAccountType()
+    {
+        $value = $this->get(self::ACCOUNT_TYPE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'os_type' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setOsType($value)
+    {
+        return $this->set(self::OS_TYPE, $value);
+    }
+
+    /**
+     * Returns value of 'os_type' property
+     *
+     * @return integer
+     */
+    public function getOsType()
+    {
+        $value = $this->get(self::OS_TYPE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'playerid' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPlayerid($value)
+    {
+        return $this->set(self::PLAYERID, $value);
+    }
+
+    /**
+     * Returns value of 'playerid' property
+     *
+     * @return integer
+     */
+    public function getPlayerid()
+    {
+        $value = $this->get(self::PLAYERID);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'mac' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setMac($value)
+    {
+        return $this->set(self::MAC, $value);
+    }
+
+    /**
+     * Returns value of 'mac' property
+     *
+     * @return string
+     */
+    public function getMac()
+    {
+        $value = $this->get(self::MAC);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'imei' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setImei($value)
+    {
+        return $this->set(self::IMEI, $value);
+    }
+
+    /**
+     * Returns value of 'imei' property
+     *
+     * @return string
+     */
+    public function getImei()
+    {
+        $value = $this->get(self::IMEI);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'imsi' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setImsi($value)
+    {
+        return $this->set(self::IMSI, $value);
+    }
+
+    /**
+     * Returns value of 'imsi' property
+     *
+     * @return string
+     */
+    public function getImsi()
+    {
+        $value = $this->get(self::IMSI);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'uuid' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setUuid($value)
+    {
+        return $this->set(self::UUID, $value);
+    }
+
+    /**
+     * Returns value of 'uuid' property
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        $value = $this->get(self::UUID);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'mobile' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setMobile($value)
+    {
+        return $this->set(self::MOBILE, $value);
+    }
+
+    /**
+     * Returns value of 'mobile' property
+     *
+     * @return integer
+     */
+    public function getMobile()
+    {
+        $value = $this->get(self::MOBILE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'accountstate' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setAccountstate($value)
+    {
+        return $this->set(self::ACCOUNTSTATE, $value);
+    }
+
+    /**
+     * Returns value of 'accountstate' property
+     *
+     * @return integer
+     */
+    public function getAccountstate()
+    {
+        $value = $this->get(self::ACCOUNTSTATE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'regtime' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setRegtime($value)
+    {
+        return $this->set(self::REGTIME, $value);
+    }
+
+    /**
+     * Returns value of 'regtime' property
+     *
+     * @return string
+     */
+    public function getRegtime()
+    {
+        $value = $this->get(self::REGTIME);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'lasttime' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setLasttime($value)
+    {
+        return $this->set(self::LASTTIME, $value);
+    }
+
+    /**
+     * Returns value of 'lasttime' property
+     *
+     * @return string
+     */
+    public function getLasttime()
+    {
+        $value = $this->get(self::LASTTIME);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'block_desc' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setBlockDesc($value)
+    {
+        return $this->set(self::BLOCK_DESC, $value);
+    }
+
+    /**
+     * Returns value of 'block_desc' property
+     *
+     * @return string
+     */
+    public function getBlockDesc()
+    {
+        $value = $this->get(self::BLOCK_DESC);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'loginip' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setLoginip($value)
+    {
+        return $this->set(self::LOGINIP, $value);
+    }
+
+    /**
+     * Returns value of 'loginip' property
+     *
+     * @return string
+     */
+    public function getLoginip()
+    {
+        $value = $this->get(self::LOGINIP);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'reg_channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setRegChannel($value)
+    {
+        return $this->set(self::REG_CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'reg_channel' property
+     *
+     * @return string
+     */
+    public function getRegChannel()
+    {
+        $value = $this->get(self::REG_CHANNEL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'login_channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setLoginChannel($value)
+    {
+        return $this->set(self::LOGIN_CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'login_channel' property
+     *
+     * @return string
+     */
+    public function getLoginChannel()
+    {
+        $value = $this->get(self::LOGIN_CHANNEL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'phone_model' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setPhoneModel($value)
+    {
+        return $this->set(self::PHONE_MODEL, $value);
+    }
+
+    /**
+     * Returns value of 'phone_model' property
+     *
+     * @return string
+     */
+    public function getPhoneModel()
+    {
+        $value = $this->get(self::PHONE_MODEL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'phone_os_ver' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setPhoneOsVer($value)
+    {
+        return $this->set(self::PHONE_OS_VER, $value);
+    }
+
+    /**
+     * Returns value of 'phone_os_ver' property
+     *
+     * @return string
+     */
+    public function getPhoneOsVer()
+    {
+        $value = $this->get(self::PHONE_OS_VER);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'game_ver' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setGameVer($value)
+    {
+        return $this->set(self::GAME_VER, $value);
+    }
+
+    /**
+     * Returns value of 'game_ver' property
+     *
+     * @return string
+     */
+    public function getGameVer()
+    {
+        $value = $this->get(self::GAME_VER);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'icon_url' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setIconUrl($value)
+    {
+        return $this->set(self::ICON_URL, $value);
+    }
+
+    /**
+     * Returns value of 'icon_url' property
+     *
+     * @return string
+     */
+    public function getIconUrl()
+    {
+        $value = $this->get(self::ICON_URL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'communiid' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setCommuniid($value)
+    {
+        return $this->set(self::COMMUNIID, $value);
+    }
+
+    /**
+     * Returns value of 'communiid' property
+     *
+     * @return integer
+     */
+    public function getCommuniid()
+    {
+        $value = $this->get(self::COMMUNIID);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'account_name' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setAccountName($value)
+    {
+        return $this->set(self::ACCOUNT_NAME, $value);
+    }
+
+    /**
+     * Returns value of 'account_name' property
+     *
+     * @return string
+     */
+    public function getAccountName()
+    {
+        $value = $this->get(self::ACCOUNT_NAME);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pwd' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setPwd($value)
+    {
+        return $this->set(self::PWD, $value);
+    }
+
+    /**
+     * Returns value of 'pwd' property
+     *
+     * @return string
+     */
+    public function getPwd()
+    {
+        $value = $this->get(self::PWD);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'logout_time' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setLogoutTime($value)
+    {
+        return $this->set(self::LOGOUT_TIME, $value);
+    }
+
+    /**
+     * Returns value of 'logout_time' property
+     *
+     * @return string
+     */
+    public function getLogoutTime()
+    {
+        $value = $this->get(self::LOGOUT_TIME);
+        return $value === null ? (string)$value : $value;
+    }
+}
+}

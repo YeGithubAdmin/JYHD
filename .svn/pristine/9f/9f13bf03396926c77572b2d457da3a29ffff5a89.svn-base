@@ -1,0 +1,148 @@
+<?php
+/****
+*  用户属性
+**/
+namespace Jy_admin\Controller;
+use Protos\PBS_ItemOpt;
+use Protos\PBS_UsrDataOprater;
+use Protos\PBS_UsrDataOpraterReturn;
+use RedisProto\RPB_PlayerData;
+use Think\Controller;
+class UsersAttributeController extends ComController {
+    public function index(){
+        $this->display();
+    }
+    public function add(){
+        print_r($_POST);
+        $obj = new \Common\Lib\func();
+        $msgArr = array(
+            2001=>"修改成功！",
+            3002=>"与游戏服务器断开，请稍后再试！",
+            3003=>"与游戏服务器断开，请稍后再试！",
+            4001=>"用户信息缺失！",
+            0=> "占位符",
+            1=>"请求成功",
+            2=>"重复创建",
+            3=>"数据保存错误",
+            4=>"参数错误",
+            5=>"服务器逻辑错误",
+            6=>"金币不足",
+            7=>"没有玩家信息",
+            8=>"重复登录",
+            9=>"正在进行游戏",
+            10=>"没有这个玩家",
+            11=>"服务器满载",
+            12=>"帐号被封",
+            13=>"没有该帐号信息",
+            14=>"钻石不足",
+            15=>"没有游戏服",
+            16=>"该帐号被另一台设备登录",
+            17=>"创建次数达到最大",
+            18=>"账号名不符合规则",
+            19=>"密码不符合规则",
+            20=>"操作不合法",
+            21=>"账号密码不匹配",
+        );
+        $result  = 2001;
+        $playerid       =       I('param.playerid',0,'intval');                   //用户ID
+        $Name           =       I('param.Name',0,'trim');                         //昵称
+        $Sex            =       I('param.Sex',0,'intval');                        //1 男 2 女
+        $Vip            =       I('param.Vip',0,'intval');                        //vip 等级
+        $VipExp         =       I('param.VipExp',0,'intval');                     //vip 经验
+        $Gold           =       I('param.Gold',0,'intval');                       //金币
+        $diamond        =       I('param.Diamond',0,'intval');                    //钻石
+        $Deposit        =       I('param.Deposit',0,'intval');                    //存款
+        $Profit         =       I('param.Profit',0,'intval');                     //当日盈利
+        $Glevel         =       I('param.Glevel',0,'intval');                     //游戏等级
+        $Gexp           =       I('param.Gexp',0,'intval');                       //游戏经验
+        $SignDay        =       I('param.SignDay',0,'intval');                    //累计签到天数
+        $SignTime       =       I('param.SignSime',0,'trim,strtotime');           //签到时间
+        $Gunid          =       I('param.Gunid',0,'intval');                      //当前炮的id
+        $IsMc           =       I('param.IsMc',0,'intval');                       //是否是月卡用户
+        $McOvertime     =       I('param.McOvertime',0,'trim,strtotime');         //月卡结束时间
+        $IsGive         =       I('param.IsGive',1,'intval');                     //是否赠送道具  1 -否 2-是
+        $DataProp       =       I('param.Prop','','trim');                        //道具
+        if($playerid == 0){
+            $result = 4001;
+            goto  response;
+        }
+
+        $DataInfo = array(
+            'Name'                 =>          $Name,
+            'Sex'                  =>          $Sex,
+            'Vip'                  =>          $Vip,
+            'VipExp'               =>          $VipExp,
+            'Gold'                 =>          $Gold,
+            'Diamond'              =>          $diamond,
+            'Deposit'              =>          $Deposit,
+            'Profit'               =>          $Profit,
+            'Glevel'               =>          $Glevel,
+            'Gexp'                 =>          $Gexp,
+            'SignDay'              =>          $SignDay,
+            'SignTime'             =>          $SignTime,
+            'Gunid'                =>          $Gunid,
+        );
+        //已入protobuf 类
+        $obj->ProtobufObj(array(
+            'Protos/PBS_UsrDataOprater.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
+            'RedisProto/RPB_PlayerData.php',
+            'Protos/PBS_ItemOpt.php',
+        ));
+        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $RPB_PlayerData     = new RPB_PlayerData();
+        $PBS_ItemOpt        = new PBS_ItemOpt();
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        $PBS_UsrDataOprater->setOpt(5);
+
+        if($IsMc == 2){
+           $RPB_PlayerData->setIsMc(true);
+           $RPB_PlayerData->setMcOvertime($McOvertime);
+        }
+        foreach ($DataInfo as $k=>$v){
+            if($v != 0 && $v != '' ){
+                $setData = "set".$k;
+                $RPB_PlayerData->$setData($v);
+            }
+        }
+        //添加道具
+        $Prop = 1;
+        if(!empty($DataProp) && $IsGive ==2){
+            $Prop = 2;
+            foreach ($DataProp as $k=>$v){
+                $PBS_ItemOpt->setNum($v['Num']);
+                $PBS_ItemOpt->setItemid($v['Itemid']);
+            }
+        }
+        if($Prop == 2){
+            $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
+        }
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+        //发送请求
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        if($PBS_UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+        if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $result = 3003;
+            goto response;
+        }
+        //接受回应
+        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
+        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+            goto response;
+        }
+        response:
+        $response  =   array(
+            'result' => $result,
+            'msg' => $msgArr[$result],
+        );
+        echo  json_encode($response);
+        exit();
+    }
+}

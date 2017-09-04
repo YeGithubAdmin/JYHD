@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+    <script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+    <script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+          rel="stylesheet" type="text/css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>全局数据</title>
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+    全局数据 <span class="c-gray en">&gt;</span>全局数据 <a
+        class="btn btn-success radius r mr-20"
+        style="line-height: 1.6em; margin-top: 3px"
+        href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="pd-20">
+    <!--搜索 -->
+    <form action="" method="get">
+        <input type="hidden" name="m" value="jy_admin" />
+        <input type="hidden" name="c" value="GlobalData" />
+        <input type="hidden" name="a" value="index" />
+        <div class="text-c">
+            创建时间： <input type="text" onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
+                         id="datemin" value="{$datemin}" name="datemin"
+                         class="input-text Wdate" style="width: 120px;">
+            <input type="hidden" onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
+                id="datemax" value="{$search['datemax']}" name="datemax"
+                class="input-text Wdate" style="width: 120px;">
+            <button type="submit" class="btn btn-success" id="" name="">
+                <i class="Hui-iconfont">&#xe665;</i> 搜索
+            </button>
+        </div>
+    </form>
+
+    <table
+            class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="30">统计项</th>
+            <th width="30">{$timeOne}</th>
+            <th width="30">{$timeTow}</th>
+            <th width="30">{$timeEight}</th>
+            <th width="60">环比变化率</th>
+            <th width="60">同比变化率</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <volist name = "dataInfo" id ="v" key = "k">
+        <tr onclick="Statistics({$k})"    class="text-c">
+            <th width="30">{$v['title']}</th>
+            <th width="30">{$v['timeOne']}{$v['Symbol']}</th>
+            <th width="30">{$v['timeTow']}{$v['Symbol']}</th>
+            <th width="30">{$v['timeEight']}{$v['Symbol']}</th>
+            <th width="60">{$v['Mom']}%</th>
+            <th width="60">{$v['An']}%</th>
+
+        </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="pd-20">
+    <div id="container" style="min-width:700px;height:400px"></div>
+</div>
+
+
+<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/Highcharts/4.1.7/js/highcharts.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/Highcharts/4.1.7/js/modules/exporting.js"></script>
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#container').highcharts({
+            title: {
+                text: '{$dataInfo["webUsersData"]["title"]}',
+                x: -20 //center
+            },
+
+            xAxis: {
+                categories: [ '{$dataInfo["webUsersData"]["erverDay"][7]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][6]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][5]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][4]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][3]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][2]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][1]["day"]}',
+                              '{$dataInfo["webUsersData"]["erverDay"][0]["day"]}'
+                              ]
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '{$dataInfo["webUsersData"]["Symbol"]}'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Tokyo',
+                data: [ {$dataInfo['webUsersData']["erverDay"][7]["num"]},
+                        {$dataInfo['webUsersData']['erverDay'][6]["num"]},
+                        {$dataInfo["webUsersData"]["erverDay"][5]["num"]},
+                        {$dataInfo["webUsersData"]["erverDay"][4]["num"]},
+                        {$dataInfo["webUsersData"]["erverDay"][3]["num"]},
+                        {$dataInfo["webUsersData"]["erverDay"][2]["num"]},
+                        {$dataInfo["webUsersData"]["erverDay"][1]["num"]},
+                        {$dataInfo["webUsersData"]["erverDay"][0]["num"]}
+                ]
+            }]
+        });
+
+
+
+
+    });
+    function Statistics(my){
+
+        var  seriesData             = '';
+        var  xAxisCategories        = '';
+        var  titleText              = '';
+        var  tooltipValueSuffix     = '';
+
+        switch (my){
+            //注册分析
+            case 1:
+
+                seriesData = [  {$dataInfo['webUsersData']["erverDay"][7]["num"]},
+                                {$dataInfo['webUsersData']['erverDay'][6]["num"]},
+                                {$dataInfo["webUsersData"]["erverDay"][5]["num"]},
+                                {$dataInfo["webUsersData"]["erverDay"][4]["num"]},
+                                {$dataInfo["webUsersData"]["erverDay"][3]["num"]},
+                                {$dataInfo["webUsersData"]["erverDay"][2]["num"]},
+                                {$dataInfo["webUsersData"]["erverDay"][1]["num"]},
+                                {$dataInfo["webUsersData"]["erverDay"][0]["num"]}
+                            ];
+                xAxisCategories =  [ '{$dataInfo["webUsersData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["webUsersData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["webUsersData"]["title"]}';
+
+                tooltipValueSuffix = '{$dataInfo["webUsersData"]["Symbol"]}';
+
+                break;
+
+               //活跃分析
+            case 2:
+
+                seriesData = [  {$dataInfo['WebvUserLoginListData']["erverDay"][7]["num"]},
+                    {$dataInfo['WebvUserLoginListData']['erverDay'][6]["num"]},
+                    {$dataInfo["WebvUserLoginListData"]["erverDay"][5]["num"]},
+                    {$dataInfo["WebvUserLoginListData"]["erverDay"][4]["num"]},
+                    {$dataInfo["WebvUserLoginListData"]["erverDay"][3]["num"]},
+                    {$dataInfo["WebvUserLoginListData"]["erverDay"][2]["num"]},
+                    {$dataInfo["WebvUserLoginListData"]["erverDay"][1]["num"]},
+                    {$dataInfo["WebvUserLoginListData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["WebvUserLoginListData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["WebvUserLoginListData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["WebvUserLoginListData"]["title"]}';
+
+                tooltipValueSuffix = '{$dataInfo["WebvUserLoginListData"]["Symbol"]}';
+
+                break;
+                //收入分析
+            case 3:
+                seriesData = [  {$dataInfo['webRmbcostData']["erverDay"][7]["num"]},
+                    {$dataInfo['webRmbcostData']['erverDay'][6]["num"]},
+                    {$dataInfo["webRmbcostData"]["erverDay"][5]["num"]},
+                    {$dataInfo["webRmbcostData"]["erverDay"][4]["num"]},
+                    {$dataInfo["webRmbcostData"]["erverDay"][3]["num"]},
+                    {$dataInfo["webRmbcostData"]["erverDay"][2]["num"]},
+                    {$dataInfo["webRmbcostData"]["erverDay"][1]["num"]},
+                    {$dataInfo["webRmbcostData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["webRmbcostData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["webRmbcostData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["webRmbcostData"]["title"]}';
+
+                tooltipValueSuffix = '{$dataInfo["webRmbcostData"]["Symbol"]}';
+
+
+                break;
+                //收费用户数量
+            case 4:
+
+
+                seriesData = [  {$dataInfo['webRmbcostUsersNumData']["erverDay"][7]["num"]},
+                    {$dataInfo['webRmbcostUsersNumData']['erverDay'][6]["num"]},
+                    {$dataInfo["webRmbcostUsersNumData"]["erverDay"][5]["num"]},
+                    {$dataInfo["webRmbcostUsersNumData"]["erverDay"][4]["num"]},
+                    {$dataInfo["webRmbcostUsersNumData"]["erverDay"][3]["num"]},
+                    {$dataInfo["webRmbcostUsersNumData"]["erverDay"][2]["num"]},
+                    {$dataInfo["webRmbcostUsersNumData"]["erverDay"][1]["num"]},
+                    {$dataInfo["webRmbcostUsersNumData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["webRmbcostUsersNumData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["webRmbcostUsersNumData"]["title"]}';
+
+                tooltipValueSuffix = '{$dataInfo["webRmbcostUsersNumData"]["Symbol"]}';
+                break;
+                //付费次数
+            case 5:
+                seriesData = [  {$dataInfo['webRmbcostUsersData']["erverDay"][7]["num"]},
+                    {$dataInfo['webRmbcostUsersData']['erverDay'][6]["num"]},
+                    {$dataInfo["webRmbcostUsersData"]["erverDay"][5]["num"]},
+                    {$dataInfo["webRmbcostUsersData"]["erverDay"][4]["num"]},
+                    {$dataInfo["webRmbcostUsersData"]["erverDay"][3]["num"]},
+                    {$dataInfo["webRmbcostUsersData"]["erverDay"][2]["num"]},
+                    {$dataInfo["webRmbcostUsersData"]["erverDay"][1]["num"]},
+                    {$dataInfo["webRmbcostUsersData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["webRmbcostUsersData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["webRmbcostUsersData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["webRmbcostUsersNumData"]["title"]}';
+
+                tooltipValueSuffix = '{$dataInfo["webRmbcostUsersNumData"]["Symbol"]}';
+                break;
+                //注册付费渗透率
+            case 6:
+
+                seriesData = [  {$dataInfo['NewRegisterUserPayData']["erverDay"][7]["num"]},
+                    {$dataInfo['NewRegisterUserPayData']['erverDay'][6]["num"]},
+                    {$dataInfo["NewRegisterUserPayData"]["erverDay"][5]["num"]},
+                    {$dataInfo["NewRegisterUserPayData"]["erverDay"][4]["num"]},
+                    {$dataInfo["NewRegisterUserPayData"]["erverDay"][3]["num"]},
+                    {$dataInfo["NewRegisterUserPayData"]["erverDay"][2]["num"]},
+                    {$dataInfo["NewRegisterUserPayData"]["erverDay"][1]["num"]},
+                    {$dataInfo["NewRegisterUserPayData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["NewRegisterUserPayData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["NewRegisterUserPayData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["NewRegisterUserPayData"]["title"]}';
+                tooltipValueSuffix = '{$dataInfo["NewRegisterUserPayData"]["Symbol"]}';
+                break;
+                 //活跃付费渗透率
+            case 7:
+                seriesData = [  {$dataInfo['activePayData']["erverDay"][7]["num"]},
+                    {$dataInfo['activePayData']['erverDay'][6]["num"]},
+                    {$dataInfo["activePayData"]["erverDay"][5]["num"]},
+                    {$dataInfo["activePayData"]["erverDay"][4]["num"]},
+                    {$dataInfo["activePayData"]["erverDay"][3]["num"]},
+                    {$dataInfo["activePayData"]["erverDay"][2]["num"]},
+                    {$dataInfo["activePayData"]["erverDay"][1]["num"]},
+                    {$dataInfo["activePayData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["activePayData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["activePayData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["activePayData"]["title"]}';
+                tooltipValueSuffix = '{$dataInfo["activePayData"]["Symbol"]}';
+                break;
+            case 8:
+                seriesData = [  {$dataInfo['ARPPUData']["erverDay"][7]["num"]},
+                    {$dataInfo['ARPPUData']['erverDay'][6]["num"]},
+                    {$dataInfo["ARPPUData"]["erverDay"][5]["num"]},
+                    {$dataInfo["ARPPUData"]["erverDay"][4]["num"]},
+                    {$dataInfo["ARPPUData"]["erverDay"][3]["num"]},
+                    {$dataInfo["ARPPUData"]["erverDay"][2]["num"]},
+                    {$dataInfo["ARPPUData"]["erverDay"][1]["num"]},
+                    {$dataInfo["ARPPUData"]["erverDay"][0]["num"]}
+                ];
+                xAxisCategories =  [ '{$dataInfo["ARPPUData"]["erverDay"][7]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][6]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][5]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][4]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][3]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][2]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][1]["day"]}',
+                    '{$dataInfo["ARPPUData"]["erverDay"][0]["day"]}'
+                ];
+                titleText = '{$dataInfo["ARPPUData"]["title"]}';
+                tooltipValueSuffix = '{$dataInfo["ARPPUData"]["Symbol"]}';
+                break;
+
+        }
+
+
+
+
+        $('#container').highcharts({
+            title: {
+                text: titleText,
+                x: -20 //center
+            },
+
+
+            xAxis: {
+                categories: xAxisCategories
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: tooltipValueSuffix
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Tokyo',
+                data: seriesData
+            }]
+        });
+    }
+</script>

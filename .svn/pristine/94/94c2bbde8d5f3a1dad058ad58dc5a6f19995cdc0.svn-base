@@ -1,0 +1,118 @@
+<?php
+/***
+ * 首冲信息
+ * @param array   $msgArr  2*  成功  3.* 超时无响应  4.*丢失或参数缺失  5.* 服务器配置问题  6.*来不明  7.* 权限问题 8.* 配置问题
+ * @param int     $page         页码
+ * @param int     $num          页数
+ * @param int     $channelid    渠道id
+ * @param int     $platform     平台号  1-iso  2-安卓
+ * @param unknow  $version      版本号
+ ***/
+namespace Jy_api\Controller;
+use Jy_api\Controller\ComController;
+use Protos\PBS_UsrDataOprater;
+use Protos\PBS_UsrDataOpraterReturn;
+use RedisProto\RPB_PlayerData;
+use Think\Controller;
+use Think\Model;
+class VipInfoController extends ComController {
+    public function index(){
+        $DataInfo       =       $this->DataInfo;
+        $msgArr         =       $this->msgArr;
+        $obj   = new \Common\Lib\func();
+        $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
+        $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
+        $msgArr[4006] = "用户信息缺失！";
+        $msgArr[5002] = "系统错误，请稍后再试！";
+        $result = 2001;
+        $info   =  array();
+        $playerid = $DataInfo['playerid'];
+
+        if(empty($playerid)){
+            $result = 4006;
+            goto response;
+        }
+
+        //获取信息
+        //已入protobuf 类
+        $obj->ProtobufObj(array(
+            'Protos/PBS_UsrDataOprater.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
+            'RedisProto/RPB_PlayerData.php'
+        ));
+        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        $PBS_UsrDataOprater->setOpt(2);
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+
+        //发送请求
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+
+        if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $result = 3003;
+            goto response;
+        }
+        if($PBS_UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+        //接受回应
+        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
+        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+            goto response;
+        }
+
+        $Base       =  $PBS_UsrDataOpraterReturn->getBase();
+        //vip 等级
+        $VipLevel   =  $Base->getVip();
+        //vip 经验
+        $VipExp     =  $Base->getVipExp();
+
+        //获取vip规则
+        $catVipInfoField = array(
+            'level',
+            'experience'
+        );
+        $catVipInfo = M('jy_vip_info')
+                      ->field($catVipInfoField)
+                      ->order('level asc')
+                      ->select();
+        if(empty($catVipInfo)){
+            $result = 5002;
+            goto response;
+        }
+        $OrderVipInfo  = array();
+        foreach ($catVipInfo as $k=>$v){
+            $OrderVipInfo[$v['level']] = $v;
+
+            //status 是否单当前等级   1-否  2-是
+            if($v['level'] == $VipLevel){
+                $catVipInfo[$k]['status'] = 2;
+            }else{
+                $catVipInfo[$k]['status'] = 1;
+            }
+        }
+        //下个等级
+        $UpVipLevel = $VipLevel+1 ;
+        //下个等级升级经验
+        $UpVipExp   =  $OrderVipInfo[$UpVipLevel];
+        $info['VipInfo']  = $catVipInfo;
+        $info['UpVipExp'] = $UpVipExp['experience'];
+        $info['UpVipLevel'] = $UpVipExp['level'];
+        $info['VipExp']   = $VipExp;
+
+        response:
+            $response = array(
+                'result' => $result,
+                'msg' => $msgArr[$result],
+                'sessionid'=>$DataInfo['sessionid'],
+                'data' => $info,
+            );
+            $this->response($response,'json');
+    }
+}

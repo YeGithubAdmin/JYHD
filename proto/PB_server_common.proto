@@ -1,0 +1,145 @@
+
+// 服务器之间通讯协议
+package protos;
+
+import "PB_game_config.proto";
+import "PB_error_code.proto";
+
+enum PB_ServerType {
+	S_HALL 		= 1; // 大厅
+	S_GAME 		= 2; // 游戏
+	S_DBAgent   = 3; // 数据代理
+	S_GMTool	= 4;	
+};
+
+message PBS_GateServerInfo
+{
+	optional string ip = 1;		// ip
+	optional int32 port = 2;	// port
+}
+
+message PBS_GateRegister 
+{
+	required PBS_GateServerInfo local = 1;
+	required PBS_GateServerInfo out = 2;
+}
+
+message PBS_GateRegisterReturn 
+{
+	required PB_ErrorCode code = 1;
+}
+
+message PBS_GateServerInfoUpdate
+{
+	required int32 cur_clients = 1;  		// 当前客户端数量
+}
+
+message PBS_ValidGateServerRequest
+{
+}
+
+message PBS_ValidGateServerReturn
+{
+	optional PBS_GateServerInfo info = 1;
+}
+
+message PBS_GateInfosRequest
+{
+}
+
+message PBS_GateInfosReturn
+{
+	repeated PBS_GateServerInfo gates = 1;
+}
+
+message PBS_BindToGate {
+	required int64 playerid = 1;
+	required int64 communiid = 2;
+}
+
+message PBS_BindToGateReturn {
+	required PB_ErrorCode code = 1;
+}
+
+message PBS_ClientShutdown {
+	required int64 playerid = 1;
+	required int64 communiid = 2;
+	required PB_ErrorCode code = 3;
+}
+
+message PBS_ClientShutdownReturn {
+}
+
+// 客户端挂起通知
+message PBS_ClientHangUpNotify
+{
+	optional int64 communiid = 1;
+}
+
+// 客户端挂起恢复通知
+message PBS_ClientHangDownNotify
+{
+	optional int64 communiid = 1;
+}
+
+// 客户端掉线通知
+message PBS_ClientDropLineNotify
+{
+	required int64 communiid = 1;
+}
+
+message PBS_ServerRegister
+{
+	required int64 			serverid 			= 1;
+	required PB_ServerType 	type 				= 2;
+	optional PB_GameType 	gametype 			= 3;
+	optional int32 			msgid_lower_bound 	= 4;
+	optional int32 			msgid_upper_bound 	= 5;
+}
+
+message PBS_ServerRegisterReturn
+{
+	enum Ret {
+		Ret_OK = 1;
+		Ret_RepeatedRegister = 2;
+	};
+	required Ret ret = 1;
+}
+
+// 服务器初始化成功通知
+message PBS_ServerInitOkNotify
+{
+	required PB_ServerType	stype 	= 1; 
+	optional PB_GameConfig 	cfg 	= 2;
+	optional int32 			tid_min = 3;
+	optional int32 			tid_max = 4;
+}
+
+// 服务器关闭通知
+message PBS_ServerClosedNotify
+{
+	required int32 serverid = 1;
+	required PB_ServerType stype = 2;
+}
+
+// 客户端通知消息
+message PBS_NotifyClient
+{
+	required int64 uid = 1;
+	required bytes msg = 2;
+	required int32 msgid = 3;
+}
+
+// 玩家登录事件
+message PBS_LoginEvent
+{
+	required int64 uid = 1;
+}
+
+// 游戏服务人数上报
+message PBS_PlayerNumsUpdate
+{
+	required int32 serverid = 1;
+	required int32 players 	= 2;	// 当前在线人数
+	optional int32 robots 	= 3;	// 当前机器人数
+}

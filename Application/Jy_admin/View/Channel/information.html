@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加渠道</title>
+</head>
+<body>
+	<div class="pd-20">
+		<form action="" method="post" class="form form-horizontal" id="form-menu-add">
+
+
+
+
+			<div class="row cl">
+				<label class="form-label col-2"><span class="c-red"></span>公司名称：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['CorporateName']}" placeholder=""
+						   name="CorporateName"  disabled = "disabled" nullmsg="公司名称不能为空">
+				</div>
+				<div class="col-2"></div>
+				<label class="form-label col-1"><span class="c-red"></span>公司电话：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['CompanyPhone']}" placeholder=""
+						   name="CompanyPhone" disabled = "disabled"  nullmsg="公司电话不能为空">
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-2"><span class="c-red"></span>联系人：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['contacts']}" placeholder=""
+						   name="contacts"  disabled = "disabled" nullmsg="联系人不能为空">
+				</div>
+				<div class="col-1"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-2"><span class="c-red"></span>联系电话：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['ContactNumber']}" placeholder=""
+						   name="ContactNumber"  disabled = "disabled" nullmsg="联系电话不能为空">
+				</div>
+				<div class="col-2"></div>
+				<label class="form-label col-1"><span class="c-red"></span>联系邮箱：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['ContactMailbox']}" placeholder=""
+						   name="ContactMailbox"  disabled = "disabled" nullmsg="联系邮箱不能为空">
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-2"><span class="c-red"></span>本公司：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['ContactMailbox']}" placeholder=""
+						   name="ContactMailbox"  disabled = "disabled" nullmsg="联系邮箱不能为空">
+				</div>
+				<div class="col-1"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-2"><span class="c-red"></span>公司地址：</label>
+				<div class="formControls col-5">
+					<input type="text" class="input-text" value="{$info['CompanyAddress']}" placeholder=""
+						 name="CompanyAddress"  disabled = "disabled" nullmsg="公司地址不能为空">
+				</div>
+				<div class="col-2"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-2"><span class="c-red"></span>备注信息：</label>
+				<div class="formControls col-7">
+					<textarea id="url" name="remark"  disabled = "disabled"  cols="200" rows="5" >{$info['remark']}</textarea>
+				</div>
+				<div class="col-4"></div>
+			</div>
+
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+			$("#form-menu-add").Validform({
+				tiptype : 2,
+				callback : function(form) {
+					form[0].submit();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.$('.btn-refresh').click();
+					parent.layer.close(index);
+				}
+			});
+
+		});
+
+	</script>
+	</literal>
+</body>
+</html>

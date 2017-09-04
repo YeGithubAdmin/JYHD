@@ -1,0 +1,41 @@
+
+message PB_RankingData
+{
+	optional int32 ranking 	 = 1;	// 排名
+	optional string name   	 = 2;	// 昵称
+	optional int64 gold    	 = 3;	// 金币
+	optional int32 big_num 	 = 4;	// 大炮弹数量
+	optional int32 mid_num 	 = 5;	// 中炮弹数量
+	optional int32 small_num = 6;	// 小炮弹数量
+}
+
+message PB_Item 
+{
+	optional int32 id 	 = 1;	// 物品id
+	optional int32 num	 = 2;	// 物品数量
+	optional int32 cur_num = 3;
+}
+
+enum EmailType 
+{
+	EmailType_None = 0;
+	EmailType_Sys  = 1;		// 系统邮件
+	EmailType_Card = 2;		// 卡密邮件
+}
+
+message PB_Email 
+{
+	optional int64 			id 		 = 1;	// 邮件id
+	optional string 		title 	 = 2;	// 标题
+	optional string 		data 	 = 3;	// 正文
+	optional string 		time 	 = 4;	// 时间
+	optional bool 			state 	 = 5; 	// 1 未读 2 已读
+	repeated PB_Item 		items 	 = 6;	// 物品
+	optional string			card_num = 7;	// 卡号
+	optional string			card_pwd = 8;	// 密码
+	optional int64			gold     = 9;	// 金币
+	optional int64			diamond  = 10;	// 钻石
+	optional EmailType		type     = 11;	// 邮件类型
+	optional string 		sender   = 12;	// 发送者
+}
+

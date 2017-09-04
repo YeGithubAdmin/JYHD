@@ -1,0 +1,155 @@
+<?php
+/***
+ * 公共验证
+ * @param array   $msgArr  2*  成功  3.* 超时无响应  4.*丢失或参数缺失  5.* 服务器配置问题  6.*来不明  7.* 权限问题 8.* 配置问题
+ * @param int     $page         页码
+ * @param int     $num          页数
+ * @param int     $channelid    渠道id
+ * @param int     $platform     平台号  1-iso  2-安卓
+ * @param unknow  $version      版本号
+ * @param array   $ChannelModel 渠道模块列表
+ ***/
+namespace Jy_api\Controller;
+use Think\Controller\RestController;
+class ComController extends RestController{
+    protected $allowMethod              = array('post');                        // REST允许的请求类型列表
+    protected $allowType                = array('xml','json');                  // REST允许请求的资源类型列表
+    protected $allowOutputType          = array('json'=>'application/json');    //REST允许输出的资源类型列表
+    public   $msgArr;
+    public   $DataInfo;
+    public   $platform;
+    public   $version;
+    public   $channelid;
+    public   $page;
+    public   $num;
+
+    public function __construct(){
+        parent::__construct();
+        $result  = 2001;
+        //错误码
+        $msgArr = array(
+            '1001' =>   '请求成功。',
+            '4001'=>    '请求参数不合法。',
+            '4002'=>    '渠道号缺失。',
+            '4003'=>    '平台号缺失。',
+            '4004'=>    '版本号缺失。',
+            '6001'=>    '请求方式不合法。',
+            '6002'=>    '平台号来历不明。',
+            '6003'=>    '渠道来历不明。',
+        );
+
+
+        //设置超时时间
+        ini_set("max_execution_time",10);
+        set_time_limit(10);
+        //判断请求方式
+        $RequestType =  $this->_method;
+        $RequestTypeData =  array(
+            'post',
+        );
+        if(!in_array($RequestType,$RequestTypeData)){
+                $result  =  6001;
+                goto end;
+        }
+
+        //请求数据
+        $DataInfo = file_get_contents('php://input');
+
+        //数据是否为空你
+        if(empty($DataInfo)){
+            $result  =  4001;
+            goto end;
+        }
+
+        //写入日志
+
+        $obj = new  \Common\Lib\func();
+        if(C('ACCESS_lOGS')){
+            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $obj->record_log($dir,'access_'.date('Ymd').'.log',$DataInfo);
+        }
+
+        $DataInfo = json_decode($DataInfo,true);
+
+        //aes验证
+
+
+        //过滤参数
+        foreach ($DataInfo as $k=>$v){
+            $DataInfo[$k] = $obj->safe_replace($v);
+        }
+
+        //token 验证
+
+
+        //渠道
+        if(empty($DataInfo['channel'])){
+            $result  =  4002;
+            goto end;
+        }
+        //平台号
+        if(empty($DataInfo['platform'])){
+            $result  =  4003;
+            goto end;
+        }
+        //版本号
+        if(empty($DataInfo['version'])){
+            $result  =  4004;
+            goto end;
+        }
+
+        //平台号映射
+        $platform = array(
+            'ios'       =>  1,
+            'android'   =>  2,
+        );
+
+        $platform = $platform[$DataInfo['platform']];
+
+        if(empty($platform)){
+            $result  =  6002;
+            goto end;
+        }
+
+        //渠道号信息验证
+        $ChannelInfo = M('jy_admin_users as a')
+                       ->join('jy_channel_info as b on a.id = b.adminUserID')
+                       ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2 and b.platform = '.$platform)
+                       ->field('a.account,a.id,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum')
+                       ->find();
+
+
+
+        if(empty($ChannelInfo)){
+            $result  =  6003;
+            goto end;
+        }
+
+        //渠道功能验证
+
+
+
+
+        end:
+        if($result != 2001){
+            $end = array(
+                     'result'   => $result,
+                     'msg'      => $msgArr[$result],
+                     'data'      => array(),
+            );
+            $this->response($end,'json');
+        }else{
+            $this->channelid = $ChannelInfo['id'];
+            $this->platform  = $platform;
+            $this->version   = $DataInfo['version'];
+            $this->DataInfo  = $DataInfo;
+            $this->page      = isset($DataInfo['page'])? $DataInfo['page']: 1;
+            $this->num       = isset($DataInfo['num']) ? $DataInfo['num']  : C('NUM');
+            $this->msgArr    = $msgArr;
+        }
+
+
+
+    }
+
+}

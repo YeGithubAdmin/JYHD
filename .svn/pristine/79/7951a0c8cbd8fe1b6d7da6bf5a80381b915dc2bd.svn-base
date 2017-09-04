@@ -1,0 +1,395 @@
+<?php
+/***
+ * 七天签到信息
+ * @param array   $msgArr  2*  成功  3.* 超时无响应  4.*丢失或参数缺失  5.* 服务器配置问题  6.*来不明  7.* 权限问题 8.* 配置问题
+ * @param int     $page         页码
+ * @param int     $num          页数
+ * @param int     $channelid    渠道id
+ * @param int     $platform     平台号  1-iso  2-安卓
+ * @param unknow  $version      版本号
+ ***/
+namespace Jy_api\Controller;
+use Jy_api\Controller\ComController;
+use Protos\PBS_ItemOpt;
+use Protos\PBS_UsrDataOprater;
+use Protos\PBS_UsrDataOpraterReturn;
+use RedisProto\RPB_PlayerData;
+use Think\Controller;
+use Think\Model;
+class SevenDaysSignController extends ComController {
+    public function index(){
+        $DataInfo       =       $this->DataInfo;
+        $msgArr         =       $this->msgArr;
+        $obj   = new \Common\Lib\func();
+
+        $msgArr[3002]  = '与游戏断开，请稍后再试。';
+        $msgArr[3003]  = '与游戏断开，请稍后再试。';
+        $msgArr[4006]  = '用户ID缺失。';
+        $msgArr[5001]  = '系统错误，请稍后在试。';
+
+        $result = 2001;
+        $info   =  array();
+
+        $playerid  = $DataInfo['playerid'];
+
+        if(empty($playerid)){
+            $result = 4006;
+            goto response;
+        }
+
+
+        //已入protobuf 类
+        $obj->ProtobufObj(array(
+            'Protos/PBS_UsrDataOprater.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
+            'RedisProto/RPB_PlayerData.php'
+        ));
+        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        $PBS_UsrDataOprater->setOpt(2);
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+
+        //发送请求
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+
+        if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $result = 3003;
+            goto response;
+        }
+        if($PBS_UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+
+
+        //接受回应
+        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
+        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+
+            goto response;
+        }
+
+        //获得结果
+        $PBS_UsrDataOpraterReturnBase  =  $PBS_UsrDataOpraterReturn->getBase();
+        //累计签到累计
+        $SignDay = $PBS_UsrDataOpraterReturnBase->getSignDay();
+        //最近签到时间
+
+
+        $SignTime =  $PBS_UsrDataOpraterReturnBase->getSignTime();
+
+        $SignTime = strtotime(date('Y-m-d',$SignTime));
+
+        //当天时间
+        $SameTime =  strtotime(date('Y-m-d',time()));
+
+
+        //当天签到状态  1-未签到   2-已签到
+        $isSign = 1;
+        if($SignTime<$SameTime){
+            $isSign = 1;
+        }
+        if($SignTime == $SameTime){
+            $isSign = 2;
+        }
+
+
+        //是否超过28天
+        $IsExceed = 1;
+        if($SignDay == 28){
+            if($isSign == 2){
+                $IsExceed = 1;
+            }else{
+                $IsExceed = 2;
+            }
+        }elseif($SignDay >28){
+            $IsExceed = 2;
+        }else{
+            $IsExceed = 1;
+        }
+
+
+        $SignDay = $SignDay%7;
+
+        //签到信息列表
+
+        $sevenDaysSignFile = array(
+            'a.DayName',
+            'a.ImgCode',
+            'a.Day',
+             'b.Type',
+            'b.GetNum*a.Number as Number'
+            );
+
+        $sevenDaysSign = M('jy_seven_days_sign as a')
+            ->join('jy_goods_all as b on b.Id = a.GoodsID','left')
+            ->field($sevenDaysSignFile)
+            ->where('IsExceed = '.$IsExceed)
+            ->order('a.Day asc')
+            ->select();
+
+        //status 1-未签 2-已签 3-今日领取  4-明日可以领取
+        foreach ($sevenDaysSign as $k=>$v){
+            //未签  余 0
+            if($SignDay == 0 && $isSign == 1){
+                if($v['Day'] == 1){
+                    $sevenDaysSign[$k]['Status'] = 3;
+                }elseif($v['Day'] == 2){
+                    $sevenDaysSign[$k]['Status'] = 4;
+                }else{
+                    $sevenDaysSign[$k]['Status'] = 1;
+                }
+            }
+            //已签 余 0
+            if($SignDay == 0 && $isSign == 2){
+                $sevenDaysSign[$k]['Status'] = 2;
+            }
+
+            //未签 余 > 0  and  6 >
+            if($SignDay >0   &&  $isSign == 1){
+                if($SignDay == $v['Day']){
+                    $sevenDaysSign[$k]['Status'] = 3;
+                }elseif($SignDay + 1 == $v['Day']){
+                    $sevenDaysSign[$k]['Status'] = 4;
+                }elseif($SignDay > $v['Day']){
+                    $sevenDaysSign[$k]['Status'] = 2;
+                }else{
+                    $sevenDaysSign[$k]['Status'] = 1;
+                }
+            }
+            //已签 余 > 0
+            if($SignDay >0  &&  $isSign == 2){
+                if($SignDay >= $v['Day']){
+                    $sevenDaysSign[$k]['Status'] = 2;
+                }elseif($SignDay + 1 == $v['Day']) {
+                    $sevenDaysSign[$k]['Status'] = 4;
+                }else{
+                    $sevenDaysSign[$k]['Status'] = 1;
+                }
+            }
+
+        }
+
+
+
+
+        $info['SignInfo']  =   $sevenDaysSign;
+        $info['Status']    =   $isSign;
+        response:
+            $response = array(
+                'result' => $result,
+                'msg' => $msgArr[$result],
+                'sessionid'=>$DataInfo['sessionid'],
+                'data' => $info,
+            );
+            $this->response($response,'json');
+
+
+    }
+
+    public function Sign(){
+
+        $DataInfo       =       $this->DataInfo;
+        $msgArr         =       $this->msgArr;
+        $obj            =       new \Common\Lib\func();
+        $msgArr[2001]  = '签到成功。';
+        $msgArr[3002]  = '与游戏断开，请稍后再试。';
+        $msgArr[3003]  = '网络错误，请稍后再试。';
+        $msgArr[4006]  = '用户ID缺失。';
+        $msgArr[5001]  = '签到物品不存在。';
+        $msgArr[7001]  = '当天已签到，请勿重复签到。';
+        $result = 2001;
+        $info   =  array();
+
+        $playerid  = $DataInfo['playerid'];
+
+        if(empty($playerid)){
+            $result = 4006;
+            goto response;
+        }
+
+
+
+        /*************************请求服务器获取签到数据**************************/
+        //已入protobuf 类
+        $obj->ProtobufObj(array(
+            'Protos/PBS_UsrDataOprater.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
+            'RedisProto/RPB_PlayerData.php',
+            'Protos/PBS_ItemOpt.php',
+        ));
+
+
+        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        $PBS_UsrDataOprater->setOpt(2);
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+
+        //发送请求
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        if($PBS_UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+
+        if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $result = 3003;
+            goto response;
+        }
+
+        //接受回应
+        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
+        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+            goto response;
+        }
+
+
+        //获得结果
+        $PBS_UsrDataOpraterReturnBase  =  $PBS_UsrDataOpraterReturn->getBase();
+        //累计签到累计
+
+        $SignDay        =       $PBS_UsrDataOpraterReturnBase->getSignDay();
+        $SignDayRes     =       $SignDay;
+
+        //最近签到时间
+        $SignTime =      $PBS_UsrDataOpraterReturnBase->getSignTime();
+        $VipLevel =      $PBS_UsrDataOpraterReturnBase->getVip();
+        $SignTime =      strtotime(date('Y-m-d',$SignTime));
+        //当天时间
+        $SameTime =     strtotime(date('Y-m-d',time()));
+        //当天签到状态  1-未签到   2-已签到
+        $isSign = 1;
+        if($SignTime<$SameTime){
+            $isSign = 1;
+        }
+        if($SignTime == $SameTime){
+            $isSign = 2;
+        }
+        //已签到
+        if($isSign == 2){
+            $result  = 7001;
+            goto  response;
+        }
+
+
+        //是否超过28天
+        $IsExceed = 1;
+        if($SignDay >= 28){
+            $IsExceed = 2;
+        }else{
+            $IsExceed = 1;
+        }
+
+        //获取第几天奖励
+        $SignDay = $SignDay%7;
+        if($SignDay == 0){
+            $SignDay = 1;
+        }else{
+            $SignDay = $SignDay+1;
+        }
+
+
+        //实例化数据库
+        $model = new Model();
+
+        //查询奖励
+        $rewardInfo =  $model
+                        ->table('jy_goods_all as a')
+                        ->join('jy_seven_days_sign as b on b.GoodsID  =  a.id and b.Day = '.$SignDay.' and b.IsExceed = '.$IsExceed)
+                        ->where('a.IsDel = 1')
+                        ->field('a.GetNum*b.Number as Number,a.Id,a.Type,a.Code')
+                        ->select();
+
+        if(empty($rewardInfo)){
+            $result  = 5001;
+            goto  response;
+        }
+
+
+
+        /****************************发放签到奖励与更天数和时间************************************/
+        $PBS_UsrDataOprater->reset();
+
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        $PBS_UsrDataOprater->setOpt(5);
+        $RPB_PlayerData   =  new RPB_PlayerData();
+        $PBS_ItemOpt      =  new PBS_ItemOpt();
+        foreach ($rewardInfo as $k=>$v){
+            $num = $v['Number'];
+            if($VipLevel >= 1){
+                $num = $num*2;
+            }
+            switch ($v['Type']){
+                  //金币
+                case 1:
+                    $RPB_PlayerData->setGold($num);
+                break;
+                  //砖石
+                case 2:
+                    $RPB_PlayerData->setDiamond($num);
+                break;
+                 //道具
+                case 3:
+                    $PBS_ItemOpt->setNum($num);
+                    $PBS_ItemOpt->setNum($rewardInfo['Code']);
+                   break;
+
+            }
+        }
+        $time = time();
+        $setSignDay = $SignDayRes+1;
+        $RPB_PlayerData->setSignDay($setSignDay);
+        $RPB_PlayerData->setSignTime($time);
+        $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
+        $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+        //发送请求
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        if($PBS_UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+            goto response;
+        }
+
+        /****************************记录签到奖励************************************/
+
+        foreach ($rewardInfo as $k=>$v){
+            unset($rewardInfo[$k]['Id']);
+            unset($rewardInfo[$k]['Type']);
+            $rewardInfo[$k]['playerid'] = $playerid;
+            $rewardInfo[$k]['Type'] = 3;
+        }
+
+        $addUsersGoodsStream = M('jy_users_goods_stream')
+            ->addAll($rewardInfo);
+
+        if(!$addUsersGoodsStream){
+            $result = 3003;
+        }
+        response:
+        $response = array(
+            'result' => $result,
+            'msg' => $msgArr[$result],
+            'sessionid'=>$DataInfo['sessionid'],
+            'data' => $info,
+        );
+        $this->response($response,'json');
+    }
+
+}

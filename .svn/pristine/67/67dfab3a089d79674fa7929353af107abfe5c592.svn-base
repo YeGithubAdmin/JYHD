@@ -1,0 +1,44 @@
+
+message LoginEvent
+{
+	optional string name  = 1;
+}
+
+message LogoutEvent
+{
+}
+
+// 破产
+message BankruptcyEvent
+{
+	optional int64 playerid = 1;
+}
+
+// 金币更新
+message GoldUpdate
+{
+	required int64 cur_gold = 1;
+	optional int64 playerid = 2;
+}
+
+// 钻石更新
+message DiamondUpdate
+{
+	required int64 cur_diamond = 1;
+	optional int64 playerid = 2;
+}
+
+message BigShellUpdate
+{
+	required int32 cur_num  = 1;
+}
+
+message MidShellUpdate
+{
+	required int32 cur_num = 1;
+}
+
+message SmallShellUpdate
+{
+	required int32 cur_num = 1;
+}

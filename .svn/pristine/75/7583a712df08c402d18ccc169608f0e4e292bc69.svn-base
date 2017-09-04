@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>物品列表</title>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 用户中心 <span class="c-gray en">&gt;所有订单</span>
+		 <span class="c-gray en">&gt;物品列表</span> <a
+			class="btn btn-success radius r mr-20"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="pd-20">
+		<!--搜索 -->
+
+
+		<table
+			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+
+					<th width="60">物品编码</th>
+					<th width="60">物品名</th>
+					<th width="60">金额/元</th>
+					<th width="60">是否赠品</th>
+					<th width="60">数量</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<volist name ="info" id ="val">
+					<tr class="text-c">
+						<td>{$val['GoodsCode']}</td>
+						<td>{$val['GoodsName']}</td>
+						<td>{$val['Price']}</td>
+						<td><eq name = "val['IsGive']" value = "1">否<else/>是</eq></td>
+						<td>{$val['Number']}</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+	<div class = "cl">
+
+		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+			 class="dataTables_paginate paging_simple_numbers">{$page}</div>
+	</div>
+
+
+	<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+</body>
+</html>
+<literal>
+<script>
+
+
+</script>
+</literal>

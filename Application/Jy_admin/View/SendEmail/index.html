@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+		  rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>邮件发送</title>
+</head>
+<body>
+<div class="pd-20">
+
+	<form action="" method="post" onsubmit="return false" class="form form-horizontal" id="form-SendEmail">
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>用户ID：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="请输入用户ID"
+					   name="playerid" datatype="*6-16" nullmsg="用户ID">
+			</div>
+			<div class="col-1"></div><label class="form-label col-1">
+			<span class="c-red">*</span>邮件类型：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" datatype="*1-16"  onchange="StatusFun(this)" name = "Type"   nullmsg="" >
+								 <option value="">请选择类型</option>
+								 <option value="1">卡密发放</option>
+								 <option value="2">物品发放</option>
+								 <option value="3">普通文本</option>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+			<div class="TypeTow" style="display: none;">
+				<label class="form-label col-1 "><span class="c-red"></span>金币：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="" placeholder="请输入数量"
+						   name="Gold" >
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red"></span>钻石：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="" placeholder="请输入数量"
+						   name="Diamond"  nullmsg="">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="row cl TypeOne" style="display: none;">
+			<label class="form-label col-1"><span class="c-red">*</span>卡号：</label>
+			<div class="formControls col-4">
+				<input type="text" class="input-text" value="" placeholder="请输入卡号"
+					   name="CardNum" nullmsg="用户ID">
+			</div>
+			<label class="form-label col-2"><span class="c-red">*</span>卡密：</label>
+			<div class="formControls col-4">
+				<input type="text" class="input-text" value="" placeholder="请输入卡密"
+					   name="CardPwd" nullmsg="">
+			</div>
+		</div>
+
+		<div class="row cl TypeTow" style="display: none;">
+			<label class="form-label col-1"><span class="c-red"></span>添加道具：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "IsGive"  onchange="GiveInfoFun(this)" nullmsg="" >
+								 <option value="1">否</option>
+								 <option value="2">是</option>
+
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+			<div id = "operation" style="display: none;">
+				<div class="formControls col-0"  onclick="GiveInfoAdd()">
+					<input class="btn btn-primary radius" type="button"  value="&nbsp;&nbsp;增加&nbsp;&nbsp;">
+
+				</div>
+				<div style="display: none;"  id = "del" class="formControls col-0">
+					<input class="btn btn-primary radius" type="button" onclick="GiveInfoDel()" value="&nbsp;&nbsp;删除&nbsp;&nbsp;">
+
+				</div>
+			</div>
+
+
+		</div>
+		<div id = "parent" class="TypeTow" >
+			<div class="row cl GiveInfo"  style="display: none">
+				<label class="form-label col-1"><span class="c-red"></span></label>
+
+				<div class="formControls col-1">
+					<input type="text"  class="input-text Itemid"   value="" placeholder="请输入道具ID"
+						   name="Prop[0][Id]"  nullmsg="">
+				</div>
+				<div class="formControls col-1">
+					<input type="text"  class="input-text Num"   value="" placeholder="请输入道具数量"
+						   name="Prop[0][Num]"  nullmsg="">
+				</div>
+			</div>
+		</div>
+		<div id = "child" class="TypeTow" style="display: none;">
+		</div>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>标题：</label>
+			<div class="formControls col-10">
+				<input type="text" class="input-text" value="" placeholder="请输入标题"
+					   name="Title" datatype="*6-16" nullmsg="用户ID">
+			</div>
+
+		</div>
+		<div class="row cl"  >
+			<label class="form-label col-1"><span class="c-red"></span>正文：</label>
+			<div class="formControls col-10">
+				<textarea  name="Content" style="width:100%"    placeholder="请输入正文。。。" cols="50" rows="10" ></textarea>
+			</div>
+			<div class="col-4"></div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-9 col-offset-6">
+				<input class="btn btn-primary radius"  onclick="UsersAttribute()" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+<literal>
+	<script type="text/javascript">
+        $(function() {
+            $('.skin-minimal input').iCheck({
+                checkboxClass : 'icheckbox-blue',
+                radioClass : 'iradio-blue',
+                increaseArea : '20%'
+            });
+
+            $("#form-SendEmail").Validform({
+                tiptype : 2,
+
+                callback : function(form) {
+                    console.log(form);
+                    form[0].submit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                }
+            });
+
+
+        });
+
+        function isJSON(str) {
+            if (typeof str == 'string') {
+                try {
+                    JSON.parse(str);
+                    return true;
+                } catch(e) {
+
+                    return false;
+                }
+            }
+
+        }
+        function UsersAttribute() {
+            layer.confirm('确定修改？',function(index){
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url:'/jy_admin/SendEmail/send',
+                    data:$('#form-SendEmail').serialize(),// 你的formid
+                    async: false,
+                    error: function(request) {
+                        layer.msg('网络超时，请稍后再试!',{icon:1,time:1000});
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        var  IsJSON =  isJSON(data);
+                        if(IsJSON){
+                            var  obj = JSON.parse(data);
+                            if(obj['result'] == 2001 || obj['result'] == 1){
+                                layer.msg('修改成功!',{icon:1,time:1000});
+                            }else{
+                                layer.msg('错误码：'+obj['code']+'，'+'错误信息：'+obj['msg'],{icon:1,time:1000});
+                            }
+                        }else{
+                            layer.msg('系统错误!',{icon:1,time:1000});
+                        }
+
+                    }
+                });
+
+            });
+
+        }
+
+
+
+
+
+	</script>
+	<script type="text/javascript">
+        //状态
+        function StatusFun(my) {
+            var Index 		= my.selectedIndex;         				//索引
+            var Value 		= my.options[Index].value;   				//选择中值
+            var TypeOne	= document.getElementsByClassName('TypeOne');		// 1
+			var TypeTwo	= document.getElementsByClassName('TypeTow');		// 1
+
+            if(Value == 1){
+				for (i=0;i<TypeOne.length;i++){
+                    TypeOne[i].style.display = "block";
+				}
+                for (j=0;j<TypeTwo.length;j++){
+                    TypeTwo[j].style.display = "none";
+                }
+
+            }else if(Value == 2){
+                for (i=0;i<TypeOne.length;i++){
+                    TypeOne[i].style.display = "none";
+                }
+                for (j=0;j<TypeTwo.length;j++){
+                    TypeTwo[j].style.display = "block";
+                }
+            }else{
+                for (i=0;i<TypeOne.length;i++){
+                    TypeOne[i].style.display = "none";
+                }
+                for (j=0;j<TypeTwo.length;j++){
+                    TypeTwo[j].style.display = "none";
+                }
+			}
+        }
+
+        //赠送
+        function GiveInfoFun(my) {
+            var Index 		= my.selectedIndex;         						//索引
+            var Value 		= my.options[Index].value;   						//选择中值
+            var operation	= document.getElementById('operation');				//操作
+            var GiveInfo	= document.getElementsByClassName('GiveInfo');		//赠送
+
+            if(Value == 1 ){
+                operation.style.display = "none";
+                for(i = 0 ;i<GiveInfo.length;i++){
+                    GiveInfo[i].style.display = "none";
+                }
+
+            }else{
+                operation.style.display = "block";
+                for(i = 0 ;i<GiveInfo.length;i++){
+                    GiveInfo[i].style.display = "block";
+                }
+            }
+        }
+        //赠送 增加
+        function GiveInfoAdd() {
+            var  parent = document.getElementById('parent');
+            var  child  = document.getElementById('child');
+            var  GiveInfo = document.getElementsByClassName('GiveInfo');
+            var  del      = document.getElementById('del');
+            child.innerHTML +=  parent.innerHTML;
+
+            if(GiveInfo.length == 2){
+                del.style.display = "block";
+            }
+            var Num 			= document.getElementsByClassName('Num');
+            var Itemid 			= document.getElementsByClassName('Itemid');
+            var Length			=  Num.length;
+            Itemid[Length-1].setAttribute('name','Prop['+Length+'][Id]');
+            Num[Length-1].setAttribute('name','Prop['+Length+'][Num]');
+
+
+
+        }
+        //赠送 减少
+        function GiveInfoDel() {
+            var  child  = document.getElementById('child');
+            var  GiveInfo = document.getElementsByClassName('GiveInfo');
+            var  del      = document.getElementById('del');
+            var length	  = GiveInfo.length;
+            if(length>1){
+                child.removeChild(GiveInfo[length-1])
+            }
+
+            if(length == 2){
+                del.style.display = "none";
+            }
+        }
+
+	</script>
+</literal>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+
+enum PB_ErrorCode {
+	Error_None 				  = 0;	// 占位符
+	Error_success             = 1;  // 请求成功
+	Error_repeated_create     = 2;	// 重复创建
+	Error_data_save           = 3;	// 数据保存错误
+	Error_argument            = 4;  // 参数错误
+	Error_server_logic		  = 5;  // 服务器逻辑错误
+	Error_gold_not_enough     = 6;  // 金币不足
+	Error_no_playerdata 	  = 7;	// 没有玩家信息
+	Error_repeated_login	  = 8;	// 重复登录
+	Error_in_gaming_status    = 9;	// 正在进行游戏
+	Error_no_this_player      = 10; // 没有这个玩家
+	Error_server_full 	      = 11;	// 服务器满载
+	Error_account_blocked	  = 12;	// 帐号被封
+	Error_no_account		  = 13;	// 没有该帐号信息
+	Error_diamond_not_enough  = 14; // 钻石不足
+	Error_no_gameserver		  = 15;	// 没有游戏服
+	Error_other_device_login  = 16;	// 该帐号被另一台设备登录
+	Error_create_max  		  = 17;	// 创建次数达到最大
+	Error_acountname_rule	  = 18;	// 账号名不符合规则
+	Error_password_rule		  = 19;	// 密码不符合规则
+	Error_opt_invalid		  = 20;	// 操作不合法
+	Error_account_pwd		  = 21;	// 账号密码不匹配
+	Error_item_not_enough	  = 22;	// 物品数量不足
+	Error_no_cfg 			  = 23;	// 没有该配置信息
+	Error_gun_coin_invalid    = 24;	// 炮倍率不合法
+	Error_no_this_id 		  = 25;	// 没有该id
+	Error_item_not_got 		  = 26;	// 物品未提取
+};
+

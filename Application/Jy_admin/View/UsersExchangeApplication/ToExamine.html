@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>审核兑换</title>
+</head>
+<body>
+	<div class="pd-20">
+
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red"></span></label>
+			<div class="formControls col-7">
+				<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+					<thead>
+					<tr class="text-c">
+						<th width="15">id</th>
+						<th width="60">用户ID</th>
+						<th width="60">兑换单号</th>
+						<th width="60">物品</th>
+						<th width="30">渔劵</th>
+						<th width="60">申请时间</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr class="text-c">
+						<td>{$info['Id']}</td>
+						<td>{$info['playerid']}</td>
+						<td>{$info['Order']}</td>
+						<td>{$info['GoodsName']}</td>
+						<td>{$info['StockNum']}</td>
+						<td>{$info['DateTime']}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		<form action="" method="post" class="form form-horizontal" id="form-menu-add">
+			<input type="hidden" class="input-text" value="{$info['Id']}" placeholder=""   name="Id"  nullmsg="">
+			<input type="hidden" class="input-text" value="{$info['Type']}" placeholder="" name="Type"  nullmsg="">
+			<div class="row cl">
+				<label class="form-label col-2"><span class="c-red">*</span>审核状态：</label>
+				<div class="formControls   skin-minimal">
+					<div class="radio-box">
+						<input type="radio" id="radio-1"  onclick="ToExamine(this)" name="Status"  value="2" checked>
+						<label for="radio-1">通过</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="radio-2"  onclick="ToExamine(this)" name="Status" value="3" >
+						<label for="radio-2">不通过</label>
+					</div>
+
+				</div>
+			</div>
+
+			<neq name = "info['Type']" value = "6">
+			<div class="row cl ToExamineType">
+				<label class="form-label col-2"><span class="c-red">*</span>卡号：</label>
+				<div class="formControls col-2">
+					<input type="text" class="input-text" value="" placeholder=""
+						   name="cardNum"  nullmsg="">
+				</div>
+				<div class="col-2"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>卡密：</label>
+				<div class="formControls col-2">
+					<input type="text" class="input-text" value="" placeholder=""
+						   name="cardPwd"  nullmsg="">
+				</div>
+				<div class="col-1"></div>
+			</div>
+			</neq>
+			<eq name = "info['Type']" value = "6">
+			<div class="row cl ToExamineType" >
+				<label class="form-label col-2"><span class="c-red">*</span>快递名：</label>
+				<div class="formControls col-2">
+					<input type="text"  class="input-text" value="" placeholder=""
+						   name="ExpressName" nullmsg="">
+				</div>
+				<div class="col-2"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>快递单号：</label>
+				<div class="formControls col-2">
+					<input type="text" class="input-text" value="" placeholder=""
+						   name="ExpressOrder"  nullmsg="">
+				</div>
+				<div class="col-1"></div>
+			</div>
+			</eq>
+			<div class="row cl" style="display: none;" id = "MessAge">
+				<label class="form-label col-2"><span class="c-red">*</span>原因：</label>
+				<div class="formControls col-7">
+					<textarea  name="MessAge" style="width:100%"   cols="50" rows="10" ></textarea>
+				</div>
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
+				<div class="col-10 col-offset-5">
+					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交审核&nbsp;&nbsp;">
+
+					<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;放弃审核&nbsp;&nbsp;</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+
+			$("#form-menu-add").Validform({
+				tiptype : 2,
+				callback : function(form) {
+					form[0].submit();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.$('.btn-refresh').click();
+					parent.layer.close(index);
+				}
+			});
+
+		});
+
+
+		function ToExamine(my) {
+			var ToExamineType = document.getElementsByClassName('ToExamineType');
+			var StatusValue   = my.value;
+			var MessAge		  = document.getElementById('MessAge');
+			console.log(ToExamineType);
+			if(StatusValue == 2){
+                for(var i=0;i<StatusValue.length;i++){
+                    console.log(i);
+                    ToExamineType[i].style.display = "block";
+                    MessAge.style.display = "none";
+                }
+			}else{
+			   for(var i=0;i<StatusValue.length;i++){
+                   MessAge.style.display = "block";
+                   ToExamineType[i].style.display = "none";
+			   }
+			}
+        }
+	</script>
+	</literal>
+</body>
+</html>

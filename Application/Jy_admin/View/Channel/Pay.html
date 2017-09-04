@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+	<link rel="stylesheet" type="text/css" href="{$responseAdmin}/Shuttle/style.css">
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>渠道支付</title>
+</head>
+<body>
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 渠道管理<span class="c-gray en">&gt;</span>渠道列表
+	 <span class="c-gray en">&gt;</span>渠道支付<a
+		class="btn btn-success radius r mr-20"
+		style="line-height: 1.6em; margin-top: 3px"
+		href="javascript:location.replace(location.href);" title="刷新"><i
+		class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+	<div class="pd-20">
+		<!--搜索 -->
+		<form action="" method="get">
+			<input type="hidden" name="m" value="jy_admin" />
+			<input type="hidden" name="c" value="Channel" />
+			<input type="hidden" name="a" value="pay" />
+			<input type="hidden" id = "adminUserID" name="adminUserID" value="{$adminUserID}" />
+			<div class="text-c">
+
+
+				<span style="width: 150px" class="select-box">
+					<select size="1" name="Type" class="select">
+						<option value="">类型</option>
+						<option value="1"<if  condition= "$search['Type'] eq '1'">selected</if>>支付宝</option>
+						<option value="2"<if condition="$search['Type'] eq '2'" >selected</if>>微信</option>
+
+					</select>
+				</span>
+
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
+
+
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+
+		</div>
+
+
+
+			<div class="ty-transfer mt20 ml20"  style="margin: 0 auto;width: 50%;position: relative;" id="ued-transfer-1">
+					<div class="fl ty-transfer-list transfer-list-left checkboxNum">
+					<div class="ty-transfer-list-foot">
+
+							<div class="tyc-check-blue fl" style="position: absolute;top: 1%;left: 1.2%;">
+								<input type="checkbox" class="transfer-all-check allCheckBox"  onclick="AllCheckBox(this)" >
+								<span>
+									全选
+                    			</span>
+							</div>
+
+
+					</div>
+					<div class="ty-transfer-list-head">
+						所有支付
+					</div>
+
+					<div class="ty-transfer-list-body">
+						<ul class="ty-tree-select">
+							<volist name = "catGoodsAll" id = "val" key = "k">
+								<li class = "Li{$k}">
+									<div class="ty-tree-div">
+										<label class="tyue-checkbox-wrapper">
+								<span class="tyue-checkbox">
+									<input type="checkbox" class="tyue-checkbox-input"  li  = "Li{$k}" value="{$val['Id']}" id="tyue-checkbox-blue">
+									<span class="tyue-checkbox-circle">
+									</span>
+								</span>
+											<span class="tyue-checkbox-txt" title="穿梭框列表内容---- 4">
+									{$val['PassAgeWay']}
+								</span>
+										</label>
+									</div>
+								</li>
+							</volist>
+						</ul>
+					</div>
+				</div>
+				<div class="fl ty-transfer-operation">
+					<span class="ty-transfer-btn-toright Hui-iconfont" onclick="AddCheckBox()">
+						&#xe63d;
+					</span>
+					<span class="ty-transfer-btn-toleft to-switch Hui-iconfont" onclick="DelCheckBox()">
+						&#xe6e2;
+        			</span>
+				</div>
+
+				<div class="fl ty-transfer-list transfer-list-right checkboxNum" style="position: relative;">
+					<div class="tyc-check-blue fl" style="position: absolute;top: 1%;left: 2.1%;">
+						<input type="checkbox" onclick="AllCheckBox(this)"  class="transfer-all-check allCheckBox" >
+						<span>
+							全选
+						</span>
+					</div>
+					<div class="ty-transfer-list-head">
+						渠道支付
+					</div>
+					<div class="ty-transfer-list-body">
+						<ul class="ty-tree-select">
+							<volist name = "ChannelGoods" id = "val" key ="k">
+								<li class= "lis{$k}">
+									<div class="ty-tree-div">
+										<label class="tyue-checkbox-wrapper">
+								<span class="tyue-checkbox">
+									<input type="checkbox" class="tyue-checkbox-input"  value="{$val['Id']}" li="lis{$k}">
+									<span class="tyue-checkbox-circle">
+									</span>
+								</span>
+											<span class="tyue-checkbox-txt" title="穿梭框列表内容穿梭框列表内容 ---- 10">
+									{$val['PassAgeWay']}
+								</span>
+										</label>
+									</div>
+								</li>
+							</volist>
+						</ul>
+					</div>
+
+				</div>
+				<div class="clearboth">
+				</div>
+				        
+			</div>
+
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	<script type="text/javascript" >
+
+			//全选 反选
+			function AllCheckBox(my){
+                var allCheckBox = document.getElementsByClassName('allCheckBox');
+                var checkboxNum = document.getElementsByClassName('checkboxNum');
+                for (i=0;i<allCheckBox.length;i++){
+                    allCheckBox[i].index = i;
+				}
+				var MyIndex = my.index;
+				var Input = checkboxNum[MyIndex].getElementsByTagName('input');
+			    var MyCheKbox = my.checked;
+			    if(MyCheKbox){
+			        for(j=0;j<Input.length;j++){
+                        Input[j].checked = true;
+					}
+				}else{
+                    for(j=0;j<Input.length;j++){
+                        Input[j].checked = false;
+                    }
+                }
+            }
+
+            //添加
+			function AddCheckBox() {
+                var tyTreeSelect = document.getElementsByClassName('ty-tree-select');
+				var adminUserID  = document.getElementById('adminUserID');
+                var InputLeft = tyTreeSelect[0].getElementsByTagName('input');
+                var InputRight =  tyTreeSelect[1].getElementsByTagName('input');
+                var  GoodsRight = [];
+                for (j=0;j<InputRight.length;j++){
+                    GoodsRight[j] = InputRight[j].value;
+				}
+
+                //被选择中的
+				var Goods  = [];
+				var Html   =  '';
+				var Key  = 0;
+				for(i=0;i<InputLeft.length;i++){
+
+				    var  InArray =  in_array(InputLeft[i].value,GoodsRight);
+				    if(InputLeft[i].checked && !InArray){
+				        //商品ID
+                        Goods[i]= InputLeft[i].value;
+                        var InputClass = InputLeft[i].getAttribute('li');
+                        //Html
+						var Parent = InputLeft[i].parentNode.parentNode.parentNode.parentNode;
+						var LiHtml  = '<li class = "'+InputClass+'" >'+Parent.innerHTML+'</li>';
+                        Html +=LiHtml;
+                        Key =  Key+1;
+					}
+
+				}
+
+				if(Html != '' && Goods != '' ){
+                    Goods = Goods.join(',');
+
+				    $.post('/jy_admin/Channel/payAdd',{'pay':Goods,'adminUserID':adminUserID.value},function (msg) {
+							if(msg == 1){
+                                tyTreeSelect[1].innerHTML +=  Html;
+							}
+                    });
+
+				}
+
+            }
+
+			//删除
+			function DelCheckBox() {
+                var tyTreeSelect = document.getElementsByClassName('ty-tree-select');
+                var InputRight =  tyTreeSelect[1].getElementsByTagName('input');
+                var adminUserID  = document.getElementById('adminUserID');
+                var Goods  = [];
+                var Key  = 0;
+                var LiIndex = [];
+                for(i=0;i<InputRight.length;i++){
+                    if(InputRight[i].checked == true){
+                        //商品ID
+                        Goods[Key]= InputRight[i].value;
+                        LiIndex[Key] = InputRight[i].getAttribute('li');
+                        Key = Key+1;
+                        //Html
+                    }
+                }
+                if(LiIndex[0] != undefined  && Goods != ''){
+                    Goods = Goods.join(',');
+                    $.ajax(
+                        {
+                            type:"POST",
+                            url:'/jy_admin/Channel/payDel',
+                            async:false,
+                            data:{'pay':Goods,'adminUserID':adminUserID.value},
+                            success:function (msg) {
+
+                                if(msg == 1){
+                                    LiIndex.forEach(function(val,index){
+                                        var parentLi = tyTreeSelect[1].getElementsByClassName(val)[0]
+                                        tyTreeSelect[1].removeChild(parentLi);
+                                    })
+								}
+                            }
+                        }
+                    );
+				}
+            }
+            function in_array(search,array){
+                for(var i in array){
+                    if(array[i]==search){
+                        return true;
+                    }
+                }
+                return false;
+            }
+	</script>
+</body>
+</html>

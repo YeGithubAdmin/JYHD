@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>兑换申请</title>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+		用户中心 <span class="c-gray en">&gt;</span>兑换申请 <a
+			class="btn btn-success radius r mr-20"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="pd-20">
+		<!--搜索 -->
+		<form action="" method="get">
+            <input type="hidden" name="m" value="jy_admin" />
+            <input type="hidden" name="c" value="AdminUsers" />
+            <input type="hidden" name="a" value="index" />
+			<div class="text-c">
+				创建时间： <input type="text"
+					onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
+					id="datemin" value="{$search['datemin']}" name="datemin"
+					class="input-text Wdate" style="width: 170px;"> - <input
+					type="text"
+					onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
+					id="datemax" value="{$search['datemax']}" name="datemax"
+					class="input-text Wdate" style="width: 170px;">
+				<input type="text" class="input-text" style="width: 250px" placeholder="请输入用户ID" id="" value="{$search['playerid']}" name="playerid">
+				<input type="text" class="input-text" style="width: 250px" placeholder="请输入兑换单号" id="" value="{$search['Order']}" name="Order">
+				<span style="width: 150px" class="select-box">
+				<select size="1" name="Status"
+					class="select">
+						<option value="">状态</option>
+						<option value="1"<if  condition= "$search['Status'] eq '1'">selected</if>>兑换申请</option>
+						<option value="2"<if condition="$search['Status'] eq '2'" >selected</if>>兑换成功</option>
+						<option value="3"<if condition="$search['Status'] eq '3'" >selected</if>>兑换失败</option>
+				</select>
+				</span>
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
+		<table
+			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+				    <th width="15">id</th>
+					<th width="60">用户ID</th>
+					<th width="60">兑换单号</th>
+					<th width="60">物品</th>
+					<th width="30">渔劵</th>
+					<th width="60">状态</th>
+					<th width="60">申请时间</th>
+					<th width="60">更新时间</th>
+					<th width="30">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name='info' id = 'val'>
+				
+				<tr class="text-c">
+					<td>{$val['Id']}</td>
+					<td>{$val['playerid']}</td>
+					<td>{$val['Order']}</td>
+					<td>{$val['GoodsName']}</td>
+					<td>{$val['StockNum']}</td>
+					<td class="td-status"><span
+							class="<if condition ="$val['Status'] eq 1" >label label-primary radius
+						<elseif condition  = "$val['Status'] eq 2"/>label label-success  radius</td>
+						<elseif condition  = "$val['Status'] eq 3"/>label label-danger   radius</if>">
+					<if condition ="$val['Status'] eq 1" >兑换申请
+					<elseif condition  = "$val['Status'] eq 2"/>兑换成功</td>
+					<elseif condition  = "$val['Status'] eq 3"/>兑换失败</if></span></td>
+					<td>{$val['DateTime']}</td>
+					<td>{$val['UpTime']}</td>
+					<td class="td-manage">
+						<eq name = "val['Status']" value = "1">
+							<a title="编辑" href="javascript:;"
+							   onclick="ToExamine('编辑','/jy_admin/UsersExchangeApplication/ToExamine/Id/{$val['Id']}')"
+							   class="ml-5" style="text-decoration: none">
+							<i class="Hui-iconfont">&#xe60c;</i>
+							</a>
+						<else/>
+							已处理
+						</eq>
+					</td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+	<div class = "cl">
+
+		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+			 class="dataTables_paginate paging_simple_numbers">{$page}</div>
+	</div>
+
+
+	<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+</body>
+</html>
+<literal>
+<script>
+
+/*管理员-编辑*/
+function adminUsers_edit(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+function ToExamine(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}
+</script>
+</literal>

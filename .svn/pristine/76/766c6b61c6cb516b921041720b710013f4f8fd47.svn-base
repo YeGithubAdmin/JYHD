@@ -1,0 +1,11 @@
+<?php
+return array(
+	//'配置项'=>'配置值'
+    'RESOURCES_ADMIN'=>'/resources/jy_admin',
+    'ADMIN_PAGE'=>0,
+    'ADMIN_NUM'=>15,
+//    //公共线模板
+//    'LAYOUT_ON'=>true,
+//    'LAYOUT_NAME'=>'layout/layout',
+
+);

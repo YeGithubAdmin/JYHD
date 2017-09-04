@@ -1,0 +1,34 @@
+
+package protos;
+
+import "PB_base_data.proto";
+import "PB_usr_data.proto";
+import "PB_error_code.proto";
+
+enum UsrDataOpt 
+{
+	Request_All  		 = 1;	// 获取用户所有数据
+	Request_Player		 = 2;	// 获取 player data
+	Request_Account      = 3;	// 获取 account data
+	Modify_Account		 = 4;	// 修改 account data
+	Modify_Player		 = 5;	// 修改 player data (资源类的字段(gold...)为增量)
+}; 
+
+// 用户数据操作
+message PBS_UsrDataOprater
+{		
+	required int64 playerid = 1;
+	required UsrDataOpt opt = 2;
+	optional RedisProto.RPB_AccountData account_data = 3;
+	optional RedisProto.RPB_PlayerData player_data = 4;
+	repeated PB_Item item_opt = 5; 		// 物品操作
+	optional PB_Email send_email = 6;	// 发送邮件
+}
+
+message PBS_UsrDataOpraterReturn
+{
+	required PB_ErrorCode code = 1;
+	optional RedisProto.RPB_PlayerData base = 2; 
+	optional RedisProto.RPB_AccountData account_data = 3;
+	repeated RedisProto.RPB_ModuleData modules = 4;
+}

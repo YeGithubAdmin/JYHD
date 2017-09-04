@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加管理员</title>
+</head>
+<body>
+	<div class="pd-20">
+
+		<form action="" method="post" class="form form-horizontal" id="form-menu-add">
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>管理员名：</label>
+				<div class="formControls col-5">
+					<input type="text" class="input-text" value="" placeholder=""
+						 name="name" datatype="*2-16" nullmsg="管理员名不能为空">
+				</div>
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>管理员账号：</label>
+				<div class="formControls col-5">
+					<input type="text" class="input-text" value="" placeholder=""
+						   name="account" datatype="account" nullmsg="管理员账号不能为空">
+				</div>
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>管理员密码：</label>
+				<div class="formControls col-5">
+					<input type="password" class="input-text" value="" placeholder=""
+						id="menu" name="passwd" datatype="*2-16" nullmsg="管理员密码不能为空">
+				</div>
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>管理员所在分组：</label>
+				<div class="formControls col-7">
+		        	<div style="width:45%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select" name="admingroup" id="first">
+								<eq name = "userInfo['default']" value ="2">
+									<option   value="0">最上级</option>
+								</eq>
+
+							 	<volist name='adminGroupInfo' id='val'>
+
+								<option   value="{$val['id']}">{$val['name']}</option>
+
+								</volist>
+							</select>
+						</span>
+		        	</div>
+
+		        </div>
+				<div class="col-4"></div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>是否锁定：</label>
+				<div class="formControls col-7">
+		        	<div style="width:45%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select" name ="islock" >
+								<option selected="selected" value="1">否</option>
+								<option value="2">是</option>
+							</select>
+						</span>
+		        	</div>
+		        </div>
+		        <input type="hidden" value="0" id="upid" name="upid" />
+				<div class="col-4"></div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>备注信息：</label>
+				<div class="formControls col-7">
+					<textarea id="url" name="remark"   cols="50" rows="5" ></textarea>
+				</div>
+				<div class="col-4"></div>
+			</div>
+
+			<div class="row cl">
+				<div class="col-9 col-offset-3">
+					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+
+			$("#form-menu-add").Validform({
+				tiptype : 2,
+                datatype:{
+				  'account':function (gets,obj,curform,regxp) {
+					  if(gets ==''){
+							return false;
+					  }
+					  if(gets.length<6 || gets.length>16){
+                          return '请输入6到16个字符';
+					  }
+					  //验证用户是否存在
+                      var _Verification = true;
+                      $.ajax(
+                          {
+                              type:"POST",
+                              url:'/jy_admin/AdminUsers/Verification',
+                              async:false,
+                              data:{'account':gets},
+                              success:function (msg) {
+                                  if(msg == 0){
+                                      _Verification =   false;
+                                  }else if(msg == 1){
+                                      _Verification =   true;
+                                  }else if(msg == 2){
+                                      _Verification   = '用户已存在，请更换账号';
+                                  }
+                              }
+                          }
+                      );
+                      return   _Verification;
+
+                  }
+				},
+				callback : function(form) {
+					form[0].submit();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.$('.btn-refresh').click();
+					parent.layer.close(index);
+				}
+			});
+
+		});
+        $.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
+	</script>
+	</literal>
+</body>
+</html>

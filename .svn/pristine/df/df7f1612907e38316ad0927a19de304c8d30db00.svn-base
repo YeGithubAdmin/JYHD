@@ -1,0 +1,11 @@
+<?php
+namespace Jy_api\Controller;
+use Jy_api\Controller\ComController;
+use Think\Controller;
+class MallGoodsListController extends ComController {
+    public function index(){
+
+        $data = array('3213'=>1);
+        $this->response($data,'json',404);
+    }
+}

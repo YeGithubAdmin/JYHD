@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+		  rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>添加微信支付</title>
+</head>
+<body>
+<div class="pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-pay-add">
+
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>名称：</label>
+			<div class="formControls col-3">
+				<input type="text" class="input-text"  nullmsg="名称不能为空"  datatype="*2-16" value="" placeholder=""
+					   name="Name" >
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>支付通道：</label>
+			<div class="formControls col-3">
+				<input type="text" class="input-text" value=""  datatype="*2-16" placeholder="" nullmsg="支付通道不能为空"
+					   name="PassAgeWay" >
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>商户号：</label>
+			<div class="formControls col-3">
+				<input type="text" class="input-text" value="" placeholder=""
+					   id="partner" name="partner" >
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>微信账号：</label>
+			<div class="formControls col-3">
+				<input type="text" class="input-text" value="" placeholder=""
+					   id="account" name="account">
+			</div>
+			<div class="col-4"></div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>APPID：</label>
+			<div class="formControls col-3">
+				<textarea id="appid" name="appid" style="width:100%" rows="7" ></textarea>
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>APPKEY(app密钥)：</label>
+			<div class="formControls col-3">
+				<textarea id="appkey" name="appkey"  style="width:100%" rows="7" ></textarea>
+			</div>
+			<div class="col-4"></div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>异步地址：</label>
+			<div class="formControls col-3">
+				<textarea id="callbackurl" name="callbackurl"  style="width:100%" rows="7" ></textarea>
+			</div>
+			<div class="col-4"></div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>优先级：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="请输入数字"
+					   id="priority" name="priority"  >
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>平台：</label>
+			<div class="formControls col-3">
+				<div style="width:20%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select"  name="Platform">
+								<option selected="selected" value="1">苹果</option>
+								<option value="2">安卓</option>
+							</select>
+						</span>
+				</div>
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>是否推荐：</label>
+			<div class="formControls col-3">
+				<div style="width:20%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select"  name="Recommend">
+								<option selected="selected" value="1">否</option>
+								<option value="2">是</option>
+							</select>
+						</span>
+				</div>
+			</div>
+
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>支持所有版本：</label>
+			<div class="formControls col-3">
+				<div style="width:20%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select"  name="Support" onchange="SupportDom(this)">
+								<option selected="selected" value="1">否</option>
+								<option value="2">是</option>
+							</select>
+						</span>
+				</div>
+			</div>
+
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl"  id = "DomSupport" >
+			<label class="form-label col-4"><span class="c-red"></span>版本：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="起始"
+					   name="VersionStart"  >
+			</div>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="结束"
+					   name="VersionEnd"  >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-4"><span class="c-red">*</span>通道备注：</label>
+			<div class="formControls col-3">
+				<textarea id="url" name="Describe"   style="width:100%" rows="7" ></textarea>
+			</div>
+			<div class="col-4"></div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-9 col-offset-3">
+				<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+<literal>
+<script type="text/javascript">
+    $(function() {
+        $('.skin-minimal input').iCheck({
+            checkboxClass : 'icheckbox-blue',
+            radioClass : 'iradio-blue',
+            increaseArea : '20%'
+        });
+
+        $("#form-pay-add").Validform({
+            tiptype : 2,
+            callback : function(form) {
+                form[0].submit();
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                parent.layer.close(index);
+            }
+        });
+    });
+    function SupportDom(my) {
+        var  	DomSupport 		= document.getElementById('DomSupport');
+        var   SupportIndex 	= my.selectedIndex;
+        var   SupportValue    = my.options[SupportIndex].value;
+        if(SupportValue == 2) {
+            DomSupport.style.display = "none";
+        }else{
+            DomSupport.style.display = "block";
+        }
+    }
+</script>
+</literal>
+</body>
+</html>

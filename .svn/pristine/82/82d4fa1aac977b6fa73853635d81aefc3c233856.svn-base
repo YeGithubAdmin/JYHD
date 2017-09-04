@@ -1,0 +1,49 @@
+<?php
+/***
+ * 公共验证
+ * @param array   $msgArr  200  成功  3.* 超时无响应  4.*丢失或参数缺失  5.* 服务器配置问题  6.*来不明  7.* 权限问题 8.* 配置问题
+ * @param json    $info         请求参数
+ * @param int     $page         页码
+ * @param int     $num          页数
+ * @param int     $channelid    渠道id
+ * @param int     $platform     平台号  2-iso  3-安卓
+ * @param unknow  $version      版本号
+ * @param array   $ChannelModel 渠道模块列表
+ ***/
+namespace Jy_api\Controller;
+use Think\Controller\RestController;
+class ComController extends RestController{
+    protected $allowMethod              = array('post');                        // REST允许的请求类型列表
+    protected $allowType                = array('xml','json');                  // REST允许请求的资源类型列表
+    protected $allowOutputType          = array('json'=>'application/json');    //REST允许输出的资源类型列表
+
+    public function __construct(){
+        parent::__construct();
+        $result  = 200;
+        //判断请求方式
+        $RequestType =  $this->_method;
+        $msgArr = array(
+            '20000' => '请求成功',
+        );
+
+        $RequestTypeData =  array(
+            'post',
+        );
+        if(!in_array($RequestType,$RequestTypeData)){
+                $result  =  201;
+                goto end;
+        }
+
+        end:
+        if($result != 200){
+            $end =  $end = array(
+                     'result'   => $result,
+                     'msg'      => $msgArr[$result],
+                     'data'      => array(),
+            );
+            $this->response($end,'json');
+        }
+
+    }
+
+}
