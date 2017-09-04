@@ -63,7 +63,6 @@ class SevenDaysSignController extends ComController {
             goto response;
         }
 
-
         //接受回应
         $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
@@ -72,7 +71,6 @@ class SevenDaysSignController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
-
             goto response;
         }
 

@@ -126,7 +126,7 @@ class TheFirstPunchBackController extends Controller {
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
             'RedisProto/RPB_PlayerData.php',
-            'Protos/PBS_ItemOpt.php',
+            'PB_Item.php',
             'Protos/OptSrc.php',
             'Protos/UsrDataOpt.php',
             'PB_Email.php',
@@ -187,7 +187,7 @@ class TheFirstPunchBackController extends Controller {
         /********************服务器添加*******************/
         $PBS_UsrDataOprater->reset();
         $PBS_UsrDataOpraterReturn->reset();
-        $PBS_ItemOpt        = new PBS_ItemOpt();
+        $PBS_ItemOpt        = new \PB_Item();
         $RPB_PlayerData     = new RPB_PlayerData();
         $PBS_UsrDataOprater->setPlayerid($GoodsInfo['playerid']);
         $PBS_UsrDataOprater->setOpt (5);
@@ -204,7 +204,6 @@ class TheFirstPunchBackController extends Controller {
         $IsAddProp = 1;
         foreach ($GoodsInfo as $k=>$v){
                   $num = $v['GetNum']*$v['Number'];
-
               switch ($v['Type']){
                   //金币
                   case 1:
@@ -218,11 +217,9 @@ class TheFirstPunchBackController extends Controller {
                   case 3:
                       $IsAddProp = 2;
                       $PBS_ItemOpt->setNum($num);
-                      $PBS_ItemOpt->setItemid($v['GoodsCode']);
+                      $PBS_ItemOpt->setId($v['GoodsCode']);
                       break;
               }
-
-
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
         if($IsAddProp == 2){
