@@ -150,22 +150,40 @@ class CardReceiveRewardsController extends ComController {
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $dataUsersGoodsStream     = array();      //道具流水
+        $dataUsersCurrencyStream  = array();      //金币砖石流水
         foreach ($CardGoodsInfo as $k=>$v){
              switch ($v['Type']){
                  //金币
                  case  1 :
                      $RPB_PlayerData->setGold($v['GetNum']);
+                     $dataUsersCurrencyStream[$k]['playerid']       =   $playerid;
+                     $dataUsersCurrencyStream[$k]['Type']           =   5;
+                     $dataUsersCurrencyStream[$k]['CurrencyType']   =   1;
+                     $dataUsersCurrencyStream[$k]['Income']         =   1;
+                     $dataUsersCurrencyStream[$k]['Number']         =   $v['GetNum'];
+
                      break;
                   //砖石
                  case  2 :
                      $RPB_PlayerData->setDiamond($v['GetNum']);
+                     $dataUsersCurrencyStream[$k]['playerid']       =   $playerid;
+                     $dataUsersCurrencyStream[$k]['Type']           =   5;
+                     $dataUsersCurrencyStream[$k]['CurrencyType']   =   2;
+                     $dataUsersCurrencyStream[$k]['Income']         =   1;
+                     $dataUsersCurrencyStream[$k]['Number']         =   $v['GetNum'];
                      break;
                  //道具
                  case 3  :
-                     $PB_Item             = new \PB_Item();
+                     $PB_Item  = new \PB_Item();
                      $PB_Item->setNum($v['GetNum']);
                      $PB_Item->setId($v['Code']);
                      $PBS_UsrDataOprater->appendItemOpt($PB_Item);
+                     $dataUsersGoodsStream[$k]['playerid']      =       $playerid;
+                     $dataUsersGoodsStream[$k]['Code']          =       $v['Code'];
+                     $dataUsersGoodsStream[$k]['Type']          =       5;
+                     $dataUsersGoodsStream[$k]['Income']        =       1;
+                     $dataUsersGoodsStream[$k]['Number']        =       $v['GetNum'];
                      break;
              }
         }
@@ -193,14 +211,23 @@ class CardReceiveRewardsController extends ComController {
             $result = $ReplyCode;
             goto response;
         }
-
         //记录
         $dataUsersCardReceiveLog = array(
             'playerid'=>$playerid
         );
         $addUsersCardReceiveLog =M('jy_users_card_receive_log')
                                 ->add($dataUsersCardReceiveLog);
-        if(!$addUsersCardReceiveLog){
+        $addUsersCurrencyStream = 1;   //记录金币砖石流水
+        $addUsersGoodsStream    = 1;                              //记录道具流水
+        if(!empty($dataUsersCurrencyStream)){
+            $addUsersCurrencyStream = M('jy_users_currency_stream')
+                                      ->addAll($dataUsersCurrencyStream);
+        }
+        if(!empty($dataUsersGoodsStream)){
+            $addUsersGoodsStream   = M('jy_users_goods_stream')
+                                    ->addAll($dataUsersGoodsStream);
+        }
+        if(!$addUsersCardReceiveLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
             $result = 3002;
             goto  response;
         }

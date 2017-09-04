@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="0cab3356-e354-489b-a3c1-d764ac1bb749" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/TheFirstPunchBackController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/TheFirstPunchBackController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,31 +17,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CardInfoController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="49" column="22" lean-forward="true" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SevenDaysSignController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="741">
-              <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+            <state relative-caret-position="522">
+              <caret line="358" column="3" lean-forward="false" selection-start-line="358" selection-start-column="3" selection-end-line="359" selection-end-column="74" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CardReceiveRewardsController.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
+      <file leaf-file-name="RewardController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="156" column="56" lean-forward="false" selection-start-line="156" selection-start-column="50" selection-end-line="156" selection-end-column="56" />
+            <state relative-caret-position="833">
+              <caret line="226" column="9" lean-forward="false" selection-start-line="226" selection-start-column="9" selection-end-line="226" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -116,8 +103,6 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/VipInfo/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" />
         <option value="$PROJECT_DIR$/protoPhp/EmailType.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/AlipayEdit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/WechatEdit.html" />
@@ -135,7 +120,6 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" />
@@ -143,7 +127,10 @@
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/TheFirstPunchBackController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
       </list>
     </option>
   </component>
@@ -565,12 +552,12 @@
       <workItem from="1503454615908" duration="23433000" />
       <workItem from="1503540591676" duration="18430000" />
       <workItem from="1503628921849" duration="20044000" />
-      <workItem from="1503884613857" duration="142013000" />
+      <workItem from="1503884613857" duration="144623000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="536361000" />
+    <option name="totallyTimeSpent" value="538971000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
@@ -644,14 +631,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protoPhp/PB_LevelType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -804,7 +783,7 @@
         <state relative-caret-position="418">
           <caret line="38" column="31" lean-forward="false" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -933,14 +912,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-512">
-          <caret line="95" column="22" lean-forward="true" selection-start-line="95" selection-start-column="22" selection-end-line="95" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -999,7 +970,7 @@
         <state relative-caret-position="419">
           <caret line="205" column="11" lean-forward="false" selection-start-line="205" selection-start-column="11" selection-end-line="211" selection-end-column="39" />
           <folding>
-            <element signature="e#68#86#0#PHP" expanded="true" />
+            <element signature="e#68#86#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1084,10 +1055,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="136" column="18" lean-forward="false" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="18" />
+        <state relative-caret-position="171">
+          <caret line="113" column="19" lean-forward="true" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1095,23 +1066,39 @@
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
-          <caret line="49" column="22" lean-forward="true" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+          <caret line="49" column="22" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/TheFirstPunchController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        <state relative-caret-position="342">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="156" column="56" lean-forward="false" selection-start-line="156" selection-start-column="50" selection-end-line="156" selection-end-column="56" />
+        <state relative-caret-position="438">
+          <caret line="163" column="85" lean-forward="true" selection-start-line="159" selection-start-column="20" selection-end-line="163" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="358" column="3" lean-forward="false" selection-start-line="358" selection-start-column="3" selection-end-line="359" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="226" column="9" lean-forward="false" selection-start-line="226" selection-start-column="9" selection-end-line="226" selection-end-column="9" />
           <folding />
         </state>
       </provider>

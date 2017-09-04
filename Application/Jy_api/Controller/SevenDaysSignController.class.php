@@ -23,23 +23,17 @@ class SevenDaysSignController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
         $obj   = new \Common\Lib\func();
-
         $msgArr[3002]  = '与游戏断开，请稍后再试。';
         $msgArr[3003]  = '与游戏断开，请稍后再试。';
         $msgArr[4006]  = '用户ID缺失。';
         $msgArr[5001]  = '系统错误，请稍后在试。';
-
         $result = 2001;
         $info   =  array();
-
         $playerid  = $DataInfo['playerid'];
-
         if(empty($playerid)){
             $result = 4006;
             goto response;
         }
-
-
         //已入protobuf 类
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
@@ -50,10 +44,8 @@ class SevenDaysSignController extends ComController {
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt(2);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
-
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
-
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
             goto response;
@@ -62,33 +54,24 @@ class SevenDaysSignController extends ComController {
             $result = 3002;
             goto response;
         }
-
         //接受回应
         $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
             goto response;
         }
-
         //获得结果
         $PBS_UsrDataOpraterReturnBase  =  $PBS_UsrDataOpraterReturn->getBase();
         //累计签到累计
         $SignDay = $PBS_UsrDataOpraterReturnBase->getSignDay();
         //最近签到时间
-
-
         $SignTime =  $PBS_UsrDataOpraterReturnBase->getSignTime();
-
         $SignTime = strtotime(date('Y-m-d',$SignTime));
-
         //当天时间
         $SameTime =  strtotime(date('Y-m-d',time()));
-
-
         //当天签到状态  1-未签到   2-已签到
         $isSign = 1;
         if($SignTime<$SameTime){
@@ -212,8 +195,6 @@ class SevenDaysSignController extends ComController {
             goto response;
         }
 
-
-
         /*************************请求服务器获取签到数据**************************/
         //已入protobuf 类
         $obj->ProtobufObj(array(
@@ -303,14 +284,12 @@ class SevenDaysSignController extends ComController {
                         ->join('jy_seven_days_sign as b on b.GoodsID  =  a.id and b.Day = '.$SignDay.' and b.IsExceed = '.$IsExceed)
                         ->where('a.IsDel = 1')
                         ->field('a.GetNum*b.Number as Number,a.Id,a.Type,a.Code')
-                        ->select();
+                        ->find();
 
         if(empty($rewardInfo)){
             $result  = 5001;
             goto  response;
         }
-
-
 
         /****************************发放签到奖励与更天数和时间************************************/
         $PBS_UsrDataOprater->reset();
@@ -318,35 +297,50 @@ class SevenDaysSignController extends ComController {
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $RPB_PlayerData   =  new RPB_PlayerData();
-        foreach ($rewardInfo as $k=>$v){
-            $num = $v['Number'];
+        $dataUsersGoodsStream       = array();      //道具流水
+        $dataUsersCurrencyStream    = array();      //金币砖石流水
+            $num = $rewardInfo['Number'];
             if($VipLevel >= 1){
                 $num = $num*2;
             }
-            switch ($v['Type']){
+            switch ($rewardInfo['Type']){
                   //金币
                 case 1:
+                    $dataUsersCurrencyStream['playerid']       =   $playerid;
+                    $dataUsersCurrencyStream['Type']           =   3;
+                    $dataUsersCurrencyStream['CurrencyType']   =   1;
+                    $dataUsersCurrencyStream['Income']         =   1;
+                    $dataUsersCurrencyStream['Number']         =  $num;
                     $RPB_PlayerData->setGold($num);
                 break;
                   //砖石
                 case 2:
                     $RPB_PlayerData->setDiamond($num);
+                    $dataUsersCurrencyStream['playerid']       =   $playerid;
+                    $dataUsersCurrencyStream['Type']           =   3;
+                    $dataUsersCurrencyStream['CurrencyType']   =   2;
+                    $dataUsersCurrencyStream['Income']         =   1;
+                    $dataUsersCurrencyStream['Number']         =  $num;
                 break;
                  //道具
                 case 3:
                     $PBS_ItemOpt      =  new \PB_Item();
                     $PBS_ItemOpt->setNum($num);
-                    $PBS_ItemOpt->setId($v['Code']);
+                    $PBS_ItemOpt->setId($rewardInfo['Code']);
                     $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
+                    $dataUsersGoodsStream['playerid']      =       $playerid;
+                    $dataUsersGoodsStream['Code']          =       $rewardInfo['Code'];
+                    $dataUsersGoodsStream['Type']          =       3;
+                    $dataUsersGoodsStream['Income']        =       1;
+                    $dataUsersGoodsStream['Number']        =       $num;
                    break;
             }
-        }
+
         $time = time();
         $setSignDay = $SignDayRes+1;
         $RPB_PlayerData->setSignDay($setSignDay);
         $RPB_PlayerData->setSignTime($time);
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
-
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
@@ -361,23 +355,27 @@ class SevenDaysSignController extends ComController {
             $result = $ReplyCode;
             goto response;
         }
-
         /****************************记录签到奖励************************************/
-
-        foreach ($rewardInfo as $k=>$v){
-            unset($rewardInfo[$k]['Id']);
-            unset($rewardInfo[$k]['Type']);
-            $rewardInfo[$k]['playerid'] = $playerid;
-            $rewardInfo[$k]['Type'] = 3;
-            $rewardInfo[$k]['Income'] = 1;
+        $addUsersCurrencyStream = 1;   //记录金币砖石流水
+        $addUsersGoodsStream    = 1;                              //记录道具流水
+        if(!empty($dataUsersCurrencyStream)){
+            $addUsersCurrencyStream = M('jy_users_currency_stream')
+                ->addAll($dataUsersCurrencyStream);
+        }
+        if(!empty($dataUsersGoodsStream)){
+            $addUsersGoodsStream   = M('jy_users_goods_stream')
+                ->addAll($dataUsersGoodsStream);
+        }
+        if(!$addUsersGoodsStream || !$addUsersCurrencyStream){
+            $result = 3002;
+            goto  response;
         }
 
-        $addUsersGoodsStream = M('jy_users_goods_stream')
-            ->addAll($rewardInfo);
 
-        if(!$addUsersGoodsStream){
-            $result = 3003;
-        }
+
+
+
+
         response:
         $response = array(
             'result' => $result,

@@ -89,14 +89,26 @@ class ExchangeController extends ComController {
         $GetNum     = $catGoodsAll['GetNum'];
         $GoodsCode  = $catGoodsAll['Code'];
         $Status     =  2;
+        $dataUsersGoodsStream     = array();      //道具流水
+        $dataUsersCurrencyStream  = array();      //金币砖石流水
         switch ($Type){
             //金币
             case 1:
                 $RPB_PlayerData->setGold($GetNum);
+                $dataUsersCurrencyStream['playerid']       =   $playerid;
+                $dataUsersCurrencyStream['Type']           =   4;
+                $dataUsersCurrencyStream['CurrencyType']   =   1;
+                $dataUsersCurrencyStream['Income']         =   1;
+                $dataUsersCurrencyStream['Number']         =   $GetNum;
                 break;
             //钻石
             case 2:
                 $RPB_PlayerData->setDiamond($GetNum);
+                $dataUsersCurrencyStream['playerid']       =   $playerid;
+                $dataUsersCurrencyStream['Type']           =   4;
+                $dataUsersCurrencyStream['CurrencyType']   =   2;
+                $dataUsersCurrencyStream['Income']         =   1;
+                $dataUsersCurrencyStream['Number']         =   $GetNum;
                 break;
             //道具
             case 3:
@@ -104,6 +116,11 @@ class ExchangeController extends ComController {
                 $PBS_ItemOpt->setId($GoodsCode);
                 $PBS_ItemOpt->setNum($GetNum);
                 $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
+                $dataUsersGoodsStream['playerid']      =       $playerid;
+                $dataUsersGoodsStream['Code']          =       $GoodsCode;
+                $dataUsersGoodsStream['Type']          =       4;
+                $dataUsersGoodsStream['Income']        =       1;
+                $dataUsersGoodsStream['Number']        =       $GetNum;
                 break;
             //话费卡
             default:
@@ -111,7 +128,6 @@ class ExchangeController extends ComController {
                 break;
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
-
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
@@ -138,13 +154,26 @@ class ExchangeController extends ComController {
             'GoodsName'     =>      $catGoodsAll['Name'],
             'playerid'      =>      $playerid,
             'Order'         =>      $obj->RandomNumber(),
-            'StockNum'      =>    $catGoodsAll['CurrencyNum'] ,
+            'StockNum'      =>      $catGoodsAll['CurrencyNum'] ,
             'GoodsID'       =>      $catGoodsAll['Id'],
             'Status'        =>      $Status,
         );
         $addUsersExchangeLog = M('jy_users_exchange_log')
                               ->add($dataUsersExchangeLog);
-        if(!$addUsersExchangeLog){
+        $addUsersCurrencyStream = 1;   //记录金币砖石流水
+        $addUsersGoodsStream    = 1;                              //记录道具流水
+        if(!empty($dataUsersCurrencyStream)){
+            $addUsersCurrencyStream = M('jy_users_currency_stream')
+                ->addAll($dataUsersCurrencyStream);
+        }
+        if(!empty($dataUsersGoodsStream)){
+            $addUsersGoodsStream   = M('jy_users_goods_stream')
+                ->addAll($dataUsersGoodsStream);
+        }
+
+
+
+        if(!$addUsersExchangeLog || !$addUsersCurrencyStream || !$addUsersGoodsStream){
             $result = 3006;
             goto response;
         }

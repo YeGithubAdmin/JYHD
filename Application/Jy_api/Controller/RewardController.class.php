@@ -182,14 +182,26 @@ class RewardController extends ComController {
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $RPB_PlayerData  = new RPB_PlayerData();
         $num = $GoodsInfo['GetNum']*$activityInfo['Number'];
+        $dataUsersGoodsStream     = array();      //道具流水
+        $dataUsersCurrencyStream  = array();      //金币砖石流水
         switch ($GoodsInfo['Type']){
             //金币
             case 1:
                 $RPB_PlayerData->setGold($num);
+                $dataUsersCurrencyStream['playerid']       =   $playerid;
+                $dataUsersCurrencyStream['Type']           =   7;
+                $dataUsersCurrencyStream['CurrencyType']   =   1;
+                $dataUsersCurrencyStream['Income']         =   1;
+                $dataUsersCurrencyStream['Number']         =  $num;
             break;
             //砖石
             case 2:
                 $RPB_PlayerData->setDiamond($num);
+                $dataUsersCurrencyStream['playerid']       =   $playerid;
+                $dataUsersCurrencyStream['Type']           =   7;
+                $dataUsersCurrencyStream['CurrencyType']   =   2;
+                $dataUsersCurrencyStream['Income']         =   1;
+                $dataUsersCurrencyStream['Number']         =  $num;
             break;
             //道具
             case 3:
@@ -197,6 +209,12 @@ class RewardController extends ComController {
                 $PB_Item->setId($num);
                 $PB_Item->setNum($GoodsInfo['Code']);
                 $PBS_UsrDataOprater->appendItemOpt($PB_Item);
+                $dataUsersGoodsStream['playerid']      =       $playerid;
+                $dataUsersGoodsStream['Code']          =       $GoodsInfo['Code'];
+                $dataUsersGoodsStream['Type']          =       7;
+                $dataUsersGoodsStream['Income']        =       1;
+                $dataUsersGoodsStream['Number']        =       $num;
+
                 break;
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
@@ -207,25 +225,20 @@ class RewardController extends ComController {
             $result = 3003;
             goto response;
         }
-
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3004;
             goto response;
         }
-
         //接受回应
         $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
             goto response;
         }
-
         //记录奖励
-
         $dataUsersActivityTheawardLog = array(
             'playerid'=>$playerid,
             'GoodsId'=>$activityInfo['GoodsId'],
@@ -237,13 +250,21 @@ class RewardController extends ComController {
             'AddUpEndTime'=>$activityInfo['AddUpEndTime'],
         );
         $addUsersActivityTheawardLog = M('jy_users_activity_theaward_log')->add($dataUsersActivityTheawardLog);
+        $addUsersCurrencyStream = 1;   //记录金币砖石流水
+        $addUsersGoodsStream    = 1;                              //记录道具流水
 
-
-        if(!$addUsersActivityTheawardLog){
+        if(!empty($dataUsersCurrencyStream)){
+            $addUsersCurrencyStream = M('jy_users_currency_stream')
+                ->addAll($dataUsersCurrencyStream);
+        }
+        if(!empty($dataUsersGoodsStream)){
+            $addUsersGoodsStream   = M('jy_users_goods_stream')
+                ->addAll($dataUsersGoodsStream);
+        }
+        if(!$addUsersActivityTheawardLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
            $result = 3002;
            goto  response;
         }
-
         response:
             $response = array(
                 'result' => $result,
