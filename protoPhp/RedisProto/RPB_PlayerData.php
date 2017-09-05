@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-09-01 04:58:52
+ * Auto generated from PB_usr_data.proto at 2017-09-05 00:47:23
  *
  * RedisProto package
  */

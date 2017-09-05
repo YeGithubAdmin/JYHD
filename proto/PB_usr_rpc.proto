@@ -34,6 +34,7 @@ message PBS_UsrDataOprater
 	optional PB_Email send_email = 7;	// 发送邮件
 	optional string reason = 8;	// 原因
 	optional PB_Item use_item = 9;	// 使用道具
+	optional PB_BuyGoods buy_goods_notify = 10; // 购买物品
 }
 
 message PBS_UsrDataOpraterReturn

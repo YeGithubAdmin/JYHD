@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_error_code.proto at 2017-09-01 04:58:52
+ * Auto generated from PB_error_code.proto at 2017-09-05 01:08:46
  */
 
 namespace {
@@ -36,6 +36,7 @@ final class PB_ErrorCode
     const Error_gun_coin_invalid = 24;
     const Error_no_this_id = 25;
     const Error_item_not_got = 26;
+    const Error_buy_fail = 27;
 
     /**
      * Returns defined enum values
@@ -72,6 +73,7 @@ final class PB_ErrorCode
             'Error_gun_coin_invalid' => self::Error_gun_coin_invalid,
             'Error_no_this_id' => self::Error_no_this_id,
             'Error_item_not_got' => self::Error_item_not_got,
+            'Error_buy_fail' => self::Error_buy_fail,
         );
     }
 }

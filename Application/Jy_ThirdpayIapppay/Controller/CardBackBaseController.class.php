@@ -1,7 +1,7 @@
 <?php
 /***
- *  爱贝月卡支付回调
- **/
+*  爱贝月卡支付回调
+**/
 namespace Jy_ThirdpayIapppay\Controller;
 use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
@@ -46,7 +46,7 @@ class CardBackController extends Controller {
         if(stripos("%22",$transdata)){ //判断接收到的数据是否做过 Urldecode处理，如果没有处理则对数据进行Urldecode处理
             $dataThirdpay= array_map ('urldecode',$dataThirdpay);
         }
-
+        $TransdataResult = $dataThirdpay['result'];
 
 
         $respData    = 'transdata='.$dataThirdpay['transdata'].'&sign='.$dataThirdpay['sign'].'&signtype='.$dataThirdpay['signtype'];//把数据组装成验签函数要求的参数格式
@@ -72,10 +72,10 @@ class CardBackController extends Controller {
             'PayID',
         );
         $GoodsInfo = $model
-            ->table('jy_users_order_info')
-            ->where('PlatformOrder = "'.$OrderID.'"')
-            ->field($GoodsInfoField)
-            ->find();
+                     ->table('jy_users_order_info')
+                     ->where('PlatformOrder = "'.$OrderID.'"')
+                     ->field($GoodsInfoField)
+                     ->find();
         if(empty($GoodsInfo)){
             $result = 5001;
             goto failed;
@@ -92,10 +92,10 @@ class CardBackController extends Controller {
             'appid',
         );
         $Thirdpay = $model
-            ->table('jy_thirdpay')
-            ->field($ThirdpayField)
-            ->where('Id = '.$GoodsInfo['PayID'].' and  IsDel = 1')
-            ->find();
+                    ->table('jy_thirdpay')
+                    ->field($ThirdpayField)
+                    ->where('Id = '.$GoodsInfo['PayID'].' and  IsDel = 1')
+                    ->find();
         if(empty($Thirdpay)){
             $result = 5002;
             goto failed;
@@ -106,7 +106,7 @@ class CardBackController extends Controller {
             $result = 7002;
             goto failed;
         }
-        $TransdataResult = $dataThirdpay['result'];
+
         /**********************业务逻辑***********************/
         $UsersOrderGoodsField = array(
             'GoodsID',
@@ -115,10 +115,10 @@ class CardBackController extends Controller {
             'Number*GetNum as Number',
         );
         $UsersOrderGoods = $model
-            ->table('jy_users_order_goods')
-            ->where('playerid = '.$GoodsInfo['playerid'].' and  PlatformOrder = "'.$OrderID.'"')
-            ->field($UsersOrderGoodsField)
-            ->select();
+                            ->table('jy_users_order_goods')
+                            ->where('playerid = '.$GoodsInfo['playerid'].' and  PlatformOrder = "'.$OrderID.'"')
+                            ->field($UsersOrderGoodsField)
+                            ->select();
         if(empty($UsersOrderGoods)){
             $result = 5003;
             goto failed;
@@ -152,11 +152,11 @@ class CardBackController extends Controller {
         $BuyGoods                =   new \PB_BuyGoods();
         $Return                  =   new PBS_UsrDataOpraterReturn();
         /**
-         *  获取用户信息
-         *  @param   $upgrade  int   是否升级 1-否  2-是
-         *  @param   $UpVipExp int   下个等级经验
-         *  @param   $VipInfo  array vip等级信息
-         ***************/
+        *  获取用户信息
+        *  @param   $upgrade  int   是否升级 1-否  2-是
+        *  @param   $UpVipExp int   下个等级经验
+        *  @param   $VipInfo  array vip等级信息
+        ***************/
         $upgrade  = 1;
         $UpVipExp = '';
         $VipInfo = array();
@@ -242,7 +242,6 @@ class CardBackController extends Controller {
         }
         //添加支付结果
         $UsrDataOprater->setBuyGoodsNotify($BuyGoods);
-        $UsrDataOprater->dump();
         $String = $UsrDataOprater->serializeToString();
         //发送请求
         $UsrDataOpraterRespond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$String,$GoodsInfo['playerid']);
@@ -298,10 +297,9 @@ class CardBackController extends Controller {
         }
 
         success:
-        echo 'success'."\n";
-        exit();
+            echo 'success'."\n";
+            exit();
         failed:
-
         $dataApiVisitLog = array(
             'Name'=>'支付订单',
             'Url'=>'/Jy_ThirdpayIapppay/CardBack/index',
@@ -310,12 +308,11 @@ class CardBackController extends Controller {
             'TimeOut'=>'',
             'AccessIP'=>$_SERVER['REMOTE_ADDR'],
         );
-
         $addApiVisitLog = M('jy_api_visit_log')
             ->add($dataApiVisitLog);
 
-        echo 'failed'."\n";
-        exit();
+            echo 'failed'."\n";
+            exit();
 
     }
 }

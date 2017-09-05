@@ -1,4 +1,12 @@
 
+message PB_OnlineRewardTask 
+{
+	optional int32 taskid 			= 1;	// 奖励id
+	optional int64 over_time 		= 2;	// 领取时间
+	optional bool  isfinish			= 3;	// 今天是否完成
+	optional int64 start_time 		= 4;
+}
+
 message PB_RankingData
 {
 	optional int32 ranking 	 = 1;	// 排名
@@ -39,3 +47,8 @@ message PB_Email
 	optional string 		sender   = 12;	// 发送者
 }
 
+message PB_BuyGoods
+{
+	required int32 			err 	 = 1;
+	required int32 			goodsid  = 2;	// 商品id
+}

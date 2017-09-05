@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="0cab3356-e354-489b-a3c1-d764ac1bb749" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" afterPath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/Channel/Pay.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/Channel/Pay.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/Channel/goods.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/Channel/goods.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,25 +18,77 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="4">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="trade.php" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/trade.php">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="327">
+                    <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="TradingResultsNotice.php" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/TradingResultsNotice.php">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="320">
+                    <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="23" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RewardController.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+      <file leaf-file-name="func.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1067">
-              <caret line="132" column="9" lean-forward="false" selection-start-line="132" selection-start-column="9" selection-end-line="132" selection-end-column="9" />
+            <state relative-caret-position="583">
+              <caret line="455" column="14" lean-forward="false" selection-start-line="455" selection-start-column="14" selection-end-line="455" selection-end-column="14" />
+              <folding>
+                <marker date="1504603602417" expanded="false" signature="2337:2416" ph="..." />
+                <marker date="1504603602417" expanded="false" signature="2569:2608" ph="..." />
+                <marker date="1504603602417" expanded="true" signature="2609:2914" ph="..." />
+                <marker date="1504603602417" expanded="false" signature="2663:2681" ph="..." />
+                <marker date="1504603602417" expanded="true" signature="2810:2898" ph="..." />
+                <marker date="1504603602417" expanded="true" signature="2982:3272" ph="..." />
+                <marker date="1504603602417" expanded="true" signature="3021:3253" ph="{...}" />
+                <marker date="1504603602417" expanded="true" signature="3316:3445" ph="..." />
+                <marker date="1504603602417" expanded="true" signature="3363:3426" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CardBackController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5776">
+              <caret line="312" column="0" lean-forward="false" selection-start-line="312" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ActivityListController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
+      <file leaf-file-name="MallShopBackController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="49" column="80" lean-forward="true" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="99" />
-              <folding />
+            <state relative-caret-position="1021">
+              <caret line="267" column="67" lean-forward="false" selection-start-line="267" selection-start-column="61" selection-end-line="267" selection-end-column="67" />
+              <folding>
+                <element signature="e#68#86#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -45,21 +97,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$respJson</find>
-      <find>PayChannel</find>
-      <find>5001</find>
-      <find>GoodsId</find>
-      <find>$UsersOrderGoods</find>
-      <find>ShowType</find>
-      <find>4007</find>
-      <find>selectGoodsFun</find>
-      <find>是否赠</find>
-      <find>UpTime</find>
-      <find>IsGive</find>
-      <find>admin_group</find>
-      <find>is_mc</find>
-      <find>jy_users_activity_theaward_log</find>
-      <find>activityID</find>
       <find>admingroup</find>
       <find>date</find>
       <find>parseFromString</find>
@@ -75,21 +112,33 @@
       <find>=&gt;</find>
       <find>$a</find>
       <find>$activityInfo</find>
+      <find>$catGoodsAll</find>
+      <find>400</find>
+      <find>40010</find>
+      <find>$RPB_PlayerData</find>
+      <find>$paytype</find>
+      <find>$arr</find>
+      <find>5001</find>
+      <find>5002</find>
+      <find>5003</find>
+      <find>playerid</find>
+      <find>$setGoodsid</find>
+      <find>$TransdataResult</find>
+      <find>jy_users_order_info</find>
+      <find>7002</find>
+      <find>$GoodsInfo</find>
     </findStrings>
     <replaceStrings>
       <replace>{$responseAdmin}</replace>
       <replace>__PUBLIC__</replace>
+      <replace>$UsrDataOprater</replace>
+      <replace>$PlayerData</replace>
+      <replace>$ErrorCode</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/LoginController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/View/Index/index.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/IndexController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/SevenDaysSignRewardController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/WechatAdd.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirdpayInfo/AlipayAdd.html" />
@@ -119,12 +168,7 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/TheFirstPunchBackController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ActiveMacroscopicController.class.php" />
@@ -135,6 +179,17 @@
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeLogController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
+        <option value="$PROJECT_DIR$/thirdpay/iapppayforphp/trade.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_admin/View/Channel/Pay.html" />
+        <option value="$PROJECT_DIR$/Application/Jy_admin/View/Channel/goods.html" />
+        <option value="$USER_HOME$/AppData/Roaming/NetSarang/Xftp/Temporary/trade [3].php" />
+        <option value="$USER_HOME$/AppData/Roaming/NetSarang/Xftp/Temporary/trade [2].php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackBaseController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php" />
       </list>
     </option>
   </component>
@@ -190,11 +245,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_admin" />
+              <option name="myItemId" value="thirdpay" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -208,15 +259,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="thirdpay" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Shuttle" />
+              <option name="myItemId" value="wechartRetreat" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -230,15 +277,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="thirdpay" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="iapppayforphp" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -252,7 +295,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="proto" />
+              <option name="myItemId" value="protoPhp" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -267,24 +310,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_ThirdpayIapppay" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -342,7 +367,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_admin" />
+              <option name="myItemId" value="Common" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -360,11 +385,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_admin" />
+              <option name="myItemId" value="Common" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
+              <option name="myItemId" value="Lib" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -516,18 +541,18 @@
       <workItem from="1503454615908" duration="23433000" />
       <workItem from="1503540591676" duration="18430000" />
       <workItem from="1503628921849" duration="20044000" />
-      <workItem from="1503884613857" duration="159344000" />
+      <workItem from="1503884613857" duration="191056000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="553692000" />
+    <option name="totallyTimeSpent" value="585404000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21510416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21510416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -595,164 +620,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersExchangeApplication/ToExamine.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="109" column="8" lean-forward="true" selection-start-line="109" selection-start-column="8" selection-end-line="115" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersInfo/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2274">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1504011346547" expanded="true" signature="6213:6233" ph="..." />
-            <marker date="1504011346547" expanded="true" signature="6334:6342" ph="..." />
-            <marker date="1504011346547" expanded="true" signature="6984:7004" ph="..." />
-            <marker date="1504011346547" expanded="true" signature="7104:7112" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/UsersAttribute/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="244" column="4" lean-forward="true" selection-start-line="244" selection-start-column="4" selection-end-line="274" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/RegisterEdition/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1367">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/AdminUsers/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2388">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1504011326538" expanded="true" signature="6213:6233" ph="..." />
-            <marker date="1504011326538" expanded="true" signature="6334:6342" ph="..." />
-            <marker date="1504011326538" expanded="true" signature="6984:7004" ph="..." />
-            <marker date="1504011326538" expanded="true" signature="7104:7112" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/AdminUsers/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2336">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="233" column="21" lean-forward="false" selection-start-line="233" selection-start-column="17" selection-end-line="233" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3059">
-          <caret line="242" column="44" lean-forward="false" selection-start-line="242" selection-start-column="44" selection-end-line="242" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1159">
-          <caret line="117" column="51" lean-forward="true" selection-start-line="117" selection-start-column="51" selection-end-line="117" selection-end-column="51" />
-          <folding>
-            <element signature="n#style#0;n#div#4;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#6;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#7;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="38" column="31" lean-forward="false" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/Jy_admin/Shuttle/jquery.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2754">
-          <caret line="4" column="29826" lean-forward="true" selection-start-line="4" selection-start-column="29826" selection-end-line="4" selection-end-column="29826" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/Jy_admin/js/H-ui.admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/SendEmail/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="303" column="69" lean-forward="false" selection-start-line="303" selection-start-column="67" selection-end-line="303" selection-end-column="69" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#4;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#3;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#4;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#6;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/Jy_admin/lib/My97DatePicker/WdatePicker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="4" column="8" lean-forward="false" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="99" column="44" lean-forward="false" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="44" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#4;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
@@ -802,29 +669,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="183" column="23" lean-forward="true" selection-start-line="183" selection-start-column="23" selection-end-line="183" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="445">
           <caret line="84" column="16" lean-forward="false" selection-start-line="84" selection-start-column="16" selection-end-line="87" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="205" column="11" lean-forward="false" selection-start-line="205" selection-start-column="11" selection-end-line="211" selection-end-column="39" />
-          <folding>
-            <element signature="e#68#86#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -857,24 +706,6 @@
         <state relative-caret-position="-1729">
           <caret line="22" column="46" lean-forward="false" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="46" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="357" column="40" lean-forward="false" selection-start-line="357" selection-start-column="25" selection-end-line="357" selection-end-column="40" />
-          <folding>
-            <marker date="1504513214186" expanded="false" signature="2337:2416" ph="..." />
-            <marker date="1504513214186" expanded="false" signature="2569:2608" ph="..." />
-            <marker date="1504513214186" expanded="true" signature="2609:2914" ph="..." />
-            <marker date="1504513214186" expanded="false" signature="2663:2681" ph="..." />
-            <marker date="1504513214186" expanded="true" signature="2810:2898" ph="..." />
-            <marker date="1504513214186" expanded="true" signature="2982:3272" ph="..." />
-            <marker date="1504513214186" expanded="true" signature="3021:3253" ph="{...}" />
-            <marker date="1504513214186" expanded="true" signature="3316:3445" ph="..." />
-            <marker date="1504513214186" expanded="true" signature="3363:3426" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -914,22 +745,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="671">
           <caret line="104" column="38" lean-forward="false" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="233" column="32" lean-forward="false" selection-start-line="233" selection-start-column="32" selection-end-line="233" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="104" column="54" lean-forward="true" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -1005,7 +820,7 @@
         <state relative-caret-position="-114">
           <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="13" />
           <folding>
-            <element signature="e#6#315#0#PHP" expanded="true" />
+            <element signature="e#6#315#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1053,6 +868,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/ContractCancel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/notifyurl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/QueryContract.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
@@ -1063,8 +902,163 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1067">
-          <caret line="132" column="9" lean-forward="false" selection-start-line="132" selection-start-column="9" selection-end-line="132" selection-end-column="9" />
+        <state relative-caret-position="817">
+          <caret line="97" column="16" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/testdemo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="614">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="33" column="15" lean-forward="false" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_3.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="851" column="9" lean-forward="false" selection-start-line="851" selection-start-column="9" selection-end-line="851" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1045">
+          <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/NetSarang/Xftp/Temporary/trade [3].php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="40" column="20" lean-forward="false" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/Channel/goods.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="79" column="14" lean-forward="false" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/Channel/Pay.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="63" column="4" lean-forward="true" selection-start-line="63" selection-start-column="4" selection-end-line="65" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackBaseController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="208" column="28" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="317" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/NetSarang/Xftp/Temporary/trade [2].php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="703">
+          <caret line="43" column="17" lean-forward="false" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="162" column="30" lean-forward="false" selection-start-line="162" selection-start-column="22" selection-end-line="162" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/trade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="614">
+          <caret line="259" column="0" lean-forward="true" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#313#0#PHP" expanded="true" />
+            <element signature="e#343#379#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="455" column="14" lean-forward="false" selection-start-line="455" selection-start-column="14" selection-end-line="455" selection-end-column="14" />
+          <folding>
+            <marker date="1504603602417" expanded="false" signature="2337:2416" ph="..." />
+            <marker date="1504603602417" expanded="false" signature="2569:2608" ph="..." />
+            <marker date="1504603602417" expanded="true" signature="2609:2914" ph="..." />
+            <marker date="1504603602417" expanded="false" signature="2663:2681" ph="..." />
+            <marker date="1504603602417" expanded="true" signature="2810:2898" ph="..." />
+            <marker date="1504603602417" expanded="true" signature="2982:3272" ph="..." />
+            <marker date="1504603602417" expanded="true" signature="3021:3253" ph="{...}" />
+            <marker date="1504603602417" expanded="true" signature="3316:3445" ph="..." />
+            <marker date="1504603602417" expanded="true" signature="3363:3426" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/CardBackController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5776">
+          <caret line="312" column="0" lean-forward="false" selection-start-line="312" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/MallShopBackController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1021">
+          <caret line="267" column="67" lean-forward="false" selection-start-line="267" selection-start-column="61" selection-end-line="267" selection-end-column="67" />
+          <folding>
+            <element signature="e#68#86#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/iapppayforphp/TradingResultsNotice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="23" />
           <folding />
         </state>
       </provider>

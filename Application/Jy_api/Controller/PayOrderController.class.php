@@ -114,8 +114,6 @@ class PayOrderController extends ComController {
         );
 
 
-
-
         $UpUsersOrderInfo  = M('jy_users_order_info')
                             ->where('playerid = '.$playerid.' and PlatformOrder = "'.$PlatformOrder.'"')
                             ->save($dataUsersOrderInfo);

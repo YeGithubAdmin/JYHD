@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-09-01 04:58:52
+ * Auto generated from PB_usr_rpc.proto at 2017-09-05 00:47:23
  *
  * protos package
  */
@@ -21,6 +21,7 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     const SEND_EMAIL = 7;
     const REASON = 8;
     const USE_ITEM = 9;
+    const BUY_GOODS_NOTIFY = 10;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -69,6 +70,11 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'required' => false,
             'type' => '\PB_Item'
         ),
+        self::BUY_GOODS_NOTIFY => array(
+            'name' => 'buy_goods_notify',
+            'required' => false,
+            'type' => '\PB_BuyGoods'
+        ),
     );
 
     /**
@@ -95,6 +101,7 @@ class PBS_UsrDataOprater extends \ProtobufMessage
         $this->values[self::SEND_EMAIL] = null;
         $this->values[self::REASON] = null;
         $this->values[self::USE_ITEM] = null;
+        $this->values[self::BUY_GOODS_NOTIFY] = null;
     }
 
     /**
@@ -349,6 +356,28 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     public function getUseItem()
     {
         return $this->get(self::USE_ITEM);
+    }
+
+    /**
+     * Sets value of 'buy_goods_notify' property
+     *
+     * @param \PB_BuyGoods $value Property value
+     *
+     * @return null
+     */
+    public function setBuyGoodsNotify(\PB_BuyGoods $value=null)
+    {
+        return $this->set(self::BUY_GOODS_NOTIFY, $value);
+    }
+
+    /**
+     * Returns value of 'buy_goods_notify' property
+     *
+     * @return \PB_BuyGoods
+     */
+    public function getBuyGoodsNotify()
+    {
+        return $this->get(self::BUY_GOODS_NOTIFY);
     }
 }
 }

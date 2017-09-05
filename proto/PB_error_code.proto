@@ -27,5 +27,6 @@ enum PB_ErrorCode {
 	Error_gun_coin_invalid    = 24;	// 炮倍率不合法
 	Error_no_this_id 		  = 25;	// 没有该id
 	Error_item_not_got 		  = 26;	// 物品未提取
+	Error_buy_fail 		  	  = 27;	// 购买失败
 };
 

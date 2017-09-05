@@ -449,6 +449,25 @@ class func{
         return  $string;
     }
 
+   /***
+   * 爱贝支付下单接口
+   * @param  $Info     array   下单信息
+   * @param  $appkey   string  私钥
+   * @param  $platpkey string  公钥
+   **/
+   public function IapppayOrder($Info,$appkey,$platpkey){
+        include IAPPPAY."base.php";
+        $orderUrl = "http://ipay.iapppay.com:9999/payapi/order";
+        $reqData = composeReq($Info, $appkey);
+        $respData = request_by_curl($orderUrl, $reqData, 'order test');
+        $parseResp = parseResp($respData, $platpkey, $respJson);
+        if(!$parseResp){
+            return false;
+        }else{
+            return $respJson->transid;
+        }
 
+
+   }
 
 }

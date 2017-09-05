@@ -27,30 +27,44 @@ class PlaceOrderController extends ComController {
         $msgArr[4006] = "用户信息缺失！";
         $msgArr[4007] = "类型缺失！";
         $msgArr[4008] = "物品信息缺失！";
-        $msgArr[5002] = "系统错误，请稍后再试！";
+        $msgArr[4009] = "支付类型缺失！";
+        $msgArr[4010] = "支付信息错误！";
+        $msgArr[5002] = "物品不存在！";
+        $msgArr[5003] = "支付信息不存在！";
+        $msgArr[5004] = "支付类型暂时未接通！";
         $msgArr[7002] = "首冲只允许购买一次，请勿重复购买！";
         $msgArr[7003] = "月卡还有效，请等月卡过期在购买！";
         $result = 2001;
         $info   =  array();
         $time = time();
-        $playerid = $DataInfo['playerid'];
+        $model = new Model();
+        $playerid       =  $DataInfo['playerid'];
+        $Type           =  $DataInfo['Type'];                  // 3-商城  1-首充  2-月卡
+        $GoodsID        =  $DataInfo['GoodsID'];               //商品ID
+        $channelid      =  $this->channelid;                   //渠道ID
+        $PlatformType   =  $DataInfo['PlatformType'];          //支付平台  1 支付宝 2-微信 3-爱贝
         if(empty($playerid)){
             $result = 4006;
             goto response;
         }
-        $Type = $DataInfo['Type'];      // 3-商城  1-首充  2-月卡
+
         if(empty($Type)){
             $result = 4007;
             goto response;
         }
-        $GoodsID =  $DataInfo['GoodsID'];
+
         if(empty($GoodsID)){
             $result = 4008;
             goto response;
         }
+        if(empty($PlatformType)){
+            $result = 4009;
+            goto response;
+        }
+
         //首充
         if($Type == 2){
-            $UsersPackageShopLog = M('jy_users_package_shop_log')
+            $UsersPackageShopLog = $model->table('jy_users_package_shop_log')
                                   ->where('playerid = '.$playerid.' and Type = 1')
                                   ->find();
             if(!empty($UsersPackageShopLog)){
@@ -60,7 +74,7 @@ class PlaceOrderController extends ComController {
         }
         //月卡
         if($Type == 3){
-            $UsersPackageShopLog = M('jy_users_package_shop_log')
+            $UsersPackageShopLog = $model->table('jy_users_package_shop_log')
                 ->where('playerid = '.$playerid.' and Type = 1')
                 ->field('UNIX_TIMESTAMP(DateTime) as DateTime')
                 ->order('Id desc')
@@ -85,7 +99,7 @@ class PlaceOrderController extends ComController {
             'CurrencyNum',
             'Code',
         );
-        $catGoodsAll = M('jy_goods_all')
+        $catGoodsAll = $model->table('jy_goods_all')
                        ->where('Id =  '.$GoodsID.' and  IsDel = 1')
                        ->field($catGoodsAllFile)
                        ->find();
@@ -115,28 +129,54 @@ class PlaceOrderController extends ComController {
                     'Code',
             );
             if(!empty($GiveGoodsID)){
-                $catGoodsAllGive = M('jy_goods_all')
+                $catGoodsAllGive = $model->table('jy_goods_all')
                     ->where('  Id in('.$GiveGoodsID.')  and  IsDel = 1')
                     ->field($catGoodsAllGiveField)
                     ->select();
             }
 
         }
-
-
-        $model = new Model();
-        $model->startTrans();
-        $PlatformOrder = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        //查询支付信息
+        $CatThirdpayField = array(
+            'c.Id',
+            'c.PassAgeWay',
+            'c.CardNotifyurl',
+            'c.TheFirstNotifyurl',
+            'c.MallShopNotifyurl',
+            'c.public',
+            'c.private',
+            'c.account',
+            'c.appid',
+        );
+        $CatThirdpay = $model->table('jy_channel_thirdpay as a')
+            ->join('jy_thirdpay as c on a.PayID = c.Id  and c.Type = '.$Type)
+            ->where('a.adminUserID = '.$channelid)
+            ->field($CatThirdpayField)
+            ->find();
+        if(empty($CatThirdpay)){
+            //查询本公司
+            $CatThirdpay = $model->table('jy_channel_info as a')
+                ->join('jy_channel_thirdpay as b on a.adminUserID = b.adminUserID')
+                ->join('jy_thirdpay as c on b.PayID = c.Id and c.Type = '.$Type)
+                ->where('a.platform = '.$Platform.' and a.isown = 2')
+                ->field($CatThirdpayField)
+                ->find();
+            if(empty($CatThirdpay)){
+                $result = 5003;
+                goto response;
+            }
+        }
         //是否首次购买
         $catUsersShopLog = $model
                             ->table('jy_users_shop_log')
                             ->where('playerid = '.$playerid.'  and  GoodID = '.$catGoodsAll['Id'].' and  IsGive = 1')
                             ->field('Id')->find();
-
         $Proportion = 0;
         if(empty($catUsersShopLog)){
             $Proportion = $catGoodsAll['Proportion'];
         }
+        //订单号
+        $PlatformOrder = 'JYHD'.date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         //订单物品信息
         $dataUsersOrderGoods = array();
         $dataUsersOrderGoods[0]['playerid']          = $playerid;
@@ -165,53 +205,8 @@ class PlaceOrderController extends ComController {
             $dataUsersOrderGoods[$num]['Type']              = $v['Type'];
             $num++;
         }
-        $addUsersOrderGoods =   $model
-                                ->table('jy_users_order_goods')
-                                ->addAll($dataUsersOrderGoods);
-        //获取用户信息
-        $obj->ProtobufObj(array(
-            'Protos/PBS_UsrDataOprater.php',
-            'Protos/PBS_UsrDataOpraterReturn.php',
-            'Protos/UsrDataOpt.php',
-            'RedisProto/RPB_PlayerData.php',
-            'RedisProto/RPB_AccountData.php',
-
-
-
-        ));
-        //实例化对象
-        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
-        $UsrDataOpt         = new UsrDataOpt();
-
-
-        $PBS_UsrDataOprater->setPlayerid($playerid);
-        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_All);
-        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
-        //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
-
-        if(strlen($PBS_UsrDataOpraterRespond)==0){
-            $result = 3003;
-            goto response;
-        }
-        if($PBS_UsrDataOpraterRespond  == 504){
-            $result = 3002;
-            goto response;
-        }
-        //接受回应
-        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
-        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
-        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-        //判断结果
-        if($ReplyCode != 1){
-            $result = $ReplyCode;
-            goto response;
-        }
-        $PBS_UsrDataOpraterReturnAccountData =  $PBS_UsrDataOpraterReturn->getAccountData();
-        $PBS_UsrDataOpraterReturnPlayerData  =  $PBS_UsrDataOpraterReturn->getBase();
-        //用名
-        $UserName = $PBS_UsrDataOpraterReturnPlayerData->getName();
-        $RegisterChannel = $PBS_UsrDataOpraterReturnAccountData->getRegChannel();
+        $RegisterChannel = "";
+        $UserName        = "";
         //订单信息
         $dataUsersOrderInfo = array(
             'playerid'=>$playerid,
@@ -225,19 +220,75 @@ class PlaceOrderController extends ComController {
             'RegisterChannel'=>$RegisterChannel,
             'PayChannel'=>$DataInfo['channel'],
             'Platform'=>$Platform,
-            'PayPassAgeWay'=>'',
+            'PayPlatform'=>$Type,
+            'PayPassAgeWay'=>$CatThirdpay['PassAgeWay'],
+            'PayID'=>$CatThirdpay['Id'],
         );
+        // 3-商城  1-首充  2-月卡
+        $appid = $CatThirdpay['appid'];
+        $notifyurl = '';
+        if($Type == 1){
+            $notifyurl = $CatThirdpay['CardNotifyurl'];
+        }elseif ($Type == 2){
+            $notifyurl = $CatThirdpay['TheFirstNotifyurl'];
+        }elseif ($Type == 3){
+            $notifyurl = $CatThirdpay['MallShopNotifyurl'];
+        }
+        //支付平台  1 支付宝 2-微信 3-爱贝
+        $Payment = false;
+        switch ($PlatformType){
+            case  1:
+                $Payment = true;
+                break;
+            case  2:
+                $Payment = true;
+                break;
+
+            case  3:
+                $Payment = true;
+                $PayInfo = array(
+                    'appid'          =>         "$appid",
+                    'waresid'        =>         3,
+                    'waresname'      =>         $catGoodsAll['Name'],
+                    'cporderid'      =>         "$PlatformOrder",
+                    'price'          =>         (float)$catGoodsAll['CurrencyNum'],        //货币
+                    'currency'       =>         "RMB",                              //货币类型
+                    'appuserid'      =>         $playerid.'#'.$catGoodsAll['Id'],   //用户在商户应用的唯一标识
+                    'cpprivateinfo'  =>         "$PlatformOrder",                   //商户私有信息，支付完成后发送支付结果通知时会透传给商户
+                    'notifyurl'      =>         $notifyurl,                         //回调地址
+                );
+
+                $transid = $obj->IapppayOrder($PayInfo,$CatThirdpay['private'],$CatThirdpay['public']);
+                if($transid){
+                    $info['transid'] = $transid;
+                }else{
+
+                    $result = 40010;
+                    goto  response;
+                }
+                break;
+            default:
+                break;
+        }
+        if($Payment == false){
+            $result = 5004;
+            goto  response;
+        }
+        $model->startTrans();
         $addUsersOrderInfo = $model
-                            ->table('jy_users_order_info')
-                            ->add($dataUsersOrderInfo);
+            ->table('jy_users_order_info')
+            ->add($dataUsersOrderInfo);
+        $addUsersOrderGoods =   $model
+            ->table('jy_users_order_goods')
+            ->addAll($dataUsersOrderGoods);
         if($addUsersOrderGoods && $addUsersOrderInfo){
-            $info['PlatformOrder'] =  $PlatformOrder;
             $model->commit();
         }else{
             $model->rollback();
             $result = 3004;
             goto response;
         }
+
         response:
             $response = array(
                 'result' => $result,

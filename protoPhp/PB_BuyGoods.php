@@ -1,29 +1,27 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-05 00:45:50
- *
- * protos package
+ * Auto generated from PB_base_data.proto at 2017-09-05 00:47:23
  */
 
-namespace Protos {
+namespace {
 /**
- * PBS_ServerClosedNotify message
+ * PB_BuyGoods message
  */
-class PBS_ServerClosedNotify extends \ProtobufMessage
+class PB_BuyGoods extends \ProtobufMessage
 {
     /* Field index constants */
-    const SERVERID = 1;
-    const STYPE = 2;
+    const ERR = 1;
+    const GOODSID = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::SERVERID => array(
-            'name' => 'serverid',
+        self::ERR => array(
+            'name' => 'err',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::STYPE => array(
-            'name' => 'stype',
+        self::GOODSID => array(
+            'name' => 'goodsid',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -44,8 +42,8 @@ class PBS_ServerClosedNotify extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::SERVERID] = null;
-        $this->values[self::STYPE] = null;
+        $this->values[self::ERR] = null;
+        $this->values[self::GOODSID] = null;
     }
 
     /**
@@ -59,48 +57,48 @@ class PBS_ServerClosedNotify extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'serverid' property
+     * Sets value of 'err' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setServerid($value)
+    public function setErr($value)
     {
-        return $this->set(self::SERVERID, $value);
+        return $this->set(self::ERR, $value);
     }
 
     /**
-     * Returns value of 'serverid' property
+     * Returns value of 'err' property
      *
      * @return integer
      */
-    public function getServerid()
+    public function getErr()
     {
-        $value = $this->get(self::SERVERID);
+        $value = $this->get(self::ERR);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'stype' property
+     * Sets value of 'goodsid' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setStype($value)
+    public function setGoodsid($value)
     {
-        return $this->set(self::STYPE, $value);
+        return $this->set(self::GOODSID, $value);
     }
 
     /**
-     * Returns value of 'stype' property
+     * Returns value of 'goodsid' property
      *
      * @return integer
      */
-    public function getStype()
+    public function getGoodsid()
     {
-        $value = $this->get(self::STYPE);
+        $value = $this->get(self::GOODSID);
         return $value === null ? (integer)$value : $value;
     }
 }

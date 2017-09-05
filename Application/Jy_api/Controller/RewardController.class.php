@@ -89,7 +89,6 @@ class RewardController extends ComController {
                        ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                        ->field($TheawardLogFile)
                        ->select();
-
         $status         = 1;
         $Schedule       = $activityInfo['Schedule'];
         $PriceNum       = !empty($catUserOrder[0]['PriceNum'])? :0;
