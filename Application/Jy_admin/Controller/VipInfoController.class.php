@@ -64,7 +64,7 @@ class VipInfoController extends ComController {
         //查询用户信息
         $catVipInfo = M('jy_vip_info')
                       ->where('level = '.$level)
-                      ->field('level,experience')
+                      ->field('level,experience,Describe,ImgCode,GiveInfo')
                       ->find();
 
         if(IS_POST){

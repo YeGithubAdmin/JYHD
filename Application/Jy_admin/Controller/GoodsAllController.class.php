@@ -265,7 +265,7 @@ class GoodsAllController extends ComController {
             $upGoodsAll = M('jy_goods_all')
                 ->where('Id = '.$Id)
                 ->save($dataGoodsAll);
-            if($upGoodsAll !== false ){
+            if($upGoodsAll){
                 $obj->showmessage('修改成功','/jy_admin/GoodsAll/index');
             }else{
                 $obj->showmessage('修改失败');

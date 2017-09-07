@@ -89,7 +89,6 @@ class CardInfoController extends ComController {
             $CurrentTime        =           strtotime(date('Y-m-d',time()));
             $OneDay             =           24*60*60;
             $DayNum             =           ($CurrentTime-$DateTime)/$OneDay;
-
             if($DayNum > 29){
                 $ShopCard  = 1;
                 $DayNum    = 0;
@@ -98,11 +97,12 @@ class CardInfoController extends ComController {
                 $StartTime          =           $CurrentTime+$OneDay;
                 $EndTime            =           $CurrentTime-$OneDay;
                 $UsersCardReceive = M('jy_users_card_receive_log')
-                    ->where('playerid = '.$playerid.' and  DateTime <=  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+                    ->where('playerid = '.$playerid.' and    DateTime <=  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                     ->find();
                 if(!empty($UsersCardReceive)){
                     $IsReceive = 2;
                 }
+                $ShopCard  = 2;
                 $DayNum  =  30-$DayNum;
             }
         }

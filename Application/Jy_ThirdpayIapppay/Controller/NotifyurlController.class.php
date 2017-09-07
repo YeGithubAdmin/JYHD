@@ -304,6 +304,7 @@ class NotifyurlController extends Controller {
             $addUsersPackageShopLog = 1;
             $addUsersGoodsStream    = 1;
             $addUsersCurrencyStream = 1;
+            $addUsersCardReceiveLog  = 1;
             if($CatUsersOrderInfo['Form'] == 1 || $CatUsersOrderInfo['Form'] == 2){
                 $dataUsersPackageShopLog = array(
                     'playerid'=>$CatUsersOrderInfo['playerid'],
@@ -312,6 +313,7 @@ class NotifyurlController extends Controller {
                 $addUsersPackageShopLog = $model
                     ->table('jy_users_package_shop_log')
                     ->add($dataUsersPackageShopLog);
+
             }
             //金币砖石
             if(!empty($dataUsersCurrencyStream)){

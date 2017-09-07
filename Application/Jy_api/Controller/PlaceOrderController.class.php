@@ -77,7 +77,7 @@ class PlaceOrderController extends ComController {
         //月卡
         if($Type == 2){
             $UsersPackageShopLog = $model->table('jy_users_package_shop_log')
-                ->where('playerid = '.$playerid.' and Type = 1')
+                ->where('playerid = '.$playerid.' and Type = 2')
                 ->field('UNIX_TIMESTAMP(DateTime) as DateTime')
                 ->order('Id desc')
                 ->find();
