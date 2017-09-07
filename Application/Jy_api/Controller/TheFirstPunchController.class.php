@@ -42,6 +42,7 @@ class TheFirstPunchController extends ComController {
         }
         //查询首冲物品
         $GoodsInfoFile = array(
+            'Id',
             'GiveInfo',
             'CurrencyNum',
 
@@ -86,6 +87,7 @@ class TheFirstPunchController extends ComController {
         $info['GoodsInfo'] = $CardGoodsInfo;
         $info['CurrencyNum'] = $GoodsAll['CurrencyNum'];
         $info['Isfirst'] = $Isfirst;
+        $info['Id'] = $GoodsAll['Id'];
 
         response:
             $response = array(

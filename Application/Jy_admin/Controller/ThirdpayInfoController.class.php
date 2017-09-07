@@ -57,9 +57,8 @@ class ThirdpayInfoController extends ComController {
             $private                    =   I('param.private','','trim');       //私钥
             $account                    =   I('param.account','','trim');       //签约账号
             $partner                    =   I('param.partner','','trim');       //合作者ID
-            $CardNotifyurl              =   I('param.CardNotifyurl','','trim');       //合作者ID
-            $TheFirstNotifyurl          =   I('param.TheFirstNotifyurl','','trim');       //合作者ID
-            $MallShopNotifyurl          =   I('param.MallShopNotifyurl','','trim');       //合作者ID
+            $Notifyurl              =   I('param.Notifyurl','','trim');       //回调地址
+
             if($Support == 2){
                 $VersionStart = '';
                 $VersionEnd = '';
@@ -72,9 +71,7 @@ class ThirdpayInfoController extends ComController {
                 'private'               =>      $private,
                 'account'               =>      $account,
                 'partner'               =>      $partner,
-                'CardNotifyurl'         =>      $CardNotifyurl,
-                'TheFirstNotifyurl'     =>      $TheFirstNotifyurl,
-                'MallShopNotifyurl'     =>      $MallShopNotifyurl,
+                'Notifyurl'             =>      $Notifyurl,
                 'PassAgeWay'            =>      $PassAgeWay,
                 'Recommend'             =>      $Recommend,
                 'Sort'                  =>      $Sort,
@@ -114,9 +111,7 @@ class ThirdpayInfoController extends ComController {
             $appid                      =   I('param.appid','','trim');                   //应用ID
             $private                    =   I('param.private','','trim');                 //私钥
             $partner                    =   I('param.partner','','trim');                 //合作者ID
-            $CardNotifyurl              =   I('param.CardNotifyurl','','trim');           //月卡回调
-            $TheFirstNotifyurl          =   I('param.TheFirstNotifyurl','','trim');       //首冲回调
-            $MallShopNotifyurl          =   I('param.MallShopNotifyurl','','trim');       //商城回调
+            $Notifyurl              =   I('param.Notifyurl','','trim');       //回调地址
             if($Support == 2){
                 $VersionStart = '';
                 $VersionEnd = '';
@@ -136,9 +131,8 @@ class ThirdpayInfoController extends ComController {
                 'appid'                 =>      $appid,
                 'private'               =>      $private,
                 'partner'               =>      $partner,
-                'CardNotifyurl'         =>      $CardNotifyurl,
-                'TheFirstNotifyurl'     =>      $TheFirstNotifyurl,
-                'MallShopNotifyurl'     =>      $MallShopNotifyurl,
+                'Notifyurl'             =>      $Notifyurl,
+
             );
 
             $addThirdpay  = M('jy_thirdpay')
@@ -173,9 +167,8 @@ class ThirdpayInfoController extends ComController {
             $appid                      =   I('param.appid','','trim');         //应用ID
             $public                     =   I('param.public','','trim');                    //公钥
             $private                    =   I('param.private','','trim');                   //私钥
-            $CardNotifyurl              =   I('param.CardNotifyurl','','trim');             //月卡回调
-            $TheFirstNotifyurl          =   I('param.TheFirstNotifyurl','','trim');         //首冲回调
-            $MallShopNotifyurl          =   I('param.MallShopNotifyurl','','trim');         //商城回调
+            $Notifyurl                  =   I('param.Notifyurl','','trim');             //月卡回调
+
 
             if($Support == 2){
                 $VersionStart = '';
@@ -195,9 +188,7 @@ class ThirdpayInfoController extends ComController {
                 'appid'                 =>      $appid,
                 'public'                =>      $public,
                 'private'               =>      $private,
-                'CardNotifyurl'         =>      $CardNotifyurl,
-                'TheFirstNotifyurl'     =>      $TheFirstNotifyurl,
-                'MallShopNotifyurl'     =>      $MallShopNotifyurl,
+                'Notifyurl'             =>      $Notifyurl,
             );
 
             $addThirdpay  = M('jy_thirdpay')
@@ -238,9 +229,8 @@ class ThirdpayInfoController extends ComController {
             'partner',
             'public',
             'private',
-            'CardNotifyurl',
-            'TheFirstNotifyurl',
-            'MallShopNotifyurl',
+            'Notifyurl',
+
         );
 
         $catThirdpay = M('jy_thirdpay')
@@ -262,9 +252,8 @@ class ThirdpayInfoController extends ComController {
             $private                    =   I('param.private','','trim');       //私钥
             $account                    =   I('param.account','','trim');       //签约账号
             $partner                    =   I('param.partner','','trim');       //合作者ID
-            $CardNotifyurl              =   I('param.CardNotifyurl','','trim');       //合作者ID
-            $TheFirstNotifyurl          =   I('param.TheFirstNotifyurl','','trim');       //合作者ID
-            $MallShopNotifyurl          =   I('param.MallShopNotifyurl','','trim');       //合作者ID
+            $Notifyurl                  =   I('param.Notifyurl','','trim');       //合作者ID
+
 
             if($Support == 2){
                 $VersionStart = '';
@@ -278,9 +267,7 @@ class ThirdpayInfoController extends ComController {
                 'private'               =>      $private,
                 'account'               =>      $account,
                 'partner'               =>      $partner,
-                'CardNotifyurl'         =>      $CardNotifyurl,
-                'TheFirstNotifyurl'     =>      $TheFirstNotifyurl,
-                'MallShopNotifyurl'     =>      $MallShopNotifyurl,
+                'Notifyurl'             =>      $Notifyurl,
                 'PassAgeWay'            =>      $PassAgeWay,
                 'Recommend'             =>      $Recommend,
                 'Sort'                  =>      $Sort,
@@ -326,9 +313,8 @@ class ThirdpayInfoController extends ComController {
             'appid',
             'partner',
             'private',
-            'CardNotifyurl',
-            'TheFirstNotifyurl',
-            'MallShopNotifyurl',
+            'Notifyurl',
+
         );
         $catThirdpay = M('jy_thirdpay')
             ->where('Id = '.$id)
@@ -348,9 +334,8 @@ class ThirdpayInfoController extends ComController {
             $appid                      =   I('param.appid','','trim');                   //应用ID
             $private                    =   I('param.private','','trim');                 //私钥
             $partner                    =   I('param.partner','','trim');                 //合作者ID
-            $CardNotifyurl              =   I('param.CardNotifyurl','','trim');           //月卡回调
-            $TheFirstNotifyurl          =   I('param.TheFirstNotifyurl','','trim');       //首冲回调
-            $MallShopNotifyurl          =   I('param.MallShopNotifyurl','','trim');       //商城回调
+            $Notifyurl                  =   I('param.Notifyurl','','trim');           //月卡回调
+
             if($Support == 2){
                 $VersionStart = '';
                 $VersionEnd = '';
@@ -369,9 +354,8 @@ class ThirdpayInfoController extends ComController {
                 'appid'                 =>      $appid,
                 'private'               =>      $private,
                 'partner'               =>      $partner,
-                'CardNotifyurl'         =>      $CardNotifyurl,
-                'TheFirstNotifyurl'     =>      $TheFirstNotifyurl,
-                'MallShopNotifyurl'     =>      $MallShopNotifyurl,
+                'Notifyurl'             =>      $Notifyurl,
+
             );
             $upThirdpay  = M('jy_thirdpay')
                 ->where('Id = '.$id.' and IsDel = 1')
@@ -405,18 +389,18 @@ class ThirdpayInfoController extends ComController {
             'private',
             'Sort',
             'Describe',
-            'CardNotifyurl',
-            'TheFirstNotifyurl',
-            'MallShopNotifyurl',
+            'Notifyurl',
             'Support',
             'VersionStart',
             'VersionEnd',
 
         );
+
         $catThirdpay = M('jy_thirdpay')
             ->where('Id = '.$Id.' and IsDel = 1')
             ->field($catThirdpayField)
             ->find();
+
         if(IS_POST){
             $Platform                   =   I('param.Platform',1,'intval');                 //平台 1-苹果 2-安卓
             $Name                       =   I('param.Name','','trim');                      //支付名称
@@ -430,9 +414,7 @@ class ThirdpayInfoController extends ComController {
             $appid                      =   I('param.appid','','trim');                     //应用ID
             $public                     =   I('param.public','','trim');                    //公钥
             $private                    =   I('param.private','','trim');                   //私钥
-            $CardNotifyurl              =   I('param.CardNotifyurl','','trim');             //月卡回调
-            $TheFirstNotifyurl          =   I('param.TheFirstNotifyurl','','trim');         //首冲回调
-            $MallShopNotifyurl          =   I('param.MallShopNotifyurl','','trim');         //商城回调
+            $Notifyurl                  =   I('param.Notifyurl','','trim');                 //回调
             if($Support == 2){
                 $VersionStart = '';
                 $VersionEnd = '';
@@ -450,9 +432,8 @@ class ThirdpayInfoController extends ComController {
                 'appid'                 =>      $appid,
                 'public'                =>      $public,
                 'private'               =>      $private,
-                'CardNotifyurl'         =>      $CardNotifyurl,
-                'TheFirstNotifyurl'     =>      $TheFirstNotifyurl,
-                'MallShopNotifyurl'     =>      $MallShopNotifyurl,
+                'Notifyurl'             =>      $Notifyurl,
+
             );
             $addThirdpay  = M('jy_thirdpay')
                 ->where('Id = '.$Id)

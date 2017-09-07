@@ -72,26 +72,13 @@
 			<div class="col-4"></div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-4"><span class="c-red">*</span>月卡回调地址：</label>
+			<label class="form-label col-4"><span class="c-red">*</span>回调地址：</label>
 			<div class="formControls col-3">
-				<textarea   datatype="*2-500" name="CardNotifyurl"  style="width:100%" rows="7" >{$info['CardNotifyurl']}</textarea>
+				<textarea   datatype="*2-500" name="Notifyurl"  style="width:100%" rows="7" >{$info['Notifyurl']}</textarea>
 			</div>
 			<div class="col-4"></div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-4"><span class="c-red">*</span>首冲回调地址：</label>
-			<div class="formControls col-3">
-				<textarea   datatype="*2-500" name="TheFirstNotifyurl"  style="width:100%" rows="7" >{$info['TheFirstNotifyurl']}</textarea>
-			</div>
-			<div class="col-4"></div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-4"><span class="c-red">*</span>商城回调地址：</label>
-			<div class="formControls col-3">
-				<textarea  datatype="*2-500" name="MallShopNotifyurl"  style="width:100%" rows="7" >{$info['MallShopNotifyurl']}</textarea>
-			</div>
-			<div class="col-4"></div>
-		</div>
+
 		<div class="row cl">
 			<label class="form-label col-4"><span class="c-red"></span>优先级：</label>
 			<div class="formControls col-1">
@@ -106,7 +93,7 @@
 				<div style="width:20%;text-align:center;float:left">
 		        		<span class="select-box">
 							<select class="select"  name="Support">
-								<option selected="selected" value="1">否</option>
+								<option  selected="selected" value="1">否</option>
 								<option value="2">是</option>
 							</select>
 						</span>
@@ -137,8 +124,8 @@
 				<div style="width:20%;text-align:center;float:left">
 		        		<span class="select-box">
 							<select class="select"  name="Support" onchange="SupportDom(this)">
-								<option selected="selected" value="1">否</option>
-								<option value="2">是</option>
+								<option <eq name = "info['Support']" value ="1">selected="selected"</eq>   value="1">否</option>
+								<option  <eq name = "info['Support']" value ="2">selected="selected"</eq> value="2">是</option>
 							</select>
 						</span>
 				</div>
@@ -146,14 +133,14 @@
 
 			<div class="col-4"></div>
 		</div>
-		<div class="row cl"  id = "DomSupport" >
+		<div class="row cl"   <eq name = "info['Support']" value ="2">style="display: none;"</eq>  id = "DomSupport" >
 			<label class="form-label col-4"><span class="c-red"></span>版本：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" value="" placeholder="起始"
+				<input type="text" class="input-text" value="{$info['VersionStart']}" placeholder="起始"
 					   name="VersionStart"  >
 			</div>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" value="" placeholder="结束"
+				<input type="text" class="input-text" value="{$info['VersionEnd']}" placeholder="结束"
 					   name="VersionEnd"  >
 			</div>
 		</div>

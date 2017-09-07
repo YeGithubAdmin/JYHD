@@ -90,7 +90,7 @@ class CardReceiveRewardsController extends ComController {
         );
         $GoodsAll = M('jy_goods_all')
                      ->field($GoodsInfoFile)
-                     ->where('ShowType = 3 and  CateGory = 4  and IsDel = 1')
+                     ->where('ShowType = 3 and CateGory = 4  and IsDel = 1')
                      ->find();
         if(empty($GoodsAll)){
             $result = 5003;
@@ -228,7 +228,13 @@ class CardReceiveRewardsController extends ComController {
             $addUsersGoodsStream   = M('jy_users_goods_stream')
                                     ->addAll($dataUsersGoodsStream);
         }
+        foreach ($CardGoodsInfo as $key=>$val){
+            if($val['Type'] == 0){
+                unset($CardGoodsInfo[$key]);
+            }
+        }
 
+        $info = array_values($CardGoodsInfo);
 
         if(!$addUsersCardReceiveLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
             $result = 3002;

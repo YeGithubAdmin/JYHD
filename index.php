@@ -25,10 +25,10 @@ define('JY_ROOT',dirname(__FILE__).DIRECTORY_SEPARATOR);
 
 // 服务器地址
 
-define('SERVER_DOMAIN_NAME','http://192.168.0.117/');
+define('SERVER_DOMAIN_NAME','http://192.168.0.156/');
 
 //图片地址
-define('IMG_URL','http://192.168.0.117/');
+define('IMG_URL','http://192.168.0.156/');
 
 //爱贝支付文件
 define('IAPPPAY',JY_ROOT.'thirdpay/iapppayforphp/');
