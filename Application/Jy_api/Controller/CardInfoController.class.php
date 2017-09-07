@@ -30,6 +30,7 @@ class CardInfoController extends ComController {
         }
         //查询奖励
         $GoodsInfoFile = array(
+            'Id',
             'GiveInfo',
             'CurrencyNum',
 
@@ -111,6 +112,7 @@ class CardInfoController extends ComController {
         $info['CurrencyNum'] = $GoodsAll['CurrencyNum'];
         $info['DayNum']      = $DayNum;
         $info['ShopCard']    = $ShopCard;
+        $info['Id']          = $GoodsAll['Id'];
         $info['IsReceive']   = $IsReceive;
 
         response:

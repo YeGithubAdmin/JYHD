@@ -189,7 +189,7 @@ class GoodsAllController extends ComController {
             $CurrencyNum                 =           I('param.CurrencyNum',0,'intval');                 //货币数量
             $IssueNum                    =           I('param.IssueNum',1,'intval');                    //发行量
             $IssueType                   =           I('param.IssueType',1,'intval');                   //是否限制发行量 1-否 2-是
-            $Type                        =           I('param.Type',1,'intval');                        //类型 1-金币 2-钻石 3-道具
+            $Type                        =           I('param.Type',0,'intval');                        //类型 1-金币 2-钻石 3-道具
             $CateGory                    =           I('param.CateGory',1,'intval');                    //类别 1-金币 2-砖石 3-道具
             $GetNum                      =           I('param.GetNum',0,'intval');                      //获得数量
             $GiveInfo                    =           I('param.GiveInfo','','trim');                     //赠送

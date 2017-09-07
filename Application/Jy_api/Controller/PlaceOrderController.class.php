@@ -10,9 +10,11 @@
  ***/
 namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
+use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
+use RedisProto\RPB_PlayerData;
 use Think\Controller;
 use Think\Model;
 class PlaceOrderController extends ComController {
@@ -63,7 +65,7 @@ class PlaceOrderController extends ComController {
         }
 
         //首充
-        if($Type == 2){
+        if($Type == 1){
             $UsersPackageShopLog = $model->table('jy_users_package_shop_log')
                                   ->where('playerid = '.$playerid.' and Type = 1')
                                   ->find();
@@ -73,7 +75,7 @@ class PlaceOrderController extends ComController {
             }
         }
         //月卡
-        if($Type == 3){
+        if($Type == 2){
             $UsersPackageShopLog = $model->table('jy_users_package_shop_log')
                 ->where('playerid = '.$playerid.' and Type = 1')
                 ->field('UNIX_TIMESTAMP(DateTime) as DateTime')
@@ -87,6 +89,56 @@ class PlaceOrderController extends ComController {
                 }
             }
         }
+
+        //查询用户信息
+
+
+        $obj->ProtobufObj(array(
+            'Protos/PBS_UsrDataOprater.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
+            'RedisProto/RPB_PlayerData.php',
+            'RedisProto/RPB_AccountData.php',
+            'Protos/OptSrc.php',
+            'Protos/UsrDataOpt.php',
+        ));
+
+        $UsrDataOprater         =   new  PBS_UsrDataOprater();
+        $UsrDataOpraterReturn   =   new  PBS_UsrDataOpraterReturn();
+        $OptSrc                 =   new  OptSrc();
+        $UsrDataOpt             =   new  UsrDataOpt();
+        $UsrDataOprater->setPlayerid($playerid);
+        $UsrDataOprater->setOpt($UsrDataOpt::Request_All);
+        $UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $String = $UsrDataOprater->serializeToString();
+        //发送请求
+        $UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$String,$playerid);
+        if(strlen($UsrDataOpraterRespond)==0){
+            $result = 3001;
+            goto response;
+        }
+        if($UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+        //接受回应
+        $UsrDataOpraterReturn->parseFromString($UsrDataOpraterRespond);
+        $ReplyCode = $UsrDataOpraterReturn->getCode();
+        //判断结果
+        if($ReplyCode != 1){
+            $result = 3003;
+            goto response;
+        }
+        //获得结果
+        $ReturnBase         =  $UsrDataOpraterReturn->getBase();
+        $AccountData        =   $UsrDataOpraterReturn->getAccountData();
+        //vip等级
+        $VipLevel           =  $ReturnBase->getVip();
+        //vip经验
+        $VipExp             =  $ReturnBase->getVipExp();
+        //注册渠道号
+        $RegisterChannel    =  $AccountData->getRegChannel();
+        //用户名称
+        $UserName           =  $ReturnBase->getName();
 
         //查询物品信息
         $catGoodsAllFile = array(
@@ -140,16 +192,14 @@ class PlaceOrderController extends ComController {
         $CatThirdpayField = array(
             'c.Id',
             'c.PassAgeWay',
-            'c.CardNotifyurl',
-            'c.TheFirstNotifyurl',
-            'c.MallShopNotifyurl',
+            'c.Notifyurl',
             'c.public',
             'c.private',
             'c.account',
             'c.appid',
         );
         $CatThirdpay = $model->table('jy_channel_thirdpay as a')
-            ->join('jy_thirdpay as c on a.PayID = c.Id  and c.Type = '.$Type)
+            ->join('jy_thirdpay as c on a.PayID = c.Id  and c.Type = '.$PlatformType)
             ->where('a.adminUserID = '.$channelid)
             ->field($CatThirdpayField)
             ->find();
@@ -157,7 +207,7 @@ class PlaceOrderController extends ComController {
             //查询本公司
             $CatThirdpay = $model->table('jy_channel_info as a')
                 ->join('jy_channel_thirdpay as b on a.adminUserID = b.adminUserID')
-                ->join('jy_thirdpay as c on b.PayID = c.Id and c.Type = '.$Type)
+                ->join('jy_thirdpay as c on b.PayID = c.Id and c.Type = '.$PlatformType)
                 ->where('a.platform = '.$Platform.' and a.isown = 2')
                 ->field($CatThirdpayField)
                 ->find();
@@ -168,11 +218,12 @@ class PlaceOrderController extends ComController {
         }
         //是否首次购买
         $catUsersShopLog = $model
-                            ->table('jy_users_shop_log')
-                            ->where('playerid = '.$playerid.'  and  GoodID = '.$catGoodsAll['Id'].' and  IsGive = 1')
-                            ->field('Id')->find();
+                            ->table('jy_users_order_info as a')
+                            ->join('jy_users_order_goods as b on a.playerid = b.playerid')
+                            ->where('a.playerid = '.$playerid.'  and  b.GoodsID = '.$catGoodsAll['Id'].' and  b.IsGive = 1')
+                            ->field('a.Id')->find();
         $Proportion = 0;
-        if(empty($catUsersShopLog)){
+        if(empty($catUsersShopLog) && $Type == 3){
             $Proportion = $catGoodsAll['Proportion'];
         }
         //订单号
@@ -205,8 +256,7 @@ class PlaceOrderController extends ComController {
             $dataUsersOrderGoods[$num]['Type']              = $v['Type'];
             $num++;
         }
-        $RegisterChannel = "";
-        $UserName        = "";
+
         //订单信息
         $dataUsersOrderInfo = array(
             'playerid'=>$playerid,
@@ -217,6 +267,9 @@ class PlaceOrderController extends ComController {
             'Status'=>1,
             'Price'=>$catGoodsAll['CurrencyNum'],
             'ExpireTime'=>0,
+            'VipLevel'=>$VipLevel,
+            'VipExp'  =>$VipExp,
+            'Form'    =>$Type,
             'RegisterChannel'=>$RegisterChannel,
             'PayChannel'=>$DataInfo['channel'],
             'Platform'=>$Platform,
@@ -224,16 +277,10 @@ class PlaceOrderController extends ComController {
             'PayPassAgeWay'=>$CatThirdpay['PassAgeWay'],
             'PayID'=>$CatThirdpay['Id'],
         );
+
         // 3-商城  1-首充  2-月卡
         $appid = $CatThirdpay['appid'];
-        $notifyurl = '';
-        if($Type == 1){
-            $notifyurl = $CatThirdpay['CardNotifyurl'];
-        }elseif ($Type == 2){
-            $notifyurl = $CatThirdpay['TheFirstNotifyurl'];
-        }elseif ($Type == 3){
-            $notifyurl = $CatThirdpay['MallShopNotifyurl'];
-        }
+        $notifyurl = $CatThirdpay['Notifyurl'];
         //支付平台  1 支付宝 2-微信 3-爱贝
         $Payment = false;
         switch ($PlatformType){
@@ -283,12 +330,20 @@ class PlaceOrderController extends ComController {
             ->addAll($dataUsersOrderGoods);
         if($addUsersOrderGoods && $addUsersOrderInfo){
             $model->commit();
+
+            $data['transdata']['appuserid'] = $playerid."#".$GoodsID;
+            $data['transdata']['cporderid'] = $PlatformOrder;
+            $data['transdata']['money'] = $catGoodsAll['CurrencyNum'];
+            $data['transdata']['paytype'] = 1;
+            $data['transdata']['appuserid'] = $playerid."#".$GoodsID;
+            $info['test'] = json_encode($data);
+//            $info['url']  = SERVER_DOMAIN_NAME.'Jy_ThirdpayIapppay/Notifyurl/index';
+
         }else{
             $model->rollback();
             $result = 3004;
             goto response;
         }
-
         response:
             $response = array(
                 'result' => $result,

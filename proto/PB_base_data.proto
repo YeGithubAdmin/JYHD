@@ -51,4 +51,7 @@ message PB_BuyGoods
 {
 	required int32 			err 	 = 1;
 	required int32 			goodsid  = 2;	// 商品id
+	repeated PB_Item 		items 	 = 3;	// 物品
+	optional int64			gold	 = 4;
+	optional int64			diamond	 = 5;
 }

@@ -4,12 +4,12 @@
 ***/
 namespace Jy_admin\Controller;
 use Think\Controller;
+use Think\Model;
 defined('THINK_PATH') or exit('Access Defined!');
 class RegisterMacroscopicController extends ComController {
     //列表
     public function index()
     {
-
         $channel = I('param.channel','','trim');                                                                    //渠道
         $timeEndDay = I('param.day',7,'intval');
         $time = date('Y-m-d', time());                                                                      //当前时间
@@ -18,7 +18,6 @@ class RegisterMacroscopicController extends ComController {
         if ($datemin == $time) {
             $datemin = $btime;
         }
-
         $dayTime = 24 * 60 * 60;
         $strtotime = strtotime($datemin);
         $timeStart= $datemin;                                                                                   //时间段：前天
@@ -69,10 +68,7 @@ class RegisterMacroscopicController extends ComController {
          *  破产率  BankruptcyRate
          *  描述 ：注册破产率=破产用户/注册用户。
          ***/
-
-
-        $where  =   'a.RegisterTM > "'.$timeEndStrtotime.'" and  a.RegisterTM < "'.$timeStartStrtotime.'"';
-
+        $where  =   'DateTime  >  str_to_date("'.$timeEndStrtotime.'","%Y-%m-%d %H:%i:%s") and  DateTime  < str_to_date("'.$timeStartStrtotime.'","%Y-%m-%d %H:%i:%s")';
         $RegisterMacrodataFile = array(
                 'UserNum',
                 'UserGame',
@@ -82,57 +78,20 @@ class RegisterMacroscopicController extends ComController {
                 'UserPayNum/UserNum  as UserNumPayRate',
                 'PayMoney',
                 'BankruptcyNum',
-                'BankruptcyNum/UserNum as BankruptcyRate'
+                'BankruptcyNum/UserNum as BankruptcyRate',
+                'date_format(DateTime,"%c月%d日") as DateTime',
         );
-        $UserComprehensive = M('jy_register_macrodata')
-                              ->where('')
+        $UserComprehensive =  M('jy_register_macrodata')
+                              ->where($where)
                               ->field($RegisterMacrodataFile)
                               ->select();
-
-        $UserComprehensiveData =array();
-        foreach ($erverDay as $k=>$v){
-            $arr = array();
-                $vTime =  date('Y-m-d',$v);
-
-                $data  = array();
-                foreach ($UserComprehensive as $key =>$val){
-                    if($val['t'] == $vTime){
-                        $data  = $val;
-
-                    }
-                }
-
-            if(!empty($data)){
-                $UserComprehensiveData[$k]['UserNum']           =           $data['UserNum'];
-                $UserComprehensiveData[$k]['UserPayNum']        =           $data['UserPayNum'];
-                $UserComprehensiveData[$k]['UserNumPayRate']    =           $data['UserNumPayRate'];
-                $UserComprehensiveData[$k]['UserGame']          =           $data['UserGame'];
-                $UserComprehensiveData[$k]['UserGameRate']      =           $data['UserGameRate'];
-                $UserComprehensiveData[$k]['PayNum']            =           $data['PayNum'];
-                $UserComprehensiveData[$k]['PayMoney']          =           $data['PayMoney'];
-                $UserComprehensiveData[$k]['ARPPU']             =           $data['ARPPU'];
-                $UserComprehensiveData[$k]['BankruptcyNum']     =           $data['BankruptcyNum'];
-                $UserComprehensiveData[$k]['BankruptcyRate']    =           $data['ARPPU'];
-            }else{
-                $UserComprehensiveData[$k]['UserNum']           =           0;
-                $UserComprehensiveData[$k]['UserPayNum']        =           0;
-                $UserComprehensiveData[$k]['UserNumPayRate']    =           0;
-                $UserComprehensiveData[$k]['UserGame']          =           0;
-                $UserComprehensiveData[$k]['UserGameRate']      =           0;
-                $UserComprehensiveData[$k]['PayNum']            =           0;
-                $UserComprehensiveData[$k]['PayMoney']          =           0;
-                $UserComprehensiveData[$k]['ARPPU']             =           0;
-                $UserComprehensiveData[$k]['BankruptcyNum']     =           0;
-                $UserComprehensiveData[$k]['BankruptcyRate']    =           0;
-            }
-            $UserComprehensiveData[$k]['date'] = date('n月j日',$v);
-
-
-        }
+        print_r($UserComprehensive);
         $this->assign('datemin',$datemin);
         $this->assign('day',$timeEndDay);
-        $this->assign('info',$UserComprehensiveData);
+        $this->assign('info',$UserComprehensive);
         $this->display();
     }
+
+
 
 }

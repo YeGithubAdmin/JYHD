@@ -14,8 +14,6 @@ use Think\Model;
 class MallShopBackController extends Controller {
     public function index(){
         include IAPPPAY.'base.php';
-
-
         $ObjFun   = new \Common\Lib\func();
         $dataThirdpay = $_POST;
         $msgArr = array(
@@ -51,7 +49,6 @@ class MallShopBackController extends Controller {
         }
         $respData    = 'transdata='.$dataThirdpay['transdata'].'&sign='.$dataThirdpay['sign'].'&signtype='.$dataThirdpay['signtype'];//把数据组装成验签函数要求的参数格式
         $OrderInfo   =  json_decode($dataThirdpay['transdata'],true);
-        dump($OrderInfo);
         if(empty($dataThirdpay)){
             $result = 4002;
             goto failed;
@@ -80,7 +77,6 @@ class MallShopBackController extends Controller {
             goto failed;
         }
 
-        dump($CatUsersOrderInfo);
         //金额是否先匹配
         if($CatUsersOrderInfo['Price']  !=  $money){
             $result = 7001;

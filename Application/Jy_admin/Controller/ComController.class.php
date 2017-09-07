@@ -38,7 +38,7 @@ class ComController extends Controller {
                 $this->page  = !empty($page) ?  $page-1 : C('ADMIN_PAGE');
                 $this->num   = !empty($num)  ?  $num  : C('ADMIN_NUM');
 
-               $adminGroup = M('jy_admin_group')
+               $adminGroup = M('jyhd.jy_admin_group')
                    ->field('id,upid,addId')
                    ->select();
                $lowerAdmingroup = array();
@@ -51,7 +51,7 @@ class ComController extends Controller {
 
                    //我的下级组员
                    $lowerAdminUser = array();
-                   $adminUser = M('jy_admin_users')
+                   $adminUser = M('jyhd.jy_admin_users')
                                 ->field('id,admingroup')
                                 ->select();
                    foreach ($adminUser as $k=>$v){

@@ -347,7 +347,7 @@ class func{
 	* @param  string  $content   proto 体
 	* @param  int  $timeOut   请求超时
 	**/
-	public function tocurl($url, $header, $content,$timeOut = 3){
+	public function tocurl($url, $header, $content,$timeOut = 60){
 		$ch = curl_init();
 		if(substr($url,0,5)=='https'){
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
