@@ -129,7 +129,7 @@ class PlaceOrderController extends ComController {
             goto response;
         }
         //获得结果
-        $ReturnBase         =  $UsrDataOpraterReturn->getBase();
+        $ReturnBase         =   $UsrDataOpraterReturn->getBase();
         $AccountData        =   $UsrDataOpraterReturn->getAccountData();
         //vip等级
         $VipLevel           =  $ReturnBase->getVip();

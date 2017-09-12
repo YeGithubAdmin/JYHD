@@ -47,7 +47,7 @@ class ActivityListController extends ComController {
                             ->join('jy_activity_son_list as b on b.FatherID = a.Id','left')
                             ->join('jy_goods_all as c on b.GoodsID  = c.Id')
                             ->field($activityFatherListField)
-                            ->where('a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and    str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
+                            ->where('a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
 
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
@@ -59,11 +59,14 @@ class ActivityListController extends ComController {
             'a.AddUpStartTime'
         );
         $catUserOrder = M('jy_activity_father_list as a')
-                        ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime  and  b.CallbackTime > a.AddUpStartTime','left')
+                        ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime  and  b.CallbackTime >= a.AddUpStartTime and b.Status = 2','left')
                         ->where('b.playerid = '.$playerid. ' and a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                         ->group('a.Type')
                         ->field($catUserOrderField)
                         ->select();
+
+
+
         $newUserOder  =  array();
         foreach ($catUserOrder as $k=>$v){
             $newUserOder[$v['Type']] = $v;
@@ -90,6 +93,7 @@ class ActivityListController extends ComController {
                    unset($activityFatherList[$k]);
             }
         }
+
         // 1-不可领  2-可领  3-已领取
         $NewactivityFatherList = array();
         foreach ($activityFatherList as $k=>$v){
@@ -108,9 +112,10 @@ class ActivityListController extends ComController {
                   }else{
                       if($PriceNum == 0 ){
                           $status = 1;
-                      }elseif($v['Schedule'] < $PriceNum){
+                      }elseif($v['Schedule'] > $PriceNum){
                           $status = 1;
-                      }elseif($v['Schedule'] >= $PriceNum && empty($Cumulative)){
+                      }elseif($v['Schedule'] <= $PriceNum && empty($Cumulative)){
+
                           $status = 2;
                       }
                   }

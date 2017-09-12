@@ -367,7 +367,17 @@ class SevenDaysSignController extends ComController {
             goto  response;
         }
 
+        if($rewardInfo['Type']>=1){
+            if($VipLevel>=1){
+                $info['Number'] =  $rewardInfo['GetNum']*2;
+            }else{
+                $info['Number'] =  $rewardInfo['GetNum']*2;
+            }
+            $info['Code']   =  $rewardInfo['Code'];
+            $info['Type']   =  $rewardInfo['Type'];
+        }
 
+        $info = array_values($info);
 
         response:
         $response = array(

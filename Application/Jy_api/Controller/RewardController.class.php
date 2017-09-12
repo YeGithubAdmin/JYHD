@@ -86,14 +86,16 @@ class RewardController extends ComController {
             'count(activityID) as num'
         );
         $TheawardLog = M('jy_users_activity_theaward_log')
-                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                        ->field($TheawardLogFile)
                        ->select();
+
         $status         = 1;
         $Schedule       = $activityInfo['Schedule'];
-        $PriceNum       = !empty($catUserOrder[0]['PriceNum'])? :0;
-        $PriceMax       = !empty($catUserOrder[0]['PriceMax'])? :0;
-        $Num            = empty($TheawardLog)? 0: $TheawardLog['num'];
+        $PriceNum       = !empty($catUserOrder[0]['PriceNum'])? $catUserOrder[0]['PriceNum']:0;
+        $PriceMax       = !empty($catUserOrder[0]['PriceMax'])? $catUserOrder[0]['PriceMax']:0;
+        $Num            = empty($TheawardLog)? 0: $TheawardLog[0]['num'];
+
         switch ($activityInfo['Type']){
             //累计
             case 1:
@@ -256,6 +258,12 @@ class RewardController extends ComController {
            $result = 3002;
            goto  response;
         }
+
+        $info = array(
+            'Number'=>$GoodsInfo['GetNum'],
+            'Type'=>$GoodsInfo['Type'],
+            'Code'=>$GoodsInfo['Code'],
+        );
         response:
             $response = array(
                 'result' => $result,

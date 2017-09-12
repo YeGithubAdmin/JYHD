@@ -70,7 +70,6 @@ class CardReceiveRewardsController extends ComController {
         $UsersCardReceive = M('jy_users_card_receive_log')
                             ->where('playerid = '.$playerid.' and  DateTime <=  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                             ->find();
-
         if(!empty($UsersCardReceive)){
             $IsReceive = 2;
         }
@@ -234,12 +233,18 @@ class CardReceiveRewardsController extends ComController {
             }
         }
 
-        $info = array_values($CardGoodsInfo);
-
         if(!$addUsersCardReceiveLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
             $result = 3002;
             goto  response;
         }
+        foreach ($CardGoodsInfo as $k=>$v){
+            if($v['Type'] >= 1){
+                $info[$k]['Number'] =  $v['GetNum'];
+                $info[$k]['Code']   =  $v['Code'];
+                $info[$k]['Type']   =  $v['Type'];
+            }
+        }
+        $info = array_values($info);
         response:
             $response = array(
                 'result' => $result,

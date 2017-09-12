@@ -59,7 +59,7 @@ class MallGoodsListController extends ComController {
             ->join('jy_users_order_goods as c on  c.GoodsId = a.Id and c.playerid = '.$playerid.' and  c.IsGive = 1','left')
             ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and  a.ShowType = '.$ShowType.' and a.IsDel = 1')
             ->field('a.Id,a.Name,a.CurrencyType,a.CurrencyNum,a.Code,a.Type,a.GetNum,a.ImgCode,a.Describe,if(c.GoodsId,0,a.Proportion) as Proportion')
-            ->limit(($page-1)*$num,$num)
+            ->group('a.Id')
             ->order('a.Sort asc')
             ->select();
 
@@ -67,7 +67,6 @@ class MallGoodsListController extends ComController {
             //查询本公司的渠道商品
             $Mychannel = M('jy_channel_info')
                 ->where('isown = 2 and platform = '.$platform)
-                ->limit(($page-1)*$num,$num)
                         ->field('adminUserID')
                         ->find();
             if(empty($Mychannel['adminUserID'])){
@@ -78,6 +77,7 @@ class MallGoodsListController extends ComController {
                 ->join('jy_users_order_goods as c on  c.GoodsId = a.Id and c.playerid = '.$playerid.' and  c.IsGive = 1','left')
                 ->where('b.adminUserID = '.$Mychannel['adminUserID'].' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and ShowType = '.$ShowType.' and IsDel = 1')
                 ->field('a.Id,a.Name,a.CurrencyType,a.CurrencyNum,a.Code,a.ImgCode,a.Type,a.GetNum,a.Describe,if(c.GoodsId,0,a.Proportion)) as Proportion')
+                ->group('a.Id')
                 ->order('a.Sort asc')
                 ->select();
 
