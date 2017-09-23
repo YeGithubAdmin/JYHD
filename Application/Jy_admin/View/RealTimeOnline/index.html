@@ -42,8 +42,13 @@
 
             <span style="width: 150px" class="select-box">
 					<select size="1" name="Type" class="select">
-						<option value="1"<if  condition= "$Type eq '1'">selected</if>>注册</option>
-                        <option value="2"<if condition="$Type eq '2'" >selected</if>>活跃</option>
+                        <option >全局</option>
+						<option value="1"<if  condition= "$Type eq '1'">selected</if>>十炮场</option>
+                        <option value="2"<if  condition="$Type eq '2'" >selected</if>>十炮场</option>
+                        <option value="3"<if  condition="$Type eq '3'" >selected</if>>百炮场</option>
+                        <option value="4"<if  condition="$Type eq '4'" >selected</if>>千炮场</option>
+                        <option value="5"<if  condition="$Type eq '5'" >selected</if>>万炮场</option>
+
 					</select>
 				</span>
             <button type="submit" class="btn btn-success" id="" name="">
@@ -88,7 +93,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Temperature (°C)'
+                    text: 'Temperature (人)'
                 },
                 plotLines: [{
                     value: 0,
@@ -97,7 +102,7 @@
                 }]
             },
             tooltip: {
-                valueSuffix: '°C'
+                valueSuffix: '人'
             },
             legend: {
                 layout: 'vertical',

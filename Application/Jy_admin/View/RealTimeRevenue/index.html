@@ -22,12 +22,12 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>实时概况</title>
+    <title>实时收入</title>
 </head>
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
-    实时数据 <span class="c-gray en">&gt;</span>实时概况 <a
+    实时数据 <span class="c-gray en">&gt;</span>实时收入<a
         class="btn btn-success radius r mr-20"
         style="line-height: 1.6em; margin-top: 3px"
         href="javascript:location.replace(location.href);" title="刷新"><i
@@ -42,8 +42,9 @@
 
             <span style="width: 150px" class="select-box">
 					<select size="1" name="Type" class="select">
-						<option value="1"<if  condition= "$Type eq '1'">selected</if>>注册</option>
-                        <option value="2"<if condition="$Type eq '2'" >selected</if>>活跃</option>
+						<option value="1"<if  condition= "$Type eq '1'">selected</if>>实时收入</option>
+                        <option value="2"<if condition="$Type eq '2'" >selected</if>>付费用户</option>
+                        <option value="3"<if condition="$Type eq '3'" >selected</if>>付费次数</option>
 					</select>
 				</span>
             <button type="submit" class="btn btn-success" id="" name="">
@@ -55,8 +56,6 @@
 <div class="pd-20">
     <div id="container" style="min-width:700px;height:400px"></div>
 </div>
-
-
 <script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
@@ -88,7 +87,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Temperature (人)'
+                    text: 'Temperature ({$info['Symbol']})'
                 },
                 plotLines: [{
                     value: 0,
@@ -97,7 +96,7 @@
                 }]
             },
             tooltip: {
-                valueSuffix: '人'
+                valueSuffix: "{$info['Symbol']}"
             },
             legend: {
                 layout: 'vertical',

@@ -12,7 +12,7 @@ class RealTimeOnlineController extends ComController {
          $time    = strtotime($time);
          $DayTime = 24*60*60;
          //搜索类型 1-注册 2-活跃
-         $Type = I('param.Type',1,'intval');
+         $Type = I('param.Type','','intval');
         //当天时间
          $SameDayStartTime   =  date('Y-m-d H:i:s',$time);
          $SameDayEndTime     =  date('Y-m-d H:i:s',$time+$DayTime);
@@ -30,27 +30,31 @@ class RealTimeOnlineController extends ComController {
 
          }
          $info = array();
-         if($Type == 1){
              //注册
              $SameDayregisterField  = array(
-                 'date_format(regtime,"%H") as i',
-                 'count(playerid) as UserNum',
+                 'DateTime',
+                 'date_format(DateTime,"%H") as i',
+                 'UserNum',
              );
              //当天
-             $SameDayregister  = M('game_account')
-                 ->where('regtime < "'.$SameDayEndTime.'"  and  "'.$SameDayStartTime.'" <= regtime')
+             $SameDayregister  = M('jy_real_time_online')
+                 ->where('DateTime < "'.$SameDayEndTime.'"  and  "'.$SameDayStartTime.'" <= DateTime')
                  ->field($SameDayregisterField)
+                 ->order('DateTime desc')
                  ->group('i')
                  ->select();
+
+             dump($SameDayregister);
+
              //一天
-             $OneDayregister  = M('game_account')
-                 ->where('regtime < "'.$OneDayEndTime.'"  and  "'.$OneDayStartTime.'" <= regtime')
+             $OneDayregister  = M('jy_real_time_online')
+                 ->where('DateTime < "'.$OneDayEndTime.'"  and  "'.$OneDayStartTime.'" <= DateTime')
                  ->field($SameDayregisterField)
                  ->group('i')
                  ->select();
              //七天前
-             $SevenDayregister  = M('game_account')
-                 ->where('regtime < "'.$SevenDayEndTime.'"  and  "'.$SevenDayStartTime.'" <= regtime')
+             $SevenDayregister  = M('jy_real_time_online')
+                 ->where('DateTime < "'.$SevenDayEndTime.'"  and  "'.$SevenDayStartTime.'" <= DateTime')
                  ->field($SameDayregisterField)
                  ->group('i')
                  ->select();
@@ -89,67 +93,7 @@ class RealTimeOnlineController extends ComController {
              $info['Seven']  =   json_encode($dataSevenDayregister);
              $info['Title']  = "注册";
 
-         }elseif ($Type == 2){
-            //活跃
-             $SameDayActiveField  = array(
-                 'FROM_UNIXTIME(login_time,"%H") as i',
-                 'count(distinct playerid) as UserNum',
-             );
-             //当天
-             $SameDayactive  = M('game_login_action')
-                 ->where('login_time < "'.strtotime($SameDayEndTime).'"  and  "'.strtotime($SameDayStartTime).'" <= login_time')
-                 ->field($SameDayActiveField)
-                 ->group('i')
-                 ->select();
-             //一天
-             $OneDayActive  = M('game_login_action')
-                 ->where('login_time < "'.strtotime($OneDayEndTime).'"  and  "'.strtotime($OneDayStartTime).'" <= login_time')
-                 ->field($SameDayActiveField)
-                 ->group('i')
-                 ->select();
 
-             //七天前
-             $SevenDayActive  = M('game_login_action')
-                 ->where('login_time < "'.strtotime($SevenDayEndTime).'"  and  "'.strtotime($SevenDayStartTime).'" <= login_time')
-                 ->field($SameDayActiveField)
-                 ->group('i')
-                 ->select();
-             $SameDayactiveSort  = array();
-             $dataSameDayactive = array();
-             $OneDayactiveSort   = array();
-             $dataOneDayactive   = array();
-             $SevenDayactiveSort = array();
-             $dataSevenDayactive= array();
-             foreach ($SameDayactive  as $k=>$v) $SameDayactiveSort[$v['i']]=$v;
-             foreach ($OneDayActive   as $k=>$v) $OneDayactiveSort[$v['i']]=$v;
-             foreach ($SevenDayActive as $k=>$v) $SevenDayactiveSort[$v['i']]=$v;
-             foreach ($timeinterval as $k=>$v){
-                 //当天
-                 if($SameDayactiveSort[$v['num']]){
-                     $dataSameDayactive[$k] =   intval($SameDayactiveSort[$v['num']]['UserNum']);
-                 }else{
-                     $dataSameDayactive[$k] = 0;
-                 }
-                 //一天
-                 if($OneDayactiveSort[$v['num']]){
-                     print_r($OneDayActive[$v['num']]);
-                     $dataOneDayactive[$k] =  intval($OneDayactiveSort[$v['num']]['UserNum']) ;
-                 }else{
-                     $dataOneDayactive[$k] = 0;
-                 }
-                 //七天
-                 if($SevenDayactiveSort[$v['num']]){
-                     $dataSevenDayactive[$k] =  intval($SevenDayactiveSort[$v['num']]['UserNum']) ;
-                 }else{
-                     $dataSevenDayactive[$k] = 0;
-                 }
-             }
-             $info['Same']   =   json_encode($dataSameDayactive);
-             $info['One']    =   json_encode($dataOneDayactive);
-             $info['Seven']  =   json_encode($dataSevenDayactive);
-             $info['Title']  = "活跃";
-
-         }
          $this->assign('erverDay',json_encode($erverDay));
          $this->assign('Type',$Type);
          $this->assign('info',$info);
