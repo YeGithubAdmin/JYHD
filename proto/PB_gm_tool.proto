@@ -1,0 +1,38 @@
+
+package protos;
+
+import "PB_base_data.proto";
+import "PB_error_code.proto";
+
+// 系统广播
+message PBS_SysBroadcast 
+{
+	optional PB_PhpBroadcast php_bc = 1;	// 系统广播php
+}
+
+message PBS_SysBroadcastReturn
+{
+	required PB_ErrorCode code = 1;
+}
+
+// 白名单
+message PBS_AddWhiteList
+{
+	required string account_name = 1;
+}
+
+message PBS_AddWhiteListReturn
+{
+	required PB_ErrorCode code = 1;
+}
+
+// 设置服务状态
+message PBS_SetServerState
+{
+	required int32 state = 1 ;	 // 1 正常 2 停服 3 仅限白名单
+}
+
+message PBS_SetServerStateReturn
+{
+	required PB_ErrorCode code = 1;
+}

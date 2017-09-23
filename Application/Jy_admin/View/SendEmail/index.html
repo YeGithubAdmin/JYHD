@@ -28,7 +28,6 @@
 </head>
 <body>
 <div class="pd-20">
-
 	<form action="" method="post" onsubmit="return false" class="form form-horizontal" id="form-SendEmail">
 		<div class="row cl">
 			<label class="form-label col-1"><span class="c-red">*</span>用户ID：</label>
@@ -64,10 +63,7 @@
 						   name="Diamond"  nullmsg="">
 				</div>
 			</div>
-
 		</div>
-
-
 		<div class="row cl TypeOne" style="display: none;">
 			<label class="form-label col-1"><span class="c-red">*</span>卡号：</label>
 			<div class="formControls col-4">
@@ -80,7 +76,6 @@
 					   name="CardPwd" nullmsg="">
 			</div>
 		</div>
-
 		<div class="row cl TypeTow" style="display: none;">
 			<label class="form-label col-1"><span class="c-red"></span>添加道具：</label>
 			<div class="formControls col-1">
@@ -89,7 +84,6 @@
 							<select  class="select" name = "IsGive"  onchange="GiveInfoFun(this)" nullmsg="" >
 								 <option value="1">否</option>
 								 <option value="2">是</option>
-
                             </select>
 						</span>
 				</div>
@@ -98,23 +92,23 @@
 			<div id = "operation" style="display: none;">
 				<div class="formControls col-0"  onclick="GiveInfoAdd()">
 					<input class="btn btn-primary radius" type="button"  value="&nbsp;&nbsp;增加&nbsp;&nbsp;">
-
 				</div>
 				<div style="display: none;"  id = "del" class="formControls col-0">
 					<input class="btn btn-primary radius" type="button" onclick="GiveInfoDel()" value="&nbsp;&nbsp;删除&nbsp;&nbsp;">
-
 				</div>
 			</div>
-
-
 		</div>
 		<div id = "parent" class="TypeTow" >
 			<div class="row cl GiveInfo"  style="display: none">
 				<label class="form-label col-1"><span class="c-red"></span></label>
-
 				<div class="formControls col-1">
-					<input type="text"  class="input-text Itemid"   value="" placeholder="请输入道具ID"
-						   name="Prop[0][Id]"  nullmsg="">
+					<span class="select-box">
+							<select  class="select Itemid" name = "Prop[0][Id]"   nullmsg="" >
+								<volist name = "PropList" id ="val">
+								 <option value="{$val['Code']}">{$val['Name']}</option>
+								</volist>
+                            </select>
+						</span>
 				</div>
 				<div class="formControls col-1">
 					<input type="text"  class="input-text Num"   value="" placeholder="请输入道具数量"
@@ -128,7 +122,7 @@
 			<label class="form-label col-1"><span class="c-red">*</span>标题：</label>
 			<div class="formControls col-10">
 				<input type="text" class="input-text" value="" placeholder="请输入标题"
-					   name="Title" datatype="*6-16" nullmsg="用户ID">
+					   name="Title" datatype="*" nullmsg="用户ID">
 			</div>
 
 		</div>

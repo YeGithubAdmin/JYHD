@@ -101,7 +101,8 @@
 						   condition="$val['islock'] eq 1">正常<else/>锁定</if></span></td>
 					<td>{$val['mtime']}</td>
 					<td>{$val['remark']}</td>
-					<td class="td-manage"><a style="text-decoration: none"
+					<td class="td-manage">
+				    <a style="text-decoration: none"
 						onClick="<if condition="$val['islock'] eq 1" >adminUsers_stop<else/>adminUsers_start</if>(this, '{$val['id']}')"
 						href="javascript:;"
 						title="<if  condition = "$val['islock'] eq 0" >锁定<else/>启用</if>"> <i
@@ -112,7 +113,9 @@
 							class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"
 						href="javascript:;" onclick="adminUsers_del(this,'{$val['id']}')"
 						class="ml-5" style="text-decoration: none"><i
-							class="Hui-iconfont">&#xe6e2;</i></a></td>
+							class="Hui-iconfont">&#xe6e2;</i>
+					</a>
+					</td>
 				</tr>
 				</volist>
 			</tbody>

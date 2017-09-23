@@ -1,23 +1,27 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-08-17 23:26:56
- *
- * protos package
+ * Auto generated from PB_event.proto at 2017-09-22 17:44:52
  */
 
-namespace Protos {
+namespace {
 /**
- * PBS_PochanBuzhu message
+ * VipUpdate message
  */
-class PBS_PochanBuzhu extends \ProtobufMessage
+class VipUpdate extends \ProtobufMessage
 {
     /* Field index constants */
     const PLAYERID = 1;
+    const VIP = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
         self::PLAYERID => array(
             'name' => 'playerid',
+            'required' => true,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::VIP => array(
+            'name' => 'vip',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -39,6 +43,7 @@ class PBS_PochanBuzhu extends \ProtobufMessage
     public function reset()
     {
         $this->values[self::PLAYERID] = null;
+        $this->values[self::VIP] = null;
     }
 
     /**
@@ -71,6 +76,29 @@ class PBS_PochanBuzhu extends \ProtobufMessage
     public function getPlayerid()
     {
         $value = $this->get(self::PLAYERID);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'vip' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setVip($value)
+    {
+        return $this->set(self::VIP, $value);
+    }
+
+    /**
+     * Returns value of 'vip' property
+     *
+     * @return integer
+     */
+    public function getVip()
+    {
+        $value = $this->get(self::VIP);
         return $value === null ? (integer)$value : $value;
     }
 }

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+    <script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+    <script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+          rel="stylesheet" type="text/css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>权限设置</title>
+    <style>
+
+        .skin-minimal{
+            position:relative;
+        }
+        .icheckbox-blue {
+            position:absolute;left:70%;top:28%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="pd-20">
+    <form action="" method="post"  >
+        <input type="hidden" name = "id" value="{$info['id']}">
+
+        <table class="table table-border table-bordered">
+            <tbody class="text-l">
+            <tr>
+                <td colspan="8" class="text-c" style="font-size:18px;color:#333">{$info['name']}权限管理</td>
+            </tr>
+            <tr>
+                <volist name='menuList' id='val'>
+                    <td  style="height:50px;"><label  for="top{$val['id']}">{$val['name']}</label><input class="first"  <eq  name ="val['checked']" value = "1"> checked="checked"</eq>	 name="authority[]" type="checkbox" id="top{$val['id']}" value="{$val['id']}"><!--一级菜单-->
+                        <ul class="text-c" style="width:100%;border-top:1px solid #ccc;">
+                            <notempty name = 'val["sub_menu"]'>
+                                <volist  name="val['sub_menu']" id="v">
+                                    <li><label for="second{$v['id']}">{$v['name']}</label><input class="first"   <eq  name ="v['checked']" value = "1"> checked="checked"</eq> name="authority[]" type="checkbox" id="second{$v['id']}" value="{$v['id']}"><!--二级菜单-->
+                                        <notempty name ="v['sub_menu']">
+                                            <ul class="text-r" style="width:100%;border-top:1px solid #ccc;">
+                                                <volist name="v['sub_menu']" id="value">
+                                                    <li><label for="three{$value['id']}">{$value['name']}</label><input  name="authority[]"  <eq  name ="value['checked']" value = "1"> checked="checked"</eq> type="checkbox" id="three{$value['id']}" value="{$value['id']}" class="three"   ></li><!--三级菜单-->
+                                                </volist>
+                                            </ul>
+                                        </notempty>
+                                    </li>
+                                </volist>
+                            </notempty>
+                        </ul>
+                    </td>
+                </volist>
+
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="row cl">
+            <div class="col-9 col-offset-3" >
+                <input class="btn btn-primary radius mt-30" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript"
+        src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+        src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+        src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+        src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+<literal>
+    <script type="text/javascript">
+        $(function(){
+            $('.skin-minimal').iCheck({
+                checkboxClass: 'icheckbox-blue',
+                radioClass: 'iradio-blue',
+                increaseArea: '20%'
+            });
+
+
+            $('.first').click(function(){
+                if($(this).prop('checked')){
+                    $(this).parent().find(":checkbox").prop('checked',true);
+                }else{
+                    $(this).parent().find(":checkbox").prop('checked',false);
+                }
+            });
+
+
+        });
+
+
+
+
+
+    </script>
+</literal>
+</body>
+</html>

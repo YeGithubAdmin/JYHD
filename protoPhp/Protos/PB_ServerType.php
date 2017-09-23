@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-07 01:22:53
+ * Auto generated from PB_server_common.proto at 2017-09-22 17:45:11
  *
  * protos package
  */
@@ -15,6 +15,7 @@ final class PB_ServerType
     const S_GAME = 2;
     const S_DBAgent = 3;
     const S_GMTool = 4;
+    const S_NUMERICAL = 5;
 
     /**
      * Returns defined enum values
@@ -28,6 +29,7 @@ final class PB_ServerType
             'S_GAME' => self::S_GAME,
             'S_DBAgent' => self::S_DBAgent,
             'S_GMTool' => self::S_GMTool,
+            'S_NUMERICAL' => self::S_NUMERICAL,
         );
     }
 }

@@ -10,6 +10,7 @@
  ***/
 namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
+use Protos\OptReason;
 use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
@@ -86,10 +87,9 @@ class RewardController extends ComController {
             'count(activityID) as num'
         );
         $TheawardLog = M('jy_users_activity_theaward_log')
-                       ->where('playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].' and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                       ->where(' Id = '.$activityID.' and playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].'  and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                        ->field($TheawardLogFile)
                        ->select();
-
         $status         = 1;
         $Schedule       = $activityInfo['Schedule'];
         $PriceNum       = !empty($catUserOrder[0]['PriceNum'])? $catUserOrder[0]['PriceNum']:0;
@@ -162,6 +162,8 @@ class RewardController extends ComController {
             'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/UsrDataOpt.php',
             'Protos/OptSrc.php',
+            'Protos/OptReason.php',
+            'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
         ));
@@ -169,10 +171,12 @@ class RewardController extends ComController {
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
+        $OptReason          = new OptReason();
         //填充数据
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $PBS_UsrDataOprater->setReason($OptReason::promotion_reward);
         $RPB_PlayerData  = new RPB_PlayerData();
         $num = $GoodsInfo['GetNum']*$activityInfo['Number'];
         $dataUsersGoodsStream     = array();      //道具流水
@@ -199,8 +203,8 @@ class RewardController extends ComController {
             //道具
             case 3:
                 $PB_Item            = new \PB_Item();
-                $PB_Item->setId($num);
-                $PB_Item->setNum($GoodsInfo['Code']);
+                $PB_Item->setId($GoodsInfo['Code']);
+                $PB_Item->setNum($num);
                 $PBS_UsrDataOprater->appendItemOpt($PB_Item);
                 $dataUsersGoodsStream['playerid']      =       $playerid;
                 $dataUsersGoodsStream['Code']          =       $GoodsInfo['Code'];
@@ -236,8 +240,10 @@ class RewardController extends ComController {
             'playerid'=>$playerid,
             'GoodsID'=>$activityInfo['GoodsID'],
             'GoodsName'=>$GoodsInfo['Name'],
+            'GetNum'=>$GoodsInfo['GetNum'],
             'activityID'=>$activityInfo['Id'],
             'Type'=>$activityInfo['Type'],
+            'Channel'=>$DataInfo['channel'],
             'Number'=>$activityInfo['Number'],
             'AddUpStartTime'=>$activityInfo['AddUpStartTime'],
             'AddUpEndTime'=>$activityInfo['AddUpEndTime'],

@@ -22,12 +22,12 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>全局数据</title>
+    <title>版本分布</title>
 </head>
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
-    活跃分析 <span class="c-gray en">&gt;</span>等级分布 <a
+    活跃分析 <span class="c-gray en">&gt;</span>版本分布 <a
         class="btn btn-success radius r mr-20"
         style="line-height: 1.6em; margin-top: 3px"
         href="javascript:location.replace(location.href);" title="刷新"><i
@@ -42,7 +42,7 @@
         <div class="text-c">
             创建时间： <input type="text"
                          onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
-                         id="datemin" value="{$datemin}" name="datemin"
+                         id="datemin" value="{$DateTime}" name="DateTime"
                          class="input-text Wdate" style="width: 120px;">  <input
                 type="hidden"
                 onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
@@ -50,9 +50,10 @@
                 class="input-text Wdate" style="width: 120px;">
 
             <span style="width: 150px" class="select-box">
-                <select size="1" name="day" class="select">
-                    <option value="15" <if  condition= "$dayNum eq '15'">selected</if> >15天</option>
-                    <option value="30" <if  condition= "$dayNum eq '30'">selected</if> >30天</option>
+                <select size="1" name="DayNum" class="select">
+                    <option value="7" <if  condition= "$DayNum eq '7'">selected</if> >7天</option>
+                    <option value="15" <if  condition= "$DayNum eq '15'">selected</if> >15天</option>
+                    <option value="30" <if  condition= "$DayNum eq '30'">selected</if> >30天</option>
 				</select>
 			</span>
             <button type="submit" class="btn btn-success" id="" name="">
@@ -66,17 +67,17 @@
         <thead>
         <tr class="text-c">
             <th width="60">版本</th>
-            <volist name = "day" id ="val">
-                <th width="100">{$val['day']}</th>
+            <volist name = "erverDay" id ="val">
+                <th width="100">{$val['time']}</th>
             </volist>
         </tr>
         </thead>
         <tbody>
         <volist name ="info" id ="val">
             <tr class="text-c">
-                <th>{$val['Edition']}</th>
-                <volist name ="val['num']" id = "v">
-                    <th>{$v}</th>
+                <th>{$val['Version']}</th>
+                <volist name ="val['data']" id = "v">
+                    <th>{$v['UserNum']}</th>
                 </volist>
             </tr>
         </volist>

@@ -4,7 +4,6 @@
 **/
 namespace Jy_admin\Controller;
 use Protos\OptSrc;
-use Protos\PBS_ItemOpt;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
@@ -12,6 +11,16 @@ use RedisProto\RPB_PlayerData;
 use Think\Controller;
 class SendEmailController extends ComController {
     public function index(){
+        //查询物品
+        $catPropListField = array(
+            'Name',
+            'Code',
+        );
+        $catPropList = M('jy_prop_list')
+                       ->field($catPropListField)
+                       ->select();
+
+        $this->assign('PropList',$catPropList);
         $this->display('index');
     }
 
@@ -84,6 +93,8 @@ class SendEmailController extends ComController {
                 'Protos/PBS_UsrDataOpraterReturn.php',
                 'Protos/OptSrc.php',
                 'Protos/UsrDataOpt.php',
+                'Protos/OptReason.php',
+                'RPB_PlayerNumerical.php',
                 'PB_Email.php',
                 'EmailType.php',
                 'PB_Item.php',

@@ -135,6 +135,8 @@ class UsersExchangeApplicationController extends ComController {
                 'Protos/UsrDataOpt.php',
                 'Protos/OptSrc.php',
                 'EmailType.php',
+                'Protos/OptReason.php',
+                'RPB_PlayerNumerical.php',
                 'PB_Item.php',
                 'PB_Email.php',
             ));

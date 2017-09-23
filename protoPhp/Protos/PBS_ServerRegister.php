@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-07 01:22:53
+ * Auto generated from PB_server_common.proto at 2017-09-22 17:45:11
  *
  * protos package
  */
@@ -17,6 +17,7 @@ class PBS_ServerRegister extends \ProtobufMessage
     const GAMETYPE = 3;
     const MSGID_LOWER_BOUND = 4;
     const MSGID_UPPER_BOUND = 5;
+    const RP = 6;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -45,6 +46,11 @@ class PBS_ServerRegister extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::RP => array(
+            'name' => 'rp',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -67,6 +73,7 @@ class PBS_ServerRegister extends \ProtobufMessage
         $this->values[self::GAMETYPE] = null;
         $this->values[self::MSGID_LOWER_BOUND] = null;
         $this->values[self::MSGID_UPPER_BOUND] = null;
+        $this->values[self::RP] = null;
     }
 
     /**
@@ -191,6 +198,29 @@ class PBS_ServerRegister extends \ProtobufMessage
     public function getMsgidUpperBound()
     {
         $value = $this->get(self::MSGID_UPPER_BOUND);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'rp' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setRp($value)
+    {
+        return $this->set(self::RP, $value);
+    }
+
+    /**
+     * Returns value of 'rp' property
+     *
+     * @return integer
+     */
+    public function getRp()
+    {
+        $value = $this->get(self::RP);
         return $value === null ? (integer)$value : $value;
     }
 }

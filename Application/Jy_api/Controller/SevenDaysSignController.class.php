@@ -10,6 +10,7 @@
  ***/
 namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
+use Protos\OptReason;
 use Protos\OptSrc;
 use Protos\PBS_ItemOpt;
 use Protos\PBS_UsrDataOprater;
@@ -22,6 +23,8 @@ class SevenDaysSignController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
+        $Platform       =       $this->platform;
+        $Version        =       $this->version;
         $obj   = new \Common\Lib\func();
         $msgArr[3002]  = '与游戏断开，请稍后再试。';
         $msgArr[3003]  = '与游戏断开，请稍后再试。';
@@ -38,11 +41,19 @@ class SevenDaysSignController extends ComController {
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
-            'RedisProto/RPB_PlayerData.php'
+            'RedisProto/RPB_PlayerData.php',
+            'RedisProto/RPB_AccountData.php',
+            'Protos/OptReason.php',
+            'RPB_PlayerNumerical.php',
+            'Protos/UsrDataOpt.php',
+            'Protos/OptSrc.php',
         ));
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $OptSrc             = new OptSrc();
+        $UsrDataOpt         = new UsrDataOpt();
         $PBS_UsrDataOprater->setPlayerid($playerid);
-        $PBS_UsrDataOprater->setOpt(2);
+        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_All);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
@@ -65,6 +76,7 @@ class SevenDaysSignController extends ComController {
         }
         //获得结果
         $PBS_UsrDataOpraterReturnBase  =  $PBS_UsrDataOpraterReturn->getBase();
+
         //累计签到累计
         $SignDay = $PBS_UsrDataOpraterReturnBase->getSignDay();
         //最近签到时间
@@ -81,7 +93,6 @@ class SevenDaysSignController extends ComController {
             $isSign = 2;
         }
 
-
         //是否超过28天
         $IsExceed = 1;
         if($SignDay == 28){
@@ -97,6 +108,8 @@ class SevenDaysSignController extends ComController {
         }
 
 
+
+
         $SignDay = $SignDay%7;
 
         //签到信息列表
@@ -104,7 +117,7 @@ class SevenDaysSignController extends ComController {
         $sevenDaysSignFile = array(
             'a.ImgCode',
             'a.Day',
-             'b.Type',
+            'b.Type',
             'b.GetNum*a.Number as Number'
             );
 
@@ -114,51 +127,80 @@ class SevenDaysSignController extends ComController {
             ->where('IsExceed = '.$IsExceed)
             ->order('a.Day asc')
             ->select();
-
         //status 1-未签 2-已签 3-今日领取  4-明日可以领取
         foreach ($sevenDaysSign as $k=>$v){
-            //未签  余 0
-            if($SignDay == 0 && $isSign == 1){
-                if($v['Day'] == 1){
-                    $sevenDaysSign[$k]['Status'] = 3;
-                }elseif($v['Day'] == 2){
-                    $sevenDaysSign[$k]['Status'] = 4;
-                }else{
-                    $sevenDaysSign[$k]['Status'] = 1;
+            if($isSign == 1){
+                if($SignDay == 0){
+                    if($v['Day'] == 1){
+                        $sevenDaysSign[$k]['Status'] = 3;
+                    }elseif($v['Day'] == 2){
+                        $sevenDaysSign[$k]['Status'] = 4;
+                    }else{
+                        $sevenDaysSign[$k]['Status'] = 1;
+                    }
                 }
-            }
-            //已签 余 0
-            if($SignDay == 0 && $isSign == 2){
-                $sevenDaysSign[$k]['Status'] = 2;
-            }
+                if($SignDay>0 && $SignDay<6){
+                    if($SignDay+1 == $v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 3;
+                    }elseif($SignDay+2 == $v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 4;
+                    }elseif($SignDay>=$v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 2;
+                    }elseif ($SignDay<$v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 1;
+                    }
+                }
+                if($SignDay==6){
+                    if($SignDay+1 == $v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 3;
+                    }elseif($SignDay >= $v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 2;
+                    }
+                }
+            }else{
+                if($SignDay == 0){
+                    $sevenDaysSign[$k]['Status'] = 2;
+                }
+                if($SignDay>0 && $SignDay<=6){
+                    if($SignDay>=$v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 2;
+                    }elseif ($SignDay+1 == $v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 4;
+                    }elseif($SignDay<$v['Day']){
+                        $sevenDaysSign[$k]['Status'] = 1;
+                    }
+                }
 
-            //未签 余 > 0  and  6 >
-            if($SignDay >0   &&  $isSign == 1){
-                if($SignDay == $v['Day']){
-                    $sevenDaysSign[$k]['Status'] = 3;
-                }elseif($SignDay + 1 == $v['Day']){
-                    $sevenDaysSign[$k]['Status'] = 4;
-                }elseif($SignDay > $v['Day']){
-                    $sevenDaysSign[$k]['Status'] = 2;
-                }else{
-                    $sevenDaysSign[$k]['Status'] = 1;
-                }
-            }
-            //已签 余 > 0
-            if($SignDay >0  &&  $isSign == 2){
-                if($SignDay >= $v['Day']){
-                    $sevenDaysSign[$k]['Status'] = 2;
-                }elseif($SignDay + 1 == $v['Day']) {
-                    $sevenDaysSign[$k]['Status'] = 4;
-                }else{
-                    $sevenDaysSign[$k]['Status'] = 1;
-                }
             }
 
         }
+        $RPB_AccountData  =   $PBS_UsrDataOpraterReturn->getAccountData();
+        $RegChannel       =   $RPB_AccountData->getRegChannel();
+        $UsersName        =   $PBS_UsrDataOpraterReturnBase->getName();
+        $Gold             =   $PBS_UsrDataOpraterReturnBase->getGold();
+        $Diamond          =   $PBS_UsrDataOpraterReturnBase->getDiamond();
+        $RegTime          =   $RPB_AccountData->getRegtime();
+        $Level            =   $PBS_UsrDataOpraterReturnBase->getGlevel();
+        //记录登录信息
+        $UsersLoginLog = array(
+            'playerid'=>$playerid,
+            'UsersName'=>$UsersName,
+            'Gold'=>$Gold,
+            'Diamond'=>$Diamond,
+            'LastIP'=>$_SERVER['REMOTE_ADDR'],
+            'LastChannel'=>$DataInfo['channel'],
+            'Level'=>$Level,
+            'RegChannel'=>$RegChannel,
+            'Platform'=>$Platform,
+            'Version'=>$Version,
+            'RegTime'=>$RegTime,
+        );
+        $addUsersLoginLog = M('jy_users_login_log')
+                            ->add($UsersLoginLog);
 
         $info['SignInfo']  =   $sevenDaysSign;
         $info['Status']    =   $isSign;
+
         response:
             $response = array(
                 'result' => $result,
@@ -198,7 +240,9 @@ class SevenDaysSignController extends ComController {
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/UsrDataOpt.php',
+            'Protos/OptReason.php',
             'Protos/OptSrc.php',
+            'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
         ));
@@ -279,7 +323,7 @@ class SevenDaysSignController extends ComController {
                         ->table('jy_goods_all as a')
                         ->join('jy_seven_days_sign as b on b.GoodsID  =  a.id and b.Day = '.$SignDay.' and b.IsExceed = '.$IsExceed)
                         ->where('a.IsDel = 1')
-                        ->field('a.GetNum*b.Number as Number,a.Id,a.Type,a.Code')
+                        ->field('a.GetNum,b.Number,a.Id,a.Type,a.Code')
                         ->find();
 
         if(empty($rewardInfo)){
@@ -293,9 +337,11 @@ class SevenDaysSignController extends ComController {
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $RPB_PlayerData   =  new RPB_PlayerData();
+        $OptReason        =  new OptReason();
+        $PBS_UsrDataOprater->setReason($OptReason::checkin_reward);
         $dataUsersGoodsStream       = array();      //道具流水
         $dataUsersCurrencyStream    = array();      //金币砖石流水
-            $num = $rewardInfo['Number'];
+            $num = $rewardInfo['Number']*$rewardInfo['GetNum'];
             if($VipLevel >= 1){
                 $num = $num*2;
             }
@@ -352,6 +398,19 @@ class SevenDaysSignController extends ComController {
             goto response;
         }
         /****************************记录签到奖励************************************/
+        //签到记录
+        $dataUsersSignLog = array(
+            'playerid'=>$playerid,
+            'GoodsID'=>$rewardInfo['Id'],
+            'Code'=>$rewardInfo['Code'],
+            'Day'=>$SignDay,
+            'Channel'=>$DataInfo['channel'],
+            'Type'=>$rewardInfo['Type'],
+            'GetNum'=>$rewardInfo['GetNum'],
+            'Number'=>$rewardInfo['Number'],
+        );
+        $addUsersSignLog = M('jy_users_sign_log')
+                           ->add($dataUsersSignLog);
         $addUsersCurrencyStream = 1;   //记录金币砖石流水
         $addUsersGoodsStream    = 1;                              //记录道具流水
         if(!empty($dataUsersCurrencyStream)){
@@ -369,15 +428,14 @@ class SevenDaysSignController extends ComController {
 
         if($rewardInfo['Type']>=1){
             if($VipLevel>=1){
-                $info['Number'] =  $rewardInfo['GetNum']*2;
+                $info['Number'] =  $rewardInfo['Number']*$rewardInfo['GetNum']*2;
             }else{
-                $info['Number'] =  $rewardInfo['GetNum']*2;
+                $info['Number'] =  $rewardInfo['Number']*$rewardInfo['GetNum'];
             }
             $info['Code']   =  $rewardInfo['Code'];
             $info['Type']   =  $rewardInfo['Type'];
         }
 
-        $info = array_values($info);
 
         response:
         $response = array(

@@ -10,6 +10,7 @@
  ***/
 namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
+use Protos\OptReason;
 use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
@@ -57,7 +58,7 @@ class CardReceiveRewardsController extends ComController {
         $CurrentTime        =           strtotime(date('Y-m-d',time()));
         $DayNum             =           ($CurrentTime-$DateTime)/(24*60*60);
         $OneDay             =           24*60*60;
-        $StartTime          =           $CurrentTime-$OneDay;
+        $StartTime          =           $CurrentTime;
         $StartTime          =           date("Y-m-d H:i:s",$StartTime);
         $EndTime            =           $CurrentTime+$OneDay;
         $EndTime            =           date("Y-m-d H:i:s",$EndTime);
@@ -68,7 +69,7 @@ class CardReceiveRewardsController extends ComController {
         //判断今天是否已经领取过  1 未领取过  2 领取过
         $IsReceive = 1;
         $UsersCardReceive = M('jy_users_card_receive_log')
-                            ->where('playerid = '.$playerid.' and  DateTime <=  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+                            ->where('playerid = '.$playerid.' and  DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                             ->find();
         if(!empty($UsersCardReceive)){
             $IsReceive = 2;
@@ -125,6 +126,8 @@ class CardReceiveRewardsController extends ComController {
             foreach ($GiveInfo as $key=>$val){
                 if($val['Id'] == $v['Id']){
                     $CardGoodsInfo[$k]['GetNum'] =  $v['GetNum']*$val['GetNum'];
+                    $CardGoodsInfo[$k]['Number'] =  $val['GetNum'];
+                    $CardGoodsInfo[$k]['GetNumGive'] =  $v['GetNum'];
                 }
             }
         }
@@ -136,6 +139,8 @@ class CardReceiveRewardsController extends ComController {
             'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/OptSrc.php',
             'Protos/UsrDataOpt.php',
+            'Protos/OptReason.php',
+            'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
         ));
@@ -143,12 +148,24 @@ class CardReceiveRewardsController extends ComController {
         $RPB_PlayerData      = new RPB_PlayerData();
         $UsrDataOpt          = new UsrDataOpt();
         $OptSrc              = new OptSrc();
+        $OptReason           = new OptReason();
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+        $PBS_UsrDataOprater->setReason($OptReason::get_yueka_award);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $dataUsersGoodsStream     = array();      //道具流水
         $dataUsersCurrencyStream  = array();      //金币砖石流水
+        $dataUsersCardReceiveLog  = array();      //月卡奖励
         foreach ($CardGoodsInfo as $k=>$v){
+            if($v['Type'] > 0){
+                $dataUsersCardReceiveLog[$k]['playerid']   =    $playerid;
+                $dataUsersCardReceiveLog[$k]['GoodsID']    =    $v['Id'];
+                $dataUsersCardReceiveLog[$k]['Type']       =    $v['Type'];
+                $dataUsersCardReceiveLog[$k]['Code']       =    $v['Code'];
+                $dataUsersCardReceiveLog[$k]['GetNum']     =    $v['GetNumGive'];
+                $dataUsersCardReceiveLog[$k]['Number']     =    $v['Number'];
+                $dataUsersCardReceiveLog[$k]['Channel']    =    $DataInfo['channel']  ;
+            }
              switch ($v['Type']){
                  //金币
                  case  1 :
@@ -190,34 +207,26 @@ class CardReceiveRewardsController extends ComController {
             $result = 3003;
             goto response;
         }
-
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3004;
             goto response;
         }
-
         //接受回应
         $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
             goto response;
         }
         //记录
-        $dataUsersCardReceiveLog = array(
-            'playerid'=>$playerid
-        );
+        $dataUsersCardReceiveLog = array_values($dataUsersCardReceiveLog);
         $addUsersCardReceiveLog =M('jy_users_card_receive_log')
-                                ->add($dataUsersCardReceiveLog);
+                                ->addAll($dataUsersCardReceiveLog);
         $addUsersCurrencyStream = 1;   //记录金币砖石流水
         $addUsersGoodsStream    = 1;   //记录道具流水
-
-
         if(!empty($dataUsersCurrencyStream)){
-
             $dataUsersCurrencyStream = array_values($dataUsersCurrencyStream);
             $addUsersCurrencyStream = M('jy_users_currency_stream')
                                       ->addAll($dataUsersCurrencyStream);
@@ -232,7 +241,6 @@ class CardReceiveRewardsController extends ComController {
                 unset($CardGoodsInfo[$key]);
             }
         }
-
         if(!$addUsersCardReceiveLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
             $result = 3002;
             goto  response;
@@ -253,7 +261,5 @@ class CardReceiveRewardsController extends ComController {
                 'data' => $info,
             );
             $this->response($response,'json');
-
-
     }
 }

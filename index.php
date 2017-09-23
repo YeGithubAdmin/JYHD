@@ -37,7 +37,7 @@ define('IAPPPAY',JY_ROOT.'thirdpay/iapppayforphp/');
 define('PROTOC_PATH', JY_ROOT.'protoPhp/');
 
 //游戏服务器请求地址
-define('SERVER_PROTO', 'http://192.168.0.147:80');
+define('SERVER_PROTO', 'http://192.168.0.151:80');
 
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';

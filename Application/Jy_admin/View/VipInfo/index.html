@@ -46,6 +46,7 @@
 			<thead>
 				<tr class="text-c">
 					<th width="30">等级</th>
+					<th width="30">每日奖励</th>
 					<th width="30">充值额度</th>
 					<th width="30">图片</th>
 					<th width="150">描述</th>
@@ -57,6 +58,7 @@
 				<volist name='info' id = 'val'>
 				<tr class="text-c">
 					<td>{$val['level']}</td>
+					<td><a  style="color:red" onclick="vipInfo_VipReward('赠送商品','/jy_admin/VipReward/index/level/{$val['level']}')">查看</a></td>
 					<td>{$val['experience']}</td>
 					<td>{$val['ImgCode']}</td>
 					<td>{$val['Describe']}</td>
@@ -103,6 +105,17 @@ function vipInfo_add(title,url,w,h){
 function vipInfo_edit(title,url,w,h){
     layer_show(title,url,w,h);
 }
+
+/*vip等级-奖励*/
+function vipInfo_VipReward(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}
+
 
 /*vip等级-删除*/
 function vipInfo_del(obj,id){

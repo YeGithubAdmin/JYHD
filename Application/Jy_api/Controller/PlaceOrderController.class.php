@@ -99,6 +99,8 @@ class PlaceOrderController extends ComController {
             'RedisProto/RPB_PlayerData.php',
             'RedisProto/RPB_AccountData.php',
             'Protos/OptSrc.php',
+            'Protos/OptReason.php',
+            'RPB_PlayerNumerical.php',
             'Protos/UsrDataOpt.php',
         ));
 
@@ -216,6 +218,19 @@ class PlaceOrderController extends ComController {
                 goto response;
             }
         }
+
+        //是否首次充值
+
+
+        $catUserOrder = M('jy_users_order_info')
+                        ->where('playerid = '.$playerid.' and  Status = 2')
+                        ->limit(0,1)
+                        ->find();
+            $IsFirst = 1;
+        if(!empty($catUserOrder)){
+            $IsFirst = 2;
+        }
+
         //是否首次购买
         $catUsersShopLog = $model
                             ->table('jy_users_order_info as a')
@@ -270,6 +285,7 @@ class PlaceOrderController extends ComController {
             'VipLevel'=>$VipLevel,
             'VipExp'  =>$VipExp,
             'Form'    =>$Type,
+            'IsFirst' =>$IsFirst,
             'RegisterChannel'=>$RegisterChannel,
             'PayChannel'=>$DataInfo['channel'],
             'Platform'=>$Platform,

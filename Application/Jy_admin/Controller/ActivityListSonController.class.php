@@ -135,8 +135,10 @@ class ActivityListSonController extends ComController {
             'a.Id',
             'a.Title',
             'a.ImgUrl',
+            'a.ImgCode',
             'a.Code',
             'b.Type',
+
         );
         $ActivitySonList = M('jy_activity_son_list as a')
                               ->join('jy_goods_all as b on b.Id = a.GoodsID and b.IsDel = 1')

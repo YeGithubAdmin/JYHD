@@ -10,6 +10,7 @@
  ***/
 namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
+use Protos\OptReason;
 use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
@@ -29,20 +30,22 @@ class VipInfoController extends ComController {
         $result = 2001;
         $info   =  array();
         $playerid = $DataInfo['playerid'];
-
         if(empty($playerid)){
             $result = 4006;
             goto response;
         }
-        //获取信息
         //已入protobuf 类
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
-            'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/UsrDataOpt.php',
             'Protos/OptSrc.php',
-            'RedisProto/RPB_PlayerData.php'
+            'Protos/OptReason.php',
+            'PB_Item.php',
+            'RPB_PlayerNumerical.php',
+            'RedisProto/RPB_PlayerData.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
         ));
+
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
@@ -52,6 +55,7 @@ class VipInfoController extends ComController {
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
             goto response;
@@ -63,6 +67,7 @@ class VipInfoController extends ComController {
         //接受回应
         $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
 
         //判断结果
@@ -70,13 +75,11 @@ class VipInfoController extends ComController {
             $result = $ReplyCode;
             goto response;
         }
-
         $Base       =  $PBS_UsrDataOpraterReturn->getBase();
         //vip 等级
         $VipLevel   =  $Base->getVip();
         //vip 经验
         $VipExp     =  $Base->getVipExp();
-
         //获取vip规则
         $catVipInfoField = array(
             'ImgCode',
@@ -96,22 +99,43 @@ class VipInfoController extends ComController {
         $OrderVipInfo  = array();
         foreach ($catVipInfo as $k=>$v){
             $OrderVipInfo[$v['level']] = $v;
-
             //status 是否单当前等级   1-否  2-是
             if($v['level'] <= $VipLevel){
                 $catVipInfo[$k]['status'] = 2;
             }else{
                 $catVipInfo[$k]['status'] = 1;
             }
+            if($catVipInfo[$k]['level'] == 0){
+                unset($catVipInfo[$k]);
+            }
         }
         //下个等级
         $UpVipLevel = $VipLevel+1 ;
         //下个等级升级经验
         $UpVipExp   =  $OrderVipInfo[$UpVipLevel];
-        $info['VipInfo']  = $catVipInfo;
+        $info['VipInfo']  = array_values($catVipInfo);
         $info['UpVipExp'] = $UpVipExp['experience'];
         $info['UpVipLevel'] = $UpVipExp['level'];
         $info['VipExp']   = $VipExp;
+
+        //判断是否已经领取 1-否  2-是
+        $Status = 1;
+        $catVipRewardlogField = array(
+            'Id',
+        );
+        $strtotime = strtotime(date('Y-m-d'),time());
+        $StartTime = date('Y-m-d H:i:s',$strtotime);
+        $EndTime   = date('Y-m-d H:i:s',$strtotime+24*60*60);
+        $catVipRewardlog = M('jy_vip_reward_log')
+            ->where('playerid = '.$playerid.'  and  DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
+            ->field($catVipRewardlogField)
+            ->find();
+        if(empty($catVipRewardlog) && $VipLevel > 0){
+            $Status = 2;
+        }
+        $info['Status'] = $Status;
+
+
 
         response:
             $response = array(

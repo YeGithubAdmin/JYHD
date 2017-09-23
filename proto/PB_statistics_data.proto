@@ -1,0 +1,59 @@
+
+import "PB_error_code.proto";
+
+message RPB_PlayerNumerical
+{
+	optional int32 gold_pay  			= 1;
+	optional int32 gold_newp_index  	= 2;
+	optional int32 diamond_day 			= 3;
+	optional int32 diamond_newp			= 4;
+	optional int32 diamond_newp_index 	= 5;
+	optional int32 fish_card_newp 		= 6;
+	optional int32 catch_fish_num 		= 7;
+	optional int32 item_day				= 8;
+	optional int32 gold_newp 			= 9;
+	optional bool  licence 				= 10;
+}
+
+message RPB_GameNumerical
+{
+	optional int32 pay_period 					= 1;	
+	optional int32 positive_consume				= 2;
+	optional int32 positive_produce  			= 3;
+	optional int32 positive_pool 				= 4;
+	optional int32 negative_settlement_pool 	= 5;
+	optional int32 negative_consume 			= 6;
+	optional int32 negative_produce 			= 7;
+	optional int32 negative_pool 				= 8;
+	
+	optional int32 bomb_gold_pool				= 9;
+	optional int32 bomb_cu_pool					= 10;
+	optional int32 bomb_ag_pool					= 11;
+	optional int32 bomb_au_pool					= 12;
+	optional int32 bomb_cu_history_pool			= 13;
+	optional int32 bomb_ag_history_pool			= 14;
+	optional int32 bomb_au_history_pool			= 15;
+	
+	optional int32 fish_card_gold_pool			= 16;
+	optional int32 fish_card_pool				= 17;
+	optional int32 fish_card_history_pool		= 18;
+	
+	optional int32 pump_gold_history_pool		= 19;
+}
+
+message PBS_GameNumericalOpt
+{
+	message Request {
+		optional int32				  game_numerical_get  = 1;	// get  opt
+		optional RPB_GameNumerical    game_numerical_set  = 2;	// set  opt
+		optional RPB_GameNumerical    game_numerical_incr = 3;	// incr opt
+	}
+
+	message Response {
+		required PB_ErrorCode 		  code 				= 1;
+		optional RPB_GameNumerical    game_numerical	= 2;
+	}
+
+	optional Request 	request 	= 1;
+	optional Response 	response 	= 2;
+}

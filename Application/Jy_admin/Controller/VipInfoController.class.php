@@ -8,7 +8,7 @@ class VipInfoController extends ComController {
     public function index(){
         $page           = $this->page;              //页码
         $num            = $this->num;               //条数
-        $where = '1';
+        $where = 'level >0';
         $count  = M('jy_vip_info')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出

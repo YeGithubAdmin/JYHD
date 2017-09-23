@@ -9,7 +9,8 @@ enum PB_ServerType {
 	S_HALL 		= 1; // 大厅
 	S_GAME 		= 2; // 游戏
 	S_DBAgent   = 3; // 数据代理
-	S_GMTool	= 4;	
+	S_GMTool	= 4; // GM工具	
+	S_NUMERICAL	= 5; // 数值	
 };
 
 message PBS_GateServerInfo
@@ -70,18 +71,6 @@ message PBS_ClientShutdown {
 message PBS_ClientShutdownReturn {
 }
 
-// 客户端挂起通知
-message PBS_ClientHangUpNotify
-{
-	optional int64 communiid = 1;
-}
-
-// 客户端挂起恢复通知
-message PBS_ClientHangDownNotify
-{
-	optional int64 communiid = 1;
-}
-
 // 客户端掉线通知
 message PBS_ClientDropLineNotify
 {
@@ -90,11 +79,15 @@ message PBS_ClientDropLineNotify
 
 message PBS_ServerRegister
 {
+	enum RouterPolicy {
+		RoundRobin  =  1;	// 轮询
+	};
 	required int64 			serverid 			= 1;
 	required PB_ServerType 	type 				= 2;
 	optional PB_GameType 	gametype 			= 3;
 	optional int32 			msgid_lower_bound 	= 4;
 	optional int32 			msgid_upper_bound 	= 5;
+	optional RouterPolicy 	rp 					= 6;
 }
 
 message PBS_ServerRegisterReturn
@@ -103,7 +96,12 @@ message PBS_ServerRegisterReturn
 		Ret_OK = 1;
 		Ret_RepeatedRegister = 2;
 	};
+	message ClientInfo {
+		optional int64 playerid = 1;
+		optional int64 communiid = 2;
+	};
 	required Ret ret = 1;
+	repeated ClientInfo clis = 2;
 }
 
 // 服务器初始化成功通知
@@ -128,12 +126,6 @@ message PBS_NotifyClient
 	required int64 uid = 1;
 	required bytes msg = 2;
 	required int32 msgid = 3;
-}
-
-// 玩家登录事件
-message PBS_LoginEvent
-{
-	required int64 uid = 1;
 }
 
 // 游戏服务人数上报

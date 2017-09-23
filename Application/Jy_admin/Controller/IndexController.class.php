@@ -19,7 +19,7 @@ class IndexController extends ComController {
             ->field('id,name,icon,upid,url,icon')
             ->select();;
 
-        //过滤权限  type   1-超级管理员  2-普通用户
+        //过滤权限  type   1-普通用户  2-默认账号
         $admingroupMenu = array();
         if($userInfo['default'] == 2){
             $admingroupMenu = $menuAll;
@@ -37,7 +37,6 @@ class IndexController extends ComController {
             }
 
         }
-
         $newMenuAll = $obj->make_tree($admingroupMenu);
 
 

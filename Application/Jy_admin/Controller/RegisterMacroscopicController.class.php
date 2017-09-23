@@ -68,27 +68,62 @@ class RegisterMacroscopicController extends ComController {
          *  破产率  BankruptcyRate
          *  描述 ：注册破产率=破产用户/注册用户。
          ***/
-        $where  =   'DateTime  >  str_to_date("'.$timeEndStrtotime.'","%Y-%m-%d %H:%i:%s") and  DateTime  < str_to_date("'.$timeStartStrtotime.'","%Y-%m-%d %H:%i:%s")';
+        $where  =   'a.regtime  >  str_to_date("'.$timeEndStrtotime.'","%Y-%m-%d %H:%i:%s") and  regtime  < str_to_date("'.$timeStartStrtotime.'","%Y-%m-%d %H:%i:%s")';
         $RegisterMacrodataFile = array(
-                'UserNum',
-                'UserGame',
-                'UserNum/UserNum as UserGameRate',
-                'UserPayNum',
-                'PayNum',
-                'UserPayNum/UserNum  as UserNumPayRate',
-                'PayMoney',
-                'BankruptcyNum',
-                'BankruptcyNum/UserNum as BankruptcyRate',
-                'date_format(DateTime,"%c月%d日") as DateTime',
+                'date_format(a.regtime,"%Y-%m-%d") as t',
+                'count(a.playerid) as  UserNum',
+                'count(distinct c.playerid) UserGame',
+                'count(distinct c.playerid)/count(a.playerid) as UserGameRate',
+                'count(distinct b.playerid) UserPayNum',
+                'count(b.playerid)  PayNum',
+                'count(distinct b.playerid)/count(a.playerid)  as UserNumPayRate',
+                'count(b.Price) PayMoney',
+                'count(distinct d.playerid) as BankruptcyNum',
+                'count(distinct d.playerid)/count(a.playerid)  as BankruptcyRate',
+
         );
-        $UserComprehensive =  M('jy_register_macrodata')
-                              ->where($where)
-                              ->field($RegisterMacrodataFile)
-                              ->select();
-        print_r($UserComprehensive);
+        $UserComprehensive = M('game_account as a')
+                            ->join('jy_users_order_info as b on a.playerid = b.playerid and b.status = 2','left')
+                            ->join('jy_users_currency_stream  as c on a.playerid = c.playerid and c.CurrencyType = 1 and c.Type = 1','left')
+                            ->join('jy_users_bankruptcy as d on a.playerid = c.playerid','left')
+                            ->field($RegisterMacrodataFile)
+                            ->group('t')
+                            ->where($where)
+                            ->select();
+        $newData = array();
+        foreach ($UserComprehensive as $k=>$v){
+            $newData[$v['t']] = $v;
+        }
+        $info = array();
+        foreach ($erverDay as $k=>$v){
+             $DateTime = date('Y-m-d',$v);
+             $value = $newData[$DateTime];
+            $info[$k]['DateTime'] = date('n月j日',$v);
+             if(!empty($value)){
+                 $info[$k]['UserNum']           =   $value['UserNum'];
+                 $info[$k]['UserGame']          =   $value['UserGame'];
+                 $info[$k]['UserGameRate']      =   $value['UserGameRate'];
+                 $info[$k]['UserPayNum']        =   $value['UserPayNum'];
+                 $info[$k]['PayNum']            =   $value['PayNum'];
+                 $info[$k]['UserNumPayRate']    =   $value['UserNumPayRate'];
+                 $info[$k]['PayMoney']          =   $value['PayMoney'];
+                 $info[$k]['BankruptcyNum']     =   $value['BankruptcyNum'];
+                 $info[$k]['BankruptcyRate']    =   $value['BankruptcyRate'];
+             }else{
+                 $info[$k]['UserNum']           =   0;
+                 $info[$k]['UserGame']          =   0;
+                 $info[$k]['UserGameRate']      =   0;
+                 $info[$k]['UserPayNum']        =   0;
+                 $info[$k]['PayNum']            =   0;
+                 $info[$k]['UserNumPayRate']    =   0;
+                 $info[$k]['PayMoney']          =   0;
+                 $info[$k]['BankruptcyNum']     =   0;
+                 $info[$k]['BankruptcyRate']    =   0;
+             }
+        }
         $this->assign('datemin',$datemin);
         $this->assign('day',$timeEndDay);
-        $this->assign('info',$UserComprehensive);
+        $this->assign('info',$info);
         $this->display();
     }
 

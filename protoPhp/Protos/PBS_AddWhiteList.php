@@ -1,25 +1,25 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-08-17 23:26:56
+ * Auto generated from PB_gm_tool.proto at 2017-09-22 17:44:56
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * PBS_PochanBuzhuReturn message
+ * PBS_AddWhiteList message
  */
-class PBS_PochanBuzhuReturn extends \ProtobufMessage
+class PBS_AddWhiteList extends \ProtobufMessage
 {
     /* Field index constants */
-    const CODE = 1;
+    const ACCOUNT_NAME = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::CODE => array(
-            'name' => 'code',
+        self::ACCOUNT_NAME => array(
+            'name' => 'account_name',
             'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
     );
 
@@ -38,7 +38,7 @@ class PBS_PochanBuzhuReturn extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::CODE] = null;
+        $this->values[self::ACCOUNT_NAME] = null;
     }
 
     /**
@@ -52,26 +52,26 @@ class PBS_PochanBuzhuReturn extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'code' property
+     * Sets value of 'account_name' property
      *
-     * @param integer $value Property value
+     * @param string $value Property value
      *
      * @return null
      */
-    public function setCode($value)
+    public function setAccountName($value)
     {
-        return $this->set(self::CODE, $value);
+        return $this->set(self::ACCOUNT_NAME, $value);
     }
 
     /**
-     * Returns value of 'code' property
+     * Returns value of 'account_name' property
      *
-     * @return integer
+     * @return string
      */
-    public function getCode()
+    public function getAccountName()
     {
-        $value = $this->get(self::CODE);
-        return $value === null ? (integer)$value : $value;
+        $value = $this->get(self::ACCOUNT_NAME);
+        return $value === null ? (string)$value : $value;
     }
 }
 }

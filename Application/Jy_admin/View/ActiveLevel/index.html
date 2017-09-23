@@ -66,8 +66,8 @@
         <thead>
         <tr class="text-c">
             <th width="60">等级</th>
-            <volist name = "day" id ="val">
-            <th width="100">{$val['day']}</th>
+            <volist name = "erverDay" id ="val">
+            <th width="100">{$val['time']}</th>
             </volist>
         </tr>
         </thead>
@@ -75,8 +75,8 @@
         <volist name ="info" id ="val">
             <tr class="text-c">
                 <th>{$val['level']}</th>
-                <volist name ="val['num']" id = "v">
-                    <th>{$v}</th>
+                <volist name ="val['data']" id = "v">
+                    <th>{$v['UserNum']}</th>
                 </volist>
             </tr>
         </volist>

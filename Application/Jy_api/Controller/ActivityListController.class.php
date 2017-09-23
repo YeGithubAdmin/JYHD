@@ -25,8 +25,8 @@ class ActivityListController extends ComController {
             'a.Type',
             'a.Title',
             'a.Code',
-            'a.ShowStartTime',
-            'a.ShowEndTime',
+            'unix_timestamp(a.AddUpStartTime) as AddUpStartTime',
+            'unix_timestamp(a.AddUpEndTime) as AddUpEndTime',
             'a.Describe',
             'b.Title as TitleSon',
             'b.Schedule',
@@ -52,21 +52,20 @@ class ActivityListController extends ComController {
 
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
         $catUserOrderField = array(
+            'count(b.Id) as Id',
             'sum(b.Price) as PriceNum',
             'max(b.Price) as PriceMax',
             'a.Type',
+            'GROUP_CONCAT(b.Price)',
             'a.AddUpEndTime',
             'a.AddUpStartTime'
         );
         $catUserOrder = M('jy_activity_father_list as a')
                         ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime  and  b.CallbackTime >= a.AddUpStartTime and b.Status = 2','left')
-                        ->where('b.playerid = '.$playerid. ' and a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                        ->where('b.playerid = '.$playerid)
                         ->group('a.Type')
                         ->field($catUserOrderField)
                         ->select();
-
-
-
         $newUserOder  =  array();
         foreach ($catUserOrder as $k=>$v){
             $newUserOder[$v['Type']] = $v;
@@ -100,6 +99,7 @@ class ActivityListController extends ComController {
             $dataInfo  = array();
             $status = 1;          //状态
             $PriceNum   =   empty($newUserOder[$v['Type']]['PriceNum']) ? 0:$newUserOder[$v['Type']]['PriceNum'];        //充值数
+            $PriceNum   = round($PriceNum);
             $PriceMax   =   empty($newUserOder[$v['Type']]['PriceMax']) ? 0:$newUserOder[$v['Type']]['PriceMax'];        //充值最大数
             $Cumulative =   $UsersTheawardLog[$v['activityID']];
             $SureNum    =   0;    //领取次数
@@ -158,7 +158,6 @@ class ActivityListController extends ComController {
             if($v['Type']<=3){
                 $dataInfo['Status']                     =       $status;
                 $dataInfo['TitleSon']                   =       $v['TitleSon'];
-                $dataInfo['TitleSon']                   =       $v['Schedule'];
                 $dataInfo['activityID']                 =       $v['activityID'];
                 $dataInfo['ImgCode']                    =       $v['ImgCode'];
                 $dataInfo['GoodsName']                  =       $v['GoodsName'];
@@ -176,14 +175,25 @@ class ActivityListController extends ComController {
                     $dataInfo['ImgUrl'] = $v['ImgUrl'];
                 }
             }
+            $AddUpEndTime  = array(
+                'year'=>date('Y',$v['AddUpEndTime']),
+                'month'=>date('m',$v['AddUpEndTime']),
+                'day'=>date('d',$v['AddUpEndTime']),
+                'dateTime'=>date('H:i',$v['AddUpEndTime']),
+            );
+            $AddUpStartTime = array(
+                'year'=>date('Y',$v['AddUpStartTime']),
+                'month'=>date('m',$v['AddUpStartTime']),
+                'day'=>date('d',$v['AddUpStartTime']),
+                'dateTime'=>date('H:i',$v['AddUpStartTime']),
+            );
             $NewactivityFatherList[$v['Type']]['Son'][]                 =     $dataInfo;
             $NewactivityFatherList[$v['Type']]['Type']                  =     $v['Type']  ;
-            $NewactivityFatherList[$v['Type']]['ShowStartTime']         =     $v['ShowStartTime']  ;
-            $NewactivityFatherList[$v['Type']]['ShowEndTime']           =     $v['ShowEndTime']  ;
+            $NewactivityFatherList[$v['Type']]['AddUpStartTime']       =     $AddUpStartTime  ;
+            $NewactivityFatherList[$v['Type']]['AddUpEndTime']          =     $AddUpEndTime;
             $NewactivityFatherList[$v['Type']]['Title']                 =     $v['Title']  ;
             $NewactivityFatherList[$v['Type']]['Describe']              =     $v['Describe']  ;
         }
-
 
         //组装数组
         foreach ($NewactivityFatherList as $k=>$v){
@@ -197,6 +207,7 @@ class ActivityListController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+
             $this->response($response,'json');
 
     }

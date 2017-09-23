@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-09-07 01:23:17
+ * Auto generated from PB_usr_rpc.proto at 2017-09-22 17:45:22
  *
  * protos package
  */
@@ -22,6 +22,9 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     const REASON = 8;
     const USE_ITEM = 9;
     const BUY_GOODS_NOTIFY = 10;
+    const PLAYER_NUMERICAL_SET = 11;
+    const PLAYER_NUMERICAL_INCR = 12;
+    const NOTIFY = 13;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -61,9 +64,10 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'type' => '\PB_Email'
         ),
         self::REASON => array(
+            'default' => \Protos\OptReason::OptReason_None,
             'name' => 'reason',
             'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_STRING,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
         self::USE_ITEM => array(
             'name' => 'use_item',
@@ -74,6 +78,21 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'name' => 'buy_goods_notify',
             'required' => false,
             'type' => '\PB_BuyGoods'
+        ),
+        self::PLAYER_NUMERICAL_SET => array(
+            'name' => 'player_numerical_set',
+            'required' => false,
+            'type' => '\RPB_PlayerNumerical'
+        ),
+        self::PLAYER_NUMERICAL_INCR => array(
+            'name' => 'player_numerical_incr',
+            'required' => false,
+            'type' => '\RPB_PlayerNumerical'
+        ),
+        self::NOTIFY => array(
+            'name' => 'notify',
+            'required' => false,
+            'type' => '\PB_HallNotify'
         ),
     );
 
@@ -99,9 +118,12 @@ class PBS_UsrDataOprater extends \ProtobufMessage
         $this->values[self::PLAYER_DATA] = null;
         $this->values[self::ITEM_OPT] = array();
         $this->values[self::SEND_EMAIL] = null;
-        $this->values[self::REASON] = null;
+        $this->values[self::REASON] = self::$fields[self::REASON]['default'];
         $this->values[self::USE_ITEM] = null;
         $this->values[self::BUY_GOODS_NOTIFY] = null;
+        $this->values[self::PLAYER_NUMERICAL_SET] = null;
+        $this->values[self::PLAYER_NUMERICAL_INCR] = null;
+        $this->values[self::NOTIFY] = null;
     }
 
     /**
@@ -316,7 +338,7 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     /**
      * Sets value of 'reason' property
      *
-     * @param string $value Property value
+     * @param integer $value Property value
      *
      * @return null
      */
@@ -328,12 +350,12 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     /**
      * Returns value of 'reason' property
      *
-     * @return string
+     * @return integer
      */
     public function getReason()
     {
         $value = $this->get(self::REASON);
-        return $value === null ? (string)$value : $value;
+        return $value === null ? (integer)$value : $value;
     }
 
     /**
@@ -378,6 +400,72 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     public function getBuyGoodsNotify()
     {
         return $this->get(self::BUY_GOODS_NOTIFY);
+    }
+
+    /**
+     * Sets value of 'player_numerical_set' property
+     *
+     * @param \RPB_PlayerNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setPlayerNumericalSet(\RPB_PlayerNumerical $value=null)
+    {
+        return $this->set(self::PLAYER_NUMERICAL_SET, $value);
+    }
+
+    /**
+     * Returns value of 'player_numerical_set' property
+     *
+     * @return \RPB_PlayerNumerical
+     */
+    public function getPlayerNumericalSet()
+    {
+        return $this->get(self::PLAYER_NUMERICAL_SET);
+    }
+
+    /**
+     * Sets value of 'player_numerical_incr' property
+     *
+     * @param \RPB_PlayerNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setPlayerNumericalIncr(\RPB_PlayerNumerical $value=null)
+    {
+        return $this->set(self::PLAYER_NUMERICAL_INCR, $value);
+    }
+
+    /**
+     * Returns value of 'player_numerical_incr' property
+     *
+     * @return \RPB_PlayerNumerical
+     */
+    public function getPlayerNumericalIncr()
+    {
+        return $this->get(self::PLAYER_NUMERICAL_INCR);
+    }
+
+    /**
+     * Sets value of 'notify' property
+     *
+     * @param \PB_HallNotify $value Property value
+     *
+     * @return null
+     */
+    public function setNotify(\PB_HallNotify $value=null)
+    {
+        return $this->set(self::NOTIFY, $value);
+    }
+
+    /**
+     * Returns value of 'notify' property
+     *
+     * @return \PB_HallNotify
+     */
+    public function getNotify()
+    {
+        return $this->get(self::NOTIFY);
     }
 }
 }

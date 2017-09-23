@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-09-07 01:23:17
+ * Auto generated from PB_usr_rpc.proto at 2017-09-22 17:45:22
  *
  * protos package
  */
@@ -16,6 +16,8 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
     const BASE = 2;
     const ACCOUNT_DATA = 3;
     const MODULES = 4;
+    const PLAYER_NUMERICAL = 5;
+    const ITEMS = 6;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -39,6 +41,16 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
             'repeated' => true,
             'type' => '\RedisProto\RPB_ModuleData'
         ),
+        self::PLAYER_NUMERICAL => array(
+            'name' => 'player_numerical',
+            'required' => false,
+            'type' => '\RPB_PlayerNumerical'
+        ),
+        self::ITEMS => array(
+            'name' => 'items',
+            'repeated' => true,
+            'type' => '\PB_Item'
+        ),
     );
 
     /**
@@ -60,6 +72,8 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
         $this->values[self::BASE] = null;
         $this->values[self::ACCOUNT_DATA] = null;
         $this->values[self::MODULES] = array();
+        $this->values[self::PLAYER_NUMERICAL] = null;
+        $this->values[self::ITEMS] = array();
     }
 
     /**
@@ -201,6 +215,92 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
     public function getModulesCount()
     {
         return $this->count(self::MODULES);
+    }
+
+    /**
+     * Sets value of 'player_numerical' property
+     *
+     * @param \RPB_PlayerNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setPlayerNumerical(\RPB_PlayerNumerical $value=null)
+    {
+        return $this->set(self::PLAYER_NUMERICAL, $value);
+    }
+
+    /**
+     * Returns value of 'player_numerical' property
+     *
+     * @return \RPB_PlayerNumerical
+     */
+    public function getPlayerNumerical()
+    {
+        return $this->get(self::PLAYER_NUMERICAL);
+    }
+
+    /**
+     * Appends value to 'items' list
+     *
+     * @param \PB_Item $value Value to append
+     *
+     * @return null
+     */
+    public function appendItems(\PB_Item $value)
+    {
+        return $this->append(self::ITEMS, $value);
+    }
+
+    /**
+     * Clears 'items' list
+     *
+     * @return null
+     */
+    public function clearItems()
+    {
+        return $this->clear(self::ITEMS);
+    }
+
+    /**
+     * Returns 'items' list
+     *
+     * @return \PB_Item[]
+     */
+    public function getItems()
+    {
+        return $this->get(self::ITEMS);
+    }
+
+    /**
+     * Returns 'items' iterator
+     *
+     * @return \ArrayIterator
+     */
+    public function getItemsIterator()
+    {
+        return new \ArrayIterator($this->get(self::ITEMS));
+    }
+
+    /**
+     * Returns element from 'items' list at given offset
+     *
+     * @param int $offset Position in list
+     *
+     * @return \PB_Item
+     */
+    public function getItemsAt($offset)
+    {
+        return $this->get(self::ITEMS, $offset);
+    }
+
+    /**
+     * Returns count of 'items' list
+     *
+     * @return int
+     */
+    public function getItemsCount()
+    {
+        return $this->count(self::ITEMS);
     }
 }
 }

@@ -22,7 +22,7 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>钻石分布</title>
+    <title>金币分布</title>
 </head>
 <body>
 <nav class="breadcrumb">
@@ -42,15 +42,16 @@
         <div class="text-c">
             创建时间： <input type="text"
                          onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
-                         id="datemin" value="{$datemin}" name="datemin"
+                         id="datemin" value="{$DateTime}" name="DateTime"
                          class="input-text Wdate" style="width: 120px;">  <input
                 type="hidden"
                 onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
-                id="datemax" value="{$search['datemax']}" name="datemax"
+                id="datemax" value="" name=""
                 class="input-text Wdate" style="width: 120px;">
 
             <span style="width: 150px" class="select-box">
-                <select size="1" name="day" class="select">
+                <select size="1" name="DayNum" class="select">
+                    <option value="7" <if  condition= "$dayNum eq '15'">selected</if> >7天</option>
                     <option value="15" <if  condition= "$dayNum eq '15'">selected</if> >15天</option>
                     <option value="30" <if  condition= "$dayNum eq '30'">selected</if> >30天</option>
 				</select>
@@ -68,19 +69,48 @@
             <th width="30">id</th>
             <th width="100">范围</th>
             <th width="60">单位</th>
-            <volist name = "day" id ="val">
-            <th width="100">{$val['day']}</th>
+            <volist name = "erverDay" id ="val">
+                <th width="100">{$val['time']}</th>
             </volist>
         </tr>
         </thead>
         <tbody>
         <volist name ="info" id ="val">
             <tr class="text-c">
-                <th>{$val['id']}</th>
-                <th>{$val['name']}</th>
-                <th>{$val['company']}</th>
-                <volist name ="val['num']" id = "v">
-                    <th>{$v}</th>
+                <th>{$val['Id']}</th>
+                <th>{$val['Name']}</th>
+                <th>
+                    <switch name = "val['Unit']" >
+                        <case value = "1">
+                            个
+                        </case>
+                        <case value = "2">
+                            十
+                        </case>
+                        <case value = "3">
+                            百
+                        </case>
+                        <case value = "4">
+                            千
+                        </case>
+                        <case value = "5">
+                            万
+                        </case>
+                        <case value = "6">
+                            十万
+                        </case>
+                        <case value = "7">
+                            百万
+                        </case>
+                        <case value = "8">
+                            千万
+                        </case>
+                        <default/>
+                        ...
+                    </switch>
+                </th>
+                <volist name ="val['data']" id = "v">
+                    <th>{$v['UserNum']}</th>
                 </volist>
             </tr>
         </volist>

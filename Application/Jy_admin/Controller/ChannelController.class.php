@@ -321,6 +321,8 @@ class ChannelController extends ComController {
         $Platform                   =  I('param.platform',0,'intval');
         $search['Type']             =      I('param.Type','','intval');        //类型
 
+
+
         $catPayWhere   = 'IsDel = 1  and  Platform = '.$Platform;
         $ChannelPayWhere  = 'b.adminUserID = '.$id;
         if ($search['Type'] != '' && $search['Type'] != 0 ) {
@@ -334,7 +336,6 @@ class ChannelController extends ComController {
                       ->where($catPayWhere)
                       ->field('Id,Name,PassAgeWay')
                       ->select();
-
         //渠道列表
         $catChannelPay = M('jy_thirdpay as a')
                         ->join('jy_channel_thirdpay as b on a.Id = b.PayID')

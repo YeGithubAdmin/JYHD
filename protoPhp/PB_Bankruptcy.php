@@ -1,24 +1,22 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-07 01:22:53
- *
- * protos package
+ * Auto generated from PB_notify.proto at 2017-09-22 17:45:22
  */
 
-namespace Protos {
+namespace {
 /**
- * PBS_ClientHangDownNotify message
+ * PB_Bankruptcy message
  */
-class PBS_ClientHangDownNotify extends \ProtobufMessage
+class PB_Bankruptcy extends \ProtobufMessage
 {
     /* Field index constants */
-    const COMMUNIID = 1;
+    const PLAYERID = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::COMMUNIID => array(
-            'name' => 'communiid',
-            'required' => false,
+        self::PLAYERID => array(
+            'name' => 'playerid',
+            'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
@@ -38,7 +36,7 @@ class PBS_ClientHangDownNotify extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::COMMUNIID] = null;
+        $this->values[self::PLAYERID] = null;
     }
 
     /**
@@ -52,25 +50,25 @@ class PBS_ClientHangDownNotify extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'communiid' property
+     * Sets value of 'playerid' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setCommuniid($value)
+    public function setPlayerid($value)
     {
-        return $this->set(self::COMMUNIID, $value);
+        return $this->set(self::PLAYERID, $value);
     }
 
     /**
-     * Returns value of 'communiid' property
+     * Returns value of 'playerid' property
      *
      * @return integer
      */
-    public function getCommuniid()
+    public function getPlayerid()
     {
-        $value = $this->get(self::COMMUNIID);
+        $value = $this->get(self::PLAYERID);
         return $value === null ? (integer)$value : $value;
     }
 }

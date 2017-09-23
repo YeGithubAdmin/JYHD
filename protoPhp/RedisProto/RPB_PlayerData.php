@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-09-07 01:23:17
+ * Auto generated from PB_usr_data.proto at 2017-09-22 17:45:22
  *
  * RedisProto package
  */
@@ -36,6 +36,8 @@ class RPB_PlayerData extends \ProtobufMessage
     const ICON_URL = 22;
     const IS_MC = 23;
     const MC_OVERTIME = 24;
+    const BK_COUNT = 25;
+    const RMB = 26;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -159,6 +161,16 @@ class RPB_PlayerData extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::BK_COUNT => array(
+            'name' => 'bk_count',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::RMB => array(
+            'name' => 'rmb',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -200,6 +212,8 @@ class RPB_PlayerData extends \ProtobufMessage
         $this->values[self::ICON_URL] = null;
         $this->values[self::IS_MC] = null;
         $this->values[self::MC_OVERTIME] = null;
+        $this->values[self::BK_COUNT] = null;
+        $this->values[self::RMB] = null;
     }
 
     /**
@@ -761,6 +775,52 @@ class RPB_PlayerData extends \ProtobufMessage
     public function getMcOvertime()
     {
         $value = $this->get(self::MC_OVERTIME);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'bk_count' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setBkCount($value)
+    {
+        return $this->set(self::BK_COUNT, $value);
+    }
+
+    /**
+     * Returns value of 'bk_count' property
+     *
+     * @return integer
+     */
+    public function getBkCount()
+    {
+        $value = $this->get(self::BK_COUNT);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'rmb' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setRmb($value)
+    {
+        return $this->set(self::RMB, $value);
+    }
+
+    /**
+     * Returns value of 'rmb' property
+     *
+     * @return integer
+     */
+    public function getRmb()
+    {
+        $value = $this->get(self::RMB);
         return $value === null ? (integer)$value : $value;
     }
 }

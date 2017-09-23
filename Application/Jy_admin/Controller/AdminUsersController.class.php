@@ -10,10 +10,8 @@ class AdminUsersController extends ComController {
         $num            = $this->num;               //条数
         $userInfo       = $this->userInfo;          //用户信息
         $lowerAdminUser = $this->lowerAdminUser;    //我的下级组
-
         //已入方法类
         $obj = new \Common\Lib\func();
-
         $search['datemax']     =      I('param.datemax','','trim');
         $search['datemin']     =      I('param.datemin','','trim');
         $search['account']     =      I('param.account','','trim');
@@ -57,15 +55,12 @@ class AdminUsersController extends ComController {
     //添加
     public function  add(){
         $obj = new \Common\Lib\func();
-
-
         $userInfo = $this->userInfo;
         $lowerAdmingroup  = $this->lowerAdmingroup;
         $adminGroup = M('jy_admin_group')
                         ->where('isdel = 1')
                         ->field('id,name')
                         ->select();
-
         $adminGroupInfo = array();
         if($userInfo['default']  == 1){
             foreach ($adminGroup as $k=>$v){
@@ -76,7 +71,6 @@ class AdminUsersController extends ComController {
         }else{
             $adminGroupInfo =  $adminGroup;
         }
-
         if(IS_POST){
             //数据
             $dataAdminUsers  = array(
@@ -89,25 +83,16 @@ class AdminUsersController extends ComController {
                 'islock'       =>       I('param.islock',1,'intval'),
                 'remark'       =>       I('param.remark','','trim'),
             );
-
             //添加
             $addAdminUsers = M('jy_admin_users')
-
                             ->add($dataAdminUsers);
             if($addAdminUsers){
                 $obj->showmessage('添加成功','/jy_admin/AdminUsers/index');
             }else{
                  $obj->showmessage('添加失败');
             }
-
-
-
-
         }
-
         //当前管理员的用户组
-
-
         $this->assign('adminGroupInfo',$adminGroupInfo);
         $this->display('add');
     }

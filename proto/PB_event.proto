@@ -1,7 +1,16 @@
 
+message CreateEvent
+{
+}
+
 message LoginEvent
 {
 	optional string name  = 1;
+}
+
+message LoginOkEvent
+{
+	optional int32 rmb  = 1;
 }
 
 message LogoutEvent
@@ -22,12 +31,41 @@ message GoldUpdate
 	optional int32 inc_gold = 3;
 }
 
+// 付费金币更新
+message PayGoldUpdate
+{
+	required int32 inc_gold = 1;
+}
+
 // 钻石更新
 message DiamondUpdate
 {
 	required int64 cur_diamond 	= 1;
 	optional int64 playerid 	= 2;
 	optional int32 inc_diamond 	= 3;
+}
+
+// 击杀boss鱼
+message KillBossFishEvent
+{
+	required int32 score  =  1;	//获取积分
+}
+
+// vip 更新
+message VipUpdate
+{
+	required int64 playerid = 1;
+	required int32 vip  	= 2;	// vip 等级
+}
+
+// 许可证更新
+message LicenceUpdate
+{
+	message LicenceData {
+		optional int64 playerid = 1;
+		optional bool licence   = 2;
+	}
+	repeated LicenceData datas = 1;
 }
 
 message BigShellUpdate
@@ -43,4 +81,10 @@ message MidShellUpdate
 message SmallShellUpdate
 {
 	required int32 cur_num = 1;
+}
+
+message RmbUpdate
+{
+	required int32 rmb_incr = 1;
+	required int32 rmb_cur  = 2;
 }

@@ -17,97 +17,133 @@ class RetainedDataController extends ComController {
         if ($datemin == $time) {
             $datemin = $btime;
         }
-
         $dayTime = 24 * 60 * 60;
         $strtotime = strtotime($datemin);
-        $timeStart= $datemin;                                                                                   //时间段：前天
-        $timeStartStrtotime = date('Y-m-d', strtotime($timeStart) + $dayTime);
-        $timeEnd = date('Y-m-d', $strtotime - ($timeEndDay-1)* $dayTime);                      //时间段：前8天
-        $timeEndStrtotime = date('Y-m-d', strtotime($timeEnd) - $timeEnd);
         //30天时间
         for($i=($timeEndDay-1);$i>=0;$i--){
             $erverDayTime = $strtotime-$i*$dayTime;
-            if($erverDayTime >= strtotime($timeEnd)){
+            if($erverDayTime >= ($strtotime-($timeEndDay-1)* $dayTime)){
                 $erverDay[$i] = $erverDayTime;
 
             }
         }
         //排序数组
-        ksort($erverDay);
+         ksort($erverDay);
+        //时间范围
+        $EndTime   = date('Y-m-d H:i:s',$strtotime+$dayTime);
+        $StartTime = date('Y-m-d H:i:s',$strtotime-$timeEndDay*$dayTime);
 
-        /**********************注册留存************************/
-        $infoDataRegister = M('tuserinfo as a')
-                    ->join('web_vuserloginlist as b on a.UserID  = b.UserID  
-                      and  date_format(b.LastLoginTM,"%Y-%m-%d")  = date_format(DATE_SUB(a.RegisterTM,INTERVAL -1 DAY),"%Y-%m-%d")','left')
 
-                    ->where('a.RegisterTM > "'.$timeEndStrtotime.'" and  a.RegisterTM < "'.$timeStartStrtotime.'"')
-                    ->field('
-                        date_format(a.RegisterTM,"%Y-%m-%d") as t
-                        ,count(distinct a.UserID) num    
-                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.RegisterTM,INTERVAL -1 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate01
-                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.RegisterTM,INTERVAL -3 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate03
-                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.RegisterTM,INTERVAL -7 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate07
-                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.RegisterTM,INTERVAL -14 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate14
-                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.RegisterTM,INTERVAL -30 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate30
-                            ')
+
+        $RegInfoField = array(
+             'date_format(a.regtime,"%Y-%m-%d") as t',
+             'count(a.playerid) as UserNum',
+             'count(distinct b.playerid) as UsersOneNum',
+             'count(distinct c.playerid) as UsersThreeNum',
+             'count(distinct d.playerid) as UsersSevenNum',
+             'count(distinct e.playerid) as UsersFourteenNum',
+             'count(distinct f.playerid) as UsersThirtyNum',
+        );
+        $RegInfo = M('account as a')
+                   ->join('jy_users_login_log as b on a.playerid = b.playerid 
+                                 and b.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and b.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('jy_users_login_log as c on a.playerid = c.playerid 
+                                 and c.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and c.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('jy_users_login_log as d on a.playerid = d.playerid 
+                                 and d.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and d.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('jy_users_login_log as e on a.playerid = e.playerid 
+                                 and e.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and e.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('jy_users_login_log as f on a.playerid = f.playerid 
+                                 and f.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and f.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->where('a.regtime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and a.regtime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                     ->group('t')
-                    ->select(false);
-          $infoDataRegister = $this->NewArr($infoDataRegister,$erverDay);
-          $infoDataRegister['title'] =  '注册留存';
-        /*************************活跃留存******************************/
-        $infoDataActive = M('web_vuserloginlist as a')
-                            ->join('web_vuserloginlist as b on a.UserID  = b.UserID
-                                     ','left')
-                          ->where('a.LastLoginTM > "'.$timeEndStrtotime.'" and  a.LastLoginTM < "'.$timeStartStrtotime.'"')
-                           ->field('date_format(a.LastLoginTM,"%Y-%m-%d") as t
-                                         ,count(distinct a.UserID) num    
-                                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.LastLoginTM,INTERVAL -1 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate01
-                                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.LastLoginTM,INTERVAL -3 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate03
-                                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.LastLoginTM,INTERVAL -7 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate07
-                                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.LastLoginTM,INTERVAL -14 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate14
-                                         ,group_concat(distinct if(date_format(b.LastLoginTM,"%Y-%m-%d") = date_format(DATE_SUB(a.LastLoginTM,INTERVAL -30 DAY),"%Y-%m-%d"),b.UserID,null)) as RetentionRate30
-                                 
-                                     ')
-                           ->group('t')
-                          ->select();
-        $infoDataActive = $this->NewArr($infoDataActive,$erverDay);
-        $infoDataActive['title'] =  '活跃留存';
-        /*************************付费留存******************************/
-        $infoDataPay = M('web_rmbcost as a')
-            ->join('web_rmbcost as b on a.Users_ids  = b.Users_ids
-                                     ','left')
-            ->where(' a.PaySuccess = 1 and  a.BackTime > "'.$timeEndStrtotime.'" and  a.BackTime < "'.$timeStartStrtotime.'"')
-            ->field('date_format(a.BackTime,"%Y-%m-%d") as t
-                                         ,count(distinct a.Users_ids) num    
-                                         ,group_concat(distinct if(date_format(b.BackTime,"%Y-%m-%d") = date_format(DATE_SUB(a.BackTime,INTERVAL -1 DAY),"%Y-%m-%d"),b.Users_ids,null)) as RetentionRate01
-                                         ,group_concat(distinct if(date_format(b.BackTime,"%Y-%m-%d") = date_format(DATE_SUB(a.BackTime,INTERVAL -3 DAY),"%Y-%m-%d"),b.Users_ids,null)) as RetentionRate03
-                                         ,group_concat(distinct if(date_format(b.BackTime,"%Y-%m-%d") = date_format(DATE_SUB(a.BackTime,INTERVAL -7 DAY),"%Y-%m-%d"),b.Users_ids,null)) as RetentionRate07
-                                         ,group_concat(distinct if(date_format(b.BackTime,"%Y-%m-%d") = date_format(DATE_SUB(a.BackTime,INTERVAL -14 DAY),"%Y-%m-%d"),b.Users_ids,null)) as RetentionRate14
-                                         ,group_concat(distinct if(date_format(b.BackTime,"%Y-%m-%d") = date_format(DATE_SUB(a.BackTime,INTERVAL -30 DAY),"%Y-%m-%d"),b.Users_ids,null)) as RetentionRate30
-                                     ')
+
+                   ->field($RegInfoField)
+                   ->select();
+        $RegInfo = $this->NewArr($RegInfo,$erverDay);
+
+
+
+
+
+        //活跃留存
+        $ActiveInfoField = array(
+            'date_format(a.LastTime,"%Y-%m-%d") as t',
+            'count(distinct a.playerid) as UserNum',
+            'count(distinct b.playerid) as UsersOneNum',
+            'count(distinct c.playerid) as UsersThreeNum',
+            'count(distinct d.playerid) as UsersSevenNum',
+            'count(distinct e.playerid) as UsersFourteenNum',
+            'count(distinct f.playerid) as UsersThirtyNum',
+        );
+        $ActiveInfo =  M('jy_users_login_log as a')
+            ->join('jy_users_login_log as b on a.playerid = b.playerid 
+                                 and b.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and b.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_login_log as c on a.playerid = c.playerid 
+                                 and c.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and c.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_login_log as d on a.playerid = d.playerid 
+                                 and d.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and d.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_login_log as e on a.playerid = e.playerid 
+                                 and e.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and e.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_login_log as f on a.playerid = f.playerid 
+                                 and f.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and f.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->where('a.LastTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and a.LastTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
             ->group('t')
+
+            ->field($ActiveInfoField)
             ->select();
 
-        $infoDataPay = $this->NewArr($infoDataPay,$erverDay);
-        $infoDataPay['title'] =  '付费留存';
+        $ActiveInfo = $this->NewArr($ActiveInfo,$erverDay);
+        //付费留存
+        $PayInfoField = array(
+            'date_format(a.CallbackTime,"%Y-%m-%d") as t',
+            'count(distinct a.playerid) as UserNum',
+            'count(distinct b.playerid) as UsersOneNum',
+            'count(distinct c.playerid) as UsersThreeNum',
+            'count(distinct d.playerid) as UsersSevenNum',
+            'count(distinct e.playerid) as UsersFourteenNum',
+            'count(distinct f.playerid) as UsersThirtyNum',
+        );
+        $PayInfo =  M('jy_users_order_info as a')
+            ->join('jy_users_order_info as b on a.playerid = b.playerid 
+                                 and b.CallbackTime < str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and b.CallbackTime >= str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_order_info as c on a.playerid = c.playerid 
+                                 and c.CallbackTime < str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and c.CallbackTime >= str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_order_info as d on a.playerid = d.playerid 
+                                 and d.CallbackTime < str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and d.CallbackTime >= str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_order_info as e on a.playerid = e.playerid 
+                                 and e.CallbackTime < str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and e.CallbackTime >= str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_order_info as f on a.playerid = f.playerid 
+                                 and f.CallbackTime < str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and f.CallbackTime >= str_to_date(date_format(DATE_SUB(a.CallbackTime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->where(' a.Status = 2 and  a.CallbackTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and a.CallbackTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+            ->group('t')
 
-        /*************************组装******************************/
+            ->field($PayInfoField)
+            ->select();
 
-        $info['infoDataRegister'] = $infoDataRegister;
-        $info['infoDataActive'] = $infoDataActive;
-        $info['infoDataPay'] = $infoDataPay;
+        $PayInfo = $this->NewArr($PayInfo,$erverDay);
 
 
-        $newErverDay = array();
-        foreach ($erverDay as $k=>$v){
 
-            $newErverDay[] =  '"'.date('n月j日',$v).'"';
-        }
 
-        $newErverDay = implode(',',$newErverDay);
-        $this->assign('datemin',$datemin);
-        $this->assign('newErverDay',$newErverDay);
-        $this->assign('erverDay',$erverDay);
+        $info['infoDataRegister'] = $RegInfo;
+        $info['infoDataActive']   = $ActiveInfo;
+        $info['infoDataPay']   = $PayInfo;
         $this->assign('info',$info);
         $this->display();
 
@@ -127,67 +163,24 @@ class RetainedDataController extends ComController {
             $dataInfo = array();
 
             foreach ($infoDataRegister as $key => $val){
-                if($dataTime==$val['t']){
-                    //当天人数
+                if($dataTime==$val['t']) {
+                    $dataInfo['UserNum']                =   $val['UserNum'];
+                    $dataInfo['UsersOneNum']            =   round(($val['UsersOneNum']/$val['UserNum'])*100,2);
+                    $dataInfo['UsersThreeNum']          =   round(($val['UsersThreeNum']/$val['UserNum'])*100,2);
+                    $dataInfo['UsersSevenNum']          =   round(($val['UsersSevenNum']/$val['UserNum'])*100,2);
+                    $dataInfo['UsersFourteenNum']       =   round(($val['UsersFourteenNum']/$val['UserNum'])*100,2);
+                    $dataInfo['UsersThirtyNum']         =   round(($val['UsersThirtyNum']/$val['UserNum'])*100,2);
 
-                    $dataInfo['num'] = $val['num'];
-
-                    //一日留存
-                    if(empty($val['RetentionRate01'])){
-                        $dataInfo['RetentionRate01'] = 0;
-
-                    }else{
-                        $RetentionRate01 = explode(',',$val['RetentionRate01']);
-                        $RetentionRate01  = count($RetentionRate01);
-                        $dataInfo['RetentionRate01'] = ($RetentionRate01/$val['num'])*100;
-                    }
-                    //3日留存
-                    if(empty($val['RetentionRate03'])){
-                        $dataInfo['RetentionRate03'] = 0;
-
-                    }else{
-                        $RetentionRate03 = explode(',',$val['RetentionRate03']);
-                        $RetentionRate03  = count($RetentionRate03);
-                        $dataInfo['RetentionRate03'] = ($RetentionRate03/$val['num'])*100;
-                    }
-                    //7日留存
-                    if(empty($val['RetentionRate07'])){
-                        $dataInfo['RetentionRate07'] = 0;
-
-                    }else{
-                        $RetentionRate07 = explode(',',$val['RetentionRate07']);
-                        $RetentionRate07  = count($RetentionRate07);
-                        $dataInfo['RetentionRate07'] = ($RetentionRate07/$val['num'])*100;
-                    }
-                    //14日留存
-                    if(empty($val['RetentionRate14'])){
-                        $dataInfo['RetentionRate14'] = 0;
-
-                    }else{
-                        $RetentionRate14 = explode(',',$val['RetentionRate14']);
-                        $RetentionRate14  = count($RetentionRate14);
-                        $dataInfo['RetentionRate14'] = ($RetentionRate14/$val['num'])*100;
-                    }
-                    //30日留存
-                    if(empty($val['RetentionRate30'])){
-                        $dataInfo['RetentionRate30'] = 0;
-
-                    }else{
-                        $RetentionRate30 = explode(',',$val['RetentionRate30']);
-                        $RetentionRate30  = count($RetentionRate30);
-                        $dataInfo['RetentionRate30'] = ($RetentionRate30/$val['num'])*100;
-                    }
                 }
             }
             if(empty($dataInfo)){
-                $dataInfo['num'] = 0;
-                $dataInfo['RetentionRate01'] = 0;
-                $dataInfo['RetentionRate03'] = 0;
-                $dataInfo['RetentionRate07'] = 0;
-                $dataInfo['RetentionRate14'] = 0;
-                $dataInfo['RetentionRate30'] = 0;
+                $dataInfo['UserNum']            =   0;
+                $dataInfo['UsersOneNum']        =   0;
+                $dataInfo['UsersThreeNum']      =   0;
+                $dataInfo['UsersSevenNum']      =   0;
+                $dataInfo['UsersFourteenNum']   =   0;
+                $dataInfo['UsersThirtyNum']     =   0;
             }
-
 
             $dataInfo['t'] = date('n月j日',$v);
             $dataArr['data'][$k] = $dataInfo;
@@ -196,4 +189,6 @@ class RetainedDataController extends ComController {
 
         return $dataArr;
     }
+
+
 }

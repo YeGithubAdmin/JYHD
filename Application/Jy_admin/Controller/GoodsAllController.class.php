@@ -41,12 +41,31 @@ class GoodsAllController extends ComController {
         $count  = M('jy_goods_all')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
+
+        $catVipInfoField = array(
+            'Id',
+            'Code',
+            'Name',
+            'CurrencyType',
+            'GetNum',
+            'CurrencyNum',
+            'Type',
+            'CateGory',
+            'LimitLevel',
+            'LimitVip',
+            'GiveInfo',
+            'CateGory',
+            'IssueNum',
+            'IssueType',
+            'Status',
+            'ShowType',
+            'DateTime',
+            'UpTime',
+        );
         $catVipInfo = M('jy_goods_all')
             ->where($where)
             ->limit($page*$num,$num)
-            ->field('Id,Code,Name,CurrencyType,GetNum,Type,CateGory
-                    ,LimitLevel,LimitVip,GiveInfo,CateGory,IssueNum,IssueType,Status,ShowType
-                    ,DateTime,UpTime')
+            ->field($catVipInfoField)
             ->order('Sort asc')
             ->select();
         $this->assign('page',$show);
@@ -186,7 +205,7 @@ class GoodsAllController extends ComController {
             $Name                        =           I('param.Name','','trim');                         //物品名
             $CurrencyType                =           I('param.CurrencyType',0,'intval');                //货币类型 1-人民币 2-金币 3-砖石
             $ShowType                    =           I('param.ShowType',0,'intval');                    //展示方式
-            $CurrencyNum                 =           I('param.CurrencyNum',0,'intval');                 //货币数量
+            $CurrencyNum                 =           I('param.CurrencyNum',0,'trim');                  //货币数量
             $IssueNum                    =           I('param.IssueNum',1,'intval');                    //发行量
             $IssueType                   =           I('param.IssueType',1,'intval');                   //是否限制发行量 1-否 2-是
             $Type                        =           I('param.Type',0,'intval');                        //类型 1-金币 2-钻石 3-道具

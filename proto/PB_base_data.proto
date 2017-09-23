@@ -55,3 +55,47 @@ message PB_BuyGoods
 	optional int64			gold	 = 4;
 	optional int64			diamond	 = 5;
 }
+
+message PB_DrawData
+{
+	optional int32 		zhuanpan_type    = 1;	// 1 - 6
+	optional int32 		kill_boss 		 = 2;	// 每日击杀boss鱼数量	进度条
+	optional int32 		kill_boss_cond   = 3;	// 进度条上限
+	optional int32		score 			 = 4;	// 每日获得的积分		奖金池
+	optional bool 		draw_state 	 	 = 5;	// 转盘领奖状态
+}
+
+message PB_VipBroadcast
+{
+	optional int32			vip  			= 1;
+	optional string 		player_name    	= 2;
+}
+
+message PB_GoldBroadcast
+{
+	optional int32			vip  			= 1;
+	optional string 		player_name    	= 2;
+	optional string 		boss_name 		= 3;
+	optional int64			gold 			= 4;
+}
+
+message PB_YuquanBroadcast
+{
+	optional int32			vip  			= 1;
+	optional string 		player_name    	= 2;
+	optional string 		boss_name 		= 3;
+	optional int32 			yuquan 			= 4;
+}
+
+message PB_ItemBroadcast
+{
+	optional int32			vip  			= 1;
+	optional string 		player_name    	= 2;
+	optional string 		boss_name 		= 3;
+	optional string			item_name 		= 4;
+}
+
+message PB_PhpBroadcast
+{
+	optional string			data			= 1;	
+}

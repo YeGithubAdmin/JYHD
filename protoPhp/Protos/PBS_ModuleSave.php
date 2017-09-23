@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_module_rpc.proto at 2017-09-07 01:23:07
+ * Auto generated from PB_module_rpc.proto at 2017-09-22 17:44:59
  *
  * protos package
  */

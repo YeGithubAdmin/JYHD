@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>游戏公告</title>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+		大厅配置 <span class="c-gray en">&gt;</span>游戏公告 <a
+			class="btn btn-success radius r mr-20"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="pd-20">
+
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;"
+				onclick="Notice_add('添加公告','/jy_admin/Notice/add','','600')"
+				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
+					添加公告</a>
+			</span>
+		</div>
+		<table
+			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+				    <th width="10">id</th>
+					<th width="60">公告内容</th>
+					<th width="60">标题</th>
+					<th width="60">是否已发布</th>
+					<th width="100">备注</th>
+					<th width="60">创建时间</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name = "info" id ="val">
+					<tr class="text-c">
+						<td>{$val['Id']}</td>
+						<td><a  style="color:red" onclick="Notice_authority('公告内容','/jy_admin/Notice/authority/Id/{$val['Id']}','4','600','800')">查看</a></td>
+						<td >{$val['Title']}</td>
+						<td class="td-status" ><span
+								class="<if condition ="$val['Status'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>"><if
+								condition="$val['Status'] eq 2">是<else/>否</if>
+							</span>
+						</td>
+						<td>{$val['Remark']}</td>
+						<td>{$val['DateTime']}</td>
+						<td class="td-manage">
+							<a style="text-decoration: none"
+							   onClick="<if condition="$val['Status'] eq 2" >Notice_stop<else/>Notice_start</if>(this, '{$val['Id']}')"
+							href="javascript:;"
+							title="<if  condition = "$val['Status'] eq 1" >发布<else/>撤销</if>"> <i
+								class="Hui-iconfont"><if condition ="$val['Status'] eq 1" >&#xe631;<else/>&#xe615;</if></i>
+							</a> <a title="编辑" href="javascript:;"
+									onclick="Notice_edit('编辑','/jy_admin/Notice/edit/Id/{$val['Id']}','','510')"
+									class="ml-5" style="text-decoration: none"><i
+								class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"
+																		 href="javascript:;" onclick="Notice_del(this,'{$val['Id']}')"
+																		 class="ml-5" style="text-decoration: none"><i
+								class="Hui-iconfont">&#xe6e2;</i>
+						</a>
+						</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+	<div class = "cl">
+		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+			 class="dataTables_paginate paging_simple_numbers">{$page}</div>
+	</div>
+	<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+</body>
+</html>
+<literal>
+<script>
+/*添加*/
+function Notice_add(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}
+/*编辑*/
+function Notice_edit(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}
+/*停用*/
+function Notice_stop(obj, id) {
+    layer.confirm('确定撤销？', function (index) {
+        $.post('/jy_admin/Notice/stop', {'Id':id}, function (msg) {
+            if (msg == 1) {
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="Notice_start(this,' + id + ')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe631;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">否</span>');
+                $(obj).remove();
+                layer.msg('已撤销!', {icon: 5, time: 1000});
+            } else {
+                layer.msg('撤销失败!', {icon: 5, time: 1000});
+            }
+        });
+    });
+}
+
+/*启用*/
+function Notice_start(obj, id) {
+    layer.confirm('确定发布？', function (index) {
+        $.post('/jy_admin/Notice/start', {'Id':id}, function (msg) {
+            if (msg == 1) {
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="Notice_stop(this,' + id + ')" href="javascript:;" title="撤销"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">是</span>');
+                $(obj).remove();
+                layer.msg('已发布!', {icon: 6, time: 1000});
+            } else {
+                layer.msg('撤销失败!', {icon: 5, time: 1000});
+            }
+        });
+    });
+}
+ 
+/*删除*/
+function Notice_del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.post('/jy_admin/Notice/del',{'Id':id},function(msg){
+			if(msg == 1){
+				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+			}else{
+				layer.msg('删除失败!',{icon:1,time:1000});
+			}
+		});
+		
+	});
+}
+function Notice_authority(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+</script>
+</literal>

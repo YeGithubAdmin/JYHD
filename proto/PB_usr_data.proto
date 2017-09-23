@@ -53,6 +53,8 @@ message RPB_PlayerData
 	optional string		icon_url		 = 22;	// 头像url
 	optional bool 		is_mc   		 = 23;	// 是否是月卡用户
 	optional int64 		mc_overtime		 = 24;	// 月卡结束时间
+	optional int32		bk_count 		 = 25;	// 破产次数			-- 废弃
+	optional int32		rmb 			 = 26;	// 人民币
 }
 
 message RPB_ModuleData

@@ -1,30 +1,30 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-08-17 23:26:56
+ * Auto generated from PB_server_common.proto at 2017-09-22 17:45:11
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * PBS_ItemOpt message
+ * ClientInfo message embedded in PBS_ServerRegisterReturn message
  */
-class PBS_ItemOpt extends \ProtobufMessage
+class PBS_ServerRegisterReturn_ClientInfo extends \ProtobufMessage
 {
     /* Field index constants */
-    const ITEMID = 1;
-    const NUM = 2;
+    const PLAYERID = 1;
+    const COMMUNIID = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::ITEMID => array(
-            'name' => 'itemid',
-            'required' => true,
+        self::PLAYERID => array(
+            'name' => 'playerid',
+            'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::NUM => array(
-            'name' => 'num',
-            'required' => true,
+        self::COMMUNIID => array(
+            'name' => 'communiid',
+            'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
@@ -44,8 +44,8 @@ class PBS_ItemOpt extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::ITEMID] = null;
-        $this->values[self::NUM] = null;
+        $this->values[self::PLAYERID] = null;
+        $this->values[self::COMMUNIID] = null;
     }
 
     /**
@@ -59,48 +59,48 @@ class PBS_ItemOpt extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'itemid' property
+     * Sets value of 'playerid' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setItemid($value)
+    public function setPlayerid($value)
     {
-        return $this->set(self::ITEMID, $value);
+        return $this->set(self::PLAYERID, $value);
     }
 
     /**
-     * Returns value of 'itemid' property
+     * Returns value of 'playerid' property
      *
      * @return integer
      */
-    public function getItemid()
+    public function getPlayerid()
     {
-        $value = $this->get(self::ITEMID);
+        $value = $this->get(self::PLAYERID);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'num' property
+     * Sets value of 'communiid' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setNum($value)
+    public function setCommuniid($value)
     {
-        return $this->set(self::NUM, $value);
+        return $this->set(self::COMMUNIID, $value);
     }
 
     /**
-     * Returns value of 'num' property
+     * Returns value of 'communiid' property
      *
      * @return integer
      */
-    public function getNum()
+    public function getCommuniid()
     {
-        $value = $this->get(self::NUM);
+        $value = $this->get(self::COMMUNIID);
         return $value === null ? (integer)$value : $value;
     }
 }

@@ -1,23 +1,23 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-07 01:22:53
+ * Auto generated from PB_gm_tool.proto at 2017-09-22 17:44:56
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * PBS_LoginEvent message
+ * PBS_SysBroadcastReturn message
  */
-class PBS_LoginEvent extends \ProtobufMessage
+class PBS_SysBroadcastReturn extends \ProtobufMessage
 {
     /* Field index constants */
-    const UID = 1;
+    const CODE = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::UID => array(
-            'name' => 'uid',
+        self::CODE => array(
+            'name' => 'code',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -38,7 +38,7 @@ class PBS_LoginEvent extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::UID] = null;
+        $this->values[self::CODE] = null;
     }
 
     /**
@@ -52,25 +52,25 @@ class PBS_LoginEvent extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'uid' property
+     * Sets value of 'code' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setUid($value)
+    public function setCode($value)
     {
-        return $this->set(self::UID, $value);
+        return $this->set(self::CODE, $value);
     }
 
     /**
-     * Returns value of 'uid' property
+     * Returns value of 'code' property
      *
      * @return integer
      */
-    public function getUid()
+    public function getCode()
     {
-        $value = $this->get(self::UID);
+        $value = $this->get(self::CODE);
         return $value === null ? (integer)$value : $value;
     }
 }

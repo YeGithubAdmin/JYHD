@@ -71,10 +71,10 @@
         <tr class="text-c">
             <th width="30">日期</th>
             <th width="60">日收入</th>
-            <th width="60">付费用户数</th>
-            <th width="60">付费次数</th>
             <th width="60">付费用户</th>
             <th width="60">付费次数</th>
+
+
             <th width="60">活跃付费渗透率</th>
             <th width="60">ARPPU</th>
             <th width="60">首付用户数</th>
@@ -83,6 +83,19 @@
         </tr>
         </thead>
         <tbody>
+
+            <volist name="info" id="val">
+                <tr class="text-c">
+            <td >{$val['DateTime']}</td>
+            <td>{$val['TotalMoney']}</td>
+            <td>{$val['PayNum']}</td>
+            <td>{$val['UserPayNum']}</td>
+            <td>{$val['ActiveRate']}</td>
+            <td>{$val['ARPPU']}</td>
+            <td>{$val['First']}</td>
+            <td>{$val['FirstMoney']}</td>
+        </tr>
+            </volist>
 
         </tbody>
     </table>

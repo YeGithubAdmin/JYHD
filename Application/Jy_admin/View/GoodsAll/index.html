@@ -115,6 +115,7 @@
 					<th width="100">商品标识</th>
 					<th width="100">商品名称</th>
 					<th width="100">购买货币</th>
+					<th width="30">价格</th>
 					<th width="100">获得数量</th>
 					<th width="100">发行量</th>
 					<th width="100">状态</th>
@@ -155,6 +156,7 @@
 							...
 						</switch>
 					</td>
+					<td>{$val['CurrencyNum']}</td>
 					<td>{$val['GetNum']}</td>
 					<td>
 						<eq name = "val['IssueType']" value ="1">

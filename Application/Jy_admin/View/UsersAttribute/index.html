@@ -104,14 +104,14 @@
 			<label class="form-label col-1"><span class="c-red"></span>签到时间：</label>
 			<div class="formControls col-1" style="display:none;">
 				<input type="text"  onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
-					    value="" name="SignSime"
+					    value="" name=""
 					   class="input-text Wdate" style="width: 120px;">
 
 			</div>
 			<div class="formControls col-1">
 				<input type="text"
 					   onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
-					      value=""     placeholder = "请选择时间" name="McOvertime"
+					      value=""     placeholder = "请选择时间" name="SignTime"
 					   class="input-text Wdate" >
 			</div>
 			<div class="col-1"></div><label class="form-label col-1">
@@ -150,7 +150,12 @@
 
 
 
-
+			<label class="form-label col-1"><span class="c-red"></span>白名单：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="请输入账号"
+					   name="AccountName" >
+			</div>
+			<div class="col-1"></div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-1"><span class="c-red"></span>添加道具：</label>
@@ -183,9 +188,18 @@
 			<div class="row cl GiveInfo"  style="display: none">
 				<label class="form-label col-1"><span class="c-red"></span></label>
 
+				<!--<div class="formControls col-1">-->
+					<!--<input type="text"  class="input-text Itemid"   value="" placeholder="请输入道具ID"-->
+						   <!--name="Prop[0][Itemid]"  nullmsg="">-->
+				<!--</div>-->
 				<div class="formControls col-1">
-					<input type="text"  class="input-text Itemid"   value="" placeholder="请输入道具ID"
-						   name="Prop[0][Itemid]"  nullmsg="">
+		        		<span class="select-box">
+							<select  class="select Itemid" name = "Prop[0][Itemid]"   nullmsg="" >
+								<volist name ="info" id="val">
+								 <option value="{$val['Code']}">{$val['Name']}</option>
+								</volist>
+                            </select>
+						</span>
 				</div>
 				<div class="formControls col-1">
 					<input type="text"  class="input-text Num"   value="" placeholder="请输入道具数量"

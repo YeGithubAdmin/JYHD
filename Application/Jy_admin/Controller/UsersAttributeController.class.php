@@ -3,13 +3,27 @@
 *  用户属性
 **/
 namespace Jy_admin\Controller;
+use Protos\OptReason;
+use Protos\OptSrc;
+use Protos\PBS_AddWhiteList;
+use Protos\PBS_AddWhiteListReturn;
 use Protos\PBS_ItemOpt;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
+use Protos\UsrDataOpt;
 use RedisProto\RPB_PlayerData;
 use Think\Controller;
 class UsersAttributeController extends ComController {
     public function index(){
+
+        $catPropListField = array(
+            'Name',
+            'Code',
+        );
+        $catPropList = M('jy_prop_list')
+                        ->field($catPropListField)
+            ->select();
+
         if(IS_POST){
             $obj = new \Common\Lib\func();
             $msgArr = array(
@@ -53,12 +67,14 @@ class UsersAttributeController extends ComController {
             $Glevel         =       I('param.Glevel',0,'intval');                     //游戏等级
             $Gexp           =       I('param.Gexp',0,'intval');                       //游戏经验
             $SignDay        =       I('param.SignDay',0,'intval');                    //累计签到天数
-            $SignTime       =       I('param.SignSime',0,'trim,strtotime');           //签到时间
+            $SignTime       =       I('param.SignTime',0,'trim,strtotime');           //签到时间
             $Gunid          =       I('param.Gunid',0,'intval');                      //当前炮的id
             $IsMc           =       I('param.IsMc',0,'intval');                       //是否是月卡用户
             $McOvertime     =       I('param.McOvertime',0,'trim,strtotime');         //月卡结束时间
             $IsGive         =       I('param.IsGive',1,'intval');                     //是否赠送道具  1 -否 2-是
             $DataProp       =       I('param.Prop','','trim');                        //道具
+            $AccountName    =       I('param.AccountName','','trim');                        //道具
+
             if($playerid == 0){
                 $result = 4001;
                 goto  response;
@@ -84,14 +100,51 @@ class UsersAttributeController extends ComController {
             $obj->ProtobufObj(array(
                 'Protos/PBS_UsrDataOprater.php',
                 'Protos/PBS_UsrDataOpraterReturn.php',
+                'Protos/PBS_AddWhiteList.php',
+                'Protos/OptSrc.php',
+                'Protos/UsrDataOpt.php',
+                'Protos/PBS_AddWhiteListReturn.php',
                 'RedisProto/RPB_PlayerData.php',
+                'Protos/OptReason.php',
+                'RPB_PlayerNumerical.php',
                 'PB_Item.php',
             ));
+
             $PBS_UsrDataOprater = new PBS_UsrDataOprater();
             $RPB_PlayerData     = new RPB_PlayerData();
             $PBS_ItemOpt        = new \PB_Item();
+            $OptReason          = new OptReason();
+            $OptSrc             = new OptSrc();
+            $UsrDataOpt         = new UsrDataOpt();
+
+            if(!empty($AccountName)){
+                $PBS_AddWhiteList        = new PBS_AddWhiteList();
+                $PBS_AddWhiteListReturn  = new PBS_AddWhiteListReturn();
+                $PBS_AddWhiteList->setAccountName($AccountName);
+
+                $String = $PBS_AddWhiteList->serializeToString();
+                $Respond =  $obj->ProtobufSend('protos.PBS_AddWhiteList',$String,0);
+                if($Respond  == 504){
+                    $result = 3002;
+                    goto response;
+                }
+                if(strlen($Respond)==0){
+                    $result = 3003;
+                    goto response;
+                }
+
+                $PBS_AddWhiteListReturn->parseFromString($Respond);
+                $ReplyCode = $PBS_AddWhiteListReturn->getCode();
+                //判断结果
+                if($ReplyCode != 1){
+                    $result = $ReplyCode;
+                    goto response;
+                }
+            }
             $PBS_UsrDataOprater->setPlayerid($playerid);
-            $PBS_UsrDataOprater->setOpt(5);
+            $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
+            $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+            $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
             if($IsMc == 2){
                 $RPB_PlayerData->setIsMc(true);
                 $RPB_PlayerData->setMcOvertime($McOvertime);
@@ -120,6 +173,7 @@ class UsersAttributeController extends ComController {
             G('begin');
             $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
             G('end');
+
             if($PBS_UsrDataOpraterRespond  == 504){
                 $result = 3002;
                 goto response;
@@ -142,7 +196,7 @@ class UsersAttributeController extends ComController {
 
         }
 
-
+        $this->assign('info',$catPropList);
         $this->display();
     }
 
