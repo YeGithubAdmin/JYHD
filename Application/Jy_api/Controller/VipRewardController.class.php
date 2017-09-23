@@ -178,6 +178,7 @@ class VipRewardController extends ComController {
             $dataVipRewardLog[$k]['playerid'] =    $playerid;
             $dataVipRewardLog[$k]['Level']    =    $VipLevel;
             $dataVipRewardLog[$k]['Number']   =    $v['Number'];
+            $dataVipRewardLog[$k]['GetNum']   =    $v['GetNum'];
             $dataVipRewardLog[$k]['Code']     =    $v['Code'];
             $dataVipRewardLog[$k]['GoodsID']  =    $v['GoodsID'];
             $dataVipRewardLog[$k]['Type']     =    $v['Type'];

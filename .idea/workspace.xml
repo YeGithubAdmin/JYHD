@@ -25,10 +25,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NotifyurlController.class.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NotifyurlController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
+            <state relative-caret-position="540">
               <caret line="276" column="0" lean-forward="true" selection-start-line="276" selection-start-column="0" selection-end-line="276" selection-end-column="0" />
               <folding />
             </state>
@@ -50,6 +50,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="209">
               <caret line="11" column="36" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VipRewardController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="176" column="51" lean-forward="true" selection-start-line="176" selection-start-column="51" selection-end-line="176" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -152,7 +162,6 @@
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/GoldStream/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/RegisterMacroscopicController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/RealTimeRevenue/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/RealTimeRevenueController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/RealTimeOverview/index.html" />
@@ -162,6 +171,7 @@
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" />
       </list>
     </option>
   </component>
@@ -505,12 +515,12 @@
       <workItem from="1505700187593" duration="63484000" />
       <workItem from="1505873012426" duration="79002000" />
       <workItem from="1506074226419" duration="8303000" />
-      <workItem from="1506131578696" duration="22036000" />
+      <workItem from="1506131578696" duration="22848000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="933103000" />
+    <option name="totallyTimeSpent" value="933915000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -869,14 +879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="93" column="29" lean-forward="false" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/RealTimeRevenueController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -927,22 +929,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1671">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Common/Conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="36" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1007">
@@ -961,14 +947,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
@@ -979,8 +957,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
+        <state relative-caret-position="540">
           <caret line="276" column="0" lean-forward="true" selection-start-line="276" selection-start-column="0" selection-end-line="276" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1671">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Common/Conf/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="36" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="176" column="51" lean-forward="true" selection-start-line="176" selection-start-column="51" selection-end-line="176" selection-end-column="51" />
           <folding />
         </state>
       </provider>
