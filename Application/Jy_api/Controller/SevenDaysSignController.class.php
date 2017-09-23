@@ -174,30 +174,6 @@ class SevenDaysSignController extends ComController {
             }
 
         }
-        $RPB_AccountData  =   $PBS_UsrDataOpraterReturn->getAccountData();
-        $RegChannel       =   $RPB_AccountData->getRegChannel();
-        $UsersName        =   $PBS_UsrDataOpraterReturnBase->getName();
-        $Gold             =   $PBS_UsrDataOpraterReturnBase->getGold();
-        $Diamond          =   $PBS_UsrDataOpraterReturnBase->getDiamond();
-        $RegTime          =   $RPB_AccountData->getRegtime();
-        $Level            =   $PBS_UsrDataOpraterReturnBase->getGlevel();
-        //记录登录信息
-        $UsersLoginLog = array(
-            'playerid'=>$playerid,
-            'UsersName'=>$UsersName,
-            'Gold'=>$Gold,
-            'Diamond'=>$Diamond,
-            'LastIP'=>$_SERVER['REMOTE_ADDR'],
-            'LastChannel'=>$DataInfo['channel'],
-            'Level'=>$Level,
-            'RegChannel'=>$RegChannel,
-            'Platform'=>$Platform,
-            'Version'=>$Version,
-            'RegTime'=>$RegTime,
-        );
-        $addUsersLoginLog = M('jy_users_login_log')
-                            ->add($UsersLoginLog);
-
         $info['SignInfo']  =   $sevenDaysSign;
         $info['Status']    =   $isSign;
 

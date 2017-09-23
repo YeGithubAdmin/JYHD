@@ -266,7 +266,7 @@ class RewardController extends ComController {
         }
 
         $info = array(
-            'Number'=>$GoodsInfo['GetNum'],
+            'Number'=>$num,
             'Type'=>$GoodsInfo['Type'],
             'Code'=>$GoodsInfo['Code'],
         );
