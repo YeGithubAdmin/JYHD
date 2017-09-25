@@ -175,16 +175,16 @@ class NotifyurlController extends Controller {
             'RedisProto/RPB_PlayerData.php',
             'Protos/OptSrc.php',
             'Protos/UsrDataOpt.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'PB_PlayerVip.php',
             'PB_HallNotify.php',
             'RPB_PlayerNumerical.php',
             'PB_Email.php',
             'PB_Item.php',
+            'PB_ResourceChange.php',
             'PB_ErrorCode.php',
             'PB_BuyGoods.php',
             'EmailType.php',
-
         ));
         //实例化对象
         $UsrDataOprater         =   new PBS_UsrDataOprater();
@@ -196,7 +196,8 @@ class NotifyurlController extends Controller {
         $UsrDataOpt             =   new UsrDataOpt();
         $ErrorCode              =   new \PB_ErrorCode();
         $BuyGoods               =   new \PB_BuyGoods();
-        $OptReason              =   new OptReason();
+        $PB_ResourceChange      =   new \PB_ResourceChange();
+        $OptReason              =   new \OptReason();
         $PB_HallNotify  = new \PB_HallNotify();
         $PB_PlayerVip   = new \PB_PlayerVip();
         //设置protocbuf
@@ -227,15 +228,14 @@ class NotifyurlController extends Controller {
                 goto OrderSave;
             }
             $PlayerData->setVipExp($UpVipExp);
-
             $Statuslevel = 0;
             if($VipInfo['level'] != $VipLevel){
-                $PB_PlayerVip->setVip($VipInfo['level']);
                 $Statuslevel = $VipInfo['level'];
             }else{
                 $PB_PlayerVip->setVip($VipLevel);
                 $Statuslevel = $VipLevel;
             }
+            $PB_PlayerVip->setVip($Statuslevel);
             $PB_PlayerVip->setExp($UpVipExp);
             //判断是否已经领取 1-否  2-是
             $Status = false;
@@ -256,7 +256,6 @@ class NotifyurlController extends Controller {
             }
             $PB_PlayerVip->setIsCanReward($Status);
             $PB_HallNotify->setPlayerVip($PB_PlayerVip);
-            $UsrDataOprater->setNotify($PB_HallNotify);
             //是否升级 1 否  2 是
             if($VipInfo['level'] != $VipLevel){
                 $PlayerData->setVip($VipInfo['level']);
@@ -274,7 +273,6 @@ class NotifyurlController extends Controller {
                 $PlayerData->setIsMc(true);
             }
             //添加物品
-
             $IsGold = 1; //是否添加过金币 1-否 2是 注释：商城
             if($CatUsersOrderInfo['Form'] == 3 || $CatUsersOrderInfo['Form'] == 1){
                 if($CatUsersOrderInfo['Form'] == 1){
@@ -289,20 +287,26 @@ class NotifyurlController extends Controller {
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
                     }
-
                     switch ($v['Type']){
                         //金币
                         case  1:
                             $PlayerData->setGold($num);
-                            $BuyGoods->setGold($num);
                             if($CatUsersOrderInfo['Form'] == 3){
                                 $IsGold = 2;
                             }
+                            $PB_Item = new \PB_Item();
+                            $PB_Item->setNum($num);
+                            $PB_Item->setId(8);
+                            $PB_ResourceChange->appendItems($PB_Item);
                             break;
                         //砖石
                         case  2:
                             $PlayerData->setDiamond($num);
-                            $BuyGoods->setDiamond($num);
+                            $PB_Item = new \PB_Item();
+                            $PB_Item->setNum($num);
+                            $PB_Item->setId(9);
+                            $PB_ResourceChange->appendItems($PB_Item);
+
                             break;
                         //道具
                         case  3:
@@ -310,24 +314,39 @@ class NotifyurlController extends Controller {
                             $Item->setId($v['GoodsCode']);
                             $Item->setNum($num);
                             $UsrDataOprater->appendItemOpt($Item);
-                            $BuyGoods->appendItems($Item);
+                            $PB_Item = new \PB_Item();
+                            $PB_Item->setNum($num);
+                            $PB_Item->setId($v['GoodsCode']);
+                            $PB_ResourceChange->appendItems($PB_Item);
+
                             break;
                     }
                 }
             }
-             if($IsGold == 2){
-                 $OptReason  =  new OptReason();
-                 $UsrDataOprater->setReason($OptReason::pay_gold);
-             }
-            if($CatUsersOrderInfo['Form'] == 2){
+
+            if($IsGold == 2){
+                $OptReason  =  new \OptReason();
+                $UsrDataOprater->setReason($OptReason::pay_gold);
+            }
+            if($CatUsersOrderInfo['Form'] == 1){
+                $PB_ResourceChange->setReason($OptReason::first_pay);
+            }elseif ($CatUsersOrderInfo['Form'] == 2){
                 $PlayerData->setDiamond(100);
                 $Item = new \PB_Item();
-                $Item->setId(7);
+                $Item->setId(9);
                 $Item->setNum(100);
-                $BuyGoods->appendItems($Item);
+                $PB_ResourceChange->appendItems($Item);
+                $PB_ResourceChange->setReason($OptReason::buy_yueka_ok);
+            }elseif ($CatUsersOrderInfo['Form'] == 3){
+                $PB_ResourceChange->setReason($OptReason::mall_reward_sdk);
             }
+
+            $PB_ResourceChange->setPlayerid($playerid);
+            $PB_HallNotify->setResChange($PB_ResourceChange);
+            $PB_HallNotify->setBuyNotify($BuyGoods);
+            $UsrDataOprater->setNotify($PB_HallNotify);
             $UsrDataOprater->setPlayerData($PlayerData);
-            $UsrDataOprater->setBuyGoodsNotify($BuyGoods);
+
         }else{
             //支付失败
             $BuyGoods->setErr($ErrorCode::Error_buy_fail);
@@ -337,6 +356,7 @@ class NotifyurlController extends Controller {
             goto OrderSave;
         }
         //反序列化
+
         $serialize = $UsrDataOprater->serializeToString();
         //发送请求
         $Respond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$serialize,$playerid);

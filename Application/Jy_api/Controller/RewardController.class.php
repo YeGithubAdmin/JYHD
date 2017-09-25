@@ -162,7 +162,7 @@ class RewardController extends ComController {
             'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/UsrDataOpt.php',
             'Protos/OptSrc.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
@@ -171,7 +171,7 @@ class RewardController extends ComController {
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
-        $OptReason          = new OptReason();
+        $OptReason          = new \OptReason();
         //填充数据
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);

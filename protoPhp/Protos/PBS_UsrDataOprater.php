@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-09-22 17:45:22
+ * Auto generated from PB_usr_rpc.proto at 2017-09-25 11:08:41
  *
  * protos package
  */
@@ -64,7 +64,7 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'type' => '\PB_Email'
         ),
         self::REASON => array(
-            'default' => \Protos\OptReason::OptReason_None,
+            'default' => \OptReason::OptReason_None,
             'name' => 'reason',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,

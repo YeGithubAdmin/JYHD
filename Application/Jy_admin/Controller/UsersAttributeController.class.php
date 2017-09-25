@@ -105,23 +105,24 @@ class UsersAttributeController extends ComController {
                 'Protos/UsrDataOpt.php',
                 'Protos/PBS_AddWhiteListReturn.php',
                 'RedisProto/RPB_PlayerData.php',
-                'Protos/OptReason.php',
+                'PB_HallNotify.php',
+                'OptReason.php',
+                'PB_ResourceChange.php',
                 'RPB_PlayerNumerical.php',
                 'PB_Item.php',
             ));
 
             $PBS_UsrDataOprater = new PBS_UsrDataOprater();
             $RPB_PlayerData     = new RPB_PlayerData();
-            $PBS_ItemOpt        = new \PB_Item();
-            $OptReason          = new OptReason();
+            $PB_HallNotify      = new \PB_HallNotify();
+            $PB_ResourceChange  = new \PB_ResourceChange();
+            $OptReason          = new \OptReason();
             $OptSrc             = new OptSrc();
             $UsrDataOpt         = new UsrDataOpt();
-
             if(!empty($AccountName)){
                 $PBS_AddWhiteList        = new PBS_AddWhiteList();
                 $PBS_AddWhiteListReturn  = new PBS_AddWhiteListReturn();
                 $PBS_AddWhiteList->setAccountName($AccountName);
-
                 $String = $PBS_AddWhiteList->serializeToString();
                 $Respond =  $obj->ProtobufSend('protos.PBS_AddWhiteList',$String,0);
                 if($Respond  == 504){
@@ -132,7 +133,6 @@ class UsersAttributeController extends ComController {
                     $result = 3003;
                     goto response;
                 }
-
                 $PBS_AddWhiteListReturn->parseFromString($Respond);
                 $ReplyCode = $PBS_AddWhiteListReturn->getCode();
                 //判断结果
@@ -153,20 +153,34 @@ class UsersAttributeController extends ComController {
                 if($v != 0 && $v != '' ){
                     $setData = "set".$k;
                     $RPB_PlayerData->$setData($v);
+                    if($k == "Gold"){
+                        $PBS_ItemOpt        = new \PB_Item();
+                        $PBS_ItemOpt->setId(8);
+                        $PBS_ItemOpt->setNum($v);
+                        $PB_ResourceChange->appendItems($PBS_ItemOpt);
+
+                    }elseif ($k == "Diamond"){
+                        $PBS_ItemOpt        = new \PB_Item();
+                        $PBS_ItemOpt->setId(9);
+                        $PBS_ItemOpt->setNum($v);
+                        $PB_ResourceChange->appendItems($PBS_ItemOpt);
+                    }
                 }
             }
             //添加道具
-            $Prop = 1;
             if(!empty($DataProp) && $IsGive ==2){
-                $Prop = 2;
                 foreach ($DataProp as $k=>$v){
+                    $PBS_ItemOpt        = new \PB_Item();
                     $PBS_ItemOpt->setNum($v['Num']);
                     $PBS_ItemOpt->setId($v['Itemid']);
+                    $PB_ResourceChange->appendItems($PBS_ItemOpt);
+                    $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
                 }
             }
-            if($Prop == 2){
-                $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
-            }
+            $PB_ResourceChange->setReason($OptReason::gm_tool);
+            $PB_ResourceChange->setPlayerid($playerid);
+            $PB_HallNotify->setResChange($PB_ResourceChange);
+            $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
             //发送请求

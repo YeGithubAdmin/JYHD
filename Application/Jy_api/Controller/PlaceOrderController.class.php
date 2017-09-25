@@ -99,7 +99,7 @@ class PlaceOrderController extends ComController {
             'RedisProto/RPB_PlayerData.php',
             'RedisProto/RPB_AccountData.php',
             'Protos/OptSrc.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'RPB_PlayerNumerical.php',
             'Protos/UsrDataOpt.php',
         ));

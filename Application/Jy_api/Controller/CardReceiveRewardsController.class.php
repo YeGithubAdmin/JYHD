@@ -139,7 +139,7 @@ class CardReceiveRewardsController extends ComController {
             'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/OptSrc.php',
             'Protos/UsrDataOpt.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
@@ -148,7 +148,7 @@ class CardReceiveRewardsController extends ComController {
         $RPB_PlayerData      = new RPB_PlayerData();
         $UsrDataOpt          = new UsrDataOpt();
         $OptSrc              = new OptSrc();
-        $OptReason           = new OptReason();
+        $OptReason           = new \OptReason();
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setReason($OptReason::get_yueka_award);

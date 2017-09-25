@@ -20,7 +20,6 @@ class MallGoodsListController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
 
-
         $msgArr[4006]  = '类别缺失。';
         $msgArr[4007]  = '展示方式缺失。';
         $msgArr[4008]  = '用户信息缺失！。';

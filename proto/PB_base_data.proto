@@ -5,6 +5,7 @@ message PB_OnlineRewardTask
 	optional int64 over_time 		= 2;	// 领取时间
 	optional bool  isfinish			= 3;	// 今天是否完成
 	optional int64 start_time 		= 4;
+	optional int32 bk_count 		= 5;	// 破产次数
 }
 
 message PB_RankingData
@@ -20,8 +21,38 @@ message PB_RankingData
 message PB_Item 
 {
 	optional int32 id 	 = 1;	// 物品id
-	optional int32 num	 = 2;	// 物品数量
+	optional int32 num	 = 2;	// 物品增量
 	optional int32 cur_num = 3;
+}
+
+enum OptReason
+{
+	OptReason_None  = 1;
+	buy_yueka_ok 	= 2;	// 购买月卡成功 sdk
+	get_yueka_award = 3;	// 领取月卡奖励
+	use_item 		= 4;	// 使用道具
+	pay_gold		= 5;	// 人民币购买的金币 sdk
+	exchange 		= 6;	// 兑换
+	vip_reward 		= 7;	// vip 奖励
+	checkin_reward 	= 8;	// 签到 奖励
+	promotion_reward = 9;	// 活动	奖励
+	mall_reward 	= 10;	// 商城	奖励
+	mall_reward_sdk = 11;	// 商城	奖励 sdk 跳转操作
+	first_pay 		= 12;	// 首充	sdk
+	gm_tool 		= 13;	// gm 后台
+	player_level_up = 14;	
+}
+
+message PB_Attr
+{
+	enum Attr_Type {
+		player_level = 1;
+	}
+
+	optional Attr_Type attr_type = 1;
+	optional int32 	   attr_add  = 2; 	// 属性增量
+	optional int32	   attr_cur  = 3;	// 当前属性
+	optional string	   attr_str  = 4;	// 某些字符型属性，比如name
 }
 
 enum EmailType 
@@ -63,6 +94,7 @@ message PB_DrawData
 	optional int32 		kill_boss_cond   = 3;	// 进度条上限
 	optional int32		score 			 = 4;	// 每日获得的积分		奖金池
 	optional bool 		draw_state 	 	 = 5;	// 转盘领奖状态
+	optional int32		score_max 		 = 6;
 }
 
 message PB_VipBroadcast
@@ -75,7 +107,7 @@ message PB_GoldBroadcast
 {
 	optional int32			vip  			= 1;
 	optional string 		player_name    	= 2;
-	optional string 		boss_name 		= 3;
+	optional int32 			fish_type 		= 3;
 	optional int64			gold 			= 4;
 }
 
@@ -83,16 +115,17 @@ message PB_YuquanBroadcast
 {
 	optional int32			vip  			= 1;
 	optional string 		player_name    	= 2;
-	optional string 		boss_name 		= 3;
-	optional int32 			yuquan 			= 4;
+	optional int32 			fish_type 		= 3;
+	optional int32 			num 			= 4;
 }
 
 message PB_ItemBroadcast
 {
 	optional int32			vip  			= 1;
 	optional string 		player_name    	= 2;
-	optional string 		boss_name 		= 3;
-	optional string			item_name 		= 4;
+	optional int32 			fish_type 		= 3;
+	optional int32			item_id 		= 4;
+	optional int32 			num 			= 5;
 }
 
 message PB_PhpBroadcast

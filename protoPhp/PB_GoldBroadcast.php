@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-09-22 17:45:22
+ * Auto generated from PB_base_data.proto at 2017-09-25 11:08:41
  */
 
 namespace {
@@ -12,7 +12,7 @@ class PB_GoldBroadcast extends \ProtobufMessage
     /* Field index constants */
     const VIP = 1;
     const PLAYER_NAME = 2;
-    const BOSS_NAME = 3;
+    const FISH_TYPE = 3;
     const GOLD = 4;
 
     /* @var array Field descriptors */
@@ -27,10 +27,10 @@ class PB_GoldBroadcast extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
-        self::BOSS_NAME => array(
-            'name' => 'boss_name',
+        self::FISH_TYPE => array(
+            'name' => 'fish_type',
             'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_STRING,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
         self::GOLD => array(
             'name' => 'gold',
@@ -56,7 +56,7 @@ class PB_GoldBroadcast extends \ProtobufMessage
     {
         $this->values[self::VIP] = null;
         $this->values[self::PLAYER_NAME] = null;
-        $this->values[self::BOSS_NAME] = null;
+        $this->values[self::FISH_TYPE] = null;
         $this->values[self::GOLD] = null;
     }
 
@@ -117,26 +117,26 @@ class PB_GoldBroadcast extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'boss_name' property
+     * Sets value of 'fish_type' property
      *
-     * @param string $value Property value
+     * @param integer $value Property value
      *
      * @return null
      */
-    public function setBossName($value)
+    public function setFishType($value)
     {
-        return $this->set(self::BOSS_NAME, $value);
+        return $this->set(self::FISH_TYPE, $value);
     }
 
     /**
-     * Returns value of 'boss_name' property
+     * Returns value of 'fish_type' property
      *
-     * @return string
+     * @return integer
      */
-    public function getBossName()
+    public function getFishType()
     {
-        $value = $this->get(self::BOSS_NAME);
-        return $value === null ? (string)$value : $value;
+        $value = $this->get(self::FISH_TYPE);
+        return $value === null ? (integer)$value : $value;
     }
 
     /**

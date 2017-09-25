@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-09-22 17:45:22
+ * Auto generated from PB_base_data.proto at 2017-09-25 11:08:41
  */
 
 namespace {
@@ -12,8 +12,9 @@ class PB_ItemBroadcast extends \ProtobufMessage
     /* Field index constants */
     const VIP = 1;
     const PLAYER_NAME = 2;
-    const BOSS_NAME = 3;
-    const ITEM_NAME = 4;
+    const FISH_TYPE = 3;
+    const ITEM_ID = 4;
+    const NUM = 5;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -27,15 +28,20 @@ class PB_ItemBroadcast extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
-        self::BOSS_NAME => array(
-            'name' => 'boss_name',
+        self::FISH_TYPE => array(
+            'name' => 'fish_type',
             'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_STRING,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::ITEM_NAME => array(
-            'name' => 'item_name',
+        self::ITEM_ID => array(
+            'name' => 'item_id',
             'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_STRING,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::NUM => array(
+            'name' => 'num',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
 
@@ -56,8 +62,9 @@ class PB_ItemBroadcast extends \ProtobufMessage
     {
         $this->values[self::VIP] = null;
         $this->values[self::PLAYER_NAME] = null;
-        $this->values[self::BOSS_NAME] = null;
-        $this->values[self::ITEM_NAME] = null;
+        $this->values[self::FISH_TYPE] = null;
+        $this->values[self::ITEM_ID] = null;
+        $this->values[self::NUM] = null;
     }
 
     /**
@@ -117,49 +124,72 @@ class PB_ItemBroadcast extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'boss_name' property
+     * Sets value of 'fish_type' property
      *
-     * @param string $value Property value
-     *
-     * @return null
-     */
-    public function setBossName($value)
-    {
-        return $this->set(self::BOSS_NAME, $value);
-    }
-
-    /**
-     * Returns value of 'boss_name' property
-     *
-     * @return string
-     */
-    public function getBossName()
-    {
-        $value = $this->get(self::BOSS_NAME);
-        return $value === null ? (string)$value : $value;
-    }
-
-    /**
-     * Sets value of 'item_name' property
-     *
-     * @param string $value Property value
+     * @param integer $value Property value
      *
      * @return null
      */
-    public function setItemName($value)
+    public function setFishType($value)
     {
-        return $this->set(self::ITEM_NAME, $value);
+        return $this->set(self::FISH_TYPE, $value);
     }
 
     /**
-     * Returns value of 'item_name' property
+     * Returns value of 'fish_type' property
      *
-     * @return string
+     * @return integer
      */
-    public function getItemName()
+    public function getFishType()
     {
-        $value = $this->get(self::ITEM_NAME);
-        return $value === null ? (string)$value : $value;
+        $value = $this->get(self::FISH_TYPE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'item_id' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setItemId($value)
+    {
+        return $this->set(self::ITEM_ID, $value);
+    }
+
+    /**
+     * Returns value of 'item_id' property
+     *
+     * @return integer
+     */
+    public function getItemId()
+    {
+        $value = $this->get(self::ITEM_ID);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'num' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setNum($value)
+    {
+        return $this->set(self::NUM, $value);
+    }
+
+    /**
+     * Returns value of 'num' property
+     *
+     * @return integer
+     */
+    public function getNum()
+    {
+        $value = $this->get(self::NUM);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

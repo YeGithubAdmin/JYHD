@@ -4,6 +4,8 @@
  ***/
 namespace Jy_admin\Controller;
 use Think\Controller;
+use Think\Model;
+
 defined('THINK_PATH') or exit('Access Defined!');
 class RealTimeOnlineController extends ComController {
     public function index(){
@@ -11,8 +13,8 @@ class RealTimeOnlineController extends ComController {
          $time    = date('Y-m-d');
          $time    = strtotime($time);
          $DayTime = 24*60*60;
-         //搜索类型 1-注册 2-活跃
-         $Type = I('param.Type','','intval');
+         //场次
+         $Type = I('param.Type',0,'intval');
         //当天时间
          $SameDayStartTime   =  date('Y-m-d H:i:s',$time);
          $SameDayEndTime     =  date('Y-m-d H:i:s',$time+$DayTime);
@@ -22,42 +24,43 @@ class RealTimeOnlineController extends ComController {
          //七天前
          $SevenDayStartTime  =  date('Y-m-d H:i:s',$time-$DayTime*7);
          $SevenDayEndTime    =  date('Y-m-d H:i:s',$time-$DayTime*6);
+
+         $model = new Model();
          $timeinterval = array();
          $erverDay = array();
          for ($i=0;$i<=23;$i++){
              $erverDay[$i] = $i.'点';
              $timeinterval[$i]['num'] = $i;
-
          }
+          $Screenings = '';
+
+         if($Type > 0){
+             $Screenings = '`Screenings` = '.$Type.' AND ';
+         }
+
          $info = array();
-             //注册
-             $SameDayregisterField  = array(
-                 'DateTime',
-                 'date_format(DateTime,"%H") as i',
-                 'UserNum',
-             );
              //当天
-             $SameDayregister  = M('jy_real_time_online')
-                 ->where('DateTime < "'.$SameDayEndTime.'"  and  "'.$SameDayStartTime.'" <= DateTime')
-                 ->field($SameDayregisterField)
-                 ->order('DateTime desc')
-                 ->group('i')
-                 ->select();
-
-             dump($SameDayregister);
-
+             $SameDayregister = $model->query('SELECT a.`Id`,a.`UserNum`,DATE_FORMAT(`DateTime`,"%H") AS i 
+                                              FROM (SELECT `Id`,`UserNum`,`DateTime` FROM jy_real_time_online 
+                                              WHERE  '.$Screenings.' `DateTime` <  STR_TO_DATE("'.$SameDayEndTime.'","%Y-%m-%d %H:%i:%s") 
+                                              AND   `DateTime`  >= STR_TO_DATE("'.$SameDayStartTime.'","%Y-%m-%d %H:%i:%s")
+                                              ORDER BY `Id` DESC  LIMIT 150 ) AS a  
+                                              GROUP BY i ORDER BY i');
              //一天
-             $OneDayregister  = M('jy_real_time_online')
-                 ->where('DateTime < "'.$OneDayEndTime.'"  and  "'.$OneDayStartTime.'" <= DateTime')
-                 ->field($SameDayregisterField)
-                 ->group('i')
-                 ->select();
+             $OneDayregister = $model->query('SELECT a.`Id`,a.`UserNum`,DATE_FORMAT(`DateTime`,"%H") AS i 
+                                              FROM (SELECT `Id`,`UserNum`,`DateTime` FROM jy_real_time_online 
+                                              WHERE '.$Screenings.' `DateTime` <  STR_TO_DATE("'.$OneDayEndTime.'","%Y-%m-%d %H:%i:%s") 
+                                              AND   `DateTime`  >= STR_TO_DATE("'.$OneDayStartTime.'","%Y-%m-%d %H:%i:%s")
+                                              ORDER BY `Id` DESC  LIMIT 150 ) AS a  
+                                              GROUP BY i ORDER BY i');
+
              //七天前
-             $SevenDayregister  = M('jy_real_time_online')
-                 ->where('DateTime < "'.$SevenDayEndTime.'"  and  "'.$SevenDayStartTime.'" <= DateTime')
-                 ->field($SameDayregisterField)
-                 ->group('i')
-                 ->select();
+             $SevenDayregister = $model->query('SELECT a.`Id`,a.`UserNum`,DATE_FORMAT(`DateTime`,"%H") AS i 
+                                              FROM (SELECT `Id`,`UserNum`,`DateTime` FROM jy_real_time_online 
+                                              WHERE '.$Screenings.' `DateTime` <  STR_TO_DATE("'.$SevenDayEndTime.'","%Y-%m-%d %H:%i:%s") 
+                                              AND   `DateTime`  >= STR_TO_DATE("'.$SevenDayStartTime.'","%Y-%m-%d %H:%i:%s")
+                                              ORDER BY `Id` DESC  LIMIT 150 ) AS a  
+                                              GROUP BY i ORDER BY i');
              $SameDayregisterSort  = array();
              $dataSameDayregister  = array();
              $OneDayregisterSort   = array();

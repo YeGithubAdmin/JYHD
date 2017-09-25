@@ -93,7 +93,7 @@ class SendEmailController extends ComController {
                 'Protos/PBS_UsrDataOpraterReturn.php',
                 'Protos/OptSrc.php',
                 'Protos/UsrDataOpt.php',
-                'Protos/OptReason.php',
+                'OptReason.php',
                 'RPB_PlayerNumerical.php',
                 'PB_Email.php',
                 'EmailType.php',
@@ -106,6 +106,7 @@ class SendEmailController extends ComController {
             $UsrDataOpt     =   new  UsrDataOpt();
             $EmailType      =   new  \EmailType();
             $PB_Email       =   new  \PB_Email();
+            $OptReason      =   new  \OptReason();
             //设置用户
             $UsrData->setPlayerid($playerid);
             //发送者
@@ -117,6 +118,7 @@ class SendEmailController extends ComController {
             $PB_Email->setTitle($Title);
             //正文
             $PB_Email->setData($Content);
+            $UsrData->setReason($OptReason::gm_tool);
             if($Type == 1){
                 //卡密邮件
                 $PB_Email->setType($EmailType::EmailType_Card);

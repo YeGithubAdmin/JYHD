@@ -29,6 +29,22 @@ message PB_ResChange
 	repeated PB_Res res = 3;
 }
 
+// 玩家属性改变(经验,等级等， 之后有时间全部改为用这个接口)
+message PB_AttributeChange
+{
+	optional int64 playerid = 1;
+	repeated PB_Attr attrs  = 2;
+	optional OptReason reason = 3;
+}
+
+// 资源改变 (item 配置表里的物品, 之后有时间全部改为用这个接口)
+message PB_ResourceChange
+{
+	optional int64 playerid = 1;
+	repeated PB_Item items  = 2;
+	optional OptReason reason = 3;
+}
+
 message PB_PlayerVip
 {
 	optional int32 vip = 1;
@@ -61,4 +77,6 @@ message PB_HallNotify
 	optional PB_ItemBroadcast	item_bc   		= 11;	// 系统广播
 	optional PB_PhpBroadcast	php_bc   		= 12;	// 系统广播
 	optional PB_DrawDataUpdate 	draw_notify 	= 13;	// 抽奖通知
+	optional PB_ResourceChange  res_change 		= 14;	// 资源改变	由客户端主动刷新本地数据
+	optional PB_AttributeChange attr_change 	= 15;	// 属性改变	由客户端主动刷新本地数据
 };

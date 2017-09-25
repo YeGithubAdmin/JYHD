@@ -1,11 +1,9 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-09-22 17:45:22
- *
- * protos package
+ * Auto generated from PB_base_data.proto at 2017-09-25 11:08:41
  */
 
-namespace Protos {
+namespace {
 /**
  * OptReason enum
  */
@@ -24,6 +22,7 @@ final class OptReason
     const mall_reward_sdk = 11;
     const first_pay = 12;
     const gm_tool = 13;
+    const player_level_up = 14;
 
     /**
      * Returns defined enum values
@@ -46,6 +45,7 @@ final class OptReason
             'mall_reward_sdk' => self::mall_reward_sdk,
             'first_pay' => self::first_pay,
             'gm_tool' => self::gm_tool,
+            'player_level_up' => self::player_level_up,
         );
     }
 }

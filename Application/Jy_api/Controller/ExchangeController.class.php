@@ -71,7 +71,7 @@ class ExchangeController extends ComController {
             'Protos/OptSrc.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'RPB_PlayerNumerical.php',
         ));
         //实例化数据
@@ -80,13 +80,12 @@ class ExchangeController extends ComController {
         $RPB_PlayerData     = new RPB_PlayerData();
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
-        $OptReason          = new OptReason();
+        $OptReason          = new \OptReason();
         //填充数据
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $PBS_UsrDataOprater->setReason($OptReason::exchange);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
-
         $PBS_ItemOpt->setId(6);
         $PBS_ItemOpt->setNum(-$catGoodsAll['CurrencyNum']);
         $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);

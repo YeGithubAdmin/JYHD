@@ -135,7 +135,7 @@ class UsersExchangeApplicationController extends ComController {
                 'Protos/UsrDataOpt.php',
                 'Protos/OptSrc.php',
                 'EmailType.php',
-                'Protos/OptReason.php',
+                'OptReason.php',
                 'RPB_PlayerNumerical.php',
                 'PB_Item.php',
                 'PB_Email.php',
@@ -145,8 +145,10 @@ class UsersExchangeApplicationController extends ComController {
             $EmailType                      =   new \EmailType();
             $UsrDataOpt                     =   new UsrDataOpt();
             $OptSrc                         =   new OptSrc();
+            $OptReason                      =   new \OptReason();
             $PBS_UsrDataOprater->setPlayerid($CatUsersExchangeLog['playerid']);
             $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+            $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
             $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
             $PB_Email = new \PB_Email();
             $PB_Email->setSender('系统');

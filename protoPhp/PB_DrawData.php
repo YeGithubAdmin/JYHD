@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-09-22 17:45:22
+ * Auto generated from PB_base_data.proto at 2017-09-25 11:08:41
  */
 
 namespace {
@@ -15,6 +15,7 @@ class PB_DrawData extends \ProtobufMessage
     const KILL_BOSS_COND = 3;
     const SCORE = 4;
     const DRAW_STATE = 5;
+    const SCORE_MAX = 6;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -43,6 +44,11 @@ class PB_DrawData extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_BOOL,
         ),
+        self::SCORE_MAX => array(
+            'name' => 'score_max',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -65,6 +71,7 @@ class PB_DrawData extends \ProtobufMessage
         $this->values[self::KILL_BOSS_COND] = null;
         $this->values[self::SCORE] = null;
         $this->values[self::DRAW_STATE] = null;
+        $this->values[self::SCORE_MAX] = null;
     }
 
     /**
@@ -190,6 +197,29 @@ class PB_DrawData extends \ProtobufMessage
     {
         $value = $this->get(self::DRAW_STATE);
         return $value === null ? (boolean)$value : $value;
+    }
+
+    /**
+     * Sets value of 'score_max' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setScoreMax($value)
+    {
+        return $this->set(self::SCORE_MAX, $value);
+    }
+
+    /**
+     * Returns value of 'score_max' property
+     *
+     * @return integer
+     */
+    public function getScoreMax()
+    {
+        $value = $this->get(self::SCORE_MAX);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

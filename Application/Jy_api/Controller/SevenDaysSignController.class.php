@@ -43,7 +43,7 @@ class SevenDaysSignController extends ComController {
             'Protos/PBS_UsrDataOpraterReturn.php',
             'RedisProto/RPB_PlayerData.php',
             'RedisProto/RPB_AccountData.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'RPB_PlayerNumerical.php',
             'Protos/UsrDataOpt.php',
             'Protos/OptSrc.php',
@@ -216,7 +216,7 @@ class SevenDaysSignController extends ComController {
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
             'Protos/UsrDataOpt.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'Protos/OptSrc.php',
             'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
@@ -313,7 +313,7 @@ class SevenDaysSignController extends ComController {
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $RPB_PlayerData   =  new RPB_PlayerData();
-        $OptReason        =  new OptReason();
+        $OptReason        =  new \OptReason();
         $PBS_UsrDataOprater->setReason($OptReason::checkin_reward);
         $dataUsersGoodsStream       = array();      //道具流水
         $dataUsersCurrencyStream    = array();      //金币砖石流水

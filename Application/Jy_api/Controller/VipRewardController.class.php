@@ -47,7 +47,7 @@ class VipRewardController extends ComController {
             'Protos/OptSrc.php',
             'PB_Item.php',
             'Redis/RPB_PlayerData.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php'
         ));
@@ -55,7 +55,7 @@ class VipRewardController extends ComController {
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
         $RPB_PlayerData     = new RPB_PlayerData();
-        $OptReason          = new OptReason();
+        $OptReason          = new \OptReason();
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);

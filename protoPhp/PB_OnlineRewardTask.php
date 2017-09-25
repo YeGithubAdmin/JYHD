@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-09-22 17:45:22
+ * Auto generated from PB_base_data.proto at 2017-09-25 11:08:41
  */
 
 namespace {
@@ -14,6 +14,7 @@ class PB_OnlineRewardTask extends \ProtobufMessage
     const OVER_TIME = 2;
     const ISFINISH = 3;
     const START_TIME = 4;
+    const BK_COUNT = 5;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -34,6 +35,11 @@ class PB_OnlineRewardTask extends \ProtobufMessage
         ),
         self::START_TIME => array(
             'name' => 'start_time',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::BK_COUNT => array(
+            'name' => 'bk_count',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -58,6 +64,7 @@ class PB_OnlineRewardTask extends \ProtobufMessage
         $this->values[self::OVER_TIME] = null;
         $this->values[self::ISFINISH] = null;
         $this->values[self::START_TIME] = null;
+        $this->values[self::BK_COUNT] = null;
     }
 
     /**
@@ -159,6 +166,29 @@ class PB_OnlineRewardTask extends \ProtobufMessage
     public function getStartTime()
     {
         $value = $this->get(self::START_TIME);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'bk_count' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setBkCount($value)
+    {
+        return $this->set(self::BK_COUNT, $value);
+    }
+
+    /**
+     * Returns value of 'bk_count' property
+     *
+     * @return integer
+     */
+    public function getBkCount()
+    {
+        $value = $this->get(self::BK_COUNT);
         return $value === null ? (integer)$value : $value;
     }
 }

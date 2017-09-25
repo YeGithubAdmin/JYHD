@@ -39,13 +39,12 @@ class VipInfoController extends ComController {
             'Protos/PBS_UsrDataOprater.php',
             'Protos/UsrDataOpt.php',
             'Protos/OptSrc.php',
-            'Protos/OptReason.php',
+            'OptReason.php',
             'PB_Item.php',
             'RPB_PlayerNumerical.php',
             'RedisProto/RPB_PlayerData.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
         ));
-
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();

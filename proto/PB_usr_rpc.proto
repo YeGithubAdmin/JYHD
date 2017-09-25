@@ -24,23 +24,6 @@ enum OptSrc
 	Src_Hall = 3;
 }
 
-enum OptReason
-{
-	OptReason_None  = 1;
-	buy_yueka_ok 	= 2;	// 购买月卡成功 sdk
-	get_yueka_award = 3;	// 领取月卡奖励
-	use_item 		= 4;	// 使用道具
-	pay_gold		= 5;	// 人民币购买的金币 sdk
-	exchange 		= 6;	// 兑换
-	vip_reward 		= 7;	// vip 奖励
-	checkin_reward 	= 8;	// 签到 奖励
-	promotion_reward = 9;	// 活动	奖励
-	mall_reward 	= 10;	// 商城	奖励
-	mall_reward_sdk = 11;	// 商城	奖励 sdk 跳转操作
-	first_pay 		= 12;	// 首充	sdk
-	gm_tool 		= 13;	// gm 后台
-}
-
 // 用户数据操作
 message PBS_UsrDataOprater
 {		
