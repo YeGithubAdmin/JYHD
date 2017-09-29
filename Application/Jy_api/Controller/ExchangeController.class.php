@@ -189,7 +189,7 @@ class ExchangeController extends ComController {
             'StockNum'      =>      $catGoodsAll['CurrencyNum'] ,
             'GoodsID'       =>      $catGoodsAll['Id'],
             'Type'          =>      $catGoodsAll['Type'],
-            'Channel'       =>      $DataInfo['Channel'],
+            'Channel'       =>      $DataInfo['channel'],
             'Status'        =>      $Status,
         );
         $addUsersExchangeLog = M('jy_users_exchange_log')
@@ -204,15 +204,14 @@ class ExchangeController extends ComController {
             $addUsersGoodsStream   = M('jy_users_goods_stream')
                 ->add($dataUsersGoodsStream);
         }
-
-
-
         if(!$addUsersExchangeLog || !$addUsersCurrencyStream || !$addUsersGoodsStream){
             $result = 3006;
             goto response;
         }
 
-        $info['GoodsID'] =  $GoodsID;
+        $info['Type'] =  $catGoodsAll['Type'];
+        $info['Code'] =  $GoodsCode;
+        $info['Number'] =  $Number*$GetNum;
         response:
             $response = array(
                 'result' => $result,

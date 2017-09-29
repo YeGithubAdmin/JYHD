@@ -108,8 +108,17 @@ class VipInfoController extends ComController {
                 unset($catVipInfo[$k]);
             }
         }
+        $MaxLevel  =  $catVipInfo[count($catVipInfo)]['level'];
         //下个等级
-        $UpVipLevel = $VipLevel+1 ;
+        if($MaxLevel == $VipLevel){
+            $UpVipLevel = $VipLevel;
+        }else{
+            $UpVipLevel = $VipLevel+1 ;
+        }
+
+
+
+
         //下个等级升级经验
         $UpVipExp   =  $OrderVipInfo[$UpVipLevel];
         $info['VipInfo']  = array_values($catVipInfo);
@@ -126,7 +135,9 @@ class VipInfoController extends ComController {
         $StartTime = date('Y-m-d H:i:s',$strtotime);
         $EndTime   = date('Y-m-d H:i:s',$strtotime+24*60*60);
         $catVipRewardlog = M('jy_vip_reward_log')
-            ->where('playerid = '.$playerid.'  and  DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
+            ->where('playerid = '.$playerid.'  and  
+                    DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  
+                    and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
             ->field($catVipRewardlogField)
             ->find();
         if(empty($catVipRewardlog) && $VipLevel > 0){

@@ -3,6 +3,38 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
-        $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+        $obj = new \Common\Lib\func();
+        $xlsData = array(
+            array('312'),
+            array(321),
+            array('321')
+        );
+        $xlsName  = "User";
+        $xlsCell  = array(
+            array('id','账号序列'),
+            array('account','登录账户'),
+            array('nickname','账户昵称')
+        );
+
+        $xlsCell = array(
+            'GroupChannel'=>'渠道ID',
+            'GroupChannel'=>'渠道名称',
+            'GroupChannel'=>'报表日期',
+            'GroupChannel'=>'新增用户',
+            'GroupChannel'=>'注册ARPU',
+            'GroupChannel'=>'活跃ARPU',
+            'GroupChannel'=>'次日留存',
+            'GroupChannel'=>'付费金额（老用户',
+            'GroupChannel'=>'活跃用户',
+            'GroupChannel'=>'付费转化',
+            'GroupChannel'=>'付费用户（老用户）',
+            'GroupChannel'=>'付费转化（老用户）',
+            'GroupChannel'=>'订单数量',
+            'GroupChannel'=>'2日留存',
+            'GroupChannel'=>'3日留存',
+        );
+
+
+        $obj->exportExcel($xlsName,$xlsCell,$xlsData);
     }
 }

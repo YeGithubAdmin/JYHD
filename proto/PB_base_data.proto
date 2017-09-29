@@ -21,8 +21,8 @@ message PB_RankingData
 message PB_Item 
 {
 	optional int32 id 	 = 1;	// 物品id
-	optional int32 num	 = 2;	// 物品增量
-	optional int32 cur_num = 3;
+	optional int64 num	 = 2;	// 物品增量
+	optional int64 cur_num = 3;
 }
 
 enum OptReason
@@ -40,18 +40,25 @@ enum OptReason
 	mall_reward_sdk = 11;	// 商城	奖励 sdk 跳转操作
 	first_pay 		= 12;	// 首充	sdk
 	gm_tool 		= 13;	// gm 后台
-	player_level_up = 14;	
+	player_level_up = 14;	// 玩家升级	
+	kill_fish 		= 15;	// 击杀鱼
+	gun_level_up	= 16;	// 炮升级
+	got_by_email 	= 17;	// 通过邮件领取
+	present_as_gift = 18;	// 赠送礼物
+	score_draw 		= 19;	// 抽奖
 }
 
 message PB_Attr
 {
 	enum Attr_Type {
-		player_level = 1;
+		player_level 		= 1;	
+		exp 		 		= 2;	// 游戏经验
+		vip_exp 			= 3;
 	}
 
 	optional Attr_Type attr_type = 1;
 	optional int32 	   attr_add  = 2; 	// 属性增量
-	optional int32	   attr_cur  = 3;	// 当前属性
+	optional int32	   attr_cur  = 3;	// 当前属性值
 	optional string	   attr_str  = 4;	// 某些字符型属性，比如name
 }
 
@@ -82,9 +89,9 @@ message PB_BuyGoods
 {
 	required int32 			err 	 = 1;
 	required int32 			goodsid  = 2;	// 商品id
-	repeated PB_Item 		items 	 = 3;	// 物品
-	optional int64			gold	 = 4;
-	optional int64			diamond	 = 5;
+	//repeated PB_Item 		items 	 = 3;	// 物品
+	//optional int64			gold	 = 4;
+	//optional int64			diamond	 = 5;
 }
 
 message PB_DrawData

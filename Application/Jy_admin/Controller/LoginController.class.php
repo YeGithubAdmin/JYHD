@@ -36,12 +36,10 @@ class LoginController extends ComController {
                         ->find();
                 }
 
-
                 if(!empty($adminInfo)){
                     //判断密码
                     if($adminInfo['passwd'] == $password){
                         if($adminInfo['islock'] == 1 && $adminInfo['grouplock'] == 1){
-                            $adminInfo['channel'] = 1;
                             session('userInfo',$adminInfo);
                         }else{
                             //被锁定

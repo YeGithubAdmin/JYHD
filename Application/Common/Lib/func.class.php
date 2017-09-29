@@ -347,7 +347,7 @@ class func{
 	* @param  string  $content   proto 体
 	* @param  int  $timeOut   请求超时
 	**/
-	public function tocurl($url, $header, $content,$timeOut = 3){
+	public function tocurl($url, $header, $content,$timeOut = 60){
 		$ch = curl_init();
 		if(substr($url,0,5)=='https'){
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
@@ -466,8 +466,147 @@ class func{
         }else{
             return $respJson->transid;
         }
-
-
    }
+
+
+   /***
+   * 金立下单接口
+   * @param   $arr array  下单信息
+   */
+    public function  JinPayCreateOrder($arr,$private_key){
+        $dst_url                    =  "https://pay.gionee.com/order/create";
+        $post_arr['api_key']        =  $arr['api_key']; // 【NOTE】跑通demo后替换成商户自己的api_key
+        $post_arr['subject']        =  $arr['subject']; // 【NOTE】请填写你的支付标题
+        $post_arr['out_order_no']   =  $arr['out_order_no']; // 【NOTE】跑通demo后替换成你自己生成的内部订单，每个订单的paynum需要不一样
+        $post_arr['deliver_type']   =  $arr['deliver_type']; // 网游类型接入时固定值
+        $post_arr['deal_price']     =  $arr['deal_price']; // 【NOTE】 需要支付的金额
+        $post_arr['total_fee']      =  $arr['total_fee']; // 【NOTE】需要支付的金额
+        $post_arr['submit_time']    =  date('YmdHis');
+        $post_arr['notify_url']     =  $arr['notify_url']; // 【NOTE】请填写充值后的回调URL
+        $post_arr['sign']           =  $this->JinPayOrderSign($post_arr,$private_key);
+        $post_arr['player_id']      =  $arr['player_id']; // 【NOTE】请填写amigo玩家id
+        $json = json_encode($post_arr);
+        $return_json = $this->https_curl($dst_url, $json);
+        $return_arr = json_decode($return_json, 1);
+        if ($return_arr['status'] !== '200010000') {
+           return false;
+        }
+        return $return_arr;
+    }
+    /***
+    * 回调金立验签
+    * @param   $publickey string  私钥
+    * @param   $$post_arr array   回调数据
+    */
+    public function JinPayRsaverify($publickey,$post_arr){
+        ksort($post_arr);
+        $signature_str = '';
+        foreach($post_arr as $key => $value){
+            if($key == 'sign') continue;
+            $signature_str .= $key.'='.$value.'&';
+        }
+        $signature_str = substr($signature_str,0,-1);
+        $pem = chunk_split($publickey,64,"\n");
+        $pem = "-----BEGIN PUBLIC KEY-----\n".$pem."-----END PUBLIC KEY-----\n";
+        $public_key_id = openssl_pkey_get_public($pem);
+        $signature =base64_decode($post_arr['sign']);
+        return openssl_verify($signature_str, $signature, $public_key_id);
+    }
+    /***
+     * 下单验证
+     * @param   $publickey string  私钥
+     * @param   $post_arr array    下单信息
+     */
+
+    public  function  JinPayOrderSign($post_arr,$publickey){
+        ksort($post_arr);
+        $signature_str = '';
+        foreach($post_arr as $key => $value){
+            $signature_str .= $value;
+        }
+        // 【NOTE】跑通demo后替换成商户自己的private_key
+        $pem = chunk_split($publickey,64,"\n");
+        $pem = "-----BEGIN PRIVATE KEY-----\n".$pem."-----END PRIVATE KEY-----\n";
+        $private_key_id = openssl_pkey_get_private($pem);
+        $signature = false;
+        openssl_sign($signature_str, $signature, $private_key_id);
+        $sign =  base64_encode($signature);
+        return $sign;
+    }
+
+   public function https_curl($url, $post_arr = array(), $timeout = 10){
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_arr);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        $content = curl_exec($curl);
+        curl_close($curl);
+        return $content;
+    }
+
+    /* 导出excel函数*/
+    public function push($data,$name='局翼互动'){
+        include JY_ROOT."PHPExcel/PHPExcel.php";
+        date_default_timezone_set('Europe/London');
+        $objPHPExcel = new \PHPExcel();
+        /*以下是一些设置 ，什么作者  标题啊之类的*/
+        $objPHPExcel->getProperties()->setCreator("转弯的阳光")
+            ->setLastModifiedBy("转弯的阳光")
+            ->setTitle("数据EXCEL导出")
+            ->setSubject("数据EXCEL导出")
+            ->setDescription("备份数据")
+            ->setKeywords("excel")
+            ->setCategory("result file");
+        /*以下就是对处理Excel里的数据， 横着取数据，主要是这一步，其他基本都不要改*/
+        foreach($data as $k => $v){
+            $num=$k+1;
+            $objPHPExcel->setActiveSheetIndex(0)
+                //Excel的第A列，uid是你查出数组的键值，下面以此类推
+                ->setCellValue('A'.$num, $v['uid'])
+                ->setCellValue('B'.$num, $v['email'])
+                ->setCellValue('C'.$num, $v['password']);
+            }
+        $objPHPExcel->getActiveSheet()->setTitle('User');
+        $objPHPExcel->setActiveSheetIndex(0);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$name.'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
+
+    public function exportExcel($expTitle,$expCellName,$expTableData){
+
+        include JY_ROOT."PHPExcel/PHPExcel.php";
+        $xlsTitle = iconv('utf-8', 'gb2312', $expTitle);//文件名称
+//        $fileName = $_SESSION['loginAccount'].date('_YmdHis');//or $xlsTitle 文件名称可根据自己情况设定
+        $cellNum = count($expCellName);
+        $dataNum = count($expTableData);
+        $objPHPExcel = new \PHPExcel();
+        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA');
+
+        for($i=0;$i<$cellNum;$i++){
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i][1]);
+        }
+        // Miscellaneous glyphs, UTF-8
+
+
+
+        for($i=0;$i<$dataNum;$i++){
+            for($j=0;$j<$cellNum;$j++){
+                $objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].($i+2), 1);
+            }
+        }
+        header('pragma:public');
+        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$xlsTitle.'.xls"');
+        header("Content-Disposition:attachment;filename=$expTitle.xls");//attachment新窗口打印inline本窗口打印
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
 
 }

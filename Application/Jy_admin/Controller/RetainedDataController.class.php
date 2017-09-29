@@ -32,9 +32,6 @@ class RetainedDataController extends ComController {
         //时间范围
         $EndTime   = date('Y-m-d H:i:s',$strtotime+$dayTime);
         $StartTime = date('Y-m-d H:i:s',$strtotime-$timeEndDay*$dayTime);
-
-
-
         $RegInfoField = array(
              'date_format(a.regtime,"%Y-%m-%d") as t',
              'count(a.playerid) as UserNum',
@@ -44,36 +41,30 @@ class RetainedDataController extends ComController {
              'count(distinct e.playerid) as UsersFourteenNum',
              'count(distinct f.playerid) as UsersThirtyNum',
         );
-        $RegInfo = M('account as a')
-                   ->join('jy_users_login_log as b on a.playerid = b.playerid 
-                                 and b.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and b.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-                   ->join('jy_users_login_log as c on a.playerid = c.playerid 
-                                 and c.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and c.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-                   ->join('jy_users_login_log as d on a.playerid = d.playerid 
-                                 and d.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and d.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-                   ->join('jy_users_login_log as e on a.playerid = e.playerid 
-                                 and e.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and e.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-                   ->join('jy_users_login_log as f on a.playerid = f.playerid 
-                                 and f.LastTime < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and f.LastTime >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+        $RegInfo = M('game_account as a')
+                   ->join('game_login_action as b on a.playerid = b.playerid 
+                                 and b.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and b.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('game_login_action as c on a.playerid = c.playerid 
+                                 and c.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and c.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('game_login_action as d on a.playerid = d.playerid 
+                                 and d.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and d.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('game_login_action as e on a.playerid = e.playerid 
+                                 and e.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and e.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+                   ->join('game_login_action as f on a.playerid = f.playerid 
+                                 and f.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and f.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
                    ->where('a.regtime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and a.regtime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                     ->group('t')
-
                    ->field($RegInfoField)
                    ->select();
         $RegInfo = $this->NewArr($RegInfo,$erverDay);
-
-
-
-
-
         //活跃留存
         $ActiveInfoField = array(
-            'date_format(a.LastTime,"%Y-%m-%d") as t',
+            'date_format(a.login_time,"%Y-%m-%d") as t',
             'count(distinct a.playerid) as UserNum',
             'count(distinct b.playerid) as UsersOneNum',
             'count(distinct c.playerid) as UsersThreeNum',
@@ -81,25 +72,24 @@ class RetainedDataController extends ComController {
             'count(distinct e.playerid) as UsersFourteenNum',
             'count(distinct f.playerid) as UsersThirtyNum',
         );
-        $ActiveInfo =  M('jy_users_login_log as a')
-            ->join('jy_users_login_log as b on a.playerid = b.playerid 
-                                 and b.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and b.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-            ->join('jy_users_login_log as c on a.playerid = c.playerid 
-                                 and c.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and c.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-            ->join('jy_users_login_log as d on a.playerid = d.playerid 
-                                 and d.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and d.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-            ->join('jy_users_login_log as e on a.playerid = e.playerid 
-                                 and e.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and e.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-            ->join('jy_users_login_log as f on a.playerid = f.playerid 
-                                 and f.LastTime < str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
-                                 and f.LastTime >= str_to_date(date_format(DATE_SUB(a.LastTime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
-            ->where('a.LastTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and a.LastTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+        $ActiveInfo =  M('game_login_action as a')
+            ->join('game_login_action as b on a.playerid = b.playerid 
+                                 and b.login_time < str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and b.login_time >= str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('game_login_action as c on a.playerid = c.playerid 
+                                 and c.login_time < str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL  -4 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and c.login_time >= str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL  -3 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('game_login_action as d on a.playerid = d.playerid 
+                                 and d.login_time < str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL -8 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and d.login_time >= str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL  -7 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('game_login_action as e on a.playerid = e.playerid 
+                                 and e.login_time < str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL -15 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and e.login_time >= str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL  -14 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('game_login_action as f on a.playerid = f.playerid 
+                                 and f.login_time < str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and f.login_time >= str_to_date(date_format(DATE_SUB(a.login_time,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->where('a.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and a.login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
             ->group('t')
-
             ->field($ActiveInfoField)
             ->select();
 

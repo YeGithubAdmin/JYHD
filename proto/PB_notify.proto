@@ -77,6 +77,6 @@ message PB_HallNotify
 	optional PB_ItemBroadcast	item_bc   		= 11;	// 系统广播
 	optional PB_PhpBroadcast	php_bc   		= 12;	// 系统广播
 	optional PB_DrawDataUpdate 	draw_notify 	= 13;	// 抽奖通知
-	optional PB_ResourceChange  res_change 		= 14;	// 资源改变	由客户端主动刷新本地数据
+	optional PB_ResourceChange  res_changed 	= 14;	// 资源改变	由客户端主动刷新本地数据
 	optional PB_AttributeChange attr_change 	= 15;	// 属性改变	由客户端主动刷新本地数据
 };

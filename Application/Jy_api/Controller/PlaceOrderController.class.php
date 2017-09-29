@@ -44,7 +44,7 @@ class PlaceOrderController extends ComController {
         $Type           =  $DataInfo['Type'];                  // 3-商城  1-首充  2-月卡
         $GoodsID        =  $DataInfo['GoodsID'];               //商品ID
         $channelid      =  $this->channelid;                   //渠道ID
-        $PlatformType   =  $DataInfo['PlatformType'];          //支付平台  1 支付宝 2-微信 3-爱贝
+        $PlatformType   =  $DataInfo['PlatformType'];          //支付平台  1 支付宝 2-微信 3-爱贝 4-金立
         if(empty($playerid)){
             $result = 4006;
             goto response;
@@ -271,7 +271,6 @@ class PlaceOrderController extends ComController {
             $dataUsersOrderGoods[$num]['Type']              = $v['Type'];
             $num++;
         }
-
         //订单信息
         $dataUsersOrderInfo = array(
             'playerid'=>$playerid,
@@ -282,6 +281,7 @@ class PlaceOrderController extends ComController {
             'Status'=>1,
             'Price'=>$catGoodsAll['CurrencyNum'],
             'ExpireTime'=>0,
+            'appuserid'=>$playerid.'#'.$catGoodsAll['Id'],
             'VipLevel'=>$VipLevel,
             'VipExp'  =>$VipExp,
             'Form'    =>$Type,
@@ -289,16 +289,17 @@ class PlaceOrderController extends ComController {
             'RegisterChannel'=>$RegisterChannel,
             'PayChannel'=>$DataInfo['channel'],
             'Platform'=>$Platform,
-            'PayPlatform'=>$Type,
+            'PayPlatform'=>$PlatformType,
             'PayPassAgeWay'=>$CatThirdpay['PassAgeWay'],
             'PayID'=>$CatThirdpay['Id'],
         );
-
         // 3-商城  1-首充  2-月卡
         $appid = $CatThirdpay['appid'];
         $notifyurl = $CatThirdpay['Notifyurl'];
-        //支付平台  1 支付宝 2-微信 3-爱贝
+        //支付平台  1 支付宝 2-微信 3-爱贝 4-金立
         $Payment = false;
+
+        $PayInfo = array();
         switch ($PlatformType){
             case  1:
                 $Payment = true;
@@ -306,7 +307,6 @@ class PlaceOrderController extends ComController {
             case  2:
                 $Payment = true;
                 break;
-
             case  3:
                 $Payment = true;
                 $PayInfo = array(
@@ -320,7 +320,6 @@ class PlaceOrderController extends ComController {
                     'cpprivateinfo'  =>         "$PlatformOrder",                   //商户私有信息，支付完成后发送支付结果通知时会透传给商户
                     'notifyurl'      =>         $notifyurl,                         //回调地址
                 );
-
                 $transid = $obj->IapppayOrder($PayInfo,$CatThirdpay['private'],$CatThirdpay['public']);
                 if($transid){
                     $info['transid'] = $transid;
@@ -329,10 +328,33 @@ class PlaceOrderController extends ComController {
                     $result = 40010;
                     goto  response;
                 }
+                $PayInfo['paytype'] = 1;
+                $PayInfo['result'] = 0;
+                $PayInfo['money'] = (float)$catGoodsAll['CurrencyNum'];
+                $a['transdata'] =  $PayInfo;
+                $PayInfo =$a;
+
+                break;
+            case 4:
+                $Payment = true;
+                $deal_price = $catGoodsAll['CurrencyNum'];
+                $PayInfo = array(
+                    'api_key'         =>         $appid,
+                    'subject'         =>         $catGoodsAll['Name'],
+                    'out_order_no'    =>         "$PlatformOrder",
+                    'deliver_type'    =>         "1",
+                    'deal_price'      =>         "$deal_price",
+                    'total_fee'       =>         "$deal_price",
+                    'notify_url'      =>         $notifyurl,
+                    'player_id'       =>         $playerid.'#'.$catGoodsAll['Id'],
+                );
+                 $info['OrderInfo']    =     $PayInfo ;
+
                 break;
             default:
                 break;
         }
+
         if($Payment == false){
             $result = 5004;
             goto  response;
@@ -346,15 +368,7 @@ class PlaceOrderController extends ComController {
             ->addAll($dataUsersOrderGoods);
         if($addUsersOrderGoods && $addUsersOrderInfo){
             $model->commit();
-
-            $data['transdata']['appuserid'] = $playerid."#".$GoodsID;
-            $data['transdata']['cporderid'] = $PlatformOrder;
-            $data['transdata']['money'] = $catGoodsAll['CurrencyNum'];
-            $data['transdata']['paytype'] = 1;
-            $data['transdata']['appuserid'] = $playerid."#".$GoodsID;
-            $info['test'] = json_encode($data);
-//            $info['url']  = SERVER_DOMAIN_NAME.'Jy_ThirdpayIapppay/Notifyurl/index';
-
+            $info['test'] = $PayInfo;
         }else{
             $model->rollback();
             $result = 3004;

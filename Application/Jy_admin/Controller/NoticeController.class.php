@@ -91,7 +91,7 @@ class NoticeController extends ComController {
                          ->find();
         if(IS_POST){
             $Status = I('param.Status',1,'intval');
-            $Content = I('param.Content','','trim');
+            $Content = I('param.Content','');
             $Title   = I('param.Title','','trim');
             $TitleSon   = I('param.TitleSon','','trim');
             $Sort    = I('param.Sort',1,'intval');
@@ -111,7 +111,7 @@ class NoticeController extends ComController {
             $UpGameNotice = M('jy_game_notice')
                 ->where('Id = '.$Id)
                 ->save($dataGameNotice);
-            if($UpGameNotice){
+            if($UpGameNotice !== false ){
                 $ObjFun->showmessage('修改成功',"/jy_admin/notice/index");
             }else{
                 $ObjFun->showmessage('修改失败');

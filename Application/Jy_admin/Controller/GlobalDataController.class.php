@@ -4,274 +4,228 @@
 */
 namespace Jy_admin\Controller;
 use Think\Controller;
+use Think\Model;
 defined('THINK_PATH') or exit('Access Defined!');
 class GlobalDataController extends ComController {
     //列表
     public function index(){
-        $time   = date('Y-m-d',time());                                           //当前时间
-        $btime   = date('Y-m-d',time()-24*60*60);                       //默认当前昨天
-        $datemin = I('param.datemin',$btime,'trim');                                     //搜索时间
-        if($datemin == $time){
-            $datemin = $btime;
+        //选择时间
+        $DateTime = I('param.DateTime','','trim');
+        $TimeDate = I('param.DateTime','','trim');
+        $timeEndDay = I('param.day',7,'intval');
 
+        $Type =  I('param.Type',0,'intval');
+        //一天的秒数
+        $DayTime = 24*60*60;
+        if($DateTime == ''){
+            $DayDate  = date('Y-m-d',time());
+            $DayDate  = strtotime($DayDate)-$DayTime;
+            $DateTime =  date('Y-m-d H:i:s',$DayDate);
+            $TimeDate =  date('Y-m-d',$DayDate);
         }
-         $strtotime  = strtotime($datemin);
-         $timeOne = $datemin;                                                                       //时间段：前天
-         $timeOneStrtotime = date('Y-m-d',strtotime($timeOne)+60*60*24) ;
-         $timeTow  = date('Y-m-d',$strtotime-24*60*60);                  //时间段：大前天
-         $timeEight = date('Y-m-d',$strtotime-7*24*60*60);                      //时间段：前8天
-         $timeEightStrtotime =  date('Y-m-d',strtotime($timeEight)-60*60*24) ;
-         $erverDay = array();
-          //八天时间
-            for($i=7;$i>=0;$i--){
-                $erverDayTime = $strtotime-$i*24*60*60;
-                if($erverDayTime >= strtotime($timeEight)){
-                    $erverDay[$i] = $erverDayTime;
-                }
-            }
-        //排序数组
-        ksort($erverDay);
+        $strtotime = strtotime($DateTime);
+        $erverDay = array();
+        $dayArr   = array();
+        //八天时间
+        for($i=($timeEndDay-1);$i>=0;$i--){
+            $erverDayTime = $strtotime-$i*$DayTime;
+                $erverDay[$i]['date'] = date("Y-m-d",$erverDayTime);
+                $dayArr[] = date('n月j日',$erverDayTime);
+        }
+        $StartTime = $strtotime-$DayTime*6 ;
+        $EndTime   = $strtotime+$DayTime ;
         /***
-         *注册用户
-         * 描述：统计所选时期内，每日新增激活的用户数量。
-         ***/
-        $webUsers = M('web_users')
-                    ->where('RegisterTM >= "%s" and  RegisterTM < "%s"',$timeEightStrtotime,$timeOneStrtotime)
-                    ->field('date_format(RegisterTM,"%Y-%m-%d") as t,count(UserID) as num,unix_timestamp(RegisterTM) as time')
-                    ->group('t')
-                    ->order('RegisterTM asc')
-                    ->select();
-        $webUsersData = array();
-        $webUsersData = $this->DataArr($webUsers,$webUsersData,$erverDay,$timeOne,$timeTow,$timeEight);
-        $webUsersData['Mom'] =  ($webUsersData['timeTow']/$webUsersData['timeOne'])*100;
-        $webUsersData['An'] =   ($webUsersData['timeEight']/$webUsersData['timeOne'])*100;
-        $webUsersData['title'] = "注册用户";
-        $webUsersData['Symbol'] = "人";
-        /***
-         * 活跃用户
-         * 描述：统计所选时期内，每日成功登录游戏的用户数量，去重。
-         ***/
-        $WebvUserLoginList = M('web_vuserloginlist')
-                            ->where('LastLoginTM >= "%s" and  LastLoginTM < "%s"',$timeEightStrtotime,$timeOneStrtotime)
-                            ->field('date_format(LastLoginTM,"%Y-%m-%d") as t,count(distinct  UserID) as num,unix_timestamp(LastLoginTM) as time')
-                            ->group('t')
-                            ->select();
-        $WebvUserLoginListData = array();
-        $WebvUserLoginListData = $this->DataArr($WebvUserLoginList,$WebvUserLoginListData,$erverDay,$timeOne,$timeTow,$timeEight);
-        $WebvUserLoginListData['Mom'] =  ($WebvUserLoginListData['timeTow']/$WebvUserLoginListData['timeOne'])*100;
-        $WebvUserLoginListData['An'] =   ($WebvUserLoginListData['timeEight']/$WebvUserLoginListData['timeOne'])*100;
-        $WebvUserLoginListData['title'] = "活跃用户";
-        $WebvUserLoginListData['Symbol'] = "人";
+         * 渠道：根据渠道号上报的渠道选择项，eg:OPPO渠道，华为渠道，全渠道（数据汇总）。
+         * 日期：统计所选时期，默认为前一天
+         * 注册用户：统计所选时期内，每日新增激活的用户数量。
+         * 活跃用户：统计所选时期内，每日成功登录游戏的用户数量，去重。
+         * 收入：统计所选时期内，每日用户成功充值的金额总值。单位为元。
+         * 付费用户数：统计所选时期内，每日成功充值的用户数量，去重。
+         * 付费次数：统计所选时期内，每日用户成功充值总次数。
+         * 注册付费渗透率：统计所选时期内，当天注册且当天付费的用户数/当天注册用户数
+         * 活跃付费渗透率：统计所选时期内，每日成功付费用户占当日活跃用户的比例。
+         * ARPPU：日ARPPU=当日充值总额度/当日付费用户数量。
+         * 注册1日留存率：统计所选时期内，当日成功登陆游戏的注册用户中，第二日再次登陆游戏的用户数量，占当日游戏新增用户数量的比例。
+         * 注册30日留存率：统计所选时期内，当日成功登陆游戏的新增玩家中，往后推第30日（当日不计入天数）登陆游戏的玩家数量，占当日游戏新增玩家数量的比例。
+         * 平均在线：统计所选时期内，每日各时间点的玩家在线数量进行平均后的数量。建议每5分钟为一个统计单位。
+         * 最高在线：统计所选时期内，平均同时在线数量最高的玩家数量。
+         * 环比变化率：=（Y日数值-（Y-1）日数值）/Y日数值，取百分比
+         * 同比变化率：=（Y日数值-（Y-7）日数值）/Y日数值，取百分比
+         * */
+         /******************注册留存********************/
+        $dateEndTime = date("Y-m-d H:i:s",$EndTime);
+        $dateStartTime = date("Y-m-d H:i:s",$StartTime);
+        $RegRetainedField = array(
+            'date_format(a.regtime,"%Y-%m-%d") as t',
+            'count(a.playerid) as UserRegNum',
+            '(count(distinct b.playerid)/count(a.playerid))*100 as UsersOneRate',
+            '(count(distinct f.playerid)/count(a.playerid))*100 as UsersThirtyRate',
+            'count(distinct c.playerid) as UserRegPayNum',
+            '(count(distinct c.playerid)/count(a.playerid))*100 as RegPayRate',
+        );
+        $RegRetained = M('game_account as a')
+            ->join('game_login_action as b on a.playerid = b.playerid 
+                                 and b.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -2 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and b.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -1 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('game_login_action as f on a.playerid = f.playerid 
+                                 and f.login_time < str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL -31 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s") 
+                                 and f.login_time >= str_to_date(date_format(DATE_SUB(a.regtime,INTERVAL  -30 DAY),"%Y-%m-%d"),"%Y-%m-%d %H:%i:%s")','left')
+            ->join('jy_users_order_info as c on c.playerid  = a.playerid 
+                    and  c.CallbackTime < str_to_date("'.$dateEndTime.'","%Y-%m-%d %H:%i:%s") 
+                    and  c.CallbackTime >= str_to_date("'.$dateStartTime.'","%Y-%m-%d %H:%i:%s") and c.Status = 2')
+            ->where('a.regtime < str_to_date("'.$dateEndTime.'","%Y-%m-%d %H:%i:%s") and a.regtime >= str_to_date("'.$dateStartTime.'","%Y-%m-%d %H:%i:%s")','left')
+            ->group('t')
+            ->field($RegRetainedField)
+            ->select();
+        /******************活跃********************/
+        $activeData = array(
+            'date_format(login_time,"%Y-%m-%d") as t',
+            'count(distinct a.playerid) as activeNum',
+            'count(b.playerid) as activePayNum',
+            '(count(b.playerid)/count(distinct a.playerid))*100 as activePayRate',
 
-        /***
-         * 收入(元)
-         * 描述：统计所选时期内，每日用户成功充值的金额总值。单位为元。
-         ***/
-        $webRmbcost = M('web_rmbcost')
-            ->where('PaySuccess = 1  and BackTime >= "%s" and  BackTime < "%s"',$timeEightStrtotime,$timeOneStrtotime)
-            ->field('date_format(BackTime,"%Y-%m-%d") as t,count(PayMoney) as num,unix_timestamp(BackTime) as time')
+        );
+        $activeData = M('game_login_action as a')
+                    ->join('jy_users_order_info as b on a.playerid  = b.playerid 
+                            and  b.CallbackTime < str_to_date("'.$dateEndTime.'","%Y-%m-%d %H:%i:%s") 
+                            and  b.CallbackTime >= str_to_date("'.$dateStartTime.'","%Y-%m-%d %H:%i:%s") and b.Status = 2')
+                    ->where('a.login_time < str_to_date("'.$dateEndTime.'","%Y-%m-%d %H:%i:%s") 
+                            and  a.login_time >= str_to_date("'.$dateStartTime.'","%Y-%m-%d %H:%i:%s")')
+                      ->field($activeData)
+                      ->group('t')
+                      ->select();
+        /******************付费***********************/
+        $UsersOrderInfoField = array(
+            'date_format(CallbackTime,"%Y-%m-%d") as t',
+            'sum(Price) as Price',
+            'count(distinct playerid) as UserPayNum',
+            'count(Id) as PayNum',
+            'sum(Price)/count(distinct playerid) as ARPPU',
+        );
+        $UsersOrderInfo = M('jy_users_order_info')
+            ->where('CallbackTime < str_to_date("'.$dateEndTime.'","%Y-%m-%d %H:%i:%s") 
+                    and  CallbackTime >= str_to_date("'.$dateStartTime.'","%Y-%m-%d %H:%i:%s") and Status = 2')
+            ->field($UsersOrderInfoField)
             ->group('t')
             ->select();
+        /********************在线*********************/
+        $RealTimeOnlineField = array(
+            'date_format(DateTime,"%Y-%m-%d") as t',
+            'max(UserNum) as maxNum',
+            'avg(UserNum) as avgNum',
+        );
+        $RealTimeOnline = M('jy_real_time_online')
+                          ->where('DateTime < str_to_date("'.$dateEndTime.'","%Y-%m-%d %H:%i:%s") 
+                                 and  DateTime >= str_to_date("'.$dateStartTime.'","%Y-%m-%d %H:%i:%s")')
+                          ->field($RealTimeOnlineField)
+                          ->group('t')
+                          ->select();
+        //当天
+        $SameStartTime  = date('Y-m-d',$strtotime) ;
+        //前天
+        $OneStartTime   = date('Y-m-d',$strtotime-$DayTime) ;
+        //前8天
+        $EightStartTime = date('Y-m-d',$strtotime-$DayTime*8) ;
 
-        $webRmbcostData = array();
-        $webRmbcostData = $this->DataArr($webRmbcost,$webRmbcostData,$erverDay,$timeOne,$timeTow,$timeEight);
-        $webRmbcostData['Mom'] =  ($webRmbcostData['timeTow']/$webRmbcostData['timeOne'])*100;
-        $webRmbcostData['An'] =   ($webRmbcostData['timeEight']/$webRmbcostData['timeOne'])*100;
-        $webRmbcostData['title'] = "收入分析";
-        $webRmbcostData['Symbol'] = "元";
-        /****
-         * 付费用户数
-         * 描述：统计所选时期内，每日成功充值的用户数量，去重。
-         **/
-        $webRmbcostUsersNum = M('web_rmbcost')
-            ->where('PaySuccess = 1  and BackTime >= "%s" and  BackTime < "%s"',$timeEightStrtotime,$timeOneStrtotime)
-            ->field('date_format(BackTime,"%Y-%m-%d") as t,count(distinct Users_ids) as num,unix_timestamp(BackTime) as time')
-            ->group('t')
-            ->select();
-        $webRmbcostUsersNumData = array();
-        $webRmbcostUsersNumData = $this->DataArr($webRmbcostUsersNum,$webRmbcostUsersNumData,$erverDay,$timeOne,$timeTow,$timeEight);
-        $webRmbcostUsersNumData['Mom'] =  ($webRmbcostUsersNumData['timeTow']/$webRmbcostUsersNumData['timeOne'])*100;
-        $webRmbcostUsersNumData['An'] =   ($webRmbcostUsersNumData['timeEight']/$webRmbcostUsersNumData['timeOne'])*100;
-        $webRmbcostUsersNumData['title'] = "付费用户数";
-        $webRmbcostUsersNumData['Symbol'] = "";
-        /***
-         * 付费次数
-         * 描述:统计所选时期内，每日用户成功充值总次数。
-         ***/
+        $SameDate       = date('n月j日',strtotime($SameStartTime));
+        $OneDate        = date('n月j日',strtotime($OneStartTime));
+        $EightDate      = date('n月j日',strtotime($EightStartTime));
 
-
-        $webRmbcostUsers = M('web_rmbcost')
-            ->where('PaySuccess = 1  and BackTime >= "%s" and  BackTime < "%s"',$timeEightStrtotime,$timeOneStrtotime)
-            ->field('date_format(BackTime,"%Y-%m-%d") as t,count(distinct Users_ids) as num,unix_timestamp(BackTime) as time')
-            ->group('t')
-            ->select();
-        $webRmbcostUsersData = array();
-        $webRmbcostUsersData = $this->DataArr($webRmbcostUsers,$webRmbcostUsersData,$erverDay,$timeOne,$timeTow,$timeEight);
-        $webRmbcostUsersData['Mom'] =  ($webRmbcostUsersData['timeTow']/$webRmbcostUsersData['timeOne'])*100;
-        $webRmbcostUsersData['An'] =   ($webRmbcostUsersData['timeEight']/$webRmbcostUsersData['timeOne'])*100;
-        $webRmbcostUsersData['title'] = "付费次数";
-        $webRmbcostUsersData['Symbol'] = "";
-
-        /***
-         * 注册付费渗透率
-         * 描述：统计所选时期内，当天注册且当天付费的用户数/当天注册用户数
-         ***/
-            //用户注册数量
-        $registerUserNum = $webUsersData;
-           //用户注册且付费
-        $registerUserPay = M('web_users as a')
-            ->join('web_rmbcost as b')
-            ->where('a.UserID  = b.Users_ids  and   b.PaySuccess  = 1  and a.RegisterTM >= "%s" and  a.RegisterTM < "%s"  and b.BackTime >= "%s" and  b.BackTime < "%s" ',$timeEightStrtotime,$timeOneStrtotime,$timeEightStrtotime,$timeOneStrtotime)
-            ->field('date_format(a.RegisterTM,"%Y-%m-%d") as t,count(distinct b.Users_ids) as num,unix_timestamp(a.RegisterTM) as time')
-            ->group('t')
-            ->order('a.RegisterTM asc')
-            ->select();
-
-        $registerUserPayData =  array();
-        $registerUserPayData = $this->DataArr($registerUserPay,$registerUserPayData,$erverDay,$timeOne,$timeTow,$timeEight);
-
-        $NewRegisterUserPayData = array();
-        foreach ($registerUserPayData['erverDay'] as $k=>$v){
-           foreach ($registerUserNum['erverDay'] as $key=>$val){
-               if($k == $key){
-                   $NewRegisterUserPayData['erverDay'][$key]['num'] = $v['num']/$val['num']*100;
-                   $NewRegisterUserPayData['erverDay'][$key]['day'] = $v['day'];
-               }
-
-           }
-        }
-        $NewRegisterUserPayData['timeOne']          =  $registerUserPayData['timeOne']/$registerUserNum['timeOne']*100;
-        $NewRegisterUserPayData['timeTow']          =  $registerUserPayData['timeTow']/$registerUserNum['timeTow']*100;
-        $NewRegisterUserPayData['timeEight']        =  $registerUserPayData['timeTow']/$registerUserNum['timeTow']*100;
-        $NewRegisterUserPayData['Mom'] =  ($registerUserPayData['timeTow']/$registerUserPayData['timeOne'])*100;
-        $NewRegisterUserPayData['An'] =   ($registerUserPayData['timeEight']/$registerUserPayData['timeOne'])*100;
-        $NewRegisterUserPayData['title'] = "注册付费渗透率";
-        $NewRegisterUserPayData['Symbol'] = "%";
-        /****
-         * 活跃付费渗透率
-         * 描述：统计所选时期内，每日成功付费用户占当日活跃用户的比例。
-         */
-        $activePayData = array();
-        foreach ($webRmbcostUsersNumData['erverDay'] as $k=>$v){
-            foreach ($WebvUserLoginListData['erverDay'] as $key=>$val){
-                if($k == $key){
-                    $activePayData['erverDay'][$key]['num'] = $v['num']/$val['num']*100;
-                    $activePayData['erverDay'][$key]['day'] = $v['day'];
-                }
-
-            }
-        }
-
-        $activePayData['timeOne']          =  $webRmbcostUsersNumData['timeOne']/$WebvUserLoginListData['timeOne']*100;
-        $activePayData['timeTow']          =  $webRmbcostUsersNumData['timeTow']/$WebvUserLoginListData['timeTow']*100;
-        $activePayData['timeEight']        =  $webRmbcostUsersNumData['timeTow']/$WebvUserLoginListData['timeTow']*100;
-        $activePayData['Mom'] =  ($webRmbcostUsersNum['timeTow']/$webRmbcostUsersNum['timeOne'])*100;
-        $activePayData['An'] =   ($webRmbcostUsersNum['timeEight']/$webRmbcostUsersNum['timeOne'])*100;
-        $activePayData['title'] = "活跃付费渗透率";
-        $activePayData['Symbol'] = "%";
-
-        /***
-         * ARPPU
-         * 描述：日ARPPU=当日充值总额度/当日付费用户数量。
-         **/
-        $ARPPUData = array();
-        foreach ($webRmbcostData['erverDay'] as $k=>$v){
-            foreach ($webRmbcostUsersNumData['erverDay'] as $key=>$val){
-                if($k == $key){
-                    $ARPPUData['erverDay'][$key]['num'] = $v['num']/$val['num']*100;
-                    $ARPPUData['erverDay'][$key]['day'] = $v['day'];
-                }
-            }
-        }
-        $ARPPUData['timeOne']          =  $webRmbcostData['timeOne']/$webRmbcostUsersNumData['timeOne']*100;
-        $ARPPUData['timeTow']          =  $webRmbcostData['timeTow']/$webRmbcostUsersNumData['timeTow']*100;
-        $ARPPUData['timeEight']        =  $webRmbcostData['timeTow']/$webRmbcostUsersNumData['timeTow']*100;
-        $ARPPUData['Mom'] =  ($webRmbcostData['timeTow']/$webRmbcostData['timeOne'])*100;
-        $ARPPUData['An'] =   ($webRmbcostData['timeEight']/$webRmbcostData['timeOne'])*100;
-        $ARPPUData['title'] = "ARPPU";
-        $ARPPUData['Symbol'] = "%";
+        $RegRetainedSort        =   array();
+        $activeDataSort         =   array();
+        $UsersOrderInfoSort     =   array();
+        $RealTimeOnlineSort     =   array();
+        $dataInfo               =   array();
+        foreach ($RegRetained as $k=>$v) $RegRetainedSort[$v['t']] = $v;
+        foreach ($activeData as $k=>$v) $activeDataSort[$v['t']] = $v;
+        foreach ($UsersOrderInfo as $k=>$v) $UsersOrderInfoSort[$v['t']] = $v;
+        foreach ($RealTimeOnline as $k=>$v) $RealTimeOnlineSort[$v['t']] = $v;
+        //注册用户
+        $dataInfo[]        =  $this->DataArr($RegRetainedSort,'注册','UserRegNum',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //活跃
+        $dataInfo[]        =  $this->DataArr($activeDataSort,'活跃','activeNum',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //收入
+        $dataInfo[]        =  $this->DataArr($UsersOrderInfoSort,'收入','Price',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //付费用户
+        $dataInfo[]        =  $this->DataArr($UsersOrderInfoSort,'付费用户','UserPayNum',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //付费次数
+        $dataInfo[]        =  $this->DataArr($UsersOrderInfoSort,'付费次数','PayNum',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //注册付费渗透率
+        $dataInfo[]        =  $this->DataArr($RegRetainedSort,'注册付费渗透率','RegPayRate',$SameStartTime,$OneStartTime,$EightStartTime,"%",$erverDay);
+        //活跃付费渗透率
+        $dataInfo[]        =  $this->DataArr($activeDataSort,'活跃付费渗透率','activePayRate',$SameStartTime,$OneStartTime,$EightStartTime,'%',$erverDay);
+        //ARPPU
+        $dataInfo[]        =  $this->DataArr($UsersOrderInfoSort,'ARPPU','ARPPU',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //注册1日留存率
+        $dataInfo[]        = $this->DataArr($RegRetainedSort,'注册1日留存率','UsersOneRate',$SameStartTime,$OneStartTime,$EightStartTime,"%",$erverDay);
+        //注册30日留存率
+        $dataInfo[]        = $this->DataArr($RegRetainedSort,'注册30日留存率','UsersThirtyRate',$SameStartTime,$OneStartTime,$EightStartTime,"%",'',$erverDay);
+        //平均在线
+        $dataInfo[]        = $this->DataArr($RealTimeOnlineSort,'平均在线','avgNum',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
+        //最高在线
+        $dataInfo[]        = $this->DataArr($RealTimeOnlineSort,'最高在线','maxNum',$SameStartTime,$OneStartTime,$EightStartTime,'',$erverDay);
 
 
 
+        $info =  $dataInfo[$Type];
+        $title = $info['Title'];
+        $str = $info['str'];
+        $this->assign('SameDate',$SameDate);
+        $this->assign('TimeDate',$TimeDate);
+        $this->assign('OneDate',$OneDate);
+        $this->assign('EightDate',$EightDate);
+        $this->assign('Type',$Type);
+        $this->assign('dayArr',json_encode($dayArr));
+        $this->assign('Info',$dataInfo);
+        $this->assign('Title',$title);
+        $this->assign('str',$str);
 
-
-
-        /**********************************注册1日留存率****************************************/
-
-        /**********************************注册30日留存率****************************************/
-
-        /**********************************注册30日留存率****************************************/
-
-        /**********************************平均在线****************************************/
-
-        /**********************************最高在线****************************************/
-
-        /**********************************数组****************************************/
-         $dataInfo['webUsersData']  = $webUsersData;                        //注册分析
-         $dataInfo['WebvUserLoginListData']  = $WebvUserLoginListData;      //活跃分析
-         $dataInfo['webRmbcostData']  = $webRmbcostData;                    //收入分析
-         $dataInfo['webRmbcostUsersNumData']  = $webRmbcostUsersNumData;    //付费用户数
-         $dataInfo['webRmbcostUsersData']  = $webRmbcostUsersData;          //付费次数
-         $dataInfo['NewRegisterUserPayData']  = $NewRegisterUserPayData;    //注册付费渗透率
-         $dataInfo['activePayData']  = $activePayData;                      //活跃付费渗透率
-         $dataInfo['ARPPUData']  = $ARPPUData;                      //ARPPU
-        $this->assign('timeOne',date('n月j日',$strtotime));
-        $this->assign('timeTow',date('n月j日',$strtotime-24*60*60));
-        $this->assign('timeEight',date('n月j日',$strtotime-8*24*60*60));
-        $this->assign('datemin',$datemin);
-        $this->assign('dataInfo',$dataInfo);
+        $this->assign('InfoData',json_encode($info['data']));
         $this->display('index');
     }
 
     /****
     * 组装数组
-    * @param  $webRmbcostUsersNum   array      新数组
-    * @param  $erverDay             array      8天时间
-    * @param  $timeOne               array      前一天
-    * @param  $timeTow               array      大前天
-    * @param  $timeEight               array      大前天
-    * @param  $timeEight               array      8天前
+    * @param  $newArray   array 新数组
+    * @param  $arraySort      array 数
+    *
     *****/
-    public  function  DataArr($webRmbcostUsersNum,$webRmbcostUsersNumData,$erverDay,$timeOne,$timeTow,$timeEight){
-
-        foreach ($webRmbcostUsersNum as $k=>$v){
-            if($v['t'] == $timeOne){
-                $webRmbcostUsersNumData['timeOne'] = $v['num'];
-            }
-            if($v['t'] == $timeTow){
-                $webRmbcostUsersNumData['timeTow'] = $v['num'];
-            }
-            if($v['t'] == $timeEight){
-                $webRmbcostUsersNumData['timeEight'] = $v['num'];
-            }
+    public  function  DataArr($arraySort,$title,$key,$timeOne,$timeTow,$timeEight,$str = '',$erverDay){
+        $newArray =array();
+        $newArray['Title'] = $title;
+        $newArray['str'] = $str;
+        if($arraySort[$timeOne]){
+            $newArray['Same'] = round($arraySort[$timeOne][$key], 2);
+        }else{
+            $newArray['Same'] = 0;
         }
+        if($newArray[$timeTow]){
+            $newArray['One'] = round($arraySort[$timeTow][$key], 2);
+        }else{
+            $newArray['One']= 0;
+        }
+        if($newArray[$timeEight]){
+            $newArray['Eight'] = round($arraySort[$timeEight][$key], 2);
+        }else{
+            $newArray['Eight'] = 0;
+        }
+        $Mom =  (($newArray['Same']-$newArray['One'])/$newArray['Same'])*100;
+        $An  =  (($newArray['Same']-$newArray['Eight'])/$newArray['Same'])*100;
+
+
+        $newArray['Mom'] = round($Mom, 2);
+        $newArray['An'] = round($An, 2);
 
         foreach ($erverDay as $k=>$v){
-            $vTime =  date('Y-m-d',$v);
-
-            $valTime = 0;
-            foreach ($webRmbcostUsersNum as $key =>$val){
-                if($val['t'] == $vTime){
-                    $valTime  = $val['num'];
-                }
-            }
-            $webRmbcostUsersNumData['erverDay'][$k]['num'] = $valTime;
-            $webRmbcostUsersNumData['erverDay'][$k]['day'] = date('n月j日',$v);
-        }
-        //判断是否为空值
-        if(empty($webRmbcostUsersNumData['timeOne'])){
-            $webRmbcostUsersNumData['timeOne'] = 0;
+           if($arraySort[$v['date']]){
+               $newArray['data'][] =  round($arraySort[$v['date']][$key],2);
+           }else{
+               $newArray['data'][] = 0;
+           }
         }
 
-        if(empty($webRmbcostUsersNumData['timeTow'])){
-            $webRmbcostUsersNumData['timeTow'] = 0;
-        }
 
-        if(empty($webRmbcostUsersNumData['timeEight'])){
-            $webRmbcostUsersNumData['timeEight'] = 0;
-        }
-
-        return $webRmbcostUsersNumData;
+        return $newArray;
     }
 
 }

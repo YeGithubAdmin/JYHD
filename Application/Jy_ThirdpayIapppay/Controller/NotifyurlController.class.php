@@ -16,11 +16,21 @@ class NotifyurlController extends Controller {
         include IAPPPAY.'base.php';
         $ObjFun   = new \Common\Lib\func();
         $dataThirdpay = file_get_contents('php://input');
+
+
+
         if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $dir = C('YQ_ROOT').'Log/pay/'.date('Y').'/'.date('m').'/'.date('d').'/';
             $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',$dataThirdpay);
         }
-        $dataThirdpay = json_decode($dataThirdpay,true);
+        if(!is_array($dataThirdpay)){
+            $dataThirdpay = json_decode($dataThirdpay,true);
+        }
+        if(!is_array($dataThirdpay['test'])){
+            $dataThirdpay = json_decode($dataThirdpay['test'],true);
+        }else{
+            $dataThirdpay = $dataThirdpay['test'];
+        }
         $msgArr = array(
             2001=>'支付成功！',
             3000=>'支付并发',
@@ -39,14 +49,14 @@ class NotifyurlController extends Controller {
             5004=>'vip配置不存在！',
             7001=>'价格不匹配！',
             7002=>'验签失败！'
-
         );
         $result = 2001;
         if($dataThirdpay == null){
             $result = 4001;
             goto  failed;
         }
-        $dataThirdpay = json_decode($dataThirdpay['test'],true);
+
+        print_r($dataThirdpay);
         $transdata=  $dataThirdpay['transdata'];
         if(stripos("%22",$transdata)){ //判断接收到的数据是否做过 Urldecode处理，如果没有处理则对数据进行Urldecode处理
             $dataThirdpay= array_map ('urldecode',$dataThirdpay);
@@ -324,6 +334,7 @@ class NotifyurlController extends Controller {
                 }
             }
 
+            $PlayerData->setRmb($money);
             if($IsGold == 2){
                 $OptReason  =  new \OptReason();
                 $UsrDataOprater->setReason($OptReason::pay_gold);
@@ -438,8 +449,10 @@ class NotifyurlController extends Controller {
         );
         $addApiVisitLog = M('jy_api_visit_log')
             ->add($dataApiVisitLog);
+        print_r($dataApiVisitLog);
             echo 'failed'."\n";
             exit();
+
         OrderSave:
         $dataUsersOrderInfo = array();   //订单数据
         $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());

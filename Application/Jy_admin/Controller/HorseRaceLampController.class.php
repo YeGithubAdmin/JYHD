@@ -40,11 +40,15 @@ class HorseRaceLampController extends ComController {
         if(IS_POST){
             $Status = I('param.Status',1,'intval');
             $Content = I('param.Content','','trim');
+            $Timing  = I('param.Timing',1,'intval');
+            $Btime  = I('param.Btime','','trim');
             $Remark  = I('param.Remark','','trim');
             $dataGameNotice = array(
                 'Content' =>    $Content,
                 'Status'  =>    $Status,
+                'Timing'  =>    $Timing,
                 'Remark'  =>    $Remark,
+                'Btime'  =>    $Btime,
 
             );
             if($Status == 2){
@@ -53,7 +57,6 @@ class HorseRaceLampController extends ComController {
                     $ObjFun->showmessage('系统');
                 }
             }
-
             $addGameNotice = M('jy_horse_race_lamp')
                 ->add($dataGameNotice);
             if($addGameNotice){
@@ -83,8 +86,10 @@ class HorseRaceLampController extends ComController {
                          ->where('Id = '.$Id)
                          ->find();
         if(IS_POST){
-            $Status  = I('param.Status',1,'intval');
+            $Status = I('param.Status',1,'intval');
             $Content = I('param.Content','','trim');
+            $Timing  = I('param.Timing',1,'intval');
+            $Btime  = I('param.Btime','','trim');
             $Remark  = I('param.Remark','','trim');
             if($Status == 2){
                    $SendProtoc = $this->SendProtoc($Content);
@@ -92,11 +97,12 @@ class HorseRaceLampController extends ComController {
                        $ObjFun->showmessage('系统');
                    }
             }
-
             $dataGameNotice = array(
                 'Content' =>    $Content,
                 'Status'  =>    $Status,
+                'Timing'  =>    $Timing,
                 'Remark'  =>    $Remark,
+                'Btime'  =>    $Btime,
             );
             $UpGameNotice = M('jy_horse_race_lamp')
                 ->where('Id = '.$Id)

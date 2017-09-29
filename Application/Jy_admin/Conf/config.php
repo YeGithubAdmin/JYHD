@@ -7,10 +7,4 @@ return array(
     'TMPL_PARSE_STRING'  =>array(
         '__PUBLIC__' => '/resources/Jy_admin', // 更改默认的/Public 替换规则
     ),
-
-
-//    //公共线模板
-//    'LAYOUT_ON'=>true,
-//    'LAYOUT_NAME'=>'layout/layout',
-
 );

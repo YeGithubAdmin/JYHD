@@ -9,8 +9,8 @@ message PB_m2g_gold_refresh
 message PB_g2m_gold_update
 {
 	required int32 pay_period = 1;
-	required int32 consume = 2;
-	required int32 produce = 3;		
+	required int64 consume = 2;
+	required int64 produce = 3;		
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -18,16 +18,16 @@ message PB_g2m_gold_update
 //////////////////////////////////////////////////////////////////////////////////
 message PB_m2g_bomb_refresh
 {
-	required int32 cu = 1;
-	required int32 ag = 2;
-	required int32 au = 3;
+	required int64 cu = 1;
+	required int64 ag = 2;
+	required int64 au = 3;
 }
 
 message PB_g2m_bomb_update
 {
-	required int32 cu = 1;
-	required int32 ag = 2;
-	required int32 au = 3;
+	required int64 cu = 1;
+	required int64 ag = 2;
+	required int64 au = 3;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -35,12 +35,12 @@ message PB_g2m_bomb_update
 //////////////////////////////////////////////////////////////////////////////////
 message PB_m2g_fish_card_refresh
 {
-	required int32 pool = 1;
+	required int64 pool = 1;
 }
 
 message PB_g2m_fish_card_update
 {
-	required int32 pool = 1;
+	required int64 pool = 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

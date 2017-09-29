@@ -29,8 +29,6 @@ class AdminUsersController extends ComController {
         if ($search['islock'] != '') {
             $where .= ' and a.`islock`=' . $search['islock'];
         }
-
-
         if($userInfo['default'] == 1){
                 $lowerAdminUser[] = $userInfo['id'];
                 $lowerAdminUser  = implode(',',$lowerAdminUser);

@@ -17,7 +17,6 @@ class ChannelController extends ComController {
 
         //已入方法类
         $obj = new \Common\Lib\func();
-
         $search['datemax']     =      I('param.datemax','','trim');
         $search['datemin']     =      I('param.datemin','','trim');
         $search['account']        =      I('param.account','','trim');

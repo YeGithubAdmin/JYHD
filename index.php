@@ -24,7 +24,6 @@ define('APP_PATH','./Application/');
 define('JY_ROOT',dirname(__FILE__).DIRECTORY_SEPARATOR);
 
 // 服务器地址
-
 define('SERVER_DOMAIN_NAME','http://192.168.0.156/');
 
 //图片地址
@@ -33,12 +32,14 @@ define('IMG_URL','http://192.168.0.156/');
 //爱贝支付文件
 define('IAPPPAY',JY_ROOT.'thirdpay/iapppayforphp/');
 
+//金立支付
+define('JINPAY',JY_ROOT.'thirdpay/JinPay/');
+
 //proto-php 文件
 define('PROTOC_PATH', JY_ROOT.'protoPhp/');
 
 //游戏服务器请求地址
 define('SERVER_PROTO', 'http://192.168.0.151:80');
-
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';
 
