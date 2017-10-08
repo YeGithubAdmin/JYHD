@@ -58,13 +58,10 @@
                         </volist>
 				</select>
 				</span>
-
-
-
             </neq>
             <span style="width: 100px" class="select-box">
                 <select size="1" name="num" class="select">
-						<option >条数</option>
+						<option value ="7" >条数</option>
                     <option <eq name = "search['num']" value ="15">selected = "true"</eq>  value="15">15</option>
 						<option  <eq name = "search['num']" value ="30">selected = "true"</eq> value="30">30</option>
 						<option <eq name = "search['num']" value ="60">selected = "true"</eq>  value="60">60</option>
@@ -75,6 +72,17 @@
             </button>
         </div>
     </form>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20" >
+        <form action="/jy_admin/ChannelData/excelData" id="excel" method="post">
+            <textarea  style="display: none;" name = "data">{$info|json_encode}</textarea>
+			<span class="l"> <a href="javascript:;"
+                                onclick="excelData()"
+                                class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
+					导出excel</a>
+			</span>
+        </form>
+    </div>
 
     <table
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
@@ -143,7 +151,11 @@
 </html>
 <!--导出excel-->
 <script type="text/javascript">
-
+//导出excel
+    var excel = document.getElementById('excel');
+    function excelData() {
+        excel.submit();
+    }
 
 </script>
 

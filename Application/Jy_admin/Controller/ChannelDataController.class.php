@@ -10,7 +10,6 @@ class ChannelDataController extends ComController {
     //列表
     public function index(){
         $userInfo  = $this->userInfo;
-
         $default   = $userInfo['default'];
         $channel   = $userInfo['channel'];
         $page      = $this->page;
@@ -55,7 +54,6 @@ class ChannelDataController extends ComController {
         $Endtime = date('Y-m-d H:i:s',$time+24*60*60);
         $datemin = date('Y-m-d H:i:s',strtotime($search['datemin']));
         $datemax = date('Y-m-d H:i:s',strtotime($search['datemax'])+24*60*60);
-
         $JoinGameAccount = '';
         if ($search['datemin'] != ''){
             $JoinGameAccount = ' and  c.regtime >= str_to_date("'.$datemin.'","%Y-%m-%d %H:%i:%s")';
@@ -66,46 +64,63 @@ class ChannelDataController extends ComController {
         }
 
         if ($search['datemax'] != ''){
-            $whereData .= ' and  c.DateTime <= str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
-            $JoinGameAccount .= ' and  c.regtime <= str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
+            $whereData .= ' and  c.DateTime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
+            $JoinGameAccount .= ' and  c.regtime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
         }else{
-            $JoinGameAccount .= ' and  c.regtime <= str_to_date("'.$Endtime.'","%Y-%m-%d %H:%i:%s")';
-            $whereData .= ' and  c.DateTime <= str_to_date("'.$Endtime.'","%Y-%m-%d %H:%i:%s")';
+            $JoinGameAccount .= ' and  c.regtime < str_to_date("'.$Endtime.'","%Y-%m-%d %H:%i:%s")';
+            $whereData .= ' and  c.DateTime < str_to_date("'.$Endtime.'","%Y-%m-%d %H:%i:%s")';
         }
+        
 
-        //查询数据
-        $catDataField = array(
-            'a.account as GroupChannel',
-            'a.name',
-            'c.PayNum',
-            'c.UserPayNum',
-            'c.RegNum',
-            'c.ActiveNum',
-            'if(round((c.TotalMoney/c.RegNum),2),round((c.TotalMoney/c.RegNum),2),0)  as  RegArpu',
-            ' if(round((c.TotalMoney/c.ActiveNum),2),round((c.TotalMoney/c.ActiveNum),2),0)    as  ActiveArpu',
-            'c.Success',
-            ' if(round((c.UserPayNum/c.ActiveNum)*100,2),round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversion',
-            ' if(round((c.UserPayNumOld/c.ActiveNum)*100,2),round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversionOld',
-            'c.TotalMoney',
-            'c.UserPayNumOld',
-            'c.OrderTotalOld',
-            'date_format(c.DateTime,"%Y-%m-%d") t'
-        );
-        $count  = M('jy_admin_users as a')
-                  ->join('jy_channel_info as b on b.adminUserID = a.Id')
-                  ->join('jy_statistics_users_pay as c on c.Channel = a.account')
-                  ->where($whereData)
-                  ->count();
+//        //查询数据
+//        $catDataField = array(
+//            'a.account as GroupChannel',
+//            'c.DateTime',
+//            'a.name',
+//            'c.PayNum',
+//            'c.UserPayNum',
+//            'c.RegNum',
+//            'c.ActiveNum',
+//            'if(round((c.TotalMoney/c.RegNum),2),round((c.TotalMoney/c.RegNum),2),0)  as  RegArpu',
+//            ' if(round((c.TotalMoney/c.ActiveNum),2),round((c.TotalMoney/c.ActiveNum),2),0)    as  ActiveArpu',
+//            'c.Success',
+//            ' if(round((c.UserPayNum/c.ActiveNum)*100,2),round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversion',
+//            ' if(round((c.UserPayNumOld/c.ActiveNum)*100,2),round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversionOld',
+//            'c.TotalMoney',
+//            'c.UserPayNumOld',
+//            'c.OrderTotalOld',
+//            'date_format(c.DateTime,"%Y-%m-%d")  as t'
+//        );
+        $catData = $model->query('
+                  SELECT * FROM (
+                  SELECT 
+                  a.account as GroupChannel,
+                  c.DateTime,a.name,
+                  c.PayNum,
+                  c.UserPayNum,
+                  c.RegNum,
+                  c.ActiveNum,
+                  if(round((c.TotalMoney/c.RegNum),2),
+                  round((c.TotalMoney/c.RegNum),2),0)  as  RegArpu,
+                  if(round((c.TotalMoney/c.ActiveNum),2),
+                  round((c.TotalMoney/c.ActiveNum),2),0)    as  ActiveArpu,
+                  c.Success,
+                  if(round((c.UserPayNum/c.ActiveNum)*100,2),
+                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversion,
+                  if(round((c.UserPayNumOld/c.ActiveNum)*100,2),
+                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversionOld,
+                  c.TotalMoney,
+                  c.UserPayNumOld,
+                  c.OrderTotalOld,
+                  date_format(c.DateTime,"%Y-%m-%d") as t  
+                  FROM jy_admin_users as a INNER JOIN jy_channel_info as b on b.adminUserID = a.Id
+                  INNER JOIN jy_statistics_users_pay as c on c.Channel = a.account  
+                  WHERE ( '.$whereData.') ORDER BY c.DateTime desc LIMIT '.($page-$search['num'])*$page.','.$search['num'].') as 
+                  catData GROUP BY  catData.`GroupChannel`,catData.`t`');
+        $count  =count($catData) ;
         $Page       = new \Common\Lib\Page($count,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
-        $catData = $model
-            ->table('jy_admin_users as a')
-            ->join('jy_channel_info as b on b.adminUserID = a.Id')
-            ->join('jy_statistics_users_pay as c on c.Channel = a.account')
-            ->where($whereData)
-            ->limit(($page-$search['num'])*$page,$search['num'])
-            ->field($catDataField)
-            ->select();
+
         //计算留存
         $RetainedDataField = array(
             'count(c.playerid) as UserNum',
@@ -171,6 +186,35 @@ class ChannelDataController extends ComController {
         $this->assign('userinfo',$userInfo);
         $this->assign('info',$catData);
         $this->display('index');
-    }
 
+    }
+    //到出excel
+    public  function excelData(){
+        $data = I('param.data','','trim');
+        $obj = new \Common\Lib\func();
+        $title = "渠道数据";
+        $titlename ='   <tr class="text-c">
+            <th width="100">渠道ID</th>
+            <th width="100">渠道名称</th>
+            <th width="100">报表日期</th>
+            <th width="100">新增用户</th>
+            <th width="100">付费金额</th>
+            <th width="100">注册ARPU</th>
+            <th width="40">活跃ARPU</th>
+            <th width="100">次日留存</th>
+            <th width="100">付费金额（老用户）</th>
+            <th width="100">活跃用户</th>
+            <th width="100">付费转化</th>
+            <th width="100">付费用户（老用户）</th>
+            <th width="100">付费转化（老用户）</th>
+            <th width="100">订单数量</th>
+            <th width="100">2日留存</th>
+            <th width="100">3日留存</th>
+            <th width="100">7日留存</th>
+            <th width="100">15日留存</th>
+            <th width="100">30日留存</th>
+        </tr>';
+        $filename = $title.".xls";
+        $obj->excelData(json_decode($data,true),$titlename,$title,$filename);
+    }
 }

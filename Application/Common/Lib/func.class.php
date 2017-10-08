@@ -589,9 +589,15 @@ class func{
         $objPHPExcel = new \PHPExcel();
         $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA');
 
-        for($i=0;$i<$cellNum;$i++){
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i][1]);
+
+
+        foreach ($cellNum as $k=>$v){
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($v.'1', $expCellName[$k]);
         }
+
+//        for($i=0;$i<$cellNum;$i++){
+//            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i]);
+//        }
         // Miscellaneous glyphs, UTF-8
 
 
@@ -608,5 +614,45 @@ class func{
         $objWriter->save('php://output');
         exit;
     }
+
+    public function excelData($datas,$titlename,$title,$filename){
+        $str = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\"\r\nxmlns:x=\"urn:schemas-microsoft-com:office:excel\"\r\nxmlns=\"http://www.w3.org/TR/REC-html40\">\r\n<head>\r\n<meta http-equiv=Content-Type content=\"text/html; charset=utf-8\">\r\n</head>\r\n<body>";
+        $str .="<table border=1><head>".$titlename."</head>";
+
+
+        foreach ($datas as $k=>$v){
+          $str .=  " <tr class='text-c'>
+                    <td>".$v['GroupChannel']."</td>
+                    <td>".$v['name']."</td>
+                    <td>".$v['t']."</td>
+                    <td>".$v['RegNum']."</td>
+                    <td>".$v['TotalMoney']."</td>
+                    <td>".$v['RegArpu']."</td>
+                    <td>".$v['ActiveArpu']."</td>
+                    <td>".$v['UsersOneNum']."%</td>
+                    <td>".$v['OrderTotalOld']."%</td>
+                    <td>".$v['ActiveNum']."</td>
+                    <td>".$v['PayConversion']."</td>
+                    <td>".$v['UserPayNumOld']."</td>
+                    <td>".$v['PayConversionOld']."%</td>
+                    <td>".$v['Success']."</td>
+                    <td>".$v['UsersTowNum']."%</td>
+                    <td>".$v['UsersThreeNum']."%</td>
+                    <td>".$v['UsersSevenNum']."%</td>
+                    <td>".$v['UsersFifteenNum']."%</td>
+                    <td>".$v['UsersThirtyNum']."%</td>
+                </tr>
+          ";
+        }
+        $str .= "</table></body></html>";
+        header( "Content-Type: application/vnd.ms-excel; name='excel'" );
+        header( "Content-type: application/octet-stream" );
+        header( "Content-Disposition: attachment; filename=".$filename );
+        header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
+        header( "Pragma: no-cache" );
+        header( "Expires: 0" );
+        exit( $str );
+    }
+
 
 }

@@ -2,98 +2,98 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="0cab3356-e354-489b-a3c1-d764ac1bb749" name="默认的" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataLossController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" afterPath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/AdminUsersController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/AdminUsersController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/GlobalDataController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/GlobalDataController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/LoginController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/LoginController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/NoticeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/NoticeController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/PayMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/PayMacroscopicController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GlobalData/index.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GlobalData/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_base_data.proto" afterPath="$PROJECT_DIR$/proto/PB_base_data.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_notify.proto" afterPath="$PROJECT_DIR$/proto/PB_notify.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_numerical.proto" afterPath="$PROJECT_DIR$/proto/PB_numerical.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_statistics_data.proto" afterPath="$PROJECT_DIR$/proto/PB_statistics_data.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/BankruptcyEvent.php" afterPath="$PROJECT_DIR$/protoPhp/BankruptcyEvent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/BigShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/BigShellUpdate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/CreateEvent.php" afterPath="$PROJECT_DIR$/protoPhp/CreateEvent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/DiamondUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/DiamondUpdate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/EmailType.php" afterPath="$PROJECT_DIR$/protoPhp/EmailType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/GoldUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/GoldUpdate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/KillBossFishEvent.php" afterPath="$PROJECT_DIR$/protoPhp/KillBossFishEvent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LoginEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LoginEvent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LogoutEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LogoutEvent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/MidShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/MidShellUpdate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Request.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Request.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Response.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Response.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_BuyGoods.php" afterPath="$PROJECT_DIR$/protoPhp/PB_BuyGoods.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_DrawData.php" afterPath="$PROJECT_DIR$/protoPhp/PB_DrawData.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_Email.php" afterPath="$PROJECT_DIR$/protoPhp/PB_Email.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_ErrorCode.php" afterPath="$PROJECT_DIR$/protoPhp/PB_ErrorCode.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_GameConfig.php" afterPath="$PROJECT_DIR$/protoPhp/PB_GameConfig.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_GameType.php" afterPath="$PROJECT_DIR$/protoPhp/PB_GameType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_Item.php" afterPath="$PROJECT_DIR$/protoPhp/PB_Item.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_LevelType.php" afterPath="$PROJECT_DIR$/protoPhp/PB_LevelType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_OnlineRewardTask.php" afterPath="$PROJECT_DIR$/protoPhp/PB_OnlineRewardTask.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_RankingData.php" afterPath="$PROJECT_DIR$/protoPhp/PB_RankingData.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_g2m_bomb_update.php" afterPath="$PROJECT_DIR$/protoPhp/PB_g2m_bomb_update.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_g2m_fish_card_update.php" afterPath="$PROJECT_DIR$/protoPhp/PB_g2m_fish_card_update.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_g2m_gold_update.php" afterPath="$PROJECT_DIR$/protoPhp/PB_g2m_gold_update.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_m2g_bomb_refresh.php" afterPath="$PROJECT_DIR$/protoPhp/PB_m2g_bomb_refresh.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_m2g_fish_card_refresh.php" afterPath="$PROJECT_DIR$/protoPhp/PB_m2g_fish_card_refresh.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_m2g_gold_refresh.php" afterPath="$PROJECT_DIR$/protoPhp/PB_m2g_gold_refresh.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/OptSrc.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/OptSrc.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGate.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGateReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGateReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientDropLineNotify.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientDropLineNotify.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdown.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdown.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdownReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdownReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosRequest.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosRequest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegister.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegister.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegisterReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegisterReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfo.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfo.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfoUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfoUpdate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataRequst.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataRequst.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSave.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSave.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAllReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAllReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll_SaveInfo.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll_SaveInfo.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_NotifyClient.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_NotifyClient.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_PlayerNumsUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_PlayerNumsUpdate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerClosedNotify.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerClosedNotify.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerInitOkNotify.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerInitOkNotify.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn_ClientInfo.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn_ClientInfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_OnlineRewardTask.php" afterPath="$PROJECT_DIR$/protoPhp/PB_OnlineRewardTask.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_g2m_bomb_update.php" afterPath="$PROJECT_DIR$/protoPhp/PB_g2m_bomb_update.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataLossController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_NotifyClient.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_NotifyClient.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdown.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdown.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn_Ret.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn_Ret.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister_RouterPolicy.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister_RouterPolicy.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOprater.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOprater.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOpraterReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOpraterReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerRequest.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerRequest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerReturn.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PB_ServerType.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PB_ServerType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/UsrDataOpt.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/UsrDataOpt.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RPB_GameNumerical.php" afterPath="$PROJECT_DIR$/protoPhp/RPB_GameNumerical.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RPB_PlayerNumerical.php" afterPath="$PROJECT_DIR$/protoPhp/RPB_PlayerNumerical.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_AccountData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_AccountData.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_ModuleData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_ModuleData.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_PlayerData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_PlayerData.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_m2g_fish_card_refresh.php" afterPath="$PROJECT_DIR$/protoPhp/PB_m2g_fish_card_refresh.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_g2m_fish_card_update.php" afterPath="$PROJECT_DIR$/protoPhp/PB_g2m_fish_card_update.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegisterReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegisterReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_RankingData.php" afterPath="$PROJECT_DIR$/protoPhp/PB_RankingData.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/SmallShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/SmallShellUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOpraterReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOpraterReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_PlayerData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_PlayerData.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RPB_PlayerNumerical.php" afterPath="$PROJECT_DIR$/protoPhp/RPB_PlayerNumerical.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Response.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Response.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/GlobalDataController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/GlobalDataController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerRequest.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_DrawData.php" afterPath="$PROJECT_DIR$/protoPhp/PB_DrawData.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_BuyGoods.php" afterPath="$PROJECT_DIR$/protoPhp/PB_BuyGoods.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOprater.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_UsrDataOprater.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll_SaveInfo.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll_SaveInfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/BankruptcyEvent.php" afterPath="$PROJECT_DIR$/protoPhp/BankruptcyEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfo.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/EmailType.php" afterPath="$PROJECT_DIR$/protoPhp/EmailType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/OptSrc.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/OptSrc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientDropLineNotify.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientDropLineNotify.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LoginEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LoginEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" afterPath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_m2g_gold_refresh.php" afterPath="$PROJECT_DIR$/protoPhp/PB_m2g_gold_refresh.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/LoginController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/LoginController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAll.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/KillBossFishEvent.php" afterPath="$PROJECT_DIR$/protoPhp/KillBossFishEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister_RouterPolicy.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegister_RouterPolicy.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_statistics_data.proto" afterPath="$PROJECT_DIR$/proto/PB_statistics_data.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_GameType.php" afterPath="$PROJECT_DIR$/protoPhp/PB_GameType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_g2m_gold_update.php" afterPath="$PROJECT_DIR$/protoPhp/PB_g2m_gold_update.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegister.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateRegister.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LogoutEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LogoutEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/BigShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/BigShellUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/UsrDataOpt.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/UsrDataOpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ValidGateServerReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RPB_GameNumerical.php" afterPath="$PROJECT_DIR$/protoPhp/RPB_GameNumerical.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/GoldUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/GoldUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/CreateEvent.php" afterPath="$PROJECT_DIR$/protoPhp/CreateEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataRequst.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataRequst.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn_ClientInfo.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn_ClientInfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GlobalData/index.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GlobalData/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGateReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGateReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_LevelType.php" afterPath="$PROJECT_DIR$/protoPhp/PB_LevelType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_base_data.proto" afterPath="$PROJECT_DIR$/proto/PB_base_data.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerRegisterReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_GameConfig.php" afterPath="$PROJECT_DIR$/protoPhp/PB_GameConfig.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdownReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ClientShutdownReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_m2g_bomb_refresh.php" afterPath="$PROJECT_DIR$/protoPhp/PB_m2g_bomb_refresh.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_AccountData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_AccountData.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_notify.proto" afterPath="$PROJECT_DIR$/proto/PB_notify.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/NoticeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/NoticeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfoUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateServerInfoUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/PayMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/PayMacroscopicController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/DiamondUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/DiamondUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSave.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSave.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_Email.php" afterPath="$PROJECT_DIR$/protoPhp/PB_Email.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosRequest.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_GateInfosRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerInitOkNotify.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerInitOkNotify.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Request.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt_Request.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_ModuleData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_ModuleData.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PB_ServerType.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PB_ServerType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/MidShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/MidShellUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleDataReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGate.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_BindToGate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_ErrorCode.php" afterPath="$PROJECT_DIR$/protoPhp/PB_ErrorCode.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAllReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveAllReturn.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/AdminUsersController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/AdminUsersController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PB_Item.php" afterPath="$PROJECT_DIR$/protoPhp/PB_Item.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_numerical.proto" afterPath="$PROJECT_DIR$/proto/PB_numerical.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerClosedNotify.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ServerClosedNotify.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveReturn.php" afterPath="$PROJECT_DIR$/protoPhp/Protos/PBS_ModuleSaveReturn.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -102,25 +102,103 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HorseRaceLampController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php">
+      <file leaf-file-name="ChannelDataController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelDataController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="42" column="38" lean-forward="false" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="38" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="72" column="8" lean-forward="false" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
+              <folding>
+                <marker date="1507478840748" expanded="true" signature="4008:5275" ph="SELECT * FRO... account" />
+                <marker date="1507478840748" expanded="true" signature="4008:5324" ph="SELECT * FRO... account" />
+                <marker date="1507478840748" expanded="true" signature="4008:5369" ph="SELECT * FRO... account" />
+                <marker date="1507478840748" expanded="true" signature="4008:5370" ph="SELECT * FRO... account" />
+                <marker date="1507478840748" expanded="true" signature="4042:5194" ph="SELECT a.acc... jy_admin_users" />
+                <marker date="1507478840748" expanded="true" signature="4042:5241" ph="SELECT a.acc... jy_admin_users" />
+                <marker date="1507478840748" expanded="true" signature="4042:5242" ph="SELECT a.acc... jy_admin_users" />
+                <marker date="1507478840748" expanded="true" signature="4042:5275" ph="SELECT a.acc... jy_admin_users" />
+                <marker date="1507478840748" expanded="true" signature="10522:11278" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html">
+      <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="54" column="12" lean-forward="true" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
-              <folding />
+            <state relative-caret-position="-542">
+              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding>
+                <marker date="1507476647932" expanded="true" signature="1545:1599" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1705:2280" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1734:1745" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1785:1796" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1836:1847" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1886:1898" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1936:1947" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="1985:1997" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="2037:2048" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="2088:2099" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="2139:2150" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="2190:2201" ph="..." />
+                <marker date="1507476647932" expanded="true" signature="2240:2251" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/VipInfo/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="36" column="8" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
+              <folding>
+                <element signature="e#1234#1238#1" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#td#1;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/ChannelData/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="63" column="41" lean-forward="false" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#neq#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="func.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="620" column="0" lean-forward="false" selection-start-line="620" selection-start-column="0" selection-end-line="620" selection-end-column="0" />
+              <folding>
+                <marker date="1507478077028" expanded="false" signature="2337:2416" ph="..." />
+                <marker date="1507478077028" expanded="false" signature="2569:2608" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="2609:2914" ph="..." />
+                <marker date="1507478077028" expanded="false" signature="2663:2681" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="2810:2898" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="2982:3272" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="3021:3253" ph="{...}" />
+                <marker date="1507478077028" expanded="true" signature="3316:3445" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="3363:3426" ph="{...}" />
+                <marker date="1507478077028" expanded="true" signature="20121:20146" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="20121:20147" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="20121:20869" ph="..." />
+                <marker date="1507478077028" expanded="true" signature="20121:21109" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,7 +207,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>PB_HallNotify</find>
       <find>PB_PlayerVip</find>
       <find>Number</find>
       <find>$activityInfo</find>
@@ -159,6 +236,7 @@
       <find>info</find>
       <find>$JoinGameAccount</find>
       <find>PayType</find>
+      <find>num</find>
     </findStrings>
     <replaceStrings>
       <replace>{$responseAdmin}</replace>
@@ -191,7 +269,6 @@
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersExchangeApplicationController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Common/Conf/config.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
@@ -208,21 +285,22 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/PayMacroscopicController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/JinPayController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/AdminUsers/index.html" />
-        <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
-        <option value="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Conf/config.php" />
         <option value="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/NoticeController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelDataController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/View/ChannelData/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_script/Controller/HorseRaceLampController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/edit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html" />
+        <option value="$PROJECT_DIR$/Application/Common/Conf/config.php" />
+        <option value="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_admin/View/ChannelData/index.html" />
+        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelDataController.class.php" />
       </list>
     </option>
   </component>
@@ -236,8 +314,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -254,25 +332,27 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -282,29 +362,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Jy_admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -315,18 +377,14 @@
               <option name="myItemId" value="Jy_admin" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="View" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
+              <option name="myItemId" value="JYHD" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -338,24 +396,19 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="View" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseRaceLamp" />
+              <option name="myItemId" value="Controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/admin/Desktop/jy/Application/Jy_admin/Controller/GoldStreamController.class.php" />
+    <property name="js.eslint.eslintPackage" value="" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -376,17 +429,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CodeceptionConfigurationType" factoryName="Codeception">
-      <PhpTestRunnerSettings />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
-      <node-interpreter value="project" />
-      <working-dir value="" />
-      <envs />
-      <scope-kind value="ALL" />
-      <method />
-    </configuration>
     <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
       <config-file value="" />
       <node-interpreter value="project" />
@@ -448,23 +490,23 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration" cleanupOnStartRun="true">
-    <configuration>C:\Users\admin\AppData\Roaming\Subversion</configuration>
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
     <supportedVersion>125</supportedVersion>
   </component>
   <component name="SvnFileUrlMappingImpl">
     <option name="myMappingRoots">
       <list>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="C:\Users\admin\Desktop\jy" />
-          <option name="myCopyRoot" value="C:\Users\admin\Desktop\jy" />
+          <option name="myVcsRoot" value="C:\Users\Administrator\Desktop\JYHD" />
+          <option name="myCopyRoot" value="C:\Users\Administrator\Desktop\JYHD" />
         </SvnCopyRootSimple>
       </list>
     </option>
     <option name="myMoreRealMappingRoots">
       <list>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="C:\Users\admin\Desktop\jy" />
-          <option name="myCopyRoot" value="C:\Users\admin\Desktop\jy" />
+          <option name="myVcsRoot" value="C:\Users\Administrator\Desktop\JYHD" />
+          <option name="myCopyRoot" value="C:\Users\Administrator\Desktop\JYHD" />
         </SvnCopyRootSimple>
       </list>
     </option>
@@ -515,32 +557,37 @@
       <workItem from="1506671504625" duration="4841000" />
       <workItem from="1506676485469" duration="2646000" />
       <workItem from="1506680067478" duration="2190000" />
+      <workItem from="1507129149296" duration="1793000" />
+      <workItem from="1507208602066" duration="1763000" />
+      <workItem from="1507297888627" duration="1114000" />
+      <workItem from="1507447515409" duration="3473000" />
+      <workItem from="1507468570508" duration="9054000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1074758000" />
+    <option name="totallyTimeSpent" value="1091955000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22708334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22620791" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25264272" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -600,20 +647,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="56" column="21" lean-forward="true" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/DiamondsStream/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1975">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_script/View/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -625,7 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1121">
           <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -633,9 +665,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="1" column="3" lean-forward="true" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
-          <folding>
-            <element signature="e#6#21#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -665,7 +694,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="36" column="8" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="42" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -674,8 +702,8 @@
         <state relative-caret-position="760">
           <caret line="43" column="166" lean-forward="true" selection-start-line="43" selection-start-column="166" selection-end-line="43" selection-end-column="179" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -684,7 +712,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="37" column="16" lean-forward="false" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -692,7 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="30" column="14" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -700,22 +726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="475">
           <caret line="61" column="62" lean-forward="false" selection-start-line="61" selection-start-column="62" selection-end-line="61" selection-end-column="62" />
-          <folding>
-            <marker date="1506324094976" expanded="true" signature="1297:1809" ph="SELECT * FRO... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1297:1884" ph="SELECT a.`Us... UserNum" />
-            <marker date="1506324094976" expanded="true" signature="1410:1468" ph="SELECT FROM jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1410:1520" ph="SELECT `Id`,... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1410:1552" ph="SELECT `User... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1410:1675" ph="SELECT `User... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1410:1708" ph="SELECT `User... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1410:1807" ph="SELECT `Id`,... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="1952:2536" ph="SELECT a.`Id... Id" />
-            <marker date="1506324094976" expanded="true" signature="2065:2175" ph="SELECT `Id`,... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="2065:2459" ph="SELECT `Id`,... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="2608:3196" ph="SELECT a.`Id... Id" />
-            <marker date="1506324094976" expanded="true" signature="2721:2831" ph="SELECT `Id`,... jy_real_time_online" />
-            <marker date="1506324094976" expanded="true" signature="2721:3119" ph="SELECT `Id`,... jy_real_time_online" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -723,7 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="40" column="16" lean-forward="true" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -731,7 +740,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="798">
           <caret line="56" column="59" lean-forward="false" selection-start-line="56" selection-start-column="59" selection-end-line="56" selection-end-column="115" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -739,7 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,15 +754,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/AdmingroupController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-114">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -763,7 +761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="53" column="20" lean-forward="false" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -771,7 +768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
           <caret line="39" column="57" lean-forward="false" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,7 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-570">
           <caret line="29" column="61" lean-forward="false" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,15 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="1" column="3" lean-forward="true" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataLossController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1729">
-          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -810,23 +796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="590">
           <caret line="218" column="31" lean-forward="false" selection-start-line="218" selection-start-column="23" selection-end-line="218" selection-end-column="31" />
-          <folding>
-            <element signature="e#368#389#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2109">
-          <caret line="291" column="20" lean-forward="false" selection-start-line="291" selection-start-column="14" selection-end-line="291" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Common/Conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="36" lean-forward="false" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -844,32 +813,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Common/Lib/PHPExcel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
           <caret line="26" column="2" lean-forward="false" selection-start-line="26" selection-start-column="2" selection-end-line="26" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11400">
-          <caret line="600" column="81" lean-forward="false" selection-start-line="600" selection-start-column="81" selection-end-line="600" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -908,19 +855,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/ChannelData/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="69" column="61" lean-forward="false" selection-start-line="69" selection-start-column="61" selection-end-line="69" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/NoticeController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
           <caret line="45" column="14" lean-forward="true" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -928,7 +866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="6" lean-forward="true" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -936,7 +873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="806">
           <caret line="68" column="83" lean-forward="false" selection-start-line="68" selection-start-column="72" selection-end-line="68" selection-end-column="83" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -944,7 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" column="40" lean-forward="false" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -952,7 +887,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="856">
           <caret line="128" column="45" lean-forward="false" selection-start-line="128" selection-start-column="45" selection-end-line="128" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -960,17 +894,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="571">
           <caret line="93" column="43" lean-forward="false" selection-start-line="93" selection-start-column="43" selection-end-line="93" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelDataController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="23" column="53" lean-forward="false" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
-          <folding>
-            <element signature="e#6#22#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -978,7 +901,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -986,10 +908,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
           <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-          <folding>
-            <element signature="e#6#18#0#PHP" expanded="true" />
-            <element signature="e#51#79#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -997,23 +915,151 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="590">
           <caret line="66" column="14" lean-forward="false" selection-start-line="52" selection-start-column="8" selection-end-line="66" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="42" column="38" lean-forward="false" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/HorseRaceLamp/add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="54" column="12" lean-forward="true" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
+        <state relative-caret-position="228">
+          <caret line="45" column="18" lean-forward="true" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/HorseRaceLampController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="193" column="21" lean-forward="false" selection-start-line="193" selection-start-column="8" selection-end-line="193" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="15" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Common/Conf/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="39" lean-forward="false" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/AdmingroupController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/RetainedDataLossController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-174">
+          <caret line="291" column="20" lean-forward="false" selection-start-line="291" selection-start-column="14" selection-end-line="291" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="520" column="46" lean-forward="false" selection-start-line="520" selection-start-column="38" selection-end-line="520" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="620" column="0" lean-forward="false" selection-start-line="620" selection-start-column="0" selection-end-line="620" selection-end-column="0" />
+          <folding>
+            <marker date="1507478077028" expanded="false" signature="2337:2416" ph="..." />
+            <marker date="1507478077028" expanded="false" signature="2569:2608" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="2609:2914" ph="..." />
+            <marker date="1507478077028" expanded="false" signature="2663:2681" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="2810:2898" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="2982:3272" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="3021:3253" ph="{...}" />
+            <marker date="1507478077028" expanded="true" signature="3316:3445" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="3363:3426" ph="{...}" />
+            <marker date="1507478077028" expanded="true" signature="20121:20146" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="20121:20147" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="20121:20869" ph="..." />
+            <marker date="1507478077028" expanded="true" signature="20121:21109" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/VipInfo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="36" column="8" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
+          <folding>
+            <element signature="e#1234#1238#1" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#td#1;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-542">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <marker date="1507476647932" expanded="true" signature="1545:1599" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1705:2280" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1734:1745" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1785:1796" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1836:1847" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1886:1898" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1936:1947" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="1985:1997" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="2037:2048" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="2088:2099" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="2139:2150" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="2190:2201" ph="..." />
+            <marker date="1507476647932" expanded="true" signature="2240:2251" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/ChannelData/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="63" column="41" lean-forward="false" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#neq#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ChannelDataController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="72" column="8" lean-forward="false" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
+          <folding>
+            <marker date="1507478840748" expanded="true" signature="4008:5275" ph="SELECT * FRO... account" />
+            <marker date="1507478840748" expanded="true" signature="4008:5324" ph="SELECT * FRO... account" />
+            <marker date="1507478840748" expanded="true" signature="4008:5369" ph="SELECT * FRO... account" />
+            <marker date="1507478840748" expanded="true" signature="4008:5370" ph="SELECT * FRO... account" />
+            <marker date="1507478840748" expanded="true" signature="4042:5194" ph="SELECT a.acc... jy_admin_users" />
+            <marker date="1507478840748" expanded="true" signature="4042:5241" ph="SELECT a.acc... jy_admin_users" />
+            <marker date="1507478840748" expanded="true" signature="4042:5242" ph="SELECT a.acc... jy_admin_users" />
+            <marker date="1507478840748" expanded="true" signature="4042:5275" ph="SELECT a.acc... jy_admin_users" />
+            <marker date="1507478840748" expanded="true" signature="10522:11278" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
