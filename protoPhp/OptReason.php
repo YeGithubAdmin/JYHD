@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-09-28 20:15:01
+ * Auto generated from PB_base_data.proto at 2017-10-20 10:32:03
  */
 
 namespace {
@@ -23,6 +23,12 @@ final class OptReason
     const first_pay = 12;
     const gm_tool = 13;
     const player_level_up = 14;
+    const kill_fish = 15;
+    const gun_level_up = 16;
+    const got_by_email = 17;
+    const present_as_gift = 18;
+    const score_draw = 19;
+    const new_player_gift = 20;
 
     /**
      * Returns defined enum values
@@ -46,6 +52,12 @@ final class OptReason
             'first_pay' => self::first_pay,
             'gm_tool' => self::gm_tool,
             'player_level_up' => self::player_level_up,
+            'kill_fish' => self::kill_fish,
+            'gun_level_up' => self::gun_level_up,
+            'got_by_email' => self::got_by_email,
+            'present_as_gift' => self::present_as_gift,
+            'score_draw' => self::score_draw,
+            'new_player_gift' => self::new_player_gift,
         );
     }
 }

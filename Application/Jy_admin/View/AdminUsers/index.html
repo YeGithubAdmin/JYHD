@@ -50,12 +50,13 @@
 					class="input-text Wdate" style="width: 120px;"> <input
 					type="text" class="input-text" style="width: 250px"
 					placeholder="输入管理员账号" id="" value="{$search['account']}"
-					name="account"> <span style="width: 150px"
-					class="select-box"> <select size="1" name="islock"
-					class="select">
+					name="account">
+				<span style="width: 150px"
+								 class="select-box"> <select size="1" name="islock"
+															 class="select">
 						<option value="">状态</option>
 						<option value="1"<if  condition= "$search['islock'] eq '1'">selected</if>>正常</option>
-						<option value="2"<if condition="$search['islock'] eq '2'" >selected</if>>锁定</option>
+				<option value="2"<if condition="$search['islock'] eq '2'" >selected</if>>锁定</option>
 				</select>
 				</span>
 				<button type="submit" class="btn btn-success" id="" name="">
@@ -88,7 +89,6 @@
 			</thead>
 			<tbody>
 				<volist name='info' id = 'val'>
-				
 				<tr class="text-c">
 					<td>{$val['id']}</td>
 					<td>{$val['name']}</td>

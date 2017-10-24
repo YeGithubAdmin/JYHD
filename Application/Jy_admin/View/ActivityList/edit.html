@@ -55,6 +55,22 @@
 			<div class="col-1"></div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
+			<div class="formControls col-6">
+				<div style="width:150px;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel" class="select">
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['id']}" <if condition = "$val['id'] eq  $info['Channel']"> selected="selected"</if>>{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+				</div>
+			</div>
+			<input type="hidden" value="0" id="upid" name="upid" />
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>计费：</label>
 			<div class="formControls col-1">
 				<input type="text"
@@ -62,11 +78,12 @@
 					   id="AddUpStartTime" value="{$info['AddUpStartTime']}" name="AddUpStartTime"
 					   class="input-text Wdate" style="width: 150px;">
 			</div>
+			<div class="col-1"></div>
 			<div class="formControls col-1">
 				<input
 						type="text"
 						onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',minDate:'#F{$dp.$D(\'AddUpStartTime\')}',maxDate:'2080-10-01'})</literal>"
-						id="AddUpEndTime" value="{$info['AddUpStartTime']}" name="AddUpEndTime"
+						id="AddUpEndTime" value="{$info['AddUpEndTime']}" name="AddUpEndTime"
 						class="input-text Wdate" style="width: 150px;">
 			</div>
 		</div>
@@ -78,6 +95,7 @@
 					   id="ShowStartTime" value="{$info['ShowStartTime']}" name="ShowStartTime"
 					   class="input-text Wdate" style="width: 150px;">
 			</div>
+			<div class="col-1"></div>
 			<div class="formControls col-1">
 				<input
 						type="text"
@@ -148,7 +166,7 @@
                                 type:"POST",
                                 url:'/jy_admin/ActivityList/Verification',
                                 async:false,
-                                data:{'Type':gets},
+                                data:{'Type':gets,''},
                                 success:function (msg) {
                                     if(msg == 0){
                                         _Verification =   false;

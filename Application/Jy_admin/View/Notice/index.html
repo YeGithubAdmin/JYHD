@@ -35,6 +35,26 @@
 	</nav>
 	<div class="pd-20">
 
+		<!--搜索 -->
+		<form action="" method="get">
+			<input type="hidden" name="m" value="jy_admin" />
+			<input type="hidden" name="c" value="Notice" />
+			<input type="hidden" name="a" value="index" />
+			<div class="text-c">
+				<span style="width: 150px" class="select-box">
+					<select size="1" name="channel" class="select">
+						<option value="">渠道</option>
+						<volist name = "catChannel" id = "val">
+							    <option value="{$val['id']}"  <if condition="$channel eq $val['id']" >selected</if>>{$val['name']}</option>
+						</volist>
+				</select>
+				</span>
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
+
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"> <a href="javascript:;"
 				onclick="Notice_add('添加公告','/jy_admin/Notice/add','','600')"
@@ -47,6 +67,7 @@
 			<thead>
 				<tr class="text-c">
 				    <th width="10">id</th>
+					<th width="60">渠道</th>
 					<th width="60">公告内容</th>
 					<th width="60">标题</th>
 					<th width="60">是否已发布</th>
@@ -59,6 +80,7 @@
 				<volist name = "info" id ="val">
 					<tr class="text-c">
 						<td>{$val['Id']}</td>
+						<td> <if condition = "$val['name']">{$val['name']}  <else/>全服</if></td>
 						<td><a  style="color:red" onclick="Notice_authority('公告内容','/jy_admin/Notice/authority/Id/{$val['Id']}','4','600','800')">查看</a></td>
 						<td >{$val['Title']}</td>
 						<td class="td-status" ><span

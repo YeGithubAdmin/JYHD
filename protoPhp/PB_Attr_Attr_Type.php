@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-09-28 20:15:01
+ * Auto generated from PB_base_data.proto at 2017-10-20 10:32:03
  */
 
 namespace {
@@ -10,6 +10,8 @@ namespace {
 final class PB_Attr_Attr_Type
 {
     const player_level = 1;
+    const exp = 2;
+    const vip_exp = 3;
 
     /**
      * Returns defined enum values
@@ -20,6 +22,8 @@ final class PB_Attr_Attr_Type
     {
         return array(
             'player_level' => self::player_level,
+            'exp' => self::exp,
+            'vip_exp' => self::vip_exp,
         );
     }
 }

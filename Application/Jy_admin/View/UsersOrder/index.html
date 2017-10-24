@@ -42,35 +42,44 @@
 			<div class="text-c">
 				创建时间： <input type="text"
 					onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
-					id="datemin" value="{$search['FoundTime']}" name="FoundTime"
+					id="datemin" value="{$search['datemin']}" name="datemin"
 					class="input-text Wdate" style="width: 120px;"> <input
-					type="hidden"
+					type="text"
 					onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
 					id="datemax" value="{$search['datemax']}" name="datemax"
 					class="input-text Wdate" style="width: 120px;">
 				<input type="text" class="input-text" style="width: 10%" placeholder="输入订单号"   value="{$search['PlatformOrder']}" name="PlatformOrder">
-				<input type="text" class="input-text" style="width: 7%" placeholder="输入支付通道"   value="{$search['PayPassAgeWay']}" name="PayPassAgeWay">
-				<input type="text" class="input-text" style="width: 7%" placeholder="输入支付渠道"   value="{$search['PayChannel']}" name="PayChannel">
-				<input type="text" class="input-text" style="width: 7%" placeholder="输入用户ID"   value="{$search['playerid']}" name="PayChannel">
-				<span style="width: 5%"
-					  class="select-box">
-					<select size="1" name="PayType"
+				<input type="text" class="input-text" style="width: 7%" placeholder="输入用户ID"   value="{$search['playerid']}" name="playerid">
+				<span style="width: 6%" class="select-box">
+					<select size="1" name="Channel"
 							class="select">
-						<option value="">支付类型</option>
-						<option value="1" <if  condition= "$search['PayType'] eq '1'">selected</if>>支付宝</option>
-						<option value="2" <if  condition="$search['PayType'] eq '2'" >selected</if>>微信</option>
+						<option value="">渠道</option>
+						<volist name = "Channel" id = "val">
+								<option value="{$val['account']}" <if  condition= "$search['Channel'] eq $val['account']">selected</if>>{$val['name']}</option>
+						</volist>
+					</select>
+				</span>
+				<span style="width: 6%"
+					  class="select-box">
+					<select size="1" name="PayPlatform"
+							class="select">
+						<option value="">支付平台</option>
+						<option value="1" <if  condition= "$search['PayPlatform'] eq '1'">selected</if>>支付宝</option>
+						<option value="2" <if  condition="$search['PayPlatform'] eq '2'" >selected</if>>微信</option>
+						<option value="3" <if  condition="$search['PayPlatform'] eq '3'" >selected</if>>爱贝</option>
+						<option value="4" <if  condition="$search['PayPlatform'] eq '4'" >selected</if>>银联</option>
 				</select>
 				</span>
-				<span style="width: 5%"
+				<span style="width: 6%"
 					  class="select-box">
 					<select size="1" name="Platform"
 							class="select">
 						<option value="">平台</option>
-						<option value="1" <if  condition= "$search['islock'] eq '1'">selected</if>>苹果</option>
-						<option value="2" <if  condition="$search['islock'] eq '2'" >selected</if>>安卓</option>
+						<option value="1" <if  condition= "$search['Platform'] eq '1'">selected</if>>苹果</option>
+						<option value="2" <if  condition="$search['Platform'] eq '2'" >selected</if>>安卓</option>
 				</select>
 				</span>
-				<span style="width: 5%"
+				<span style="width: 6%"
 					class="select-box">
 					<select size="1" name="Status"
 					class="select">
@@ -86,7 +95,12 @@
 				</button>
 			</div>
 		</form>
-
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
+					导出excel</a>
+			</span>
+		</div>
+		<div   style="margin-top: 10px;"  class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">订单总额 <a style="color: red;">{$Price}</a> 人民币 </div>
 		<table
 			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
@@ -95,11 +109,12 @@
 					<th width="60">订单名</th>
 					<th width="60">订单号</th>
 					<th width="60">金额/元</th>
-					<th width="60">用户</th>
+					<th width="60">用户名</th>
+					<th width="60">用户ID</th>
 					<th width="60">物品</th>
 					<th width="60">订单状态</th>
 					<th width="60">支付渠道</th>
-					<th width="60">平台</th>
+					<th width="60">手机系统</th>
 					<th width="60">支付类型</th>
 					<th width="60">支付通道</th>
 					<th width="60">支付时间</th>
@@ -114,6 +129,7 @@
 					<td width="60">{$val['PlatformOrder']}</td>
 					<td width="60">{$val['Price']}</td>
 					<td width="60">{$val['UsersName']}</td>
+					<td width="60">{$val['playerid']}</td>
 					<td width="60">
 						<a  style="color:red" onclick="UsersOrder_authority('物品列表','/jy_admin/UsersOrder/authority/playerid/{$val['playerid']}/PlatformOrder/{$val['PlatformOrder']}')">查看</a>
 					</td>
@@ -137,29 +153,33 @@
 					</td>
 					<td width="60">{$val['PayChannel']}</td>
 					<td width="60">
-						<switch name = "val['PayType']" >
+						<switch name = "val['Platform']" >
 							<case value = "1">
 								苹果
 							</case>
 							<case value = "2">
 								安卓
 							</case>
-
 							<default/>
 							...
 						</switch>
 					</td>
 					<td width="60">
-						<switch name = "val['Platform']" >
+						<switch name = "val['PayPlatform']" >
 							<case value = "1">
 								支付宝
 							</case>
 							<case value = "2">
 								微信
 							</case>
-
+							<case value = "3">
+								爱贝
+							</case>
+							<case value = "4">
+								金立
+							</case>
 							<default/>
-							未支付
+							...
 						</switch>
 					</td>
 					<td width="60">{$val['PayPassAgeWay']}</td>

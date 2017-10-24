@@ -21,6 +21,7 @@ class PlaceOrderController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
+
         $obj   = new \Common\Lib\func();
         $Platform = $this->platform;
         $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
@@ -36,6 +37,7 @@ class PlaceOrderController extends ComController {
         $msgArr[5004] = "支付类型暂时未接通！";
         $msgArr[7002] = "首冲只允许购买一次，请勿重复购买！";
         $msgArr[7003] = "月卡还有效，请等月卡过期在购买！";
+        $msgArr[7004] = "支付功能，暂时停止！";
         $result = 2001;
         $info   =  array();
         $time = time();
@@ -49,12 +51,10 @@ class PlaceOrderController extends ComController {
             $result = 4006;
             goto response;
         }
-
         if(empty($Type)){
             $result = 4007;
             goto response;
         }
-
         if(empty($GoodsID)){
             $result = 4008;
             goto response;
@@ -63,6 +63,23 @@ class PlaceOrderController extends ComController {
             $result = 4009;
             goto response;
         }
+        //支付是否已停止
+        $catGameConfig = M('jy_game_config')
+                        ->where('Type = 1  and Status = 1 or Channel = "'.$DataInfo['channel'].'"  and Status = 1')
+                        ->order('Type asc')
+                        ->select();
+        foreach ($catGameConfig as $k=>$v){
+            if($v['StopPay'] == 2){
+                $result = 7004;
+                goto response;
+            }
+        }
+
+
+
+
+
+
 
         //首充
         if($Type == 1){
@@ -89,10 +106,7 @@ class PlaceOrderController extends ComController {
                 }
             }
         }
-
         //查询用户信息
-
-
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
@@ -218,31 +232,28 @@ class PlaceOrderController extends ComController {
                 goto response;
             }
         }
-
         //是否首次充值
-
-
         $catUserOrder = M('jy_users_order_info')
                         ->where('playerid = '.$playerid.' and  Status = 2')
                         ->limit(0,1)
                         ->find();
             $IsFirst = 1;
-        if(!empty($catUserOrder)){
+        if(empty($catUserOrder)){
             $IsFirst = 2;
         }
-
         //是否首次购买
         $catUsersShopLog = $model
                             ->table('jy_users_order_info as a')
-                            ->join('jy_users_order_goods as b on a.playerid = b.playerid')
-                            ->where('a.playerid = '.$playerid.'  and  b.GoodsID = '.$catGoodsAll['Id'].' and  b.IsGive = 1')
+                            ->join('jy_users_order_goods as b on a.playerid = b.playerid and a.PlatformOrder = b.PlatformOrder')
+                            ->where('a.playerid = '.$playerid.'  and  a.Status = 2  and b.GoodsID = '.$catGoodsAll['Id'].' and  b.IsGive = 1')
                             ->field('a.Id')->find();
         $Proportion = 0;
         if(empty($catUsersShopLog) && $Type == 3){
             $Proportion = $catGoodsAll['Proportion'];
         }
         //订单号
-        $PlatformOrder = 'JYHD'.date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $getrand = $obj->RandomNumber();
+        $PlatformOrder = $getrand.date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         //订单物品信息
         $dataUsersOrderGoods = array();
         $dataUsersOrderGoods[0]['playerid']          = $playerid;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-09-28 20:15:00
+ * Auto generated from PB_gm_tool.proto at 2017-10-20 10:32:03
  *
  * protos package
  */
@@ -13,12 +13,24 @@ class PBS_SetServerState extends \ProtobufMessage
 {
     /* Field index constants */
     const STATE = 1;
+    const CHANNEL = 2;
+    const AFTER_SECOND = 3;
 
     /* @var array Field descriptors */
     protected static $fields = array(
         self::STATE => array(
             'name' => 'state',
             'required' => true,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::CHANNEL => array(
+            'name' => 'channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::AFTER_SECOND => array(
+            'name' => 'after_second',
+            'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
@@ -39,6 +51,8 @@ class PBS_SetServerState extends \ProtobufMessage
     public function reset()
     {
         $this->values[self::STATE] = null;
+        $this->values[self::CHANNEL] = null;
+        $this->values[self::AFTER_SECOND] = null;
     }
 
     /**
@@ -71,6 +85,52 @@ class PBS_SetServerState extends \ProtobufMessage
     public function getState()
     {
         $value = $this->get(self::STATE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setChannel($value)
+    {
+        return $this->set(self::CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'channel' property
+     *
+     * @return string
+     */
+    public function getChannel()
+    {
+        $value = $this->get(self::CHANNEL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'after_second' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setAfterSecond($value)
+    {
+        return $this->set(self::AFTER_SECOND, $value);
+    }
+
+    /**
+     * Returns value of 'after_second' property
+     *
+     * @return integer
+     */
+    public function getAfterSecond()
+    {
+        $value = $this->get(self::AFTER_SECOND);
         return $value === null ? (integer)$value : $value;
     }
 }

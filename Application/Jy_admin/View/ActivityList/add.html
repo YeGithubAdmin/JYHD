@@ -42,7 +42,7 @@
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select" datatype="Type" name="Type" >
+							<select class="select"  name="Type" >
 								<option   value="1">累计充值</option>
 								<option   value="2">单笔充值</option>
 								<option   value="3">循环充值</option>
@@ -54,13 +54,31 @@
 				<div class="col-1"></div>
 			</div>
 			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
+				<div class="formControls col-1">
+					<div style="width: 100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel" class="select">
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['id']}">{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+					</div>
+				</div>
+				<input type="hidden" value="0" id="upid" name="upid" />
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>计费：</label>
 				<div class="formControls col-1">
 					<input type="text"
 						   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',maxDate:'#F{$dp.$D(\'AddUpEndTime\')||\'2080-10-01\'}'})</literal>"
 						   id="AddUpStartTime" value="" name="AddUpStartTime"
 						   class="input-text Wdate" style="width: 150px;">
+
 				</div>
+				<div class="col-1"></div>
 				<div class="formControls col-1">
 					<input
 							type="text"
@@ -77,6 +95,7 @@
 						   id="ShowStartTime" value="" name="ShowStartTime"
 						   class="input-text Wdate" style="width: 150px;">
 				</div>
+				<div class="col-1"></div>
 				<div class="formControls col-1">
 					<input
 							type="text"
@@ -131,7 +150,6 @@
 				radioClass : 'iradio-blue',
 				increaseArea : '20%'
 			});
-
 			$("#form-menu-add").Validform({
 				tiptype : 2,
                 datatype:{

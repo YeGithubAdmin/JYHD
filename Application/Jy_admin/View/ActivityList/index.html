@@ -35,7 +35,25 @@
 	</nav>
 
 	<div class="pd-20">
-
+		<!--搜索 -->
+		<form action="" method="get">
+			<input type="hidden" name="m" value="jy_admin" />
+			<input type="hidden" name="c" value="Notice" />
+			<input type="hidden" name="a" value="index" />
+			<div class="text-c">
+				<span style="width: 150px" class="select-box">
+					<select size="1" name="channel" class="select">
+						<option value="">渠道</option>
+						<volist name = "catChannel" id = "val">
+							    <option value="{$val['id']}"  <if condition="$channel eq $val['id']" >selected</if>>{$val['name']}</option>
+						</volist>
+				</select>
+				</span>
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
 	        <a href="javascript:;" onclick="activity_add('添加活动','/jy_admin/ActivityList/add')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加活动</a>
@@ -46,6 +64,7 @@
 			<thead>
 				<tr class="text-c">
 				    <th width="30">id</th>
+					<th width="30">渠道</th>
 					<th width="30">活动类型</th>
 					<th width="30">子活动</th>
 					<th width="60">计费起始时间</th>
@@ -61,6 +80,7 @@
 					<volist name = "info" id ="val">
 						<tr class="text-c">
 							<td>{$val['Id']}</td>
+							<td>{$val['name']}</td>
 							<td>
 								<switch name = "val['Type']" >
 									<case value = "1">

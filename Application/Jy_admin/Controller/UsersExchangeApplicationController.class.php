@@ -67,6 +67,7 @@ class UsersExchangeApplicationController extends ComController {
 
         $msgArr = array(
             2001=>'更新成功！',
+            3001=>'网络错误，请稍后再试',
             3002=>'与游戏服务器断开，请稍后再试！',
             3003=>'与游戏服务器断开，请稍后再试！',
             4001=>'审核状态不明确',
@@ -197,6 +198,39 @@ class UsersExchangeApplicationController extends ComController {
             //接受回应
             $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
             $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+            if($Status == 2){
+                $PBS_UsrDataOprater->reset();
+                $PB_Email->reset();
+                $PBS_UsrDataOpraterReturn->reset();
+
+                $PBS_UsrDataOprater->setPlayerid($CatUsersExchangeLog['playerid']);
+                $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+                $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
+                $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+                $PB_Email = new \PB_Email();
+                $PB_Email->setSender('系统');
+                $PB_Email->setTitle('兑换通知');
+                $PB_Email->setData('您兑换的'.$CatUsersExchangeLog['GoodsName'].',审核已通过，请在兑换邮件查收。');
+                $PB_Email->setType($EmailType::EmailType_Sys);
+                $PBS_UsrDataOprater->setSendEmail($PB_Email);
+                $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+                //发送请求
+                $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$CatUsersExchangeLog['playerid']);
+
+                if($PBS_UsrDataOpraterRespond  == 504){
+                    $result = 3002;
+                    goto response;
+                }
+                if(strlen($PBS_UsrDataOpraterRespond)==0){
+                    $result = 3003;
+                    goto response;
+                }
+                //接受回应
+                $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+                $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+
+            }
+
 
             //判断结果
             if($ReplyCode != 1){

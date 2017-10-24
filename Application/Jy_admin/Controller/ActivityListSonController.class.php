@@ -39,6 +39,7 @@ class ActivityListSonController extends ComController {
             ->join('jy_goods_all as b on b.Id = a.GoodsID and b.IsDel')
             ->where($where)
             ->limit($page*$num,$num)
+            ->order('a.Schedule asc')
             ->field($activityFatherlistFile)
             ->select();
         $count = count($info);

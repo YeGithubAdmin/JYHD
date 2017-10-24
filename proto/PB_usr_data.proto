@@ -34,7 +34,7 @@ message RPB_PlayerData
 	optional int32		sex 			 = 3;	// 1 男 2 女
 	optional int32      vip				 = 4;	// vip 等级
 	optional int32		vip_exp			 = 5;	// vip 经验
-	optional int32		status 			 = 6; 	// 游戏状态（1离线，2在线，3玩牌）
+	optional int32		status 			 = 6; 	// 游戏状态（1离线，2在线，3游戏中）
 	optional int32		serverid 		 = 7;	// 所在游戏服务器id
 	optional int32		game_type 		 = 8;	// 所在游戏类型
 	optional int32      room_type 		 = 9;	// 所在房间类型
@@ -53,8 +53,54 @@ message RPB_PlayerData
 	optional string		icon_url		 = 22;	// 头像url
 	optional bool 		is_mc   		 = 23;	// 是否是月卡用户
 	optional int64 		mc_overtime		 = 24;	// 月卡结束时间
-	optional int32		bk_count 		 = 25;	// 破产次数			-- 废弃
 	optional int32		rmb 			 = 26;	// 人民币
+	optional bool 		is_got_xslb 	 = 27;	// 是否领取新手礼包
+}
+
+message RPB_PlayerLoginAction
+{
+	optional int64      playerid		 = 1;	// 玩家id
+	optional int32		account_type	 = 2; 	// 帐号类型 (1游客，2自定义)
+	optional int32		os_type 		 = 3; 	// 系统类型 (1ios, 2安卓)
+	optional string		login_channel	 = 4;	// 登录渠道号
+	optional string		reg_channel		 = 5;	// 注册渠道号
+	optional string		game_ver		 = 6;	// 游戏版本号
+	optional string		name 			 = 7;	// 昵称
+	optional int32      vip				 = 8;	// vip 等级
+	optional int32		vip_exp			 = 9;	// vip 经验
+	optional int32		glevel 			 = 10;	// 游戏等级
+	optional int32  	gexp   			 = 11;	// 游戏经验
+	optional int64		gold 			 = 12;	// 金币
+	optional int64		diamond 		 = 13;	// 钻石
+	optional int64		deposit			 = 14;	// 存款
+	optional string 	login_time 		 = 15;	// 登陆时间
+	optional string		regtime 		 = 16;	// 注册时间
+}
+
+message RPB_ResChangeAction
+{
+	optional int64      playerid		 = 1;	// 玩家id
+	optional int32		account_type	 = 2; 	// 帐号类型 (1游客，2自定义)
+	optional int32		os_type 		 = 3; 	// 系统类型 (1ios, 2安卓)
+	optional string		login_channel	 = 4;	// 登录渠道号
+	optional string		reg_channel		 = 5;	// 注册渠道号
+	optional string		game_ver		 = 6;	// 游戏版本号
+	optional int32		itemid 			 = 7;	// 物品id 取自物品表
+	optional int32 		add_num 		 = 8;	// 增加数量
+	optional int32      cur_num 		 = 9;	// 当前数量
+	optional int32 		reason 			 = 10;	// 原因	取自 OptReason
+	optional string     opt_time 		 = 11;	// 操作时间
+}
+
+message RPB_PlayerItem
+{
+	optional int64 		playerid 		 = 1;
+	optional int32		item1_num 		 = 2;
+	optional int32		item2_num 		 = 3;
+	optional int32		item3_num 		 = 4;
+	optional int32		item4_num 		 = 5;
+	optional int32		item5_num 		 = 6;
+	optional int32		item6_num 		 = 7;
 }
 
 message RPB_ModuleData

@@ -347,7 +347,7 @@ class func{
 	* @param  string  $content   proto 体
 	* @param  int  $timeOut   请求超时
 	**/
-	public function tocurl($url, $header, $content,$timeOut = 60){
+	public function tocurl($url, $header, $content,$timeOut = 5){
 		$ch = curl_init();
 		if(substr($url,0,5)=='https'){
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
@@ -579,41 +579,10 @@ class func{
         exit;
     }
 
-    public function exportExcel($expTitle,$expCellName,$expTableData){
-
-        include JY_ROOT."PHPExcel/PHPExcel.php";
-        $xlsTitle = iconv('utf-8', 'gb2312', $expTitle);//文件名称
-//        $fileName = $_SESSION['loginAccount'].date('_YmdHis');//or $xlsTitle 文件名称可根据自己情况设定
-        $cellNum = count($expCellName);
-        $dataNum = count($expTableData);
-        $objPHPExcel = new \PHPExcel();
-        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA');
 
 
 
-        foreach ($cellNum as $k=>$v){
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($v.'1', $expCellName[$k]);
-        }
 
-//        for($i=0;$i<$cellNum;$i++){
-//            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i]);
-//        }
-        // Miscellaneous glyphs, UTF-8
-
-
-
-        for($i=0;$i<$dataNum;$i++){
-            for($j=0;$j<$cellNum;$j++){
-                $objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].($i+2), 1);
-            }
-        }
-        header('pragma:public');
-        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$xlsTitle.'.xls"');
-        header("Content-Disposition:attachment;filename=$expTitle.xls");//attachment新窗口打印inline本窗口打印
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('php://output');
-        exit;
-    }
 
     public function excelData($datas,$titlename,$title,$filename){
         $str = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\"\r\nxmlns:x=\"urn:schemas-microsoft-com:office:excel\"\r\nxmlns=\"http://www.w3.org/TR/REC-html40\">\r\n<head>\r\n<meta http-equiv=Content-Type content=\"text/html; charset=utf-8\">\r\n</head>\r\n<body>";

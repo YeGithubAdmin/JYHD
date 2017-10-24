@@ -35,7 +35,6 @@ class ExchangeController extends ComController {
         $msgArr[4007] = "物品信息，缺失！";
         $msgArr[5002] = "物品信息，缺失！";
 
-
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
@@ -71,6 +70,8 @@ class ExchangeController extends ComController {
             'Protos/OptSrc.php',
             'RedisProto/RPB_PlayerData.php',
             'PB_Item.php',
+            'PB_Email.php',
+            'EmailType.php',
             'OptReason.php',
             'RPB_PlayerNumerical.php',
         ));
@@ -108,7 +109,6 @@ class ExchangeController extends ComController {
             $result = $ReplyCode;
             goto response;
         }
-
         $PBS_UsrDataOprater->reset();
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
@@ -157,6 +157,7 @@ class ExchangeController extends ComController {
                 $Status = 1;
                 break;
         }
+
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
@@ -178,6 +179,49 @@ class ExchangeController extends ComController {
             $result = $ReplyCode;
             goto response;
         }
+
+        if($Type > 3){
+            $EmailType      =   new  \EmailType();
+            $PB_Email       =   new  \PB_Email();
+            //设置用户
+            $PBS_UsrDataOprater->reset();
+            $PBS_UsrDataOpraterReturn->reset();
+            $PBS_UsrDataOprater->setPlayerid($playerid);
+            //发送者
+            $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+            //发送类型
+            $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
+            $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+            $PB_Email->setType($EmailType::EmailType_Sys);
+            //标题
+            $PB_Email->setTitle('兑换通知');
+            $PB_Email->setSender('系统');
+            //正文
+            $PB_Email->setData('您兑换的'.$catGoodsAll['Name'].',需要进行审核，审核结果已邮件的形式发送到您的邮箱，请留意邮箱信息。');
+            $PBS_UsrDataOprater->setSendEmail($PB_Email);
+            $UsrDataString = $PBS_UsrDataOprater->serializeToString();
+            //发送请求
+            $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
+            if($Respond  == 504){
+                $result = 3003;
+                goto response;
+            }
+            if(strlen($Respond)==0){
+                $result = 3004;
+                goto response;
+            }
+            //接受回应
+            $PBS_UsrDataOpraterReturn->parseFromString($Respond);
+            $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+            //判断结果
+            if($ReplyCode != 1){
+                $result = $ReplyCode;
+                goto response;
+            }
+        }
+
+
+
         //增加兑换记录
         $dataUsersExchangeLog = array(
             'Number'        =>      $Number,

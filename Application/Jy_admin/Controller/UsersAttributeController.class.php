@@ -100,10 +100,8 @@ class UsersAttributeController extends ComController {
             $obj->ProtobufObj(array(
                 'Protos/PBS_UsrDataOprater.php',
                 'Protos/PBS_UsrDataOpraterReturn.php',
-                'Protos/PBS_AddWhiteList.php',
                 'Protos/OptSrc.php',
                 'Protos/UsrDataOpt.php',
-                'Protos/PBS_AddWhiteListReturn.php',
                 'RedisProto/RPB_PlayerData.php',
                 'PB_HallNotify.php',
                 'OptReason.php',
@@ -119,28 +117,7 @@ class UsersAttributeController extends ComController {
             $OptReason          = new \OptReason();
             $OptSrc             = new OptSrc();
             $UsrDataOpt         = new UsrDataOpt();
-            if(!empty($AccountName)){
-                $PBS_AddWhiteList        = new PBS_AddWhiteList();
-                $PBS_AddWhiteListReturn  = new PBS_AddWhiteListReturn();
-                $PBS_AddWhiteList->setAccountName($AccountName);
-                $String = $PBS_AddWhiteList->serializeToString();
-                $Respond =  $obj->ProtobufSend('protos.PBS_AddWhiteList',$String,0);
-                if($Respond  == 504){
-                    $result = 3002;
-                    goto response;
-                }
-                if(strlen($Respond)==0){
-                    $result = 3003;
-                    goto response;
-                }
-                $PBS_AddWhiteListReturn->parseFromString($Respond);
-                $ReplyCode = $PBS_AddWhiteListReturn->getCode();
-                //判断结果
-                if($ReplyCode != 1){
-                    $result = $ReplyCode;
-                    goto response;
-                }
-            }
+
             $PBS_UsrDataOprater->setPlayerid($playerid);
             $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
             $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
@@ -179,7 +156,7 @@ class UsersAttributeController extends ComController {
             }
             $PB_ResourceChange->setReason($OptReason::gm_tool);
             $PB_ResourceChange->setPlayerid($playerid);
-            $PB_HallNotify->setResChange($PB_ResourceChange);
+            $PB_HallNotify->setResChanged($PB_ResourceChange);
             $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();

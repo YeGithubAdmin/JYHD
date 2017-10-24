@@ -20,24 +20,28 @@ class ComController extends Controller {
 
            //后台资源
            $responseAdmin = C('RESOURCES_ADMIN');
+
           //控制器
            $Controller = array(
+               'Loginindex',
                'Loginsign',
+               'Loginverification',
                'Logincode',
                'Loginsignout'
            );
+
+
            $response = in_array($addr,$Controller);
             $lowerAdmingroup = array();
             $lowerAdminUser = array();
            if(!$userInfo &&  !$response) {
-               header('Location:/jy_admin/login/sign');
+               header('Location:/jy_admin/login/index');
                die;
            }else{
                 $page = I('param.page','','trim');
                 $num  = I('param.num','','trim');
                 $this->page  = !empty($page) ?  $page-1 : C('ADMIN_PAGE');
                 $this->num   = !empty($num)  ?  $num  : C('ADMIN_NUM');
-
                $adminGroup = M('jyhd.jy_admin_group')
                    ->field('id,upid,addId')
                    ->select();
@@ -46,12 +50,10 @@ class ComController extends Controller {
                if($userInfo['default'] == 1){
                    $admingroup =  $userInfo['admingroup'];
                    //我的下级组
-
                    $lowerAdmingroup = $this->make_tree($adminGroup,'id','upid','',$admingroup);
-
                    //我的下级组员
                    $lowerAdminUser = array();
-                   $adminUser = M('jyhd.jy_admin_users')
+                   $adminUser = M('jy_admin_users')
                                 ->field('id,admingroup')
                                 ->select();
                    foreach ($adminUser as $k=>$v){

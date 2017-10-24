@@ -24,13 +24,11 @@
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
-	<title>修改公告</title>
+	<title>修改跑马灯</title>
 </head>
 <body>
 <div class="pd-20">
-
 	<form action="" method="post" class="form form-horizontal" id="form-menu-add">
-
 		<div>
 			<input type="hidden"  name="Id"  value="{$info['Id']}" >
 		</div>
@@ -41,15 +39,46 @@
 			</div>
 			<div class="col-1"> </div>
 		</div>
-
 		<div class="row cl">
-			<label class="form-label  col-3"><span class="c-red">*</span>备注：</label>
-			<div class="formControls  col-6">
-				<textarea  style="width: 100%;" name="Remark"   rows="5" >{$info['Remark']}</textarea>
+			<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
+			<div class="formControls col-6">
+				<div style="width:150px;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel" class="select">
+								<option value="0">全服</option>
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['id']}" <if condition = "$val['id'] eq  $info['Channel']"> selected="selected"</if>>{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+				</div>
 			</div>
-			<div class="col-1"></div>
+			<input type="hidden" value="0" id="upid" name="upid" />
+			<div class="col-4"></div>
 		</div>
-
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>是否定时发送：</label>
+			<div class="formControls col-1 skin-minimal">
+				<div class="radio-box">
+					<input type="radio" id="Timing-1"    <eq name = "info['Timing']" value = "1"> checked = "true"</eq>    onclick="TimingFun(this)"   value="1"  name="Timing">
+					<label for="Status-1">否</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio"  <eq name = "info['Timing']" value = "2"> checked = "true"</eq>  onclick="TimingFun(this)"  id="Timing-2" value="2" name="Timing">
+					<label for="Status-2">是</label>
+				</div>
+			</div>
+			<div class="col-1"> </div>
+		</div>
+		<div class="row cl"      <eq name = "info['Timing']" value = "1"> style="display: none;"</eq>   Id = "TimingTime">
+			<label class="form-label col-3"><span class="c-red">*</span>结束时间：</label>
+			<div class="formControls col-1">
+				<input type="text"
+					   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:''})</literal>"
+					   id="AddUpStartTime" value="{$info['Btime']}" name="Btime"
+					   class="input-text Wdate" style="width: 150px;">
+			</div>
+		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>立即发送：</label>
 			<div class="formControls col-1 skin-minimal">
@@ -61,11 +90,23 @@
 					<input type="radio"  <eq name ="info['Status']" value = "2">checked = "true"</eq>  value ="2" id="Status-2" name="Status">
 					<label for="Status-2">是</label>
 				</div>
-
 			</div>
 			<div class="col-1"> </div>
 		</div>
-
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>权重（越大越高）：</label>
+			<div class="formControls col-1skin-minimal">
+				<input type="text"   value="{$info['Sort']}" name="Sort"  datatype="*" class="input-text" >
+			</div>
+			<div class="col-1"> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label  col-3"><span class="c-red">*</span>备注：</label>
+			<div class="formControls  col-6">
+				<textarea  style="width: 100%;" name="Remark"   rows="5" >{$info['Remark']}</textarea>
+			</div>
+			<div class="col-1"></div>
+		</div>
 		<div class="row cl">
 			<div class="col-9 col-offset-3">
 				<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -83,6 +124,7 @@
 <script type="text/javascript"
 		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
 
 
@@ -106,6 +148,16 @@
             });
 
         });
+        //是否定时发送
+        function TimingFun(my) {
+            var MyValue    = my.value;
+            var TimingTime = document.getElementById('TimingTime');
+            if(MyValue == 1){
+                TimingTime.style.display = "none";
+            }else{
+                TimingTime.style.display = "block";
+            }
+        }
 	</script>
 </literal>
 </body>

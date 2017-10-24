@@ -43,9 +43,11 @@ class Page {
     public function show() {
         if(0 == $this->totalRows) return '';
         $p = 'page';
+
         $nowCoolPage      = ceil($this->nowPage/$this->rollPage);
         $url  =  $_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?").$this->parameter;
         $parse = parse_url($url);
+
         if(isset($parse['query'])) {
             parse_str($parse['query'],$params);
             unset($params[$p]);

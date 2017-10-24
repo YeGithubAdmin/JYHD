@@ -35,9 +35,28 @@
 	</nav>
 	<div class="pd-20">
 
+		<!--搜索 -->
+		<form action="" method="get">
+			<input type="hidden" name="m" value="jy_admin" />
+			<input type="hidden" name="c" value="HorseRaceLamp" />
+			<input type="hidden" name="a" value="index" />
+			<div class="text-c">
+				<span style="width: 150px" class="select-box">
+					<select size="1" name="channel" class="select">
+						<option value="">渠道</option>
+						<volist name = "catChannel" id = "val">
+							    <option value="{$val['id']}"  <if condition="$channel eq $val['id']" >selected</if>>{$val['name']}</option>
+						</volist>
+				</select>
+				</span>
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"> <a href="javascript:;"
-				onclick="HorseRaceLamp_add('添加公告','/jy_admin/HorseRaceLamp/add','','600')"
+				onclick="HorseRaceLamp_add('添加跑马灯','/jy_admin/HorseRaceLamp/add','','600')"
 				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
 					添加跑马灯</a>
 			</span>
@@ -47,24 +66,33 @@
 			<thead>
 				<tr class="text-c">
 				    <th width="10">id</th>
+					<th width="60">渠道</th>
 					<th width="150">内容</th>
-					<th width="60">是否已发送</th>
-					<th width="100">备注</th>
-					<th width="60">创建时间</th>
-					<th width="100">操作</th>
+					<th width="30">是否已发送</th>
+					<th width="30">是否定时发送</th>
+					<th width="30">结束时间</th>
+					<th width="60">备注</th>
+					<th width="40">创建时间</th>
+					<th width="60">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<volist name = "info" id ="val">
 					<tr class="text-c">
 						<td>{$val['Id']}</td>
+						<td> <if condition = "$val['name']">{$val['name']}<else/>全服</if></td>
 						<td>{$val['Content']}</td>
-
 						<td class="td-status" ><span
 								class="<if condition ="$val['Status'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>"><if
 								condition="$val['Status'] eq 2">是<else/>否</if>
 							</span>
 						</td>
+						<td class="td-status" ><span
+								class="<if condition ="$val['Timing'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>"><if
+								condition="$val['Timing'] eq 2">是<else/>否</if>
+							</span>
+						</td>
+						<td>{$val['Btime']}</td>
 						<td>{$val['Remark']}</td>
 						<td>{$val['DateTime']}</td>
 						<td class="td-manage">
@@ -77,7 +105,7 @@
 									onclick="HorseRaceLamp_edit('编辑','/jy_admin/HorseRaceLamp/edit/Id/{$val['Id']}','','510')"
 									class="ml-5" style="text-decoration: none"><i
 								class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"
-																		 href="javascript:;" onclick="Notice_del(this,'{$val['Id']}')"
+																		 href="javascript:;" onclick="HorseRaceLamp_del(this,'{$val['Id']}')"
 																		 class="ml-5" style="text-decoration: none"><i
 								class="Hui-iconfont">&#xe6e2;</i>
 						</a>

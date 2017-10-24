@@ -23,6 +23,8 @@ class RewardController extends ComController {
         $msgArr         =       $this->msgArr;
         $obj = new  \Common\Lib\func();
         $result = 2001;
+
+       $ChannelID =  $this->channelid;
         $info   =  array();
         //当前时间
         $time = date('Y-m-d H:i:s',time());
@@ -62,7 +64,7 @@ class RewardController extends ComController {
         $activityInfo = M('jy_activity_father_list as a')
                         ->join('jy_activity_son_list as b on a.Id = b.FatherID')
                         ->field($activityInfoFile)
-                        ->where('b.Id = '.$activityID.'  and  a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                        ->where('b.Id = '.$activityID.' and  a.Channel = '.$ChannelID.'  and  a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                         ->find();
 
         if(empty($activityInfo)){

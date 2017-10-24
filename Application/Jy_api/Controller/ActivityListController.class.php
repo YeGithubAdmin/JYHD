@@ -15,12 +15,15 @@ class ActivityListController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
+
+        $ChannelID =   $this->channelid;
         $result = 2001;
         $info   =  array();
         //当前时间
         $time = date('Y-m-d h:i:s',time());
         //状态码
         $msgArr[4006] = "用户信息缺失！";
+
         $activityFatherListField = array(
             'a.Type',
             'a.Title',
@@ -47,7 +50,8 @@ class ActivityListController extends ComController {
                             ->join('jy_activity_son_list as b on b.FatherID = a.Id','left')
                             ->join('jy_goods_all as c on b.GoodsID  = c.Id')
                             ->field($activityFatherListField)
-                            ->where('a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
+                            ->order('b.Schedule asc')
+                            ->where('a.Channel = '.$ChannelID.' and  a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
 
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
@@ -62,7 +66,7 @@ class ActivityListController extends ComController {
         );
         $catUserOrder = M('jy_activity_father_list as a')
                         ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime  and  b.CallbackTime >= a.AddUpStartTime and b.Status = 2','left')
-                        ->where('b.playerid = '.$playerid)
+                        ->where(' a.Channel = '.$ChannelID.' and  b.playerid = '.$playerid)
                         ->group('a.Type')
                         ->field($catUserOrderField)
                         ->select();

@@ -63,6 +63,23 @@
 			<div class="col-1"> </div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
+			<div class="formControls col-6">
+				<div style="width:150px;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel" class="select">
+								<option value="0">全服</option>
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['id']}" <if condition = "$val['id'] eq  $info['Channel']"> selected="selected"</if>>{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+				</div>
+			</div>
+			<input type="hidden" value="0" id="upid" name="upid" />
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>过期时间：</label>
 			<div class="formControls col-6 skin-minimal">
 				<input type="text"
@@ -78,6 +95,38 @@
 				<input type="text" style="width: 150px;"   value="{$info['Num']}" name="Num"  class="input-text" >
 			</div>
 			<div class="col-1"> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>邮件通知：</label>
+			<div class="formControls col-1 skin-minimal">
+				<div class="radio-box">
+					<input type="radio" id="SendEmail-1"    <eq name = "info['SendEmail']" value = "1">checked = "true" </eq>   value="1" onclick="SendEmailFun(this)"  name="SendEmail">
+					<label for="Status-1">否</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="SendEmail-2" value="2"   <eq name = "info['SendEmail']" value = "2">checked = "true" </eq> onclick="SendEmailFun(this)"  name="SendEmail">
+					<label for="Status-2">是</label>
+				</div>
+
+			</div>
+			<div class="col-1"> </div>
+		</div>
+
+		<div id = "SendEmail"   <eq name = "info['SendEmail']" value = "1">style="display: none;"</eq>>
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>邮件标题：</label>
+				<div class="formControls col-6 skin-minimal">
+					<input type="text"   value="{$info['TitleContent']}" name="TitleContent"  class="input-text" >
+				</div>
+				<div class="col-1"> </div>
+			</div>
+			<div class="row cl">
+				<label class="form-label  col-3"><span class="c-red">*</span>邮件内容：</label>
+				<div class="formControls  col-6">
+					<textarea  style="width: 100%;" name="EmailContent"   rows="20" >{$info['EmailContent']}</textarea>
+				</div>
+				<div class="col-1"></div>
+			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>是否置顶：</label>
@@ -151,6 +200,15 @@
             });
 
         });
+        function  SendEmailFun(my) {
+            var Email 	= document.getElementById('SendEmail');
+            var MyValue = my.value;
+            if(MyValue == 2){
+                Email.style.display = "block";
+            }else{
+                Email.style.display = "none";
+            }
+        }
 	</script>
 </literal>
 </body>

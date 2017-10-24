@@ -152,36 +152,28 @@ class ComController extends RestController{
             $result  =  4005;
             goto end;
         }
-
         //平台号映射
         $platform = array(
             'ios'       =>  1,
             'android'   =>  2,
         );
-
         $platform = $platform[$DataInfo['platform']];
-
         if(empty($platform)){
             $result  =  6002;
             goto end;
         }
-
         //渠道号信息验证
         $ChannelInfo = M('jy_admin_users as a')
                        ->join('jy_channel_info as b on a.id = b.adminUserID')
                        ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2 and b.platform = '.$platform)
                        ->field('a.account,a.id,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum')
                        ->find();
-
-
-
         if(empty($ChannelInfo)){
             $result  =  6003;
             goto end;
         }
 
         //渠道功能验证
-
         end:
         if($result != 2001){
             $end = array(

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_notify.proto at 2017-09-28 20:15:01
+ * Auto generated from PB_notify.proto at 2017-10-20 10:32:03
  */
 
 namespace {
@@ -23,7 +23,7 @@ class PB_HallNotify extends \ProtobufMessage
     const ITEM_BC = 11;
     const PHP_BC = 12;
     const DRAW_NOTIFY = 13;
-    const RES_CHANGE = 14;
+    const RES_CHANGED = 14;
     const ATTR_CHANGE = 15;
 
     /* @var array Field descriptors */
@@ -93,8 +93,8 @@ class PB_HallNotify extends \ProtobufMessage
             'required' => false,
             'type' => '\PB_DrawDataUpdate'
         ),
-        self::RES_CHANGE => array(
-            'name' => 'res_change',
+        self::RES_CHANGED => array(
+            'name' => 'res_changed',
             'required' => false,
             'type' => '\PB_ResourceChange'
         ),
@@ -133,7 +133,7 @@ class PB_HallNotify extends \ProtobufMessage
         $this->values[self::ITEM_BC] = null;
         $this->values[self::PHP_BC] = null;
         $this->values[self::DRAW_NOTIFY] = null;
-        $this->values[self::RES_CHANGE] = null;
+        $this->values[self::RES_CHANGED] = null;
         $this->values[self::ATTR_CHANGE] = null;
     }
 
@@ -434,25 +434,25 @@ class PB_HallNotify extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'res_change' property
+     * Sets value of 'res_changed' property
      *
      * @param \PB_ResourceChange $value Property value
      *
      * @return null
      */
-    public function setResChange(\PB_ResourceChange $value=null)
+    public function setResChanged(\PB_ResourceChange $value=null)
     {
-        return $this->set(self::RES_CHANGE, $value);
+        return $this->set(self::RES_CHANGED, $value);
     }
 
     /**
-     * Returns value of 'res_change' property
+     * Returns value of 'res_changed' property
      *
      * @return \PB_ResourceChange
      */
-    public function getResChange()
+    public function getResChanged()
     {
-        return $this->get(self::RES_CHANGE);
+        return $this->get(self::RES_CHANGED);
     }
 
     /**

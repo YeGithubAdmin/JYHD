@@ -8,9 +8,22 @@ import "PB_error_code.proto";
 message PBS_SysBroadcast 
 {
 	optional PB_PhpBroadcast php_bc = 1;	// 系统广播php
+	optional string channel = 2;
 }
 
 message PBS_SysBroadcastReturn
+{
+	required PB_ErrorCode code = 1;
+}
+
+// 全服邮件
+message PBS_SendEmail2All
+{
+	optional PB_Email send_email = 1;	// 发送邮件
+	optional string channel 	 = 2;	// 发送渠道
+}
+
+message PBS_SendEmail2AllReturn
 {
 	required PB_ErrorCode code = 1;
 }
@@ -29,7 +42,9 @@ message PBS_AddWhiteListReturn
 // 设置服务状态
 message PBS_SetServerState
 {
-	required int32 state = 1 ;	 // 1 正常 2 停服 3 仅限白名单
+	required int32 state = 1 ;	 		// 1 正常 2 停服 3 仅限白名单
+	optional string channel = 2;		// 渠道
+	optional int32 after_second = 3;	// 多少秒之后执行停服操作, 0 为立即执行
 }
 
 message PBS_SetServerStateReturn

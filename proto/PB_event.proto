@@ -35,6 +35,7 @@ message GoldUpdate
 message PayGoldUpdate
 {
 	required int32 inc_gold = 1;
+	optional int64 playerid = 2;
 }
 
 // 钻石更新

@@ -5,73 +5,45 @@ class IndexController extends Controller {
     public function index(){
         $obj = new \Common\Lib\func();
         $xlsData = array(
-            array('312'),
-            array(321),
-            array('321')
+            array('a'=>"321321"),
         );
-
         $xlsName  = "User";
         $xlsCell  = array(
-            array('id','账号序列'),
-            array('account','登录账户'),
-            array('nickname','账户昵称')
-        );
-        $xlsCell = array(
-            array(
-                '账号序列',
-                '登录账户',
-                '账户昵称',
-            ),
-            array(
-                '账号序列',
-                '登录账户',
-                '账户昵称',
-            ),
-        array(
-            '账号序列',
-            '登录账户',
-            '账户昵称',
-        ),
+            'dasid',
+            'dasdas',
+            'dasdsa',
 
         );
-//        $xlsCell = array(
-//            'GroupChannel'=>'渠道ID',
-//            'GroupChannel'=>'渠道名称',
-//            'GroupChannel'=>'报表日期',
-//            'GroupChannel'=>'新增用户',
-//            'GroupChannel'=>'注册ARPU',
-//            'GroupChannel'=>'活跃ARPU',
-//            'GroupChannel'=>'次日留存',
-//            'GroupChannel'=>'付费金额（老用户',
-//            'GroupChannel'=>'活跃用户',
-//            'GroupChannel'=>'付费转化',
-//            'GroupChannel'=>'付费用户（老用户）',
-//            'GroupChannel'=>'付费转化（老用户）',
-//            'GroupChannel'=>'订单数量',
-//            'GroupChannel'=>'2日留存',
-//            'GroupChannel'=>'3日留存',
-//        );
-
-        $dataResult = array();
-        $headTitle = "XX保险公司 优惠券赠送记录";
-        $title = "优惠券记录";
-        $headtitle= "<tr style='height:50px;border-style:none;><th border=\"0\" style='height:60px;width:270px;font-size:22px;' colspan='11' >{$headTitle}</th></tr>";
-        $titlename = "<tr> 
-               <th style='width:70px;' >合作商户</th> 
-               <th style='width:70px;' >会员卡号</th> 
-               <th style='width:70px;'>车主姓名</th> 
-               <th style='width:150px;'>手机号</th> 
-               <th style='width:70px;'>车牌号</th> 
-               <th style='width:100px;'>优惠券类型</th> 
-               <th style='width:70px;'>优惠券名称</th> 
-               <th style='width:70px;'>优惠券面值</th> 
-               <th style='width:70px;'>优惠券数量</th> 
-               <th style='width:70px;'>赠送时间</th> 
-               <th style='width:90px;'>截至有效期</th> 
-           </tr>";
-        $filename = $title.".xls";
-
-        $obj->excelData($titlename,$titlename,$headtitle,$filename);
-//        $obj->exportExcel($xlsName,$xlsCell,$xlsData);
+        $this->exportExcel($xlsName,$xlsCell,$xlsData);
     }
+
+
+    public function exportExcel($expTitle,$expCellName,$expTableData){
+        include JY_ROOT."PHPExcel/PHPExcel.php";
+        $xlsTitle = iconv('utf-8', 'gb2312', $expTitle);//文件名称
+        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA');
+        //实例对象
+        $PHPExcel = new \PHPExcel();
+        //创建工作区
+        $PHPExcel->createSheet(0);
+        // 设置当前激活的工作表编号
+        $PHPExcel->setActiveSheetIndex(0);
+        // 获取当前激活的工作表
+        $Sheet = $PHPExcel->getActiveSheet();
+        foreach ($cellName as $k=>$v){
+            $Sheet->setCellValue($v.'1',$expCellName[$k]);
+        }
+        foreach ($expTableData as $k=>$v){
+            $i = $k+2;
+            $Sheet->setCellValue('A'.$i,$v['a']);
+
+        }
+        header('pragma:public');
+        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$xlsTitle.'.xls"');
+        header("Content-Disposition:attachment;filename=$expTitle.xls");//attachment新窗口打印inline本窗口打印
+        $objWriter = \PHPExcel_IOFactory::createWriter($PHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
+
 }

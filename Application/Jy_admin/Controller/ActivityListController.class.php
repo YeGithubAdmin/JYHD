@@ -8,37 +8,69 @@ class ActivityListController extends ComController {
     public function index(){
         $page           = $this->page;              //页码
         $num            = $this->num;               //条数
-        $where = 1;
-        $count  = M('jy_activity_father_list')
+
+
+        //渠道号
+        $channel = I('param.channel',0,'intval');
+        $where = '1';
+        if($channel != 0 ){
+            $where  .= '  and   b.id  = "'.$channel.'"';
+        }
+
+
+        $catChannelField = array(
+            'name',
+            'account',
+            'id',
+        );
+        $catChannel = M('jy_admin_users')
+            ->where('channel = 2')
+            ->field($catChannelField)
+            ->select();
+
+        $count  = M('jy_activity_father_list as a')
+            ->join('jy_admin_users as b on a.Channel = b.id and b.channel = 2')
             ->where($where)
             ->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
-
         $activityFatherlistFile = array(
-            'Id',
-            'Type',
-            'Title',
-            'Code',
-            'AddUpStartTime',
-            'AddUpEndTime',
-            'ShowStartTime',
-            'ShowEndTime',
-            'Describe',
+            'a.Id',
+            'a.Type',
+            'a.Title',
+            'a.Code',
+            'b.name',
+            'a.AddUpStartTime',
+            'a.AddUpEndTime',
+            'a.ShowStartTime',
+            'a.ShowEndTime',
+            'a.Describe',
         );
-        $info = M('jy_activity_father_list')
+        $info = M('jy_activity_father_list as a')
+            ->join('jy_admin_users as b on a.Channel = b.id and b.channel = 2')
             ->where($where)
             ->limit($page*$num,$num)
             ->field($activityFatherlistFile)
             ->select();
 
         $this->assign('page',$show);
+        $this->assign('catChannel',$catChannel);
         $this->assign('info',$info);
+        $this->assign('channel',$channel);
         $this->display('index');
     }
     //添加
     public  function add(){
         $obj = new \Common\Lib\func();
+        $catChannelField = array(
+            'name',
+            'account',
+            'id',
+        );
+        $catChannel = M('jy_admin_users')
+            ->where('channel = 2')
+            ->field($catChannelField)
+            ->select();
         if(IS_POST){
             $Type                   =       I('param.Type',1,'intval');                 //活动类型  1-累计充值 2-单笔充值   3-循环充值    4-图片类型
             $Title                  =       I('param.Title','','trim');                //标题
@@ -48,10 +80,12 @@ class ActivityListController extends ComController {
             $ShowStartTime          =       I('param.ShowStartTime','','trim');        //显示开始时间
             $ShowEndTime            =       I('param.ShowEndTime','','trim');          //显示结束时间
             $Describe               =       I('param.Describe ','','trim');
+            $Channel                =       I('param.Channel',0,'intval');
             $dataActivityFatherList = array(
                 'Type'              =>      $Type,
                 'Title'             =>      $Title,
                 'Code'              =>      $Code,
+                'Channel'           =>      $Channel,
                 'AddUpStartTime'    =>      $AddUpStartTime,
                 'AddUpEndTime'      =>      $AddUpEndTime,
                 'ShowStartTime'     =>      $ShowStartTime,
@@ -66,13 +100,22 @@ class ActivityListController extends ComController {
                 $obj->showmessage('添加失败');
             }
         }
-
+        $this->assign('catChannel',$catChannel);
         $this->display('add');
     }
     //修改
     public function edit(){
         $obj = new \Common\Lib\func();
         $Id = I('param.Id',0,'intval');
+        $catChannelField = array(
+            'name',
+            'account',
+            'id',
+        );
+        $catChannel = M('jy_admin_users')
+            ->where('channel = 2')
+            ->field($catChannelField)
+            ->select();
         if ($Id<=0){
             $obj->showmessage('非法操作');
         }
@@ -87,6 +130,7 @@ class ActivityListController extends ComController {
             'AddUpStartTime',
             'AddUpEndTime',
             'ShowStartTime',
+            'Channel',
             'ShowEndTime',
             'Describe',
         );
@@ -96,7 +140,6 @@ class ActivityListController extends ComController {
                               ->field($ActivityFatherListField)
                               ->find();
         if(IS_POST){
-            $Type                   =       I('param.Type',1,'intval');                 //活动类型  1-累计充值 2-单笔充值   3-循环充值    4-图片类型
             $Title                  =       I('param.Title','','trim');                //标题
             $Code                   =       I('param.Code','','trim');                 //活动标识
             $AddUpStartTime         =       I('param.AddUpStartTime','','trim');       //计费开始时间
@@ -104,6 +147,7 @@ class ActivityListController extends ComController {
             $ShowStartTime          =       I('param.ShowStartTime','','trim');        //显示开始时间
             $ShowEndTime            =       I('param.ShowEndTime','','trim');          //显示结束时间
             $Describe               =       I('param.Describe','','trim');            //描述
+            $Channel                =       I('param.Channel',0,'intval');
             $dataActivityFatherList = array(
                 'Title'             =>      $Title,
                 'Code'              =>      $Code,
@@ -112,6 +156,7 @@ class ActivityListController extends ComController {
                 'ShowStartTime'     =>      $ShowStartTime,
                 'ShowEndTime'       =>      $ShowEndTime,
                 'Describe'          =>      $Describe,
+                'Channel'          =>      $Channel,
             );
             $addActivityFatherList = M('jy_activity_father_list')
                 ->where('Id = '.$Id)
@@ -123,6 +168,7 @@ class ActivityListController extends ComController {
             }
         }
         $this->assign('info',$ActivityFatherList);
+        $this->assign('catChannel',$catChannel);
         $this->display('edit');
     }
     //删除
@@ -146,14 +192,15 @@ class ActivityListController extends ComController {
 
     //验证类型爱过是否存在
     public function Verification(){
-        $Type =  I('param.Type',0,'intval');
+        $Type       =  I('param.Type',0,'intval');
+        $Channel       =  I('param.Channel',0,'intval');
         if($Type == ''){
             echo 0;
             exit();
         }
 
         $activityFatherList = M('jy_activity_father_list')
-            ->where('Type = "'.$Type.'"')
+            ->where('Type = "'.$Type.'" and Channel = '.$Channel)
             ->field('id')
             ->find();
         if(empty($activityFatherList)){

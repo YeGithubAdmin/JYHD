@@ -51,17 +51,28 @@ class MallGoodsListController extends ComController {
             goto response;
         }
 
+        $GoodsAllField = array(
+            'a.Id',
+            'a.Name',
+            'a.CurrencyType',
+            'a.CurrencyNum',
+            'a.Code',
+            'a.Type',
+            'a.GetNum',
+            'a.ImgCode',
+            'a.Describe',
+            'a.Proportion',
 
+        );
 
         $GoodsAll  = M('jy_goods_all as a')
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
-            ->join('jy_users_order_goods as c on  c.GoodsId = a.Id and c.playerid = '.$playerid.' and  c.IsGive = 1','left')
+
             ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and  a.ShowType = '.$ShowType.' and a.IsDel = 1')
-            ->field('a.Id,a.Name,a.CurrencyType,a.CurrencyNum,a.Code,a.Type,a.GetNum,a.ImgCode,a.Describe,if(c.GoodsId,0,a.Proportion) as Proportion')
+            ->field($GoodsAllField)
             ->group('a.Id')
             ->order('a.Sort asc')
             ->select();
-
         if(empty($GoodsAll)){
             //查询本公司的渠道商品
             $Mychannel = M('jy_channel_info')
@@ -73,14 +84,31 @@ class MallGoodsListController extends ComController {
             }
             $GoodsAll  = M('jy_goods_all as a')
                 ->join('jy_channel_goods as b on a.Id = b.goodsID')
-                ->join('jy_users_order_goods as c on  c.GoodsId = a.Id and c.playerid = '.$playerid.' and  c.IsGive = 1','left')
                 ->where('b.adminUserID = '.$Mychannel['adminUserID'].' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and ShowType = '.$ShowType.' and IsDel = 1')
-                ->field('a.Id,a.Name,a.CurrencyType,a.CurrencyNum,a.Code,a.ImgCode,a.Type,a.GetNum,a.Describe,if(c.GoodsId,0,a.Proportion)) as Proportion')
+                ->field($GoodsAllField)
                 ->group('a.Id')
                 ->order('a.Sort asc')
                 ->select();
-
         }
+        //过滤首次充值
+        $ShopLogField = array(
+            'b.GoodsID',
+        );
+        $ShopLog = M('jy_users_order_info as a')
+                   ->join('jy_users_order_goods as  b on  a.playerid = '.$playerid.'  and b.PlatformOrder = a.PlatformOrder and b.IsGive = 1')
+                   ->field($ShopLogField)
+                   ->where('a.playerid = '.$playerid.' and a.Status = 2')
+                   ->select();
+        $ShopLogSort = array();
+        foreach ($ShopLog as $k=>$v) $ShopLogSort[$v['GoodsID']] = $v;
+        if(!empty($GoodsAll)){
+            foreach ($GoodsAll as $k=>$v){
+                if($ShopLogSort[$v['Id']]){
+                    $GoodsAll[$k]['Proportion'] = 0;
+                }
+            }
+        }
+
         $info = $GoodsAll;
         response:
             $response = array(

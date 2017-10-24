@@ -56,7 +56,7 @@ class NotifyurlController extends Controller {
             goto  failed;
         }
 
-        print_r($dataThirdpay);
+
         $transdata=  $dataThirdpay['transdata'];
         if(stripos("%22",$transdata)){ //判断接收到的数据是否做过 Urldecode处理，如果没有处理则对数据进行Urldecode处理
             $dataThirdpay= array_map ('urldecode',$dataThirdpay);

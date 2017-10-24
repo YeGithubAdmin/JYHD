@@ -46,6 +46,7 @@ enum OptReason
 	got_by_email 	= 17;	// 通过邮件领取
 	present_as_gift = 18;	// 赠送礼物
 	score_draw 		= 19;	// 抽奖
+	new_player_gift = 20;	// 新手礼包
 }
 
 message PB_Attr
@@ -89,9 +90,6 @@ message PB_BuyGoods
 {
 	required int32 			err 	 = 1;
 	required int32 			goodsid  = 2;	// 商品id
-	//repeated PB_Item 		items 	 = 3;	// 物品
-	//optional int64			gold	 = 4;
-	//optional int64			diamond	 = 5;
 }
 
 message PB_DrawData

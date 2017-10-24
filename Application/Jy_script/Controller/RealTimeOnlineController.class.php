@@ -15,6 +15,7 @@ class RealTimeOnlineController extends Controller {
                                 ->group('Screenings')
                                 ->field($catRealTimeOnlineFiel)
                                 ->select();
+        print_r($catRealTimeOnline);
         if(!empty($catRealTimeOnline)){
            $addRealTimeOnline = M('jy_real_time_online')
                                 ->addAll($catRealTimeOnline);

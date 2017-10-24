@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-09-28 20:15:00
+ * Auto generated from PB_gm_tool.proto at 2017-10-20 10:32:03
  *
  * protos package
  */
@@ -13,6 +13,7 @@ class PBS_SysBroadcast extends \ProtobufMessage
 {
     /* Field index constants */
     const PHP_BC = 1;
+    const CHANNEL = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -20,6 +21,11 @@ class PBS_SysBroadcast extends \ProtobufMessage
             'name' => 'php_bc',
             'required' => false,
             'type' => '\PB_PhpBroadcast'
+        ),
+        self::CHANNEL => array(
+            'name' => 'channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
     );
 
@@ -39,6 +45,7 @@ class PBS_SysBroadcast extends \ProtobufMessage
     public function reset()
     {
         $this->values[self::PHP_BC] = null;
+        $this->values[self::CHANNEL] = null;
     }
 
     /**
@@ -71,6 +78,29 @@ class PBS_SysBroadcast extends \ProtobufMessage
     public function getPhpBc()
     {
         return $this->get(self::PHP_BC);
+    }
+
+    /**
+     * Sets value of 'channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setChannel($value)
+    {
+        return $this->set(self::CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'channel' property
+     *
+     * @return string
+     */
+    public function getChannel()
+    {
+        $value = $this->get(self::CHANNEL);
+        return $value === null ? (string)$value : $value;
     }
 }
 }

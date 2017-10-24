@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-09-28 20:15:01
+ * Auto generated from PB_usr_data.proto at 2017-10-20 10:32:03
  *
  * RedisProto package
  */
@@ -36,8 +36,8 @@ class RPB_PlayerData extends \ProtobufMessage
     const ICON_URL = 22;
     const IS_MC = 23;
     const MC_OVERTIME = 24;
-    const BK_COUNT = 25;
     const RMB = 26;
+    const IS_GOT_XSLB = 27;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -161,15 +161,15 @@ class RPB_PlayerData extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::BK_COUNT => array(
-            'name' => 'bk_count',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
         self::RMB => array(
             'name' => 'rmb',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::IS_GOT_XSLB => array(
+            'name' => 'is_got_xslb',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_BOOL,
         ),
     );
 
@@ -212,8 +212,8 @@ class RPB_PlayerData extends \ProtobufMessage
         $this->values[self::ICON_URL] = null;
         $this->values[self::IS_MC] = null;
         $this->values[self::MC_OVERTIME] = null;
-        $this->values[self::BK_COUNT] = null;
         $this->values[self::RMB] = null;
+        $this->values[self::IS_GOT_XSLB] = null;
     }
 
     /**
@@ -779,29 +779,6 @@ class RPB_PlayerData extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'bk_count' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setBkCount($value)
-    {
-        return $this->set(self::BK_COUNT, $value);
-    }
-
-    /**
-     * Returns value of 'bk_count' property
-     *
-     * @return integer
-     */
-    public function getBkCount()
-    {
-        $value = $this->get(self::BK_COUNT);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
      * Sets value of 'rmb' property
      *
      * @param integer $value Property value
@@ -822,6 +799,29 @@ class RPB_PlayerData extends \ProtobufMessage
     {
         $value = $this->get(self::RMB);
         return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'is_got_xslb' property
+     *
+     * @param boolean $value Property value
+     *
+     * @return null
+     */
+    public function setIsGotXslb($value)
+    {
+        return $this->set(self::IS_GOT_XSLB, $value);
+    }
+
+    /**
+     * Returns value of 'is_got_xslb' property
+     *
+     * @return boolean
+     */
+    public function getIsGotXslb()
+    {
+        $value = $this->get(self::IS_GOT_XSLB);
+        return $value === null ? (boolean)$value : $value;
     }
 }
 }

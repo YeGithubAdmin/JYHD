@@ -33,31 +33,51 @@
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>内容：</label>
 				<div class="formControls col-6 skin-minimal">
-					<input type="text"   value="" name="Title"  datatype="*" class="input-text" >
+					<input type="text"   value="" name="Content"  datatype="*" class="input-text" >
 				</div>
 				<div class="col-1"> </div>
 			</div>
 			<div class="row cl">
-				<label class="form-label  col-3"><span class="c-red">*</span>备注：</label>
-				<div class="formControls  col-6">
-					<textarea  style="width: 100%;" name="Remark"   rows="5" ></textarea>
+				<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
+				<div class="formControls col-3">
+					<div style="text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel" class="select">
+								<option value="0">全服</option>
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['id']}">{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+					</div>
 				</div>
-				<div class="col-1"></div>
+				<input type="hidden" value="0" id="upid" name="upid" />
+				<div class="col-4"></div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>是否定时发送：</label>
 				<div class="formControls col-1 skin-minimal">
 					<div class="radio-box">
-						<input type="radio" id="Timing-1" checked = "true" value="1"  name="Timing">
+						<input type="radio" id="Timing-1"   onclick="TimingFun(this)"  checked = "true" value="1"  name="Timing">
 						<label for="Status-1">否</label>
 					</div>
 					<div class="radio-box">
-						<input type="radio" id="Timing-2" value="2" name="Timing">
+						<input type="radio"  onclick="TimingFun(this)"  id="Timing-2" value="2" name="Timing">
 						<label for="Status-2">是</label>
 					</div>
 
 				</div>
 				<div class="col-1"> </div>
+			</div>
+
+			<div class="row cl" style="display: none;" Id = "TimingTime">
+				<label class="form-label col-3"><span class="c-red">*</span>结束时间：</label>
+				<div class="formControls col-1">
+					<input type="text"
+						   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:''})</literal>"
+						    value="" name="Btime"
+						   class="input-text Wdate" style="width: 150px;">
+				</div>
 			</div>
 
 			<div class="row cl">
@@ -76,6 +96,20 @@
 				<div class="col-1"> </div>
 			</div>
 			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>权重（越大越高）：</label>
+				<div class="formControls col-1 skin-minimal">
+					<input type="text"   value="" name="Sort"  datatype="*" class="input-text" >
+				</div>
+				<div class="col-1"> </div>
+			</div>
+			<div class="row cl">
+				<label class="form-label  col-3"><span class="c-red">*</span>备注：</label>
+				<div class="formControls  col-6">
+					<textarea  style="width: 100%;" name="Remark"   rows="5" ></textarea>
+				</div>
+				<div class="col-1"></div>
+			</div>
+			<div class="row cl">
 				<div class="col-9 col-offset-3">
 					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 				</div>
@@ -92,6 +126,7 @@
 	<script type="text/javascript"
 		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
 	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
 
 
@@ -115,6 +150,18 @@
 			});
 
 		});
+
+		//是否定时发送
+		function TimingFun(my) {
+			var MyValue    = my.value;
+			var TimingTime = document.getElementById('TimingTime');
+			if(MyValue == 1){
+				TimingTime.style.display = "none";
+			}else{
+				TimingTime.style.display = "block";
+			}
+        }
+
 	</script>
 	</literal>
 </body>
