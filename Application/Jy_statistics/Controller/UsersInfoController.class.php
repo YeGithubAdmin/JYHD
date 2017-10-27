@@ -138,8 +138,6 @@ class UsersInfoController extends ComController {
         $GameValue['SignData']       =      $SignData[0]['SignData'];
         $GameValue['NovicePack']     =      $NovicePack[0]['NovicePack'];
         $GameValue['PayGold']        =      $PayGold[0]['PayGold'];
-
-
         //游戏数值
         $obj->ProtobufObj(
             array(

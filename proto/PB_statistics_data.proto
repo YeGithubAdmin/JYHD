@@ -4,15 +4,16 @@ import "PB_error_code.proto";
 message RPB_PlayerNumerical
 {
 	optional int64 gold_pay  			= 1;	// 付费金币
-	optional int64 gold_newp_index  	= 2;
-	optional int64 diamond_day 			= 3;
-	optional int64 diamond_newp			= 4;
+	optional int64 gold_newp_index  	= 2;	
+	optional int64 diamond_day 			= 3;	// 每天获得钻石 
+	optional int64 diamond_newp			= 4;	// 新手期获得钻石
 	optional int64 diamond_newp_index 	= 5;
-	optional int64 fish_card_newp 		= 6;
-	optional int64 catch_fish_num 		= 7;
-	optional int64 item_day				= 8;
-	optional int64 gold_newp 			= 9;
-	optional bool  licence 				= 10;
+	optional int64 fish_card_newp 		= 6;	// 新手期获得鱼券
+	optional int64 catch_fish_num 		= 7;	// 捕获的鱼数
+	optional int64 item_day				= 8;	// 每天获得道具数量
+	optional int64 gold_newp 			= 9;	// 新手期获得金币
+	optional bool  licence 				= 10;	// 鱼券许可证
+	optional int64 playerid 			= 11;	// 玩家id
 }
 
 message RPB_GameNumerical
@@ -36,7 +37,7 @@ message RPB_GameNumerical
 	optional int64 bomb_au_history_pool			= 15;	// 金核弹产出
 	
 	optional int64 fish_card_gold_pool			= 16;
-	optional int64 fish_card_pool				= 17;
+	optional int64 fish_card_pool				= 17;	// 当前剩余鱼券
 	optional int64 fish_card_history_pool		= 18;	// 鱼券产出
 	
 	optional int64 pump_gold_history_pool		= 19;	// 系统抽水
