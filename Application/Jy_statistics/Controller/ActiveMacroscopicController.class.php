@@ -17,6 +17,12 @@ class ActiveMacroscopicController extends ComController {
         $search['datemax']     = I('param.datemax',$EndTime,'trim');
         $search['num']         = I('param.num',30,'intval');
         $search['channel']     = I('param.channel','','trim');
+        $search['Version']     = I('param.Version','','trim');
+        //版本
+        $GameVersion = M('jy_game_version')
+                       ->field('Version')
+                       ->order('Version asc')
+                       ->select();
         $ChannelListField = array(
             'Id',
             'name',
@@ -26,7 +32,6 @@ class ActiveMacroscopicController extends ComController {
             ->where('channel = 2 and isdel = 1')
             ->field($ChannelListField)
             ->select();
-
         $where = 1;
         //时间范围
         if($search['datemin']  != '' ) {
@@ -39,6 +44,10 @@ class ActiveMacroscopicController extends ComController {
         //渠道
         if( $search['channel']  != ''){
             $where .= '  and  `Channel` =  "'.  $search['channel'].'"';
+        }
+        //版本
+        if( $search['VerSion']  != ''){
+            $where .= '  and  `VerSion` =  "'.  $search['VerSion'].'"';
         }
         /***
         *
@@ -67,11 +76,15 @@ class ActiveMacroscopicController extends ComController {
         *  描述：破产且在30分钟内付费的用户数/破产用户数。
         ****/
         $infoFile = array(
-             'Id',
+            'Id',
             'Account',
             'EquipmentAndroid',
             'EquipmentIos',
+            'WAU',
+            'MAU',
+            'BankruptcyTotal',
             'UserGame',
+            'PayNum',
             'BankruptcyNum',
             'Channel',
             'VerSion',
@@ -82,12 +95,9 @@ class ActiveMacroscopicController extends ComController {
                 ->field($infoFile)
                 ->order('DateTime desc')
                 ->select();
-        $sortInfo =  array();
-        foreach ($info as $k=>$v){
-            $sortInfo[$v['DateTime']] = $v;
-        }
         $this->assign('ChannelList',$ChannelList);
         $this->assign('search',$search);
+        $this->assign('GameVersion',$GameVersion);
         $this->assign('info',$info);
         $this->display();
     }

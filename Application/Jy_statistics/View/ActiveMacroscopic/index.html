@@ -46,7 +46,7 @@
                 onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-{%d-1}'})</literal>"
                 id="datemax" value="{$search['datemax']}" name="datemax"
                 class="input-text Wdate" style="width: 120px;">
-            <neq name = "userinfo['channel']" value="2">
+
                 <span style="width: 150px" class="select-box">
                 <select size="1" name="channel" class="select">
                         <option value="">渠道</option>
@@ -55,7 +55,14 @@
                         </volist>
 				</select>
 				</span>
-            </neq>
+            <span style="width: 150px" class="select-box">
+                <select size="1" name="Version" class="select">
+                        <option value="">版本</option>
+                        <volist name = "GameVersion" id = "val">
+                              <option  value="{$val['Version']}"   <if condition  = "$search['Version'] eq $val['Version']"> selected = "true"</if>   >{$val['Version']}</option>
+                        </volist>
+				</select>
+				</span>
             <span style="width: 100px" class="select-box">
                 <select size="1" name="num" class="select">
                     <option  <eq name = "search['num']" value ="30">selected = "true"</eq> value="30">条数</option>
@@ -82,6 +89,8 @@
             <th width="60">DAU/MAU比值</th>
             <th width="60">活跃游戏率</th>
             <th width="60">活跃付费率</th>
+            <th width="60">破产用户</th>
+            <th width="60">破产总数</th>
             <th width="60">破产率</th>
         </tr>
         </thead>
@@ -93,13 +102,14 @@
             <th>{$val['VerSion']}</th>
             <th>{$val['Account']}</th>
             <th>{$val['EquipmentAndroid']+$val['EquipmentIos']}</th>
-            <th>{$val['UserActiveGame']*100}%</th>
-            <th>{$val['UserActiveGame']*100}%</th>
-            <th>{$val['UserActivePayRate']*100}%</th>
+            <th>{$val['WAU']}</th>
+            <th>{$val['MAU']}</th>
+            <th>{$val['Account']*100/$val['MAU']|round = "2"}%</th>
             <th>{$val['UserGame']*100/$val['Account']|round = "2"}%</th>
-            <th>{$val['BankruptcyNum']*100/$val['Account'] = "2"}%</th>
-            <th>{$val['BankruptcyNum']*100/$val['Account'] = "2"}%</th>
-
+            <th>{$val['PayNum']*100/$val['Account']|round = "2"}%</th>
+            <th>{$val['BankruptcyNum']}</th>
+            <th>{$val['BankruptcyTotal']}</th>
+            <th>{$val['BankruptcyNum']*100/$val['Account']|round = "2"}%</th>
         </tr>
         </volist>
         </tbody>

@@ -48,14 +48,7 @@
 						<option value="2"<if condition="$search['islock'] eq '2'" >selected</if>>锁定</option>
 				</select>
 				</span>
-				<span style="width: 150px"
-					  class="select-box"> <select size="1" name="islock"
-												  class="select">
-						<option value="">平台</option>
-						<option value="1"<if  condition= "$search['islock'] eq '1'">selected</if>>苹果</option>
-					<option value="2"    <if condition="$search['islock'] eq '2'" >selected</if>>安卓</option>
-				</select>
-				</span>
+
 
 				<input
 						type="text" class="input-text" style="width: 150px"
@@ -90,7 +83,6 @@
 			<thead>
 				<tr class="text-c">
 				    <th width="30">id</th>
-					<th width="60">平台</th>
 					<th width="60">渠道名</th>
 					<th width="60">渠道号</th>
 					<th width="60">渠道商品</th>
@@ -103,25 +95,23 @@
 			</thead>
 			<tbody>
 				<volist name='info' id = 'val'>
-				
-				<tr class="text-c">
-					<td>{$val['adminUserID']}</td>
-					<td><eq name = "val['platform']" value = "1">苹果<else/>安卓</eq></td>
-					<td>{$val['name']}</td>
-					<td>{$val['account']}</td>
-					<td><a  style="color:red" onclick="Channel_good('渠道商品','/jy_admin/Channel/goods/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
-					<td><a  style="color:red" onclick="Channel_pay('渠道支付','/jy_admin/Channel/pay/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
-					<td><a  style="color:red" onclick="Channel_information('渠道信息','/jy_admin/Channel/information/id/{$val['adminUserID']}')">查看</a></td>
-					<td>{$val['addName']}</td>
-					<td>{$val['mtime']}</td>
-					<td class="td-manage">
-						<a title="编辑" href="javascript:;"
-						onclick="Channel_edit('编辑','/jy_admin/Channel/edit/id/{$val['adminUserID']}')"
-						class="ml-5" style="text-decoration: none"><i
-							class="Hui-iconfont">&#xe6df;</i>
-						</a>
-					</td>
-				</tr>
+					<tr class="text-c">
+						<td>{$val['adminUserID']}</td>
+						<td>{$val['name']}</td>
+						<td>{$val['account']}</td>
+						<td><a  style="color:red" onclick="Channel_good('渠道商品','/jy_admin/Channel/goods/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
+						<td><a  style="color:red" onclick="Channel_pay('渠道支付','/jy_admin/Channel/pay/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
+						<td><a  style="color:red" onclick="Channel_information('渠道信息','/jy_admin/Channel/information/id/{$val['adminUserID']}')">查看</a></td>
+						<td>{$val['addName']}</td>
+						<td>{$val['mtime']}</td>
+						<td class="td-manage">
+							<a title="编辑" href="javascript:;"
+							onclick="Channel_edit('编辑','/jy_admin/Channel/edit/id/{$val['adminUserID']}')"
+							class="ml-5" style="text-decoration: none"><i
+								class="Hui-iconfont">&#xe6df;</i>
+							</a>
+						</td>
+					</tr>
 				</volist>
 			</tbody>
 		</table>

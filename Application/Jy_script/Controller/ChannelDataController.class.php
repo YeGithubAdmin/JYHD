@@ -7,8 +7,9 @@ class ChannelDataController extends Controller {
         //统计时间
         $time = strtotime(date('Y-m-d'),time());
 
+
         $day  = 24*60*60;
-        $time = $time-$day;
+
         $EndTime   = date('Y-m-d H:i:s',$time+$day);
         $StartTime = date('Y-m-d H:i:s',$time);
         $model = new Model();
@@ -39,6 +40,8 @@ class ChannelDataController extends Controller {
             ->field($gameLoginActionField)
             ->group('GroupChannel')
             ->select();
+
+
         //活跃统计 android
 
 
@@ -137,7 +140,7 @@ class ChannelDataController extends Controller {
         $OneNumEndTime =  date('Y-m-d H:i:s',$time) ;
         $UsersOneNumField = array(
             'a.reg_channel as  GroupChannel',
-            'count(a.playerid) as UserNum',
+            'count(distinct a.playerid) as UserNum',
             'a.regtime',
             'b.login_time',
             'count(distinct b.playerid) as UsersOneNum',
@@ -147,11 +150,12 @@ class ChannelDataController extends Controller {
                        ->join('game_login_action as b on  a.reg_channel = b.login_channel  and  a.playerid = b.playerid  
                                 and   b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
                                 and b.login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")','left')
-                       ->where('a.regtime < str_to_date("'.$OneNumEndTime.'","%Y-%m-%d %H:%i:%s") 
+                       ->where('a.regtime < str_to_date("'.$OneNumEndTime.'","%Y-%m-%d %H:%i:%s")
                                 and a.regtime >= str_to_date("'.$OneNumStartTime.'","%Y-%m-%d %H:%i:%s")')
                        ->field($UsersOneNumField)
                        ->group('GroupChannel')
                        ->select();
+
 
         //二日 UsersTowNum
         $TowNumStartTime        = date("Y-m-d H:i:s",$time-2*24*60*60);
@@ -168,7 +172,7 @@ class ChannelDataController extends Controller {
 
         //3日 UsersThreeNum
         $ThreeNumStartTime        = date("Y-m-d H:i:s",$time-3*24*60*60);
-        $ThreeNumEndTime      =  date('Y-m-d H:i:s',$time-2*60*60) ;
+        $ThreeNumEndTime      =  date('Y-m-d H:i:s',$time-2*60*60*24) ;
         $UsersThreeNum =  M('game_account as a')
             ->join('game_login_action as b on  a.reg_channel = b.login_channel  and  a.playerid = b.playerid  
                                 and   b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
@@ -180,7 +184,7 @@ class ChannelDataController extends Controller {
             ->select();
         //7日 UsersSevenNum
         $SevenNumStartTime        = date("Y-m-d H:i:s",$time-7*24*60*60);
-        $SevenNumEndTime      =  date('Y-m-d H:i:s',$time-6*60*60) ;
+        $SevenNumEndTime      =  date('Y-m-d H:i:s',$time-6*60*60*24) ;
         $UsersSevenNum =  M('game_account as a')
             ->join('game_login_action as b on  a.reg_channel = b.login_channel  and  a.playerid = b.playerid  
                                 and   b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
@@ -189,10 +193,11 @@ class ChannelDataController extends Controller {
                                 and a.regtime >= str_to_date("'.$SevenNumStartTime.'","%Y-%m-%d %H:%i:%s")')
             ->field($UsersOneNumField)
             ->group('GroupChannel')
-            ->select();
+            ->select(false);
+
         //15日  UsersFifteenNum
         $FifteenNumStartTime        = date("Y-m-d H:i:s",$time-15*24*60*60);
-        $FifteenNumEndTime      =  date('Y-m-d H:i:s',$time-14*60*60) ;
+        $FifteenNumEndTime      =  date('Y-m-d H:i:s',$time-14*60*60*24) ;
         $UsersFifteenNum =  M('game_account as a')
             ->join('game_login_action as b on  a.reg_channel = b.login_channel  and  a.playerid = b.playerid  
                                 and   b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
@@ -204,7 +209,7 @@ class ChannelDataController extends Controller {
             ->select();
         //30日  UsersThirtyNum
         $ThirtyNumStartTime         =  date("Y-m-d H:i:s",$time-30*24*60*60);
-        $ThirtyNumEndTime           =  date('Y-m-d H:i:s',$time-29*60*60) ;
+        $ThirtyNumEndTime           =  date('Y-m-d H:i:s',$time-29*60*60*24) ;
         $UsersThirtyNum =  M('game_account as a')
             ->join('game_login_action as b on  a.reg_channel = b.login_channel  and  a.playerid = b.playerid  
                                 and   b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
@@ -214,7 +219,6 @@ class ChannelDataController extends Controller {
             ->field($UsersOneNumField)
             ->group('GroupChannel')
             ->select();
-
         //留存组装
         /***
          * 计算留存
@@ -225,7 +229,7 @@ class ChannelDataController extends Controller {
          * UsersFifteenNum      15日
          * UsersThirtyNum       30日
          *******/
-         $UsersOneNumSort = array();
+        $UsersOneNumSort = array();
         $UsersTowNumSort = array();
         $UsersThreeNumSort = array();
         $UsersSevenNumSort = array();
@@ -237,7 +241,6 @@ class ChannelDataController extends Controller {
         foreach ($UsersSevenNum as $k=>$v) $UsersSevenNumSort[$v['GroupChannel']] = $v;
         foreach ($UsersFifteenNum as $k=>$v) $UsersFifteenNumSort[$v['GroupChannel']] = $v;
         foreach ($UsersThirtyNum as $k=>$v) $UsersThirtyNumSort[$v['GroupChannel']] = $v;
-
         $info = array();
         foreach ($ChannelList as $k=>$v){
             $info[$k]['Channel']       = $v['GroupChannel'];
@@ -333,7 +336,6 @@ class ChannelDataController extends Controller {
             }
 
         }
-
         //添加数据
         $addStatisticsUsersPay = $model
             ->table('jy_statistics_users_pay')

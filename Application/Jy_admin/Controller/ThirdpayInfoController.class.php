@@ -32,7 +32,6 @@ class ThirdpayInfoController extends ComController {
             ->order('Sort asc')
             ->field('Id,Name,PassAgeWay,Recommend,Sort,Describe,Support,Platform,Type,VersionStart,VersionEnd,DateTime')
             ->select();
-
         $this->assign('page',$show);
         $this->assign('info',$catThirdpay);
         $this->assign('search',$search);

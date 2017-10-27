@@ -3,6 +3,8 @@
 *  用户信息
 **/
 namespace Jy_statistics\Controller;
+use Protos\PBS_GetGameNumerical;
+use Protos\PBS_GetGameNumericalReturn;
 use Protos\PBS_ItemOpt;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
@@ -12,6 +14,10 @@ use Think\Model;
 
 class UsersInfoController extends ComController {
     public function index(){
+
+        $obj = new  \Common\Lib\func();
+
+
         $page           = $this->page;              //页码
         $num            = $this->num;               //条数
         $time = strtotime(date('Y-m-d',time()));
@@ -54,7 +60,11 @@ class UsersInfoController extends ComController {
         }
         //游戏状态
         if( $search['Status'] != 0  ){
-            $where .= ' and b.`status`='.$search['Status'];
+            if($search['Status']  == 2){
+                $where .= ' and b.`status`>='.$search['Status'];
+            }else{
+                $where .= ' and b.`status`='.$search['Status'];
+            }
         }
         //游戏等级
         if( $search['glevel'] != 0  ){
@@ -83,6 +93,83 @@ class UsersInfoController extends ComController {
             $order = $search['SortName'].' '.$search['Sort'] ;
         }
 
+        //签到
+        $SignDataField = array(
+            'sum(GetNum*Number) as SignData'
+        );
+        $SignData =  M('jy_users_sign_log')
+                    ->where('Code = 6 and  Type = 3')
+                    ->field($SignDataField)
+                    ->select();
+        //抽奖
+        $LuckdrawField = array(
+            'SUM(`add_num`) as Luckdraw',
+        );
+        $Luckdraw = M('game_reschange_action')
+                    ->where('reason = 19 AND  itemid = 6 ')
+                    ->field($LuckdrawField)
+                    ->select();
+        //兑换
+        $ExchangeField = array(
+            'sum(StockNum) as Exchange'
+        );
+        $Exchange = M('jy_users_exchange_log')
+                    ->where('Status <= 2')
+                    ->field($ExchangeField)
+                    ->select();
+        //新手礼包
+        $NovicePackField = array(
+            'sum(Number) as NovicePack'
+        );
+        $NovicePack =  M('jy_novice_pack_log')
+                      ->where('Code = 6 and Type = 3')
+                      ->field($NovicePackField)
+                      ->select();
+        //付费金币
+        $PayGoldField = array(
+            'SUM(`add_num`) as PayGold',
+        );
+        $PayGold = M('game_reschange_action')
+            ->where('reason = 5 AND  itemid = 8 ')
+            ->field($PayGoldField)
+            ->select();
+        $GameValue['Exchange']       =      $Exchange[0]['Exchange'];
+        $GameValue['Luckdraw']       =      $Luckdraw[0]['Luckdraw'];
+        $GameValue['SignData']       =      $SignData[0]['SignData'];
+        $GameValue['NovicePack']     =      $NovicePack[0]['NovicePack'];
+        $GameValue['PayGold']        =      $PayGold[0]['PayGold'];
+
+
+        //游戏数值
+        $obj->ProtobufObj(
+            array(
+                'Protos/PBS_GetGameNumerical.php',
+                'Protos/PBS_GetGameNumericalReturn.php',
+                'RPB_GameNumerical.php'
+            )
+        );
+        $PBS_GetGameNumerical           =   new PBS_GetGameNumerical();
+        $PBS_GetGameNumericalReturn     =   new PBS_GetGameNumericalReturn();
+        $String = $PBS_GetGameNumerical->serializeToString();
+        //发送请求
+        $Respond =  $obj->ProtobufSend('protos.PBS_GetGameNumerical',$String,1);
+        if($Respond  == 504){
+        }
+        if(strlen($Respond)==0){
+        }
+        $PBS_GetGameNumericalReturn->parseFromString($Respond);
+        $ReplyCode = $PBS_GetGameNumericalReturn->getCode();
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+        }
+       $Data = $PBS_GetGameNumericalReturn->getData();
+       $GameValue['bomb_cu_history_pool']           =   $Data->getBombCuHistoryPool();        // 铜核弹产出
+       $GameValue['bomb_ag_history_pool']           =   $Data->getBombAuHistoryPool();        // 银核弹产出
+       $GameValue['bomb_au_history_pool']           =   $Data->getBombAuHistoryPool();        // 金核弹产出
+       $GameValue['fish_card_history_pool']         =   $Data->getFishCardHistoryPool();      // 鱼券产出
+       $GameValue['pump_gold_history_pool']         =   $Data->getPumpGoldHistoryPool();      // 系统抽水
+
         $countFiled = array(
             'count(distinct b.playerid) as num',
             'sum(d.Price) as Price',
@@ -102,7 +189,6 @@ class UsersInfoController extends ComController {
             ->where($where)
             ->field($countFiled)
             ->select();
-
         $TheNumberOf = $count[0]['num'];
         $Page       = new \Common\Lib\Page($TheNumberOf,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
@@ -115,17 +201,18 @@ class UsersInfoController extends ComController {
             'b.diamond',
             'b.deposit',
             'b.profit',
+            'a.online_time as onlineTime',
             'a.account_type',
             'a.os_type',
             'a.accountstate',
-            '(UNIX_TIMESTAMP(a.logout_time)-UNIX_TIMESTAMP(a.LastTime))/60  AS  WhenLong',
             'b.status',
             'a.regtime',
             'a.logout_time',
             'a.reg_channel',
             'a.login_channel',
+            'a.game_ver',
             'a.phone_os_ver',
-            ' sum(d.Price) as Price',
+            'sum(d.Price) as Price',
             'c.item1_num',
             'c.item2_num',
             'c.item3_num',
@@ -148,6 +235,7 @@ class UsersInfoController extends ComController {
         $this->assign('Channel',$Channel);
         $this->assign('count',$count);
         $this->assign('search',$search);
+        $this->assign('GameValue',$GameValue);
         $this->display('index');
     }
 
@@ -158,14 +246,66 @@ class UsersInfoController extends ComController {
         if($playerid<=0){
             $obj->showmessage('非法操作');
         }
-
         //账号信息
+        $catGameAccountField = array(
+            'playerid',
+            'account_type',
+            'os_type',
+            'mac',
+            'imei',
+            'imsi',
+            'uuid',
+            'mobile',
+            'accountstate',
+            'regtime',
+            'lasttime',
+            'block_desc',
+            'reg_channel',
+            'login_channel',
+            'phone_model',
+            'phone_os_ver',
+            'game_ver',
+            'communiid',
+            'account_name',
+            'logout_time',
+            'online_time',
+            'reg_channel',
+        );
         $catGameAccount = M('game_account')
                           ->where('playerid = '.$playerid)
+                          ->field($catGameAccountField)
                           ->find();
         //玩家信息
+
+        $catGamePlayerField = array(
+            'playerid',
+            'name',
+            'sex',
+            'vip',
+            'vip_exp',
+            'status',
+            'serverid',
+            'game_type',
+            'room_type',
+            'level_type',
+            'roomid',
+            'gold',
+            'diamond',
+            'deposit',
+            'profit',
+            'glevel',
+            'gexp',
+            'gun_lv',
+            'sign_day',
+            'sign_time',
+            'gunid',
+            'icon_url',
+            'is_mc',
+            'date_format(mc_overtime,"%Y-%m-%d %H:%i:%s") as McOvertime',
+        );
         $catGamePlayer =  M('game_player')
                           ->where('playerid = '.$playerid)
+                          ->field($catGamePlayerField)
                           ->find();
         //道具信息
         $catGameItem   =  M('game_item')
@@ -218,6 +358,7 @@ class UsersInfoController extends ComController {
                       and  login_time  >= str_to_date("'.$TowStart.'","%Y-%m-%d %H:%i:%s")')
             ->field($GameLoginActionField)
             ->select();
+
         $this->assign('catGameAccount',$catGameAccount);
         $this->assign('catUserOderInfo',$catUserOderInfo);
         $this->assign('catToDayUserOderInfo',$catToDayUserOderInfo);

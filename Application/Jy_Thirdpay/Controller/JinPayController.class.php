@@ -128,36 +128,11 @@ class JinPayController extends Controller {
             $result = 5003;
             goto OrderSave;
         }
-//        //金币 砖石
-//        $dataUsersCurrencyStream = array();
-//        foreach ($GoodsInfo as $k=>$v){
-//            if($v['Type'] == 1 || $v['Type'] == 2){
-//                $dataUsersCurrencyStream[$k]['playerid']      =   $playerid;
-//                $dataUsersCurrencyStream[$k]['Type']          =   2;
-//                $dataUsersCurrencyStream[$k]['CurrencyType']  =   $v['Type'];
-//                $dataUsersCurrencyStream[$k]['Income']        =   1;
-//                $dataUsersCurrencyStream[$k]['Number']        =   $v['Number']*$v['GetNum'];
-//
-//            }
-//        }
-//        $dataUsersCurrencyStream = array_values($dataUsersCurrencyStream);
-        $DatausersGoodsStream = array();
-//        //道具
-//        foreach ($GoodsInfo as $k=>$v){
-//            if($v['Type'] == 3){
-//                $DatausersGoodsStream[$k]['playerid'] =      $playerid;
-//                $DatausersGoodsStream[$k]['Code']     =      $v['GoodsCode'];
-//                $DatausersGoodsStream[$k]['Type']     =      2;
-//                $DatausersGoodsStream[$k]['Income']   =      1;
-//                $DatausersGoodsStream[$k]['Number']   =      $v['Number']*$v['GetNum'];
-//            }
-//        }
-//        $DatausersGoodsStream = array_values($DatausersGoodsStream);
+
         /**
          * 服务器查询
          * statr
          */
-
         $dataJinpayLog = array(
             'api_key'=>$dataThirdpay['api_key'],
             'close_time'=>$dataThirdpay['close_time'],
@@ -170,7 +145,6 @@ class JinPayController extends Controller {
             'sign'=>$dataThirdpay['sign'],
             'DateTime'=>$dataThirdpay['DateTime'],
         );
-
         $addJinpayLog = M('jy_jinpay_log')->add($dataJinpayLog);
 
         $ObjFun->ProtobufObj(array(

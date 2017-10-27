@@ -26,6 +26,10 @@ class ExchangeController extends ComController {
         $obj   = new \Common\Lib\func();
         $result = 2001;
         $info   =  array();
+
+
+        $msgArr[2001] = '兑换成功，已发放到邮件';
+
         $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
         $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
         $msgArr[3004] = "与游戏服务器断开，请稍后再试！";
@@ -34,7 +38,6 @@ class ExchangeController extends ComController {
         $msgArr[4006] = "用户信息，缺失！";
         $msgArr[4007] = "物品信息，缺失！";
         $msgArr[5002] = "物品信息，缺失！";
-
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
@@ -82,6 +85,8 @@ class ExchangeController extends ComController {
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
         $OptReason          = new \OptReason();
+        $EmailType          = new  \EmailType();
+        $PB_Email           = new  \PB_Email();
         //填充数据
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
@@ -119,45 +124,27 @@ class ExchangeController extends ComController {
         $GetNum     = $catGoodsAll['GetNum'];
         $GoodsCode  = $catGoodsAll['Code'];
         $Status     =  2;
-        $dataUsersGoodsStream     = array();      //道具流水
-        $dataUsersCurrencyStream  = array();      //金币砖石流水
         switch ($Type){
             //金币
             case 1:
-                $RPB_PlayerData->setGold($GetNum);
-                $dataUsersCurrencyStream['playerid']       =   $playerid;
-                $dataUsersCurrencyStream['Type']           =   4;
-                $dataUsersCurrencyStream['CurrencyType']   =   1;
-                $dataUsersCurrencyStream['Income']         =   1;
-                $dataUsersCurrencyStream['Number']         =   $GetNum;
+                $PB_Email->setGold($GetNum);
                 break;
             //钻石
             case 2:
-                $RPB_PlayerData->setDiamond($GetNum);
-                $dataUsersCurrencyStream['playerid']       =   $playerid;
-                $dataUsersCurrencyStream['Type']           =   4;
-                $dataUsersCurrencyStream['CurrencyType']   =   2;
-                $dataUsersCurrencyStream['Income']         =   1;
-                $dataUsersCurrencyStream['Number']         =   $GetNum;
+                $PB_Email->setDiamond($GetNum);
                 break;
             //道具
             case 3:
                 $PBS_ItemOpt  = new \PB_Item();
                 $PBS_ItemOpt->setId($GoodsCode);
                 $PBS_ItemOpt->setNum($GetNum);
-                $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
-                $dataUsersGoodsStream['playerid']      =       $playerid;
-                $dataUsersGoodsStream['Code']          =       $GoodsCode;
-                $dataUsersGoodsStream['Type']          =       4;
-                $dataUsersGoodsStream['Income']        =       1;
-                $dataUsersGoodsStream['Number']        =       $GetNum;
+                $PB_Email->appendItems($PBS_ItemOpt);
                 break;
             //话费卡
             default:
-                $Status = 1;
+             $Status = 1;
                 break;
         }
-
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
@@ -179,49 +166,46 @@ class ExchangeController extends ComController {
             $result = $ReplyCode;
             goto response;
         }
-
-        if($Type > 3){
-            $EmailType      =   new  \EmailType();
-            $PB_Email       =   new  \PB_Email();
-            //设置用户
-            $PBS_UsrDataOprater->reset();
-            $PBS_UsrDataOpraterReturn->reset();
-            $PBS_UsrDataOprater->setPlayerid($playerid);
-            //发送者
-            $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
-            //发送类型
-            $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
-            $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
-            $PB_Email->setType($EmailType::EmailType_Sys);
-            //标题
-            $PB_Email->setTitle('兑换通知');
-            $PB_Email->setSender('系统');
-            //正文
+        //设置用户
+        $PBS_UsrDataOprater->reset();
+        $PBS_UsrDataOpraterReturn->reset();
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        //发送者
+        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        //发送类型
+        $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
+        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+        $PB_Email->setType($EmailType::EmailType_Sys);
+        //标题
+        $PB_Email->setTitle('兑换通知');
+        $PB_Email->setSender('系统');
+        //正文
+        if($Type <= 3){
+            $PB_Email->setData('恭喜您成兑换'.$catGoodsAll['Name'].'。');
+        }else{
+            $msgArr[2001] = '兑换成功，该物品需要进行人审核，请留意邮件审核状态。';
             $PB_Email->setData('您兑换的'.$catGoodsAll['Name'].',需要进行审核，审核结果已邮件的形式发送到您的邮箱，请留意邮箱信息。');
-            $PBS_UsrDataOprater->setSendEmail($PB_Email);
-            $UsrDataString = $PBS_UsrDataOprater->serializeToString();
-            //发送请求
-            $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
-            if($Respond  == 504){
-                $result = 3003;
-                goto response;
-            }
-            if(strlen($Respond)==0){
-                $result = 3004;
-                goto response;
-            }
-            //接受回应
-            $PBS_UsrDataOpraterReturn->parseFromString($Respond);
-            $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-            //判断结果
-            if($ReplyCode != 1){
-                $result = $ReplyCode;
-                goto response;
-            }
         }
-
-
-
+        $PBS_UsrDataOprater->setSendEmail($PB_Email);
+        $UsrDataString = $PBS_UsrDataOprater->serializeToString();
+        //发送请求
+        $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
+        if($Respond  == 504){
+            $result = 3003;
+            goto response;
+        }
+        if(strlen($Respond)==0){
+            $result = 3004;
+            goto response;
+        }
+        //接受回应
+        $PBS_UsrDataOpraterReturn->parseFromString($Respond);
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+            goto response;
+        }
         //增加兑换记录
         $dataUsersExchangeLog = array(
             'Number'        =>      $Number,
@@ -238,21 +222,10 @@ class ExchangeController extends ComController {
         );
         $addUsersExchangeLog = M('jy_users_exchange_log')
                               ->add($dataUsersExchangeLog);
-        $addUsersCurrencyStream = 1;   //记录金币砖石流水
-        $addUsersGoodsStream    = 1;                              //记录道具流水
-        if(!empty($dataUsersCurrencyStream)){
-            $addUsersCurrencyStream = M('jy_users_currency_stream')
-                ->add($dataUsersCurrencyStream);
-        }
-        if(!empty($dataUsersGoodsStream)){
-            $addUsersGoodsStream   = M('jy_users_goods_stream')
-                ->add($dataUsersGoodsStream);
-        }
-        if(!$addUsersExchangeLog || !$addUsersCurrencyStream || !$addUsersGoodsStream){
+        if(!$addUsersExchangeLog){
             $result = 3006;
             goto response;
         }
-
         $info['Type'] =  $catGoodsAll['Type'];
         $info['Code'] =  $GoodsCode;
         $info['Number'] =  $Number*$GetNum;
@@ -263,8 +236,6 @@ class ExchangeController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
-            $this->response($response,'json');
-
-
+        $this->response($response,'json');
     }
 }

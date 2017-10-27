@@ -35,14 +35,11 @@ class ActiveLevelController extends ComController {
 
         //等级访问
         $HighestLevel = 99;
-
         $dataLevel = array();
-
         for($i = 1;$i<=$HighestLevel;$i++){
 
             $dataLevel[]['level'] = $i;
         }
-
         //查询数据
         $catDataField = array(
             'Version',
@@ -81,7 +78,6 @@ class ActiveLevelController extends ComController {
             }
             $dataLevel[$k]['data'] = $dataGameVersion;
         }
-
 
         $this->assign('erverDay',$erverDay);
         $this->assign('info',$dataLevel);

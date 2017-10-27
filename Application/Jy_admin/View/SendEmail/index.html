@@ -30,12 +30,30 @@
 <div class="pd-20">
 	<form action="" method="post" onsubmit="return false" class="form form-horizontal" id="form-SendEmail">
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>用户ID：</label>
+			<label class="form-label col-1"><span class="c-red">*</span>渠道：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" value="" placeholder="请输入用户ID"
-					   name="playerid" datatype="*6-16" nullmsg="用户ID">
+				<div style="width:150px;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel"  onchange="ChannelFun(this)" class="select">
+								<option value="1">个人</option>
+								<option value="2">全服</option>
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['account']}">{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+				</div>
 			</div>
-			<div class="col-1"></div><label class="form-label col-1">
+			<div class="col-1"></div>
+			<div id = "playerid">
+				<label class="form-label col-1 "><span class="c-red">*</span>用户ID：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="" placeholder="请输入用户ID"
+						   name="playerid"   nullmsg="用户ID">
+				</div>
+				<div class="col-1"></div>
+			</div>
+			<label class="form-label col-1">
 			<span class="c-red">*</span>邮件类型：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
@@ -49,21 +67,25 @@
 						</span>
 				</div>
 			</div>
-			<div class="col-1"></div>
-			<div class="TypeTow" style="display: none;">
-				<label class="form-label col-1 "><span class="c-red"></span>金币：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder="请输入数量"
-						   name="Gold" >
-				</div>
+				<input type="hidden" value="0" id="upid" name="upid" />
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red"></span>钻石：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder="请输入数量"
-						   name="Diamond"  nullmsg="">
-				</div>
+		</div>
+
+		<div class="row cl  TypeTow" style="display: none;">
+			<label class="form-label col-1 "><span class="c-red"></span>金币：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="请输入数量"
+					   name="Gold" >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red"></span>钻石：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="" placeholder="请输入数量"
+					   name="Diamond"  nullmsg="">
 			</div>
 		</div>
+
+
 		<div class="row cl TypeOne" style="display: none;">
 			<label class="form-label col-1"><span class="c-red">*</span>卡号：</label>
 			<div class="formControls col-4">
@@ -221,6 +243,18 @@
 
             });
 
+        }
+
+		//渠道
+
+		function  ChannelFun(my) {
+			var  playerid = document.getElementById('playerid');
+			var  MyValue  = my.value;
+			if(MyValue == 1){
+                playerid.style.display = "block";
+			}else{
+                playerid.style.display = "none";
+			}
         }
 
 

@@ -32,7 +32,7 @@ class MallExchangeController extends ComController {
         if(empty($GoodsAll)){
             //查询本公司的渠道商品
             $Mychannel = M('jy_channel_info')
-                ->where('isown = 2 and platform = '.$platform)
+                ->where('isown = 2')
                 ->limit(($page-1)*$num,$num)
                         ->field('adminUserID')
                         ->find();

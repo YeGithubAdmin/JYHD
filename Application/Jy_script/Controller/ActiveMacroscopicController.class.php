@@ -7,9 +7,10 @@ use Think\Controller;
 class ActiveMacroscopicController extends Controller {
     public function index(){
         $time       =  strtotime(date('Y-m-d',time()));
+        //$time       =  strtotime('2017-10-24');
         $DaySecond  = 24*60*60;
-        $StartTime  =  date('Y-m-d H:i:s',$time);
-        $EndTime    =  date('Y-m-d H:i:s',$time+$DaySecond);
+        $StartTime  =  date('Y-m-d H:i:s',$time-$DaySecond);
+        $EndTime    =  date('Y-m-d H:i:s',$time);
         //渠道
         $ChannelData = M('jy_admin_users')
                        ->where('channel = 2 and  isdel = 1')
@@ -23,16 +24,21 @@ class ActiveMacroscopicController extends Controller {
         //账号活跃
         $AccountField = array(
             'login_channel as GroupChannel',
-            'count(distinct playerid) as Account',
-            'game_ver as VerSion',
+            'count(distinct a.playerid) as Account',
+            'count(distinct b.playerid) as PayNum',
+            'a.game_ver as VerSion',
         );
-        $Account = M('game_login_action')
-                   ->where('login_channel in('.$Channel.') 
-                            and  login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and 
-                            login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+        $Account = M('game_login_action as a')
+                   ->join('jy_users_order_info as b on  a.playerid = b.playerid  and b.`Status` = 2  
+                   and b.CallbackTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
+                   and b.CallbackTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")','left')
+                   ->where('a.login_channel in('.$Channel.') 
+                            and  a.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and 
+                            a.login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                    ->field($AccountField)
                     ->group('GroupChannel,VerSion')
                    ->select();
+
         //设备活跃 安卓
 
         $EquipmentAndroidField = array(
@@ -62,6 +68,39 @@ class ActiveMacroscopicController extends Controller {
             ->field($EquipmentIosField)
             ->group('GroupChannel,VerSion')
             ->select();
+
+        //周活跃
+        $WAUStartTime  = date('Y-m-d H:i:s',$time-$DaySecond*7);
+        $WAUField = array(
+            'login_channel as GroupChannel',
+            'count(distinct playerid) as WAU',
+            'game_ver as VerSion',
+        );
+
+
+        $WAU = M('game_login_action')
+            ->where('login_channel in('.$Channel.') 
+                            and  login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and 
+                            login_time >= str_to_date("'.$WAUStartTime.'","%Y-%m-%d %H:%i:%s")')
+            ->field($WAUField)
+            ->group('GroupChannel,VerSion')
+            ->select();
+
+
+        //月活跃
+        $MAUStartTime  = date('Y-m-d H:i:s',$time-$DaySecond*30);
+        $MAUField = array(
+            'login_channel as GroupChannel',
+            'count(distinct playerid) as MAU',
+            'game_ver as VerSion',
+        );
+        $MAU = M('game_login_action')
+            ->where('login_channel in('.$Channel.') 
+                            and  login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and 
+                            login_time >= str_to_date("'.$MAUStartTime.'","%Y-%m-%d %H:%i:%s")')
+            ->field($MAUField)
+            ->group('GroupChannel,VerSion')
+            ->select();
         //用户游戏数
         $UserGameField = array(
             'login_channel  as GroupChannel',
@@ -78,6 +117,8 @@ class ActiveMacroscopicController extends Controller {
          $BankruptcyNumField = array(
              'login_channel  as GroupChannel',
              'count(distinct playerid) as BankruptcyNum',
+             'count(playerid) as BankruptcyTotal',
+             'GROUP_CONCAT(distinct playerid)',
              'game_ver as VerSion'
          );
         $BankruptcyNum   = M('game_broke_action')
@@ -92,11 +133,15 @@ class ActiveMacroscopicController extends Controller {
         $EquipmentAndroidSort       =   array();
         $EquipmentIosSort           =   array();
         $BankruptcyNumSort          =   array();
+        $WAUSort                    =   array();
+        $MAUSort                    =   array();
         foreach ($Account as $k=>$v) $AccountSort[$v['GroupChannel'].$v['VerSion']] = $v;
         foreach ($UserGame as $k=>$v) $UserGameSort[$v['GroupChannel'].$v['VerSion']] = $v;
         foreach ($EquipmentAndroid as $k=>$v) $EquipmentAndroidSort[$v['GroupChannel'].$v['VerSion']] = $v;
         foreach ($EquipmentIos as $k=>$v) $EquipmentIosSort[$v['GroupChannel'].$v['VerSion']] = $v;
         foreach ($BankruptcyNum as $k=>$v) $BankruptcyNumSort[$v['GroupChannel'].$v['VerSion']] = $v;
+        foreach ($WAU as $k=>$v) $WAUSort[$v['GroupChannel'].$v['VerSion']] = $v;
+        foreach ($MAU as $k=>$v) $MAUSort[$v['GroupChannel'].$v['VerSion']] = $v;
         //版本号信息
         $GameVersion = M('jy_game_version')
                        ->field('Version')
@@ -118,8 +163,10 @@ class ActiveMacroscopicController extends Controller {
             $info[$k]['Channel'] = $v['Channel'];
             if($AccountSort[$v['account']]){
                 $info[$k]['Account'] = $AccountSort[$v['account']]['Account'];
+                $info[$k]['PayNum'] = $AccountSort[$v['account']]['PayNum'];
             }else{
-                $info[$k]['Account']  = 0;
+                $info[$k]['Account']  =  0;
+                $info[$k]['PayNum']   =  0;
             }
             //用户游戏数
             if($UserGameSort[$v['account']]){
@@ -142,14 +189,28 @@ class ActiveMacroscopicController extends Controller {
             //破产
             if($BankruptcyNumSort[$v['account']]){
                 $info[$k]['BankruptcyNum'] = $BankruptcyNumSort[$v['account']]['BankruptcyNum'];
+                $info[$k]['BankruptcyTotal'] = $BankruptcyNumSort[$v['account']]['BankruptcyTotal'];
             }else{
                 $info[$k]['BankruptcyNum'] = 0;
+                $info[$k]['BankruptcyTotal'] = 0;
             }
+            //周活跃
+            if($WAUSort[$v['account']]){
+                $info[$k]['WAU'] = $WAUSort[$v['account']]['WAU'];
+            }else{
+                $info[$k]['WAU'] = 0;
+            }
+            //月活跃
+            if($MAUSort[$v['account']]){
+                $info[$k]['MAU'] = $MAUSort[$v['account']]['MAU'];
+            }else{
+                $info[$k]['MAU'] = 0;
+            }
+            $info[$k]['DateTime'] = $StartTime;
         }
         $db = M('jy_statistics_activem_acroscopic');
         $addData = $db
                   ->addAll($info);
-        echo $db->getLastSql();
         exit('结束');
 
      }

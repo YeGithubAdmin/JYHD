@@ -97,13 +97,10 @@ class AdminUsersController extends ComController {
     //修改
     public function edit(){
         $obj = new \Common\Lib\func();
-
         $id = I('param.id',0,'intval');
         if($id<=0){
             $obj->showmessage('非法操作');
         }
-
-
         $userInfo = $this->userInfo;
         $lowerAdmingroup  = $this->lowerAdmingroup;
         $adminGroup = M('jy_admin_group')
@@ -121,12 +118,15 @@ class AdminUsersController extends ComController {
             $adminGroupInfo =  $adminGroup;
         }
 
+
+
+
+
         //管理员信息
         $adminUsersInfo = M('jy_admin_users')
                           ->where('id = '.$id.' and isdel = 1')
                           ->field('id,name,passwd,account,admingroup,islock,remark')
                           ->find();
-
 
         if(IS_POST){
             //数据
@@ -152,7 +152,7 @@ class AdminUsersController extends ComController {
             }
         }
         //当前管理员的用户组
-        $this->assign('jy_adminGroupInfo',$adminGroupInfo);
+        $this->assign('adminGroupInfo',$adminGroupInfo);
         $this->assign('info',$adminUsersInfo);
         $this->display('edit');
     }
@@ -161,7 +161,6 @@ class AdminUsersController extends ComController {
     //删除
     public function  del(){
         $id = I('param.id',0,'intval');
-
         if($id == 0){
             echo  0;
         }else{

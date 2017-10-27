@@ -34,6 +34,34 @@
         class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="pd-20">
+    <form action="" method="get">
+
+        <div class="text-c">
+            创建时间：<input type="text"
+                        onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-{%d}\'}'})</literal>"
+                        id="datemin" value="{$search['datemin']}" name="datemin"
+                        class="input-text Wdate" style="width: 120px;"> - <input
+                type="text"
+                onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-{%d}'})</literal>"
+                id="datemax" value="{$search['datemax']}" name="datemax"
+                class="input-text Wdate" style="width: 120px;">
+
+                <span style="width: 150px" class="select-box">
+
+                <select size="1" name="channel" class="select">
+                        <option value="">渠道</option>
+                        <volist name = "ChannelList" id = "val">
+                              <option  value="{$val['account']}"   <if condition  = "$search['channel'] eq $val['account']"> selected = "true"</if>   >{$val['name']}</option>
+                        </volist>
+				</select>
+				</span>
+
+
+            <button type="submit" class="btn btn-success" id="" name="">
+                <i class="Hui-iconfont">&#xe665;</i> 搜索
+            </button>
+        </div>
+    </form>
 
 
     <table
@@ -50,10 +78,10 @@
         <tbody>
             <volist name="info" id="val">
              <tr class="text-c">
-                <td>{$val['name']}</td>
-                <td>{$val['SuccessNum']}</td>
-                <td>{$val['TotalNum']}</td>
-                <td>{$val['SuccessRate']*100}%</td>
+                <td>{$val['Name']}</td>
+                 <td> <if condition = "$val['Success']">{$val['Success']}<else/>0</if> </td>
+                <td><if condition = "$val['Total']">{$val['Total']}<else/>0</if></td>
+                <td>{$val['Success']*100/$val['Total']|round = "2"}%</td>
              </tr>
             </volist>
 

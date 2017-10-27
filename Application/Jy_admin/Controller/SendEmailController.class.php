@@ -4,6 +4,9 @@
 **/
 namespace Jy_admin\Controller;
 use Protos\OptSrc;
+use Protos\PBS_SendEmail2All;
+use Protos\PBS_SendEmail2AllReturn;
+use Protos\PBS_SetServerStateReturn;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
@@ -16,10 +19,28 @@ class SendEmailController extends ComController {
             'Name',
             'Code',
         );
+
+
+
         $catPropList = M('jy_prop_list')
                        ->field($catPropListField)
                        ->select();
 
+
+        //渠道
+        $catChannelField = array(
+            'name',
+            'account',
+            'id',
+        );
+        $catChannel = M('jy_admin_users')
+            ->where('channel = 2 and isdel = 1')
+            ->field($catChannelField)
+            ->select();
+
+
+
+        $this->assign('catChannel',$catChannel);
         $this->assign('PropList',$catPropList);
         $this->display('index');
     }
@@ -82,15 +103,21 @@ class SendEmailController extends ComController {
 
             //是否添加道具
             $IsGive  = I('param.IsGive',1,'intval');
+            //渠道或个人
 
-            if($playerid<=0){
+            $Channel  = I('param.Channel','','trim');
+
+            if($playerid<=0 && $Channel == 1){
                 $result =  4002;
                 goto  response;
             }
+
             //已入protobuf类型
             $obj->ProtobufObj(array(
                 'Protos/PBS_UsrDataOprater.php',
                 'Protos/PBS_UsrDataOpraterReturn.php',
+                'Protos/PBS_SendEmail2All.php',
+                'Protos/PBS_SendEmail2AllReturn.php',
                 'Protos/OptSrc.php',
                 'Protos/UsrDataOpt.php',
                 'OptReason.php',
@@ -100,25 +127,28 @@ class SendEmailController extends ComController {
                 'PB_Item.php',
             ));
             //实话对象
-            $UsrData        =   new  PBS_UsrDataOprater();
-            $UsrDataReturn  =   new  PBS_UsrDataOpraterReturn();
-            $OptSrc         =   new  OptSrc();
-            $UsrDataOpt     =   new  UsrDataOpt();
+
+            if($Channel == 1){
+                $UsrData        =   new  PBS_UsrDataOprater();
+                $UsrDataReturn  =   new  PBS_UsrDataOpraterReturn();
+                $OptReason      =   new  \OptReason();
+                $OptSrc         =   new  OptSrc();
+                $UsrDataOpt     =   new  UsrDataOpt();
+                //设置用户
+                $UsrData->setPlayerid($playerid);
+                //发送者
+                $UsrData->setSrc($OptSrc::Src_PHP);
+                //发送类型
+                $UsrData->setOpt($UsrDataOpt::Modify_Player);
+                $UsrData->setReason($OptReason::gm_tool);
+
+            }
             $EmailType      =   new  \EmailType();
             $PB_Email       =   new  \PB_Email();
-            $OptReason      =   new  \OptReason();
-            //设置用户
-            $UsrData->setPlayerid($playerid);
-            //发送者
-            $UsrData->setSrc($OptSrc::Src_PHP);
-            //发送类型
-            $UsrData->setOpt($UsrDataOpt::Modify_Player);
-
             //标题
             $PB_Email->setTitle($Title);
             //正文
             $PB_Email->setData($Content);
-            $UsrData->setReason($OptReason::gm_tool);
             if($Type == 1){
                 //卡密邮件
                 $PB_Email->setType($EmailType::EmailType_Card);
@@ -126,7 +156,7 @@ class SendEmailController extends ComController {
                 $PB_Email->setCardPwd($CardPwd);
             }elseif ($Type == 2){
                 //金币砖石道具
-                $PB_Email->setType($EmailType::EmailType_Sys);
+
                 if($Diamond != 0){
                     $PB_Email->setDiamond($Diamond);
                 }
@@ -147,27 +177,58 @@ class SendEmailController extends ComController {
                 //普通文字邮件
                 $PB_Email->setType($EmailType::EmailType_Sys);
             }
-            //添加邮件
-            $UsrData->setSendEmail($PB_Email);
-            //序列化
-            $UsrDataString = $UsrData->serializeToString();
-            //发送请求
-            $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
-            if($Respond  == 504){
-                $result = 3003;
-                goto response;
+            if($Channel == 1 ){
+                //添加邮件
+                $UsrData->setSendEmail($PB_Email);
+                //序列化
+                $UsrDataString = $UsrData->serializeToString();
+                //发送请求
+                $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
+                if($Respond  == 504){
+                    $result = 3003;
+                    goto response;
+                }
+                if(strlen($Respond)==0){
+                    $result = 3004;
+                    goto response;
+                }
+                //接受回应
+                $UsrDataReturn->parseFromString($Respond);
+                $ReplyCode = $UsrDataReturn->getCode();
+                //判断结果
+                if($ReplyCode != 1){
+                    $result = $ReplyCode;
+                    goto response;
+                }
             }
-            if(strlen($Respond)==0){
-                $result = 3004;
-                goto response;
-            }
-            //接受回应
-            $UsrDataReturn->parseFromString($Respond);
-            $ReplyCode = $UsrDataReturn->getCode();
-            //判断结果
-            if($ReplyCode != 1){
-                $result = $ReplyCode;
-                goto response;
+
+            if($Channel == 2 || $Channel != 1){
+
+                $PBS_SendEmail2All          =   new  PBS_SendEmail2All();
+                $PBS_SendEmail2AllReturn    =   new  PBS_SendEmail2AllReturn();
+                if($Channel == 2 ){
+                    $PBS_SendEmail2All->setChannel('global');
+                }else{
+                    $PBS_SendEmail2All->setChannel($Channel);
+                }
+                $PBS_SendEmail2All->setSendEmail($PB_Email);
+                $String = $PBS_SendEmail2All->serializeToString();
+                $Respond =  $obj->ProtobufSend('protos.PBS_SendEmail2All',$String,1);
+                if(strlen($Respond)==0){
+                    $result = 3003;
+                    goto response;
+                }
+                if($Respond  == 504){
+                    $result = 3004;
+                    goto response;
+                }
+                $PBS_SendEmail2AllReturn->parseFromString($Respond);
+                $ReplyCode =   $PBS_SendEmail2AllReturn->getCode();
+                if($ReplyCode != 1){
+                    $result = $ReplyCode;
+                    goto response;
+                }
+
             }
             response:
             $response =array(

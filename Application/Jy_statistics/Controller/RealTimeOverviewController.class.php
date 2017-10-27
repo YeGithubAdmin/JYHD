@@ -7,15 +7,25 @@ use Think\Controller;
 defined('THINK_PATH') or exit('Access Defined!');
 class RealTimeOverviewController extends ComController {
     public function index(){
-         $time    = time();
          $time    = date('Y-m-d');
          $time    = strtotime($time);
          $DayTime = 24*60*60;
+         $channel = I('param.channel','','trim');
 
          //搜索类型 1-注册 2-活跃
-        $Type = I('param.Type',1,'intval');
+         $Type = I('param.Type',1,'intval');
 
+        //渠道
 
+        $catChannelField = array(
+            'name',
+            'account',
+            'id',
+        );
+        $catChannel = M('jy_admin_users')
+            ->where('channel = 2 and isdel= 1')
+            ->field($catChannelField)
+            ->select();
         //当天时间
          $SameDayStartTime   =  date('Y-m-d H:i:s',$time);
          $SameDayEndTime     =  date('Y-m-d H:i:s',$time+$DayTime);
@@ -36,26 +46,34 @@ class RealTimeOverviewController extends ComController {
          $info = array();
 
          if($Type == 1){
+
+
+             $where = '';
+             if($channel !=  ''){
+                 $where = 'reg_channel  =  "'.$channel.'"   and  ';
+             }
+
+
              //注册
              $SameDayregisterField  = array(
-                 'date_format(regtime,"%H") as i',
+                 'date_format(regtime,"%k") as i',
                  'count(playerid) as UserNum',
              );
              //当天
              $SameDayregister  = M('game_account')
-                 ->where('regtime < "'.$SameDayEndTime.'"  and  "'.$SameDayStartTime.'" <= regtime')
+                 ->where($where.'regtime < "'.$SameDayEndTime.'"  and  "'.$SameDayStartTime.'" <= regtime')
                  ->field($SameDayregisterField)
                  ->group('i')
                  ->select();
              //一天
              $OneDayregister  = M('game_account')
-                 ->where('regtime < "'.$OneDayEndTime.'"  and  "'.$OneDayStartTime.'" <= regtime')
+                 ->where($where.'regtime < "'.$OneDayEndTime.'"  and  "'.$OneDayStartTime.'" <= regtime')
                  ->field($SameDayregisterField)
                  ->group('i')
                  ->select();
              //七天前
              $SevenDayregister  = M('game_account')
-                 ->where('regtime < "'.$SevenDayEndTime.'"  and  "'.$SevenDayStartTime.'" <= regtime')
+                 ->where($where.'regtime < "'.$SevenDayEndTime.'"  and  "'.$SevenDayStartTime.'" <= regtime')
                  ->field($SameDayregisterField)
                  ->group('i')
                  ->select();
@@ -97,27 +115,38 @@ class RealTimeOverviewController extends ComController {
          }elseif ($Type == 2){
             //活跃
              $SameDayActiveField  = array(
-                 'FROM_UNIXTIME(login_time,"%H") as i',
+                 'date_format(regtime,"%k") as i',
                  'count(distinct playerid) as UserNum',
              );
 
+             $where = '';
+             if($channel !=  ''){
+                 $where = 'login_channel  =  "'.$channel.'"   and  ';
+             }
+
+
              //当天
              $SameDayactive  = M('game_login_action')
-                 ->where('login_time <    str_to_date("'.$SameDayEndTime.'","%Y-%m-%d %H:%i:%d")  and    str_to_date("'.$SameDayStartTime.'","%Y-%m-%d %H:%i:%d")  <= login_time')
+                 ->where( $where.' login_time <  str_to_date("'.$SameDayEndTime.'","%Y-%m-%d %H:%i:%s")  
+                                and login_time  >= str_to_date("'.$SameDayStartTime.'","%Y-%m-%d %H:%i:%s")  ')
                  ->field($SameDayActiveField)
                  ->group('i')
                  ->select();
+
+
+
 
              //一天
              $OneDayActive  = M('game_login_action')
-                 ->where('login_time <  str_to_date("'.$OneDayEndTime.'","%Y-%m-%d %H:%i:%d")  and   str_to_date("'.$OneDayStartTime.'","%Y-%m-%d %H:%i:%d") <= login_time')
+                 ->where($where.'login_time <  str_to_date("'.$OneDayEndTime.'","%Y-%m-%d %H:%i:%s")  and   str_to_date("'.$OneDayStartTime.'","%Y-%m-%d %H:%i:%s") <= login_time')
                  ->field($SameDayActiveField)
                  ->group('i')
                  ->select();
 
+
              //七天前
              $SevenDayActive  = M('game_login_action')
-                 ->where('login_time <   str_to_date("'.$SevenDayEndTime.'","%Y-%m-%d %H:%i:%d")   and   str_to_date("'.$SevenDayStartTime.'","%Y-%m-%d %H:%i:%d")  <= login_time')
+                 ->where($where.'login_time <   str_to_date("'.$SevenDayEndTime.'","%Y-%m-%d %H:%i:%s")   and   str_to_date("'.$SevenDayStartTime.'","%Y-%m-%d %H:%i:%s")  <= login_time')
                  ->field($SameDayActiveField)
                  ->group('i')
                  ->select();
@@ -158,6 +187,8 @@ class RealTimeOverviewController extends ComController {
 
          }
          $this->assign('erverDay',json_encode($erverDay));
+         $this->assign('channel',$channel);
+         $this->assign('catChannel',$catChannel);
          $this->assign('Type',$Type);
          $this->assign('info',$info);
          $this->display();

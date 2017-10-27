@@ -104,7 +104,7 @@
 							<option <if condition = "$search['SortName']  eq 'c.item6_num'">selected</if>  value="c.item6_num">渔劵</option>
 							<option <if condition = "$search['SortName']  eq  'c.glevel'">selected</if>  value="c.glevel">等级</option>
 							<option <if condition = "$search['SortName']  eq  'c.glevel'">selected</if>  value="b.vip">vip</option>
-							<option <if condition = "$search['SortName']  eq  'c.glevel'">selected</if>  value="WhenLong">在线时长</option>
+							<option <if condition = "$search['SortName']  eq  'onlineTime'">selected</if>  value="onlineTime">在线时长</option>
 					</select>
 				</span>
 
@@ -136,6 +136,40 @@
 					<!--导出excel</a>-->
 			<!--</span>-->
 		<!--</div>-->
+		<table
+				class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>游戏数值</td>
+			</tr>
+			<tr class="text-c">
+				<th width="60">铜核弹产出</th>
+				<th width="60">银核弹产出</th>
+				<th width="60">金核弹产出</th>
+				<th width="60">系统抽水</th>
+				<th width="60">付费金币鱼券</th>
+				<th width="60">新手礼包渔劵</th>
+				<th width="60">抽奖鱼券</th>
+				<th width="60">签到鱼券</th>
+				<th width="60">兑换鱼券</th>
+				<th width="60">总付费金币</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr class="text-c">
+				<td>{$GameValue['bomb_cu_history_pool']}</td>
+				<td>{$GameValue['bomb_ag_history_pool']}</td>
+				<td>{$GameValue['bomb_au_history_pool']}</td>
+				<td>{$GameValue['pump_gold_history_pool']}</td>
+				<td>{$GameValue['fish_card_history_pool']}</td>
+				<td>{$GameValue['NovicePack']}</td>
+				<td>{$GameValue['Luckdraw']}</td>
+				<td>{$GameValue['SignData']}</td>
+				<td>{$GameValue['Exchange']}</td>
+				<td>{$GameValue['PayGold']}</td>
+			</tr>
+			</tbody>
+		</table>
 		<table
 				class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
@@ -225,7 +259,7 @@
 						<td><if condition = "$val['item5_num']">{$val['item5_num']}<else/>0</if></td>
 						<td><if condition = "$val['item6_num']">{$val['item6_num']}<else/>0</if></td>
 						<td>{$val['deposit']}</td>
-						<td>{$val['WhenLong']|round}</td>
+						<td>{$val['onlineTime']/60|round}</td>
 
 						<td>
 							<switch name = "val['account_type']" >
@@ -285,7 +319,7 @@
 						<td>{$val['logout_time']}</td>
 						<td>{$val['reg_channel']}</td>
 						<td>{$val['login_channel']}</td>
-						<td>{$val['phone_os_ver']}</td>
+						<td>{$val['game_ver']}</td>
 						<td>
 							<a title="编辑" href="javascript:;"  onclick="CatInfo('查看详细信息','/Jy_statistics/UsersInfo/info/playerid/{$val['playerid']}')"  class="ml-5" style="text-decoration: none">
 								<i class="Hui-iconfont"></i>

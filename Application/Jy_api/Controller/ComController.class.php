@@ -118,11 +118,9 @@ class ComController extends RestController{
             $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
             $obj->record_log($dir,'access_'.date('Ymd').'.log',$DataInfo);
         }
-
         $DataInfo = json_decode($DataInfo,true);
 
         //aes验证
-
 
         //过滤参数
         foreach ($DataInfo as $k=>$v){
@@ -165,7 +163,7 @@ class ComController extends RestController{
         //渠道号信息验证
         $ChannelInfo = M('jy_admin_users as a')
                        ->join('jy_channel_info as b on a.id = b.adminUserID')
-                       ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2 and b.platform = '.$platform)
+                       ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2')
                        ->field('a.account,a.id,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum')
                        ->find();
         if(empty($ChannelInfo)){

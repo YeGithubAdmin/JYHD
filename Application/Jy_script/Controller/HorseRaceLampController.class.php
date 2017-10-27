@@ -22,6 +22,11 @@ class HorseRaceLampController extends Controller {
                              ->field($CatHorseRaceLampField)
                              ->order('Sort desc')
                              ->select();
+
+
+
+
+
         if(empty($CatHorseRaceLamp)){
                exit();
         }
@@ -39,6 +44,8 @@ class HorseRaceLampController extends Controller {
             $PhpBroadcast->setData($v['Content']);
             if($v['Channel']){
                 $SysBroadcast->setChannel($v['Channel']);
+            }else{
+                $SysBroadcast->setChannel('global');
             }
             $SysBroadcast->setPhpBc($PhpBroadcast);
             $String = $SysBroadcast->serializeToString();
@@ -54,12 +61,12 @@ class HorseRaceLampController extends Controller {
             if($ReplyCode != 1){
                exit();
             }else{
-               if($v['Status']  == 1){
-                   $dataHorseRaceLamp = array(
-                       'Status'=>2,
-                   );
-                    $upHorseRaceLamp = M('jy_horse_race_lamp')->where('Id = '.$v['Id'])->save($dataHorseRaceLamp);
-               }
+//               if($v['Status']  == 1){
+//                   $dataHorseRaceLamp = array(
+//                       'Status'=>2,
+//                   );
+//                    $upHorseRaceLamp = M('jy_horse_race_lamp')->where('Id = '.$v['Id'])->save($dataHorseRaceLamp);
+//               }
             }
         }
     }

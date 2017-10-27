@@ -7,10 +7,11 @@ use Think\Controller;
 defined('THINK_PATH') or exit('Access Defined!');
 class RealTimeRevenueController extends ComController {
     public function index(){
-         $time    = time();
          $time    = date('Y-m-d');
          $time    = strtotime($time);
          $DayTime = 24*60*60;
+
+         $channel = I('param.channel','','trim');
          //搜索类型 1-实时收入 2-付费用户 3-次数
          $Type = I('param.Type',1,'intval');
         //当天时间
@@ -31,44 +32,64 @@ class RealTimeRevenueController extends ComController {
          $info = array();
         if($Type == 1){
             $dataFiled = array(
-                'date_format(CallbackTime,"%H") as i',
+                'date_format(CallbackTime,"%k") as i',
                 'sum(Price) as Num',
             );
             $info['Title'] = "实时收入";
             $info['Symbol'] = "￥";
         }elseif ($Type == 2){
             $dataFiled = array(
-                'date_format(CallbackTime,"%H") as i',
+                'date_format(CallbackTime,"%k") as i',
                 'count(distinct playerid) Num',
             );
             $info['Title'] = "付费用户";
             $info['Symbol'] = "人";
         }elseif ($Type == 3){
             $dataFiled = array(
-                'date_format(CallbackTime,"%H") as i',
+                'date_format(CallbackTime,"%k") as i',
                 'count(Id) as Num',
             );
             $info['Title'] = "付费次数";
             $info['Symbol'] = "次";
         }
+        //渠道
+        $catChannelField = array(
+            'name',
+            'account',
+            'id',
+        );
+        $catChannel = M('jy_admin_users')
+            ->where('channel = 2 and isdel= 1')
+            ->field($catChannelField)
+            ->select();
+
+        $where = '';
+
+
+        if($channel != ''){
+            $where  =  '  PayChannel   = "'.$channel.'"  and ';
+        }
+
+
+
         //当天
         $SameUserOrderInfo = M('jy_users_order_info')
-                              ->where('Status = 2 and CallbackTime  < str_to_date("'.$SameDayEndTime.'","%Y-%m-%d %H:%i:%s")  
+                              ->where( $where.'Status = 2 and CallbackTime  < str_to_date("'.$SameDayEndTime.'","%Y-%m-%d %H:%i:%s")  
                                        and CallbackTime >= str_to_date("'.$SameDayStartTime.'","%Y-%m-%d %H:%i:%s")')
                               ->field($dataFiled)
                               ->group('i')
                               ->select();
          //一天前
         $OneUserOrderInfo = M('jy_users_order_info')
-            ->where(' Status = 2 and  CallbackTime  < str_to_date("'.$OneDayStartTime.'","%Y-%m-%d %H:%i:%s")  
-                                       and CallbackTime >= str_to_date("'.$OneDayEndTime.'","%Y-%m-%d %H:%i:%s")')
+            ->where( $where.' Status = 2 and  CallbackTime  < str_to_date("'.$OneDayEndTime.'","%Y-%m-%d %H:%i:%s")  
+                                       and CallbackTime >= str_to_date("'.$OneDayStartTime.'","%Y-%m-%d %H:%i:%s")')
             ->field($dataFiled)
             ->group('i')
             ->select();
         //七天前
         $SevenUserOrderInfo = M('jy_users_order_info')
-            ->where(' Status = 2 and  CallbackTime  < str_to_date("'.$SevenDayStartTime.'","%Y-%m-%d %H:%i:%s")  
-                                       and CallbackTime >= str_to_date("'.$SevenDayEndTime.'","%Y-%m-%d %H:%i:%s")')
+            ->where( $where.' Status = 2 and  CallbackTime  < str_to_date("'.$SevenDayEndTime.'","%Y-%m-%d %H:%i:%s")  
+                                       and CallbackTime >= str_to_date("'.$SevenDayStartTime.'","%Y-%m-%d %H:%i:%s")')
             ->field($dataFiled)
             ->group('i')
             ->select();
@@ -101,8 +122,10 @@ class RealTimeRevenueController extends ComController {
          $info['Same']   =   json_encode($dataSameUserOrderInfo);
          $info['One']    =   json_encode($dataOneUserOrderInfo);
          $info['Seven']  =   json_encode($dataSevenUserOrderInfo);
+        $this->assign('channel',$channel);
          $this->assign('erverDay',json_encode($erverDay));
          $this->assign('Type',$Type);
+         $this->assign('catChannel',$catChannel);
          $this->assign('info',$info);
          $this->display();
     }

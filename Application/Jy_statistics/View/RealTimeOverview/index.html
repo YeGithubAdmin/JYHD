@@ -39,13 +39,20 @@
         <input type="hidden" name="c" value="GoodsAll" />
         <input type="hidden" name="a" value="index" />
         <div class="text-c">
-
             <span style="width: 150px" class="select-box">
 					<select size="1" name="Type" class="select">
 						<option value="1"<if  condition= "$Type eq '1'">selected</if>>注册</option>
                         <option value="2"<if condition="$Type eq '2'" >selected</if>>活跃</option>
 					</select>
-				</span>
+			</span>
+            <span style="width: 150px" class="select-box">
+					<select size="1" name="channel" class="select">
+						<option value="">渠道</option>
+						<volist name = "catChannel" id = "val">
+							    <option value="{$val['account']}"  <if condition="$channel eq $val['account']" >selected</if>>{$val['name']}</option>
+						</volist>
+				</select>
+			</span>
             <button type="submit" class="btn btn-success" id="" name="">
                 <i class="Hui-iconfont">&#xe665;</i> 搜索
             </button>

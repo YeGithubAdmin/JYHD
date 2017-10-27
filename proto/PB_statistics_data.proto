@@ -3,7 +3,7 @@ import "PB_error_code.proto";
 
 message RPB_PlayerNumerical
 {
-	optional int64 gold_pay  			= 1;
+	optional int64 gold_pay  			= 1;	// 付费金币
 	optional int64 gold_newp_index  	= 2;
 	optional int64 diamond_day 			= 3;
 	optional int64 diamond_newp			= 4;
@@ -22,23 +22,24 @@ message RPB_GameNumerical
 	optional int64 positive_produce  			= 3;
 	optional int64 positive_pool 				= 4;
 	optional int64 negative_settlement_pool 	= 5;
+
 	optional int64 negative_consume 			= 6;
 	optional int64 negative_produce 			= 7;
-	optional int64 negative_pool 				= 8;
+	optional int64 negative_pool 				= 8;	// 逆周期池
 	
 	optional int64 bomb_gold_pool				= 9;
 	optional int64 bomb_cu_pool					= 10;
 	optional int64 bomb_ag_pool					= 11;
 	optional int64 bomb_au_pool					= 12;
-	optional int64 bomb_cu_history_pool			= 13;
-	optional int64 bomb_ag_history_pool			= 14;
-	optional int64 bomb_au_history_pool			= 15;
+	optional int64 bomb_cu_history_pool			= 13;	// 铜核弹产出
+	optional int64 bomb_ag_history_pool			= 14;	// 银核弹产出
+	optional int64 bomb_au_history_pool			= 15;	// 金核弹产出
 	
 	optional int64 fish_card_gold_pool			= 16;
 	optional int64 fish_card_pool				= 17;
-	optional int64 fish_card_history_pool		= 18;
+	optional int64 fish_card_history_pool		= 18;	// 鱼券产出
 	
-	optional int64 pump_gold_history_pool		= 19;
+	optional int64 pump_gold_history_pool		= 19;	// 系统抽水
 }
 
 message PBS_GameNumericalOpt

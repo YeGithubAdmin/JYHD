@@ -19,26 +19,18 @@ class MallGoodsListController extends ComController {
         $channelid      =       $this->channelid;
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
-
         $msgArr[4006]  = '类别缺失。';
         $msgArr[4007]  = '展示方式缺失。';
         $msgArr[4008]  = '用户信息缺失！。';
         $msgArr[5001]  = '渠道信息错误。';
-
-
         $result = 2001;
         $info   =  array();
-
-
         $CateGory       =       $DataInfo['CateGory'];  //类别 1-金币 2-砖石 3-道具
         $ShowType       =       $DataInfo['ShowType'];  //展示方式 1-商城
-
-
         if(!isset($CateGory)){
             $result = 4006;
             goto  response;
         }
-
         if(!isset($ShowType)){
             $result = 4007;
             goto  response;
@@ -50,7 +42,6 @@ class MallGoodsListController extends ComController {
             $result = 4008;
             goto response;
         }
-
         $GoodsAllField = array(
             'a.Id',
             'a.Name',
@@ -64,10 +55,8 @@ class MallGoodsListController extends ComController {
             'a.Proportion',
 
         );
-
         $GoodsAll  = M('jy_goods_all as a')
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
-
             ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and  a.ShowType = '.$ShowType.' and a.IsDel = 1')
             ->field($GoodsAllField)
             ->group('a.Id')
@@ -76,7 +65,7 @@ class MallGoodsListController extends ComController {
         if(empty($GoodsAll)){
             //查询本公司的渠道商品
             $Mychannel = M('jy_channel_info')
-                ->where('isown = 2 and platform = '.$platform)
+                ->where('isown = 2')
                         ->field('adminUserID')
                         ->find();
             if(empty($Mychannel['adminUserID'])){

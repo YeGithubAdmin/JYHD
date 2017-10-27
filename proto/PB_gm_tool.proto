@@ -2,6 +2,7 @@
 package protos;
 
 import "PB_base_data.proto";
+import "PB_statistics_data.proto";
 import "PB_error_code.proto";
 
 // 系统广播
@@ -50,4 +51,26 @@ message PBS_SetServerState
 message PBS_SetServerStateReturn
 {
 	required PB_ErrorCode code = 1;
+}
+
+// 获取游戏数值统计
+message PBS_GetGameNumerical
+{
+}
+
+message PBS_GetGameNumericalReturn
+{
+	required PB_ErrorCode code = 1;
+	optional RPB_GameNumerical data = 2; 
+}
+
+// 更改数值数据
+message PBS_gm_numerical_op
+{
+	message data {
+		required string key = 1; 		// bomb_cu_pool, bomb_ag_pool, bomb_au_pool, fish_card_pool
+		required int64 value = 2;
+	}
+	repeated data set_data = 1;
+	repeated data add_data = 2;
 }

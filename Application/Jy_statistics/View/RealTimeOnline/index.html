@@ -51,6 +51,14 @@
 
 					</select>
 				</span>
+            <span style="width:  6%" class="select-box">
+					<select size="1" name="Channel" class="select">
+							<option value="">注册渠道</option>
+							<volist name ="Channel" id = "val">
+								<option   <if condition = "$search['Channel']  eq $val['account']">selected</if>  value="{$val['account']}">{$val['name']}</option>
+							</volist>
+					</select>
+				</span>
             <button type="submit" class="btn btn-success" id="" name="">
                 <i class="Hui-iconfont">&#xe665;</i> 搜索
             </button>

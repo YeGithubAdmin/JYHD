@@ -47,6 +47,15 @@
                         <option value="3"<if condition="$Type eq '3'" >selected</if>>付费次数</option>
 					</select>
 				</span>
+
+            <span style="width: 150px" class="select-box">
+					<select size="1" name="channel" class="select">
+						<option value="">渠道</option>
+						<volist name = "catChannel" id = "val">
+							    <option value="{$val['account']}"  <if condition="$channel eq $val['account']" >selected</if>>{$val['name']}</option>
+						</volist>
+				</select>
+				</span>
             <button type="submit" class="btn btn-success" id="" name="">
                 <i class="Hui-iconfont">&#xe665;</i> 搜索
             </button>

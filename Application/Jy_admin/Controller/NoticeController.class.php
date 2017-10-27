@@ -34,7 +34,7 @@ class NoticeController extends ComController {
             'id',
         );
         $catChannel = M('jy_admin_users')
-                      ->where('channel = 2')
+                      ->where('channel = 2 and isdel= 1')
                       ->field($catChannelField)
                       ->select();
         $catGameNotice = array(
@@ -67,7 +67,7 @@ class NoticeController extends ComController {
             'id',
         );
         $catChannel = M('jy_admin_users')
-            ->where('channel = 2')
+            ->where('channel = 2 and isdel = 1')
             ->field($catChannelField)
             ->select();
         if(IS_POST){

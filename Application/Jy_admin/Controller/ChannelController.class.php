@@ -51,11 +51,10 @@ class ChannelController extends ComController {
             ->join('jy_channel_info as b')
             ->where($where)
             ->limit($page*$num,$num)
-            ->field('b.adminUserID,b.platform,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum,
+            ->field('b.adminUserID,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum,
                      b.CorporateName,b.CompanyPhone,b.contacts,b.ContactNumber,b.ContactMailbox
                      ,b.addName,b.addId,b.isown,a.islock,b.remark,b.mtime,a.account,a.name')
             ->select();
-
         $this->assign('page',$show);
         $this->assign('info',$info);
         $this->assign('userInfo',$userInfo);
@@ -75,7 +74,6 @@ class ChannelController extends ComController {
             ->select();
         if(IS_POST){
             $adminUserID                    =       I('param.adminUserID',0,'intval');             //管理员ID
-            $platform                       =       I('param.platform',1,'intval');                //平台
             $pattern                        =       I('param.pattern',1,'intval');                 //合作方式
             $DividedInto                    =       I('param.DividedInto','','trim');              //分成
             $RegisterNum                    =       I('param.RegisterNum','','trim');              //注册人数（结算率）
@@ -88,35 +86,29 @@ class ChannelController extends ComController {
             $ContactMailbox                 =       I('param.ContactMailbox','','trim');           //联系邮箱
             $remark                         =       I('param.remark','','trim');                   //备注信息
             $isown                          =       I('param.isown',1,'intval');                   //是否本公司渠道
-
-            $addName                        =       $userInfo['name'];                          //添加人名
-            $addId                          =       $userInfo['id'];                            //添加人ID
-
+            $addName                        =       $userInfo['name'];                             //添加人名
+            $addId                          =       $userInfo['id'];                               //添加人ID
             if($adminUserID <=0){
                 $obj->showmessage('非法操作');
             }
-
             //渠道信息
             $dataChannelInfo = array(
-                    'adminUserID'=> $adminUserID,
-                    'platform'=>$platform,
-                    'pattern'=>$pattern,
-                    'DividedInto'=>$DividedInto,
-                    'RegisterNum'=>$RegisterNum,
-                    'RechargeNum'=>$RechargeNum,
-                    'CorporateName'=>$CorporateName,
-                    'CompanyAddress'=>$CompanyAddress,
-                    'CompanyPhone'=>$CompanyPhone,
-                    'contacts'=>$contacts,
-                    'ContactNumber'=>$ContactNumber,
-                    'ContactMailbox'=>$ContactMailbox,
-                    'remark'=>$remark,
-                    'isown'=>$isown,
-                    'addName'=>$addName,
-                    'addId'=>$addId,
+                    'adminUserID'   =>  $adminUserID,
+                    'pattern'       =>  $pattern,
+                    'DividedInto'   =>  $DividedInto,
+                    'RegisterNum'   =>  $RegisterNum,
+                    'RechargeNum'   =>  $RechargeNum,
+                    'CorporateName' =>  $CorporateName,
+                    'CompanyAddress'=>  $CompanyAddress,
+                    'CompanyPhone'  =>  $CompanyPhone,
+                    'contacts'      =>  $contacts,
+                    'ContactNumber' =>  $ContactNumber,
+                    'ContactMailbox'=>  $ContactMailbox,
+                    'remark'        =>  $remark,
+                    'isown'         =>  $isown,
+                    'addName'       =>  $addName,
+                    'addId'         =>  $addId,
                 );
-
-
             $model = new Model();
             //开启事物
             $model->startTrans();
@@ -141,54 +133,12 @@ class ChannelController extends ComController {
                 $model->rollback();
                 $obj->showmessage('添加失败');
             }
-
         }
         $this->assign('adminUsers',$adminUsers);
         $this->display('add');
     }
     //修改
     public function  edit(){
-        //菜单
-        $obj = new \Common\Lib\func();
-        $id = I('param.id',0,'intval');
-        if($id == 0){
-            $obj->showmessage('非法操作');
-        }
-
-        $db = M('jy_system_menu');
-        $menuList = $db
-            ->where('upid = 0  and islock = 1')
-            ->field('id,upid,name')
-            ->select();
-
-        //菜单信息
-        $menuInfo = $db
-                    ->where('id = '.$id)
-                    ->field('id,upid,name,sort,icon,url,islock,remark,mtime')
-                    ->find();
-
-
-
-        if(IS_POST){
-            $dataMenu['icon'] = I('param.icon','','trim');
-            $dataMenu['sort'] = I('param.sort',0,'intval');
-            $dataMenu['remark'] = I('param.remark','','trim');
-            $dataMenu['url'] = I('param.url','','trim');
-            $dataMenu['name'] = I('param.name','','trim');
-            $dataMenu['upid'] = I('param.upid',0,'intval');
-            $dataMenu['islock'] = I('param.islock',1,'intval');
-            $upMenu = $db
-                ->where('id = '.$id)
-                ->save($dataMenu);
-            if($upMenu){
-                $obj->showmessage('修改成功','/yq_admin/menu/index');
-            }else{
-                $obj->showmessage('修改失败');
-            }
-        }
-
-        $this->assign('menu',$menuList);
-        $this->assign('info',$menuInfo);
         $this->display('edit');
     }
     //删除
@@ -228,7 +178,7 @@ class ChannelController extends ComController {
         $search['CateGory']        =      I('param.CateGory','','intval');      //类别
         $search['Type']            =      I('param.Type','','intval');        //类型
 
-        $catGoodsAllWhere   = 'IsDel = 1 and  Platform  in ('.$Platform.',1)';
+        $catGoodsAllWhere   = 'IsDel = 1';
         $ChannelGoodsWhere  = 'b.adminUserID = '.$id.'  and a.IsDel = 1';
 
         if ($search['ShowType'] != '' && $search['ShowType'] != 0 ) {
@@ -319,16 +269,12 @@ class ChannelController extends ComController {
         $id                         =  I('param.id',0,'intval');
         $Platform                   =  I('param.platform',0,'intval');
         $search['Type']             =      I('param.Type','','intval');        //类型
-
-
-
-        $catPayWhere   = 'IsDel = 1  and  Platform = '.$Platform;
+        $catPayWhere   = 'IsDel = 1';
         $ChannelPayWhere  = 'b.adminUserID = '.$id;
         if ($search['Type'] != '' && $search['Type'] != 0 ) {
             $catPayWhere  .= ' and `Type`=' . $search['Type'];
             $ChannelPayWhere .= ' and a.`Type`=' . $search['Type'];
         }
-
 
         //支付列表
         $catThirdpay = M('jy_thirdpay')
@@ -341,7 +287,6 @@ class ChannelController extends ComController {
                         ->where($ChannelPayWhere)
                         ->field('a.Id,a.PassAgeWay,a.Name')
                         ->select();
-
         $this->assign('adminUserID',$id);
         $this->assign('search',$search);
         $this->assign('catGoodsAll',$catThirdpay);

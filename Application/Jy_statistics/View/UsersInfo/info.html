@@ -100,12 +100,12 @@
 			<tr class="text-c">
 				<th  width="30">账号名</th>
 				<td width="30">{$catGameAccount['account_name']}</td>
-				<th width="15">密码</th>
-				<td width="15">{$catGameAccount['pwd']}</td>
 				<th width="40">最后离线时间</th>
 				<td width="40">{$catGameAccount['logout_time']}</td>
-
-
+				<th width="15">在线时长</th>
+				<td width="15">{$catGameAccount['online_time']/60|round}</td>
+				<th width="15" style="color: red;">地区（待完善）</th>
+				<td width="15"></td>
 			</tr>
 			<tr class="text-c" >
 				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 14>玩家信息</td>
@@ -119,18 +119,14 @@
 				<td width="40">
 					<switch name = "catGameAccount['sex']" >
 						<case value = "1">
-							男
-						</case>
-						<case value = "2">
-							女
+							捕鱼
 						</case>
 						<default/>
-						...
+						其他
 					</switch>
 				</td>
 				<th width="40">游戏状态</th>
 				<td width="40">
-
 					<switch name = "catGameAccount['status']" >
 						<case value = "1">
 							离线
@@ -142,18 +138,48 @@
 							游戏
 						</case>
 						<default/>
-						...
-					</switch></td>
+						离线
+					</switch>
+				</td>
 				<th width="40">服务器</th>
 				<td width="40">{$catGamePlayer['serverid']}</td>
 				<th width="40">游戏类型</th>
-				<td width="40">{$catGamePlayer['game_type']}</td>
+				<td width="40">
+					<switch name = "catGamePlayer['game_type']" >
+						<case value = "1">
+							离线
+						</case>
+						<case value = "2">
+							在线
+						</case>
+						<case value = "3">
+							游戏
+						</case>
+						<default/>
+						未知
+					</switch>
+				</td>
 			</tr>
 			<tr class="text-c">
 				<th  width="30">房间类型</th>
-				<td width="30">{$catGamePlayer['room_type']}</td>
-				<th width="15">场次类型</th>
-				<td width="15">{$catGamePlayer['level_type']}</td>
+				<td width="30">
+					<switch name = "catGamePlayer['room_type']" >
+						<case value = "1">
+							十炮场
+						</case>
+						<case value = "2">
+							百炮场
+						</case>
+						<case value = "3">
+							千炮场
+						</case>
+						<case value = "4">
+							万炮场
+						</case>
+						<default/>
+							离线
+					</switch>
+				</td>
 				<th width="40">房间id</th>
 				<td width="40">{$catGamePlayer['roomid']}</td>
 				<th width="40">游戏等级</th>
@@ -162,21 +188,24 @@
 				<td width="40">{$catGamePlayer['gexp']}</td>
 				<th width="40">炮等级</th>
 				<td width="40">{$catGamePlayer['gun_lv']}</td>
+				<th  width="30">签到天数</th>
+				<td width="30" colspan=2>{$catGamePlayer['sign_day']}</td>
 			</tr>
 			<tr class="text-c">
 				<th width="40">vip等级</th>
 				<td width="40">{$catGamePlayer['vip']}</td>
 				<th width="40">vip经验</th>
 				<td width="40">{$catGamePlayer['vip_exp']}</td>
-				<th  width="30">签到天数</th>
-				<td width="30">{$catGamePlayer['sign_day']}</td>
 				<th width="15">月卡</th>
 				<td width="15"><if condition = "$catGamePlayer['is_mc']">是<else/>否</if></td>
+				<th width="15">月卡结束时间</th>
+				<td width="15">
+					{$catGamePlayer['McOvertime']}
+				</td>
 				<th width="15">今日启动数</th>
 				<td width="15"> <if condition = "$catToDayGameLoginAction[0]['num']"> {$catToDayGameLoginAction[0]['num']|round = "2"}<else/>0</if></td>
 				<th width="15">昨日启动数</th>
 				<td width="15"> <if condition = "$catTowDayGameLoginAction[0]['num']"> {$catTowDayGameLoginAction[0]['num']|round = "2"}<else/>0</if></td>
-
 			</tr>
 			<tr class="text-c" >
 				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 14>资产</td>

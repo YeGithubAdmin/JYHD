@@ -36,29 +36,33 @@
 <div class="pd-20">
     <!--搜索 -->
     <form action="" method="get">
-        <input type="hidden" name="m" value="jy_admin" />
-        <input type="hidden" name="c" value="RegisterMacroscopic" />
-        <input type="hidden" name="a" value="index" />
         <div class="text-c">
-            创建时间： <input type="text"
-                         onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
-                         id="datemin" value="{$datemin}" name="datemin"
-                         class="input-text Wdate" style="width: 120px;">  <input
-                type="hidden"
-                onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
+            创建时间：<input type="text"
+                        onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-{%d}\'}'})</literal>"
+                        id="datemin" value="{$search['datemin']}" name="datemin"
+                        class="input-text Wdate" style="width: 120px;"> - <input
+                type="text"
+                onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-{%d}'})</literal>"
                 id="datemax" value="{$search['datemax']}" name="datemax"
                 class="input-text Wdate" style="width: 120px;">
+            <neq name = "userinfo['channel']" value="2">
+                <span style="width: 150px" class="select-box">
 
-            <span style="width: 150px"
-                  class="select-box"> <select size="1" name="day"
-                                              class="select">
-						<option value="7" <if  condition= "$day eq '7'">selected</if> >7天</option>
-						<option value="30" <if  condition= "$day eq '30'">selected</if> >30天</option>
-						<option value="60"<if  condition= "$day eq '60'">selected</if>>60天</option>
-
+                <select size="1" name="channel" class="select">
+                        <option value="">渠道</option>
+                        <volist name = "ChannelList" id = "val">
+                              <option  value="{$val['account']}"   <if condition  = "$search['channel'] eq $val['account']"> selected = "true"</if>   >{$val['name']}</option>
+                        </volist>
 				</select>
 				</span>
-
+            </neq>
+            <span style="width: 100px" class="select-box">
+                <select size="1" name="num" class="select">
+						<option  <eq name = "search['num']" value ="30">selected = "true"</eq> value="30">条数</option>
+                    <option <eq name = "search['num']" value ="60">selected = "true"</eq>  value="60">60</option>
+                    <option <eq name = "search['num']" value ="90">selected = "true"</eq>  value="90">90</option>
+				</select>
+				</span>
             <button type="submit" class="btn btn-success" id="" name="">
                 <i class="Hui-iconfont">&#xe665;</i> 搜索
             </button>
@@ -70,33 +74,30 @@
         <thead>
         <tr class="text-c">
             <th width="30">日期</th>
+            <th width="30">渠道</th>
             <th width="60">日收入</th>
             <th width="60">付费用户</th>
             <th width="60">付费次数</th>
-
-
             <th width="60">活跃付费渗透率</th>
             <th width="60">ARPPU</th>
             <th width="60">首付用户数</th>
             <th width="60">首付金额</th>
-
         </tr>
         </thead>
         <tbody>
-
             <volist name="info" id="val">
                 <tr class="text-c">
-            <td >{$val['DateTime']}</td>
+            <td >{$val['t']}</td>
+            <td >{$val['name']}</td>
             <td>{$val['TotalMoney']}</td>
-            <td>{$val['PayNum']}</td>
             <td>{$val['UserPayNum']}</td>
-            <td>{$val['ActiveRate']}</td>
-            <td>{$val['ARPPU']}</td>
-            <td>{$val['First']}</td>
+            <td>{$val['PayNum']}</td>
+            <td>{$val['UserPayNum']*100/$val['ActiveNum']|round = "2"}%</td>
+            <td>{$val['TotalMoney']/$val['UserPayNum']|round = "2"}</td>
+                    <td>{$val['First']}</td>
             <td>{$val['FirstMoney']}</td>
         </tr>
             </volist>
-
         </tbody>
     </table>
 </div>
