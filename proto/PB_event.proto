@@ -3,14 +3,11 @@ message CreateEvent
 {
 }
 
-message LoginEvent
-{
-	optional string name  = 1;
-}
-
 message LoginOkEvent
 {
-	optional int32 rmb  = 1;
+	optional int32 rmb  	= 1;
+	optional string name  	= 2;
+	optional string channel = 3;
 }
 
 message LogoutEvent
@@ -21,6 +18,8 @@ message LogoutEvent
 message BankruptcyEvent
 {
 	optional int64 playerid = 1;
+	optional string channel = 2;
+	optional string game_ver = 3;
 }
 
 // 金币更新
@@ -89,3 +88,15 @@ message RmbUpdate
 	required int32 rmb_incr = 1;
 	required int32 rmb_cur  = 2;
 }
+
+message KillFishAction
+{
+	message ActionInfo {
+		optional int32 fishid 	= 1;
+		optional bool  isboss 	= 2;
+		optional int32 gun_coin = 3;	// 炮倍率
+		optional int32 gold     = 4;	// 获得金币
+	}
+	repeated ActionInfo acts  = 1;
+}
+

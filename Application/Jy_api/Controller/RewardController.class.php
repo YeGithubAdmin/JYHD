@@ -64,9 +64,10 @@ class RewardController extends ComController {
         $activityInfo = M('jy_activity_father_list as a')
                         ->join('jy_activity_son_list as b on a.Id = b.FatherID')
                         ->field($activityInfoFile)
-                        ->where('b.Id = '.$activityID.' and  a.Channel = '.$ChannelID.'  and  a.AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  a.AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                        ->where('b.Id = '.$activityID.' and  a.Channel = '.$ChannelID.'  
+                                and  a.ShowStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  
+                                and  a.ShowEndTime    >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
                         ->find();
-
         if(empty($activityInfo)){
             $result  = 5002;
             goto response;
@@ -77,7 +78,8 @@ class RewardController extends ComController {
             'max(Price) as PriceMax',
         );
         $catUserOrder = M('jy_users_order_info')
-            ->where('playerid = '.$playerid. ' and CallbackTime  <= str_to_date("'.$activityInfo['AddUpEndTime'].'","%Y-%m-%d %H:%i:%s")  and CallbackTime >= str_to_date("'.$activityInfo['AddUpStartTime'].'","%Y-%m-%d %H:%i:%s")')
+            ->where('playerid = '.$playerid. ' and CallbackTime  <= str_to_date("'.$activityInfo['AddUpEndTime'].'","%Y-%m-%d %H:%i:%s") 
+                    and CallbackTime >= str_to_date("'.$activityInfo['AddUpStartTime'].'","%Y-%m-%d %H:%i:%s")')
             ->field($catUserOrderField)
             ->select();
         $newUserOder  =  array();
@@ -89,7 +91,11 @@ class RewardController extends ComController {
             'count(activityID) as num'
         );
         $TheawardLog = M('jy_users_activity_theaward_log')
-                       ->where(' Id = '.$activityID.' and playerid  =  '.$playerid.' and  Type = '.$activityInfo['Type'].'  and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") and  AddUpEndTime >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                       ->where(' activityID =  '.$activityID.' 
+                                and playerid  =  '.$playerid.' 
+                                and  Type = '.$activityInfo['Type'].'  
+                                and  DateTime  <= str_to_date("'.$activityInfo['AddUpEndTime'].'","%Y-%m-%d %H:%i:%s") 
+                                and  DateTime >= str_to_date("'.$activityInfo['AddUpStartTime'].'","%Y-%m-%d %H:%i:%s")')
                        ->field($TheawardLogFile)
                        ->select();
         $status         = 1;
@@ -97,7 +103,6 @@ class RewardController extends ComController {
         $PriceNum       = !empty($catUserOrder[0]['PriceNum'])? $catUserOrder[0]['PriceNum']:0;
         $PriceMax       = !empty($catUserOrder[0]['PriceMax'])? $catUserOrder[0]['PriceMax']:0;
         $Num            = empty($TheawardLog)? 0: $TheawardLog[0]['num'];
-
         switch ($activityInfo['Type']){
             //累计
             case 1:
@@ -134,6 +139,7 @@ class RewardController extends ComController {
                 }
             break;
         }
+
         //判断状态
         if($status == 1){
             $result  = 7002;
@@ -181,26 +187,14 @@ class RewardController extends ComController {
         $PBS_UsrDataOprater->setReason($OptReason::promotion_reward);
         $RPB_PlayerData  = new RPB_PlayerData();
         $num = $GoodsInfo['GetNum']*$activityInfo['Number'];
-        $dataUsersGoodsStream     = array();      //道具流水
-        $dataUsersCurrencyStream  = array();      //金币砖石流水
         switch ($GoodsInfo['Type']){
             //金币
             case 1:
                 $RPB_PlayerData->setGold($num);
-                $dataUsersCurrencyStream['playerid']       =   $playerid;
-                $dataUsersCurrencyStream['Type']           =   7;
-                $dataUsersCurrencyStream['CurrencyType']   =   1;
-                $dataUsersCurrencyStream['Income']         =   1;
-                $dataUsersCurrencyStream['Number']         =  $num;
             break;
             //砖石
             case 2:
                 $RPB_PlayerData->setDiamond($num);
-                $dataUsersCurrencyStream['playerid']       =   $playerid;
-                $dataUsersCurrencyStream['Type']           =   7;
-                $dataUsersCurrencyStream['CurrencyType']   =   2;
-                $dataUsersCurrencyStream['Income']         =   1;
-                $dataUsersCurrencyStream['Number']         =  $num;
             break;
             //道具
             case 3:
@@ -208,12 +202,6 @@ class RewardController extends ComController {
                 $PB_Item->setId($GoodsInfo['Code']);
                 $PB_Item->setNum($num);
                 $PBS_UsrDataOprater->appendItemOpt($PB_Item);
-                $dataUsersGoodsStream['playerid']      =       $playerid;
-                $dataUsersGoodsStream['Code']          =       $GoodsInfo['Code'];
-                $dataUsersGoodsStream['Type']          =       7;
-                $dataUsersGoodsStream['Income']        =       1;
-                $dataUsersGoodsStream['Number']        =       $num;
-
                 break;
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
@@ -250,23 +238,11 @@ class RewardController extends ComController {
             'AddUpStartTime'=>$activityInfo['AddUpStartTime'],
             'AddUpEndTime'=>$activityInfo['AddUpEndTime'],
         );
-
         $addUsersActivityTheawardLog = M('jy_users_activity_theaward_log')->add($dataUsersActivityTheawardLog);
-        $addUsersCurrencyStream = 1;   //记录金币砖石流水
-        $addUsersGoodsStream    = 1;   //记录道具流水
-        if(!empty($dataUsersCurrencyStream)){
-            $addUsersCurrencyStream = M('jy_users_currency_stream')
-                ->add($dataUsersCurrencyStream);
-        }
-        if(!empty($dataUsersGoodsStream)){
-            $addUsersGoodsStream   = M('jy_users_goods_stream')
-                ->add($dataUsersGoodsStream);
-        }
-        if(!$addUsersActivityTheawardLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
+        if(!$addUsersActivityTheawardLog){
            $result = 3002;
            goto  response;
         }
-
         $info = array(
             'Number'=>$num,
             'Type'=>$GoodsInfo['Type'],

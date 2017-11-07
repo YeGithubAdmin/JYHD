@@ -31,7 +31,7 @@
 
 	<form action="" method="post" class="form form-horizontal" id="form-vipInfo-add">
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>图片标识：</label>
+			<label class="form-label col-1"><span class="c-red"></span>图片标识：</label>
 			<div class="formControls col-1">
 				<input type="text"  class="input-text"   value="{$info['ImgCode']}" placeholder="请输入图片标识"
 					   name="ImgCode" >
@@ -101,7 +101,7 @@
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "Type"   onchange="TypeFun(this)"  nullmsg="" >
+							<select  class="select" name = "Type"     nullmsg="" >
 								 <option value="1"  <eq name="info['Type']" value = "1">selected="selected"</eq> >金币</option>
 								 <option value="2"  <eq name="info['Type']" value = "2">selected="selected"</eq> >钻石</option>
 								 <option value="3"  <eq name="info['Type']" value = "3">selected="selected"</eq>>道具</option>
@@ -117,10 +117,7 @@
 				<input type="text"   class="input-text"  value="{$info['FaceValue']}" placeholder="请输入面值"
 					   name="FaceValue"  nullmsg="">
 			</div>
-			<div class="formControls col-1" id ="Code"   <neq name="info['Type']" value = "3">style="display:none;"</neq>   >
-				<input type="text" class="input-text"  value="{$info['Code']}" placeholder="请输入商品标识"
-					   name="Code" nullmsg="">
-			</div>
+
 			<div class="formControls col-1 "  id = "Hidden"  <in name="info['Type']" value="3,4,5">style="display:none;"</in> >
 				<input type="text"  class="input-text"  style="display:none;" value="" placeholder="请输入面值"
 					   nullmsg="">
@@ -135,9 +132,9 @@
 		        		<span class="select-box">
 							<select  class="select" name = "ShowType"  nullmsg="" >
 								 <option value="1"  <eq name="info['ShowType']" value = "1">selected="selected"</eq> >商城</option>
-								 <option value="2"  <eq name="info['ShowType']" value = "2">selected="selected"</eq> >首冲礼包</option>
+								 <option value="2"  <eq name="info['ShowType']" value = "2">selected="selected"</eq> >新手礼包</option>
 								 <option value="3"  <eq name="info['ShowType']" value = "3">selected="selected"</eq> >月卡</option>
-								 <option value="5"  <eq name="info['ShowType']" value = "5">selected="selected"</eq> >新手礼包</option>
+								 <option value="5"  <eq name="info['ShowType']" value = "5">selected="selected"</eq> >启航礼包</option>
 								 <option value="4"  <eq name="info['ShowType']" value = "4">selected="selected"</eq> >兑换商城</option>
 								 <option value="0"  <eq name="info['ShowType']" value = "0">selected="selected"</eq> >其他</option>
                             </select>
@@ -207,7 +204,7 @@
 				</div>
 			</div>
 			<div class="formControls col-1">
-				<input type="text"  class="input-text" <eq name="info['LimitShop']" value = "1">style="display: none;"</eq>  id="LimitShopNum" value="{$info['LimitShopNum']}" placeholder="请输入数量"
+				<input type="text"  class="input-text"   <in name="info['LimitShop']" value = "1,5">style="display: none;"</in>  id="LimitShopNum" value="{$info['LimitShopNum']}" placeholder="请输入数量"
 					   name="LimitShopNum" >
 			</div>
 
@@ -261,7 +258,21 @@
 			</div>
 		</div>
 		<div class="row cl">
-
+			<label class="form-label col-1"><span class="c-red"></span>苹果商店编码：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="{$info['IosCode']}" placeholder="苹果商店编码"
+					   name="IosCode"  nullmsg="获得数量不能为空">
+			</div>
+			<label class="form-label col-2"><span class="c-red">*</span>商品标识：</label>
+			<div class="formControls col-1"     >
+			<input type="text" class="input-text"  datatype="*1-20" value="{$info['Code']}" placeholder="请输入商品标识"
+				   name="Code" nullmsg="">
+			</div>
+			<label class="form-label col-2"><span class="c-red"></span>原价：</label>
+			<div class="formControls col-1"  >
+				<input type="text" class="input-text"  value="{$info['OriginalPrice']}"   placeholder="请输入原价"
+					   name="OriginalPrice" nullmsg="">
+			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-1"><span class="c-red">*</span>是否赠送：</label>
@@ -325,6 +336,10 @@
 					<input type="text"  class="input-text GetNum"   value="{$info['GiveInfo'][0]['GetNum']}" placeholder="请输入倍数"
 						   name="GiveInfo[0][GetNum]"  nullmsg="充值额度不能为空">
 				</div>
+			<div class="formControls col-1">
+				<input type="text"  class="input-text GoodName"   value="{$info['GiveInfo'][0]['Name']}" placeholder="请输入名称"
+					   name="GiveInfo[0][Name]"  nullmsg="充值额度不能为空">
+			</div>
 			</div>
 		</div>
 		<div id = "child">
@@ -337,7 +352,7 @@
 								<span class="select-box">
 									<select  class="select GoodsType"  name = "GiveInfo[{$k}][Type]"  onchange="selectGoodsFun(this)" nullmsg="" >
 										 <option value="0">请选择类型</option>
-										<option <eq name = "v['Type']"   value ="1">selected="selected"</eq> value="1">金币</option>
+										<option  <eq name = "v['Type']"   value ="1">selected="selected"</eq> value="1">金币</option>
 										<option  <eq name = "v['Type']"  value ="2">selected="selected"</eq> value="2">砖石</option>
 										<option  <eq name = "v['Type']"  value ="3">selected="selected"</eq> value="2">道具</option>
 										<option  <eq name = "v['Type']"  value ="0">selected="selected"</eq> value="2">其它</option>
@@ -364,6 +379,10 @@
 								<input type="text"  class="input-text GetNum"   value="{$v['GetNum']}" placeholder="请输入数量"
 									   name="GiveInfo[{$k}][GetNum]"  nullmsg="充值额度不能为空">
 							</div>
+								<div class="formControls col-1">
+									<input type="text"  class="input-text GoodName"   value="{$v['Name']}" placeholder="请输入名称"
+										   name="GiveInfo[{$k}][Name]"  nullmsg="充值额度不能为空">
+								</div>
 						</div>
 					</if>
 				</volist>
@@ -491,45 +510,17 @@
             }
         }
 
-        //类型
-        function TypeFun(my) {
-            var Index 		= my.selectedIndex;         				//索引
-            var Value 		= my.options[Index].value;   				//选择中值
-            var FaceValue	= document.getElementById('FaceValue');		//发行数量
-            var Code		= document.getElementById('Code');			//
-            var Hidden		= document.getElementById('Hidden');
-            if(Value == 4 || Value == 5){
-                FaceValue.style.display = "block";
-                Code.style.display = "none";
-                Hidden.style.display = "none";
-            }else if(Value == 3){
-                Code.style.display = "block";
-                Hidden.style.display = "none";
-                FaceValue.style.display = "none";
-            }
-            else{
-                FaceValue.style.display = "none";
-                Code.style.display = "none";
-                Hidden.style.display = "block";
-            }
-
-        }
-
-
-
         //赠送
         function GiveInfoFun(my) {
             var Index 		= my.selectedIndex;         						//索引
             var Value 		= my.options[Index].value;   						//选择中值
             var operation	= document.getElementById('operation');				//操作
             var GiveInfo	= document.getElementsByClassName('GiveInfo');		//赠送
-
             if(Value == 1 ){
                 operation.style.display = "none";
                 for(i = 0 ;i<GiveInfo.length;i++){
                     GiveInfo[i].style.display = "none";
                 }
-
             }else{
                 operation.style.display = "block";
                 for(i = 0 ;i<GiveInfo.length;i++){
@@ -544,20 +535,18 @@
             var  GiveInfo = document.getElementsByClassName('GiveInfo');
             var  del      = document.getElementById('del');
             child.innerHTML +=  parent.innerHTML;
-
             if(GiveInfo.length == 2){
                 del.style.display = "block";
             }
-            var Id 			= document.getElementsByClassName('Id');
+            var Id 			    = document.getElementsByClassName('Id');
             var GetNum 			= document.getElementsByClassName('GetNum');
-            var GoodsType 			= document.getElementsByClassName('GoodsType');
-            var Length			=  Id.length;
+            var GoodsType 		= document.getElementsByClassName('GoodsType');
+            var GoodName		= document.getElementsByClassName('GoodName');
+            var Length			= Id.length;
             GoodsType[Length-1].setAttribute('name','GiveInfo['+Length+'][Type]');
             GetNum[Length-1].setAttribute('name','GiveInfo['+Length+'][GetNum]');
+            GoodName[Length-1].setAttribute('name','GiveInfo['+Length+'][Name]');
             Id[Length-1].setAttribute('name','GiveInfo['+Length+'][Id]');
-            console.log(Length);
-
-
         }
         //赠送 减少
         function GiveInfoDel() {

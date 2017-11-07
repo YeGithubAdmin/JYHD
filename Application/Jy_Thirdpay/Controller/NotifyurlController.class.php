@@ -15,13 +15,13 @@ class NotifyurlController extends Controller {
     public function index(){
         include IAPPPAY.'base.php';
         $ObjFun   = new \Common\Lib\func();
-      //  $dataThirdpay =  file_get_contents('php://input');
-        $dataThirdpay =  $_POST;
+
+       $dataThirdpay =  $_POST;
 
         if(!is_array($dataThirdpay)){
             $dataThirdpay = json_decode($dataThirdpay,'true');
         }
-
+        //测试
         if(C('ACCESS_lOGS')){
             $dir = C('YQ_ROOT').'Log/pay/'.date('Y').'/'.date('m').'/'.date('d').'/';
             $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',json_encode($dataThirdpay));
@@ -51,11 +51,17 @@ class NotifyurlController extends Controller {
             goto  failed;
         }
         $transdata= $dataThirdpay['transdata'];
+
         if(stripos("%22",$transdata)){ //判断接收到的数据是否做过 Urldecode处理，如果没有处理则对数据进行Urldecode处理
             $dataThirdpay= array_map ('urldecode',$dataThirdpay);
         }
         $respData    = 'transdata='.$dataThirdpay['transdata'].'&sign='.$dataThirdpay['sign'].'&signtype='.$dataThirdpay['signtype'];//把数据组装成验签函数要求的参数格式
-        $OrderInfo      = json_decode($dataThirdpay['transdata'],true);
+
+        if(!is_array($dataThirdpay['transdata'])){
+            $dataThirdpay['transdata'] = json_decode($dataThirdpay['transdata'],true);
+        }
+        $OrderInfo      = $dataThirdpay['transdata'];
+
         if(empty($OrderInfo)){
             $result = 4002;
             goto failed;
@@ -73,7 +79,6 @@ class NotifyurlController extends Controller {
         $GoosID         =  $appuserid[1];
         //用户ID
         $playerid       =  $appuserid[0];
-
         //实例化数据
         $model = new Model();
         //查询订单信息
@@ -91,7 +96,6 @@ class NotifyurlController extends Controller {
                      ->where('playerid  = '.$playerid.'  and  PlatformOrder = "'.$OrderID.'"')
                      ->field($CatUsersOrderInfoField)
                      ->find();
-
         if($CatUsersOrderInfo['Status'] == 2){
             goto success;
         }
@@ -149,31 +153,6 @@ class NotifyurlController extends Controller {
             $result = 5003;
             goto OrderSave;
         }
-        //金币 砖石
-        $dataUsersCurrencyStream = array();
-        foreach ($GoodsInfo as $k=>$v){
-            if($v['Type'] == 1 || $v['Type'] == 2){
-                $dataUsersCurrencyStream[$k]['playerid']      =   $playerid;
-                $dataUsersCurrencyStream[$k]['Type']          =   2;
-                $dataUsersCurrencyStream[$k]['CurrencyType']  =   $v['Type'];
-                $dataUsersCurrencyStream[$k]['Income']        =   1;
-                $dataUsersCurrencyStream[$k]['Number']        =   $v['Number']*$v['GetNum'];
-
-            }
-        }
-        $dataUsersCurrencyStream = array_values($dataUsersCurrencyStream);
-        $DatausersGoodsStream = array();
-        //道具
-        foreach ($GoodsInfo as $k=>$v){
-            if($v['Type'] == 3){
-                $DatausersGoodsStream[$k]['playerid'] =      $playerid;
-                $DatausersGoodsStream[$k]['Code']     =      $v['GoodsCode'];
-                $DatausersGoodsStream[$k]['Type']     =      2;
-                $DatausersGoodsStream[$k]['Income']   =      1;
-                $DatausersGoodsStream[$k]['Number']   =      $v['Number']*$v['GetNum'];
-            }
-        }
-        $DatausersGoodsStream = array_values($DatausersGoodsStream);
         /**
          * 服务器查询
          * statr
@@ -296,6 +275,11 @@ class NotifyurlController extends Controller {
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
                     }
+                    if($v['IsGive'] = 1){
+                        $dataLogUsersShop['Number'] = $v['GetNum'];
+                        $dataLogUsersShop['Type']   = $v['Type'];
+                        $dataLogUsersShop['Code']   = $v['GoodsCode'];
+                    }
                     switch ($v['Type']){
                         //金币
                         case  1:
@@ -327,7 +311,6 @@ class NotifyurlController extends Controller {
                             $PB_Item->setNum($num);
                             $PB_Item->setId($v['GoodsCode']);
                             $PB_ResourceChange->appendItems($PB_Item);
-
                             break;
                     }
                 }
@@ -385,28 +368,17 @@ class NotifyurlController extends Controller {
             //开启事物
             $model->startTrans();
             //月卡 首冲
-            $addUsersPackageShopLog = 1;
-            $addUsersGoodsStream    = 1;
-            $addUsersCurrencyStream = 1;
-            $addUsersCardReceiveLog  = 1;
-            if($CatUsersOrderInfo['Form'] == 1 || $CatUsersOrderInfo['Form'] == 2){
-                $dataUsersPackageShopLog = array(
-                    'playerid'=>$CatUsersOrderInfo['playerid'],
-                    'Type'=>$CatUsersOrderInfo['Form'],
-                );
-                $addUsersPackageShopLog = $model
-                    ->table('jy_users_package_shop_log')
-                    ->add($dataUsersPackageShopLog);
-
-            }
-            //金币砖石
-            if(!empty($dataUsersCurrencyStream)){
-                $addUsersCurrencyStream  =   $model->table('jy_users_currency_stream')->addAll($dataUsersCurrencyStream);
-            }
-            //道具
-            if(!empty($DatausersGoodsStream)){
-                $addUsersGoodsStream = $model->table('jy_users_goods_stream')->addAll($DatausersGoodsStream);
-            }
+//            $addUsersPackageShopLog = 1;
+//            if($CatUsersOrderInfo['Form'] == 1 || $CatUsersOrderInfo['Form'] == 2){
+//                $dataUsersPackageShopLog = array(
+//                    'playerid'=>$CatUsersOrderInfo['playerid'],
+//                    'Type'=>$CatUsersOrderInfo['Form'],
+//                );
+//                $addUsersPackageShopLog = $model
+//                    ->table('jy_users_package_shop_log')
+//                    ->add($dataUsersPackageShopLog);
+//
+//            }
             //修改订单
             $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
             $dataUsersOrderInfo['PayType']       = $paytype;
@@ -416,8 +388,14 @@ class NotifyurlController extends Controller {
                 ->table('jy_users_order_info')
                 ->where('playerid  = '.$playerid.'  and    PlatformOrder = "'.$OrderID.'"')
                 ->save($dataUsersOrderInfo);
-
-            if($addUsersPackageShopLog && $addUsersGoodsStream && $addUsersCurrencyStream && $UpUsersOrderInfo){
+            //添加购买物品记录
+            $dataLogUsersShop['playerid'] = $playerid;
+            $dataLogUsersShop['GoodsID'] = $GoosID;
+            $dataLogUsersShop['Price'] = $money;
+            $dataLogUsersShop['Form'] = $CatUsersOrderInfo['Form'];
+            $addLogUsersShop  = M('log_users_shop_0')->add($dataLogUsersShop);
+            echo M('log_users_shop_0')->getLastSql();
+            if($addLogUsersShop && $UpUsersOrderInfo){
                 $model->commit();
                 goto  success;
             }else{
@@ -430,13 +408,8 @@ class NotifyurlController extends Controller {
             goto OrderSave;
         }
         success:
-        $response = array(
-            'result' => $result,
-            'msg' => $msgArr[$result],
-            'data' => array(),
-        );
-        echo json_encode($response);
-            exit();
+        echo 'success'."\n";
+        exit();
         failed:
         $dataApiVisitLog = array(
             'Name'=>'支付订单',
@@ -446,17 +419,21 @@ class NotifyurlController extends Controller {
             'TimeOut'=>'',
             'AccessIP'=>$_SERVER['REMOTE_ADDR'],
         );
+
+
+
+
         $addApiVisitLog = M('jy_api_visit_log')
             ->add($dataApiVisitLog);
-            echo 'failed'."\n";
-            exit();
+
+        echo 'failed'."\n";
+        exit();
         OrderSave:
         $dataUsersOrderInfo = array();   //订单数据
         $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
         $dataUsersOrderInfo['PayType']       = $paytype;
         $dataUsersOrderInfo['MessAge']       = '状态码：'.$result.'说明：'.$msgArr[$result].';';
         $dataUsersOrderInfo['Status']        = 4;
-
         $UpUsersOrderInfo = $model
                             ->table('jy_users_order_info')
                             ->where('playerid  = '.$playerid.'  and    PlatformOrder = "'.$OrderID.'"')

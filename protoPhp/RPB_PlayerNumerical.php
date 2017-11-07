@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2017-10-25 14:57:37
+ * Auto generated from PB_statistics_data.proto at 2017-10-30 16:45:18
  */
 
 namespace {
@@ -20,6 +20,7 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     const ITEM_DAY = 8;
     const GOLD_NEWP = 9;
     const LICENCE = 10;
+    const PLAYERID = 11;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -73,6 +74,11 @@ class RPB_PlayerNumerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_BOOL,
         ),
+        self::PLAYERID => array(
+            'name' => 'playerid',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -100,6 +106,7 @@ class RPB_PlayerNumerical extends \ProtobufMessage
         $this->values[self::ITEM_DAY] = null;
         $this->values[self::GOLD_NEWP] = null;
         $this->values[self::LICENCE] = null;
+        $this->values[self::PLAYERID] = null;
     }
 
     /**
@@ -340,6 +347,29 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     {
         $value = $this->get(self::LICENCE);
         return $value === null ? (boolean)$value : $value;
+    }
+
+    /**
+     * Sets value of 'playerid' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPlayerid($value)
+    {
+        return $this->set(self::PLAYERID, $value);
+    }
+
+    /**
+     * Returns value of 'playerid' property
+     *
+     * @return integer
+     */
+    public function getPlayerid()
+    {
+        $value = $this->get(self::PLAYERID);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

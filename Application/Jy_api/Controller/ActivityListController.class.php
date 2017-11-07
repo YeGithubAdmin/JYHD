@@ -53,19 +53,19 @@ class ActivityListController extends ComController {
                             ->order('b.Schedule asc')
                             ->where('a.Channel = '.$ChannelID.' and  a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
-
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
         $catUserOrderField = array(
             'count(b.Id) as Id',
             'sum(b.Price) as PriceNum',
             'max(b.Price) as PriceMax',
             'a.Type',
-            'GROUP_CONCAT(b.Price)',
             'a.AddUpEndTime',
             'a.AddUpStartTime'
         );
         $catUserOrder = M('jy_activity_father_list as a')
-                        ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime  and  b.CallbackTime >= a.AddUpStartTime and b.Status = 2','left')
+                        ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime 
+                                and  b.CallbackTime >= a.AddUpStartTime
+                                and b.Status = 2','left')
                         ->where(' a.Channel = '.$ChannelID.' and  b.playerid = '.$playerid)
                         ->group('a.Type')
                         ->field($catUserOrderField)
@@ -76,16 +76,16 @@ class ActivityListController extends ComController {
         }
         //查询领奖记录
         $catUsersActivityTheawardFile = array(
-                                        'activityID',
-                                        'activityID as ID',
-                                        'Type',
-                                        'count(activityID) as num'
-                                             );
-
-        $catUsersActivityTheawardLog = M('jy_users_activity_theaward_log')
-                                        ->where('playerid = '.$playerid.'  and  AddUpStartTime  <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and AddUpEndTime  >= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")')
+                                            'a.activityID',
+                                            'a.activityID as ID',
+                                            'a.Type',
+                                            'count(a.activityID) as num'
+                                        );
+        $catUsersActivityTheawardLog = M('jy_users_activity_theaward_log as a ')
+                                        ->join('jy_activity_father_list as b')
+                                        ->where('a.playerid = '.$playerid.'  and  a.Type = b.Type  and a.DateTime  <= b.AddUpEndTime  and   a.DateTime >= a.AddUpStartTime ')
                                         ->field($catUsersActivityTheawardFile)
-                                        ->group('ID')
+                                        ->group('a.activityID')
                                         ->select();
         $UsersTheawardLog = array();
         foreach ($catUsersActivityTheawardLog as $key=>$val){
@@ -96,14 +96,13 @@ class ActivityListController extends ComController {
                    unset($activityFatherList[$k]);
             }
         }
-
         // 1-不可领  2-可领  3-已领取
         $NewactivityFatherList = array();
         foreach ($activityFatherList as $k=>$v){
             $dataInfo  = array();
             $status = 1;          //状态
             $PriceNum   =   empty($newUserOder[$v['Type']]['PriceNum']) ? 0:$newUserOder[$v['Type']]['PriceNum'];        //充值数
-            $PriceNum   = round($PriceNum);
+            $PriceNum   =   round($PriceNum);
             $PriceMax   =   empty($newUserOder[$v['Type']]['PriceMax']) ? 0:$newUserOder[$v['Type']]['PriceMax'];        //充值最大数
             $Cumulative =   $UsersTheawardLog[$v['activityID']];
             $SureNum    =   0;    //领取次数
@@ -119,7 +118,6 @@ class ActivityListController extends ComController {
                       }elseif($v['Schedule'] > $PriceNum){
                           $status = 1;
                       }elseif($v['Schedule'] <= $PriceNum && empty($Cumulative)){
-
                           $status = 2;
                       }
                   }
@@ -193,17 +191,15 @@ class ActivityListController extends ComController {
             );
             $NewactivityFatherList[$v['Type']]['Son'][]                 =     $dataInfo;
             $NewactivityFatherList[$v['Type']]['Type']                  =     $v['Type']  ;
-            $NewactivityFatherList[$v['Type']]['AddUpStartTime']       =     $AddUpStartTime  ;
+            $NewactivityFatherList[$v['Type']]['AddUpStartTime']        =     $AddUpStartTime  ;
             $NewactivityFatherList[$v['Type']]['AddUpEndTime']          =     $AddUpEndTime;
             $NewactivityFatherList[$v['Type']]['Title']                 =     $v['Title']  ;
             $NewactivityFatherList[$v['Type']]['Describe']              =     $v['Describe']  ;
         }
-
         //组装数组
         foreach ($NewactivityFatherList as $k=>$v){
                 $info[] =  $v;
         }
-
         response:
             $response = array(
                 'result' => $result,
@@ -211,6 +207,7 @@ class ActivityListController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+
 
             $this->response($response,'json');
 

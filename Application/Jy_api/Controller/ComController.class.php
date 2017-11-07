@@ -91,6 +91,9 @@ class ComController extends RestController{
 
 
 
+
+
+
         $tagKey = '/Jy_api/'.CONTROLLER_NAME.'/'.ACTION_NAME;
 
         //判断请求方式
@@ -160,12 +163,19 @@ class ComController extends RestController{
             $result  =  6002;
             goto end;
         }
+        if($platform == 1){
+            define('SERVER_PROTO_IOS', 'http://172.18.238.60');
+
+        }
+
+
         //渠道号信息验证
         $ChannelInfo = M('jy_admin_users as a')
                        ->join('jy_channel_info as b on a.id = b.adminUserID')
                        ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2')
                        ->field('a.account,a.id,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum')
                        ->find();
+
         if(empty($ChannelInfo)){
             $result  =  6003;
             goto end;

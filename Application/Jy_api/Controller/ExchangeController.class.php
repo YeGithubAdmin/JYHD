@@ -27,9 +27,7 @@ class ExchangeController extends ComController {
         $result = 2001;
         $info   =  array();
 
-
         $msgArr[2001] = '兑换成功，已发放到邮件';
-
         $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
         $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
         $msgArr[3004] = "与游戏服务器断开，请稍后再试！";

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_game_config.proto at 2017-10-25 14:57:36
+ * Auto generated from PB_game_config.proto at 2017-10-30 16:45:18
  */
 
 namespace {

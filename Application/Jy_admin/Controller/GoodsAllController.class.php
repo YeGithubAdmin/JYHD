@@ -61,6 +61,7 @@ class GoodsAllController extends ComController {
             'ShowType',
             'DateTime',
             'UpTime',
+            'OriginalPrice',
         );
         $catVipInfo = M('jy_goods_all')
             ->where($where)
@@ -113,7 +114,13 @@ class GoodsAllController extends ComController {
             $IsGive                      =           I('param.IsGive',1,'intval');                      //是否赠送 1-否 2-是
             $Proportion                  =           I('param.Proportion',0,'intval');                  //首冲比例
             $ImgCode                     =           I('param.ImgCode','','trim');                      //图片标识
-            $FaceValue                    =           I('param.FaceValue','','trim');                      //话费卡面值
+            $IosCode                     =           I('param.IosCode',0,'intval');                     //Ios 标识
+            $FaceValue                   =           I('param.FaceValue','','trim');                    //话费卡面值
+            $OriginalPrice               =           I('param.OriginalPrice','','trim');                //话费卡面值
+
+
+
+
             //发行量
             if($IssueType == 1){
                 $IssueNum = 0;
@@ -144,6 +151,7 @@ class GoodsAllController extends ComController {
                 'CateGory'          =>       $CateGory,
                 'GetNum'            =>       $GetNum,
                 'GiveInfo'          =>       $GiveInfo,
+                'IosCode'           =>       $IosCode,
                 'IsGroom'           =>       $IsGroom,
                 'Status'            =>       $Status,
                 'TheShelvesTime'    =>       $TheShelvesTime,
@@ -162,6 +170,7 @@ class GoodsAllController extends ComController {
                 'Proportion'        =>       $Proportion,
                 'ImgCode'           =>       $ImgCode,
                 'FaceValue'         =>       $FaceValue,
+                'OriginalPrice'     =>       $OriginalPrice,
             );
             //添加
             $addGoodsAll = M('jy_goods_all')
@@ -191,7 +200,7 @@ class GoodsAllController extends ComController {
         //商品信息
         $catGoodsAllInfo = M('jy_goods_all')
                             ->where('Id = '.$Id.' and IsDel = 1')
-                            ->field('Id,Code,Name,CurrencyType,CurrencyNum,IssueNum,IssueType,Type,CateGory,GiveInfo,IsGroom,Status,TheShelvesTime,Platform
+                            ->field('Id,Code,Name,IosCode,OriginalPrice,CurrencyType,CurrencyNum,IssueNum,IssueType,Type,CateGory,GiveInfo,IsGroom,Status,TheShelvesTime,Platform
                             ,LimitShop,LimitShopNum,ExchangeType,FaceValue,ShowType,ExchangeNum,ImgCode,Describe,Proportion,Push,Broadcast,Rmark,GetNum,LimitLevel,LimitVip')
                             ->find();
         if(empty($catGoodsAllInfo['GiveInfo'])){
@@ -228,8 +237,13 @@ class GoodsAllController extends ComController {
             $LimitVip                    =           I('param.LimitVip',0,'intval');                    //会员等级限制 0-不限制
             $IsGive                      =           I('param.IsGive',1,'intval');                      //是否赠送 1-否 2-是
             $Proportion                  =           I('param.Proportion',0,'intval');                  //首冲比例
+            $IosCode                     =           I('param.IosCode',0,'intval');                     //IOS标识
             $ImgCode                     =           I('param.ImgCode','','trim');                      //图片标识
             $FaceValue                   =           I('param.FaceValue','','trim');                     //话费卡面值
+            $OriginalPrice               =           I('param.OriginalPrice','','trim');                 //原价
+
+
+
             //发行量
             if($IssueType == 1){
                 $IssueNum = 0;
@@ -240,7 +254,7 @@ class GoodsAllController extends ComController {
             }
             //限兑
             if($ExchangeType == 1){
-                $LimitShopNum = 0;
+                $ExchangeNum = 0;
             }
             //赠送
             if($IsGive == 1){
@@ -265,6 +279,7 @@ class GoodsAllController extends ComController {
                 'Status'            =>       $Status,
                 'TheShelvesTime'    =>       $TheShelvesTime,
                 'Platform'          =>       $Platform,
+                'IosCode'           =>       $IosCode,
                 'LimitShop'         =>       $LimitShop,
                 'LimitShopNum'      =>       $LimitShopNum,
                 'ExchangeType'      =>       $ExchangeType,
@@ -279,7 +294,9 @@ class GoodsAllController extends ComController {
                 'UpTime'            =>       date('Y-m-d H:i:s',time()),
                 'ImgCode'           =>       $ImgCode,
                 'FaceValue'         =>       $FaceValue,
+                'OriginalPrice'     =>       $OriginalPrice,
             );
+
             //添加
             $upGoodsAll = M('jy_goods_all')
                 ->where('Id = '.$Id)

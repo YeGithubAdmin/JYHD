@@ -128,7 +128,6 @@ class JinPayController extends Controller {
             $result = 5003;
             goto OrderSave;
         }
-
         /**
          * 服务器查询
          * statr
@@ -265,6 +264,11 @@ class JinPayController extends Controller {
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
                     }
+
+                    if($v['IsGive'] = 1){
+                        $dataLogUsersShop['Number'] = $v['GetNum'];
+                        $dataLogUsersShop['Type']   = $v['Type'];
+                    }
                     switch ($v['Type']){
                         //金币
                         case  1:
@@ -284,7 +288,6 @@ class JinPayController extends Controller {
                             $PB_Item->setNum($num);
                             $PB_Item->setId(9);
                             $PB_ResourceChange->appendItems($PB_Item);
-
                             break;
                         //道具
                         case  3:
@@ -296,12 +299,10 @@ class JinPayController extends Controller {
                             $PB_Item->setNum($num);
                             $PB_Item->setId($v['GoodsCode']);
                             $PB_ResourceChange->appendItems($PB_Item);
-
                             break;
                     }
                 }
             }
-
             $PlayerData->setRmb($money);
             if($IsGold == 2){
                 $OptReason  =  new \OptReason();
@@ -319,7 +320,6 @@ class JinPayController extends Controller {
             }elseif ($CatUsersOrderInfo['Form'] == 3){
                 $PB_ResourceChange->setReason($OptReason::mall_reward_sdk);
             }
-
             $PB_ResourceChange->setPlayerid($playerid);
             $PB_HallNotify->setResChanged($PB_ResourceChange);
             $PB_HallNotify->setBuyNotify($BuyGoods);
@@ -353,29 +353,17 @@ class JinPayController extends Controller {
         if($result == 2001 || $result == 1){
             //开启事物
             $model->startTrans();
-            //月卡 首冲
-            $addUsersPackageShopLog = 1;
-            $addUsersGoodsStream    = 1;
-            $addUsersCurrencyStream = 1;
-            $addUsersCardReceiveLog  = 1;
-            if($CatUsersOrderInfo['Form'] == 1 || $CatUsersOrderInfo['Form'] == 2){
-                $dataUsersPackageShopLog = array(
-                    'playerid'=>$CatUsersOrderInfo['playerid'],
-                    'Type'=>$CatUsersOrderInfo['Form'],
-                );
-                $addUsersPackageShopLog = $model
-                    ->table('jy_users_package_shop_log')
-                    ->add($dataUsersPackageShopLog);
 
-            }
-//            //金币砖石
-//            if(!empty($dataUsersCurrencyStream)){
-//                $addUsersCurrencyStream  =   $model->table('jy_users_currency_stream')->addAll($dataUsersCurrencyStream);
-//            }
-//            //道具
-//            if(!empty($DatausersGoodsStream)){
-//                $addUsersGoodsStream = $model->table('jy_users_goods_stream')->addAll($DatausersGoodsStream);
-//            }
+            //添加购买物品记录
+            $dataLogUsersShop = array(
+                'playerid'  => $playerid,
+                'GoodsID'   => $GoosID,
+                'Code'      => $playerid,
+                'Price'     => $money,
+                'Form'      => $CatUsersOrderInfo['Form'],
+            );
+            $addLogUsersShop  = M('log_users_shop_0')->add($dataLogUsersShop);
+
             //修改订单
             $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
             $dataUsersOrderInfo['PayType']       = 0;
@@ -386,7 +374,7 @@ class JinPayController extends Controller {
                 ->where('playerid  = '.$playerid.'  and    PlatformOrder = "'.$OrderID.'"')
                 ->save($dataUsersOrderInfo);
 
-            if($addUsersPackageShopLog && $addUsersGoodsStream && $addUsersCurrencyStream && $UpUsersOrderInfo){
+            if($addLogUsersShop && $UpUsersOrderInfo){
                 $model->commit();
                 goto  success;
             }else{

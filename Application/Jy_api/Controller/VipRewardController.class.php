@@ -200,4 +200,129 @@ class VipRewardController extends ComController {
             );
             $this->response($response,'json');
     }
+    //vip 奖励信息
+    public function info(){
+        $DataInfo       =       $this->DataInfo;
+        $msgArr         =       $this->msgArr;
+        $obj   = new \Common\Lib\func();
+        $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
+        $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
+        $msgArr[4006] = "用户信息缺失！";
+        $msgArr[5002] = "系统错误，请稍后再试！";
+        $result = 2001;
+        $info   =  array();
+        $playerid = $DataInfo['playerid'];
+        if(empty($playerid)){
+            $result = 4006;
+            goto response;
+        }
+        //已入protobuf 类
+        $obj->ProtobufObj(array(
+            'Protos/PBS_UsrDataOprater.php',
+            'Protos/UsrDataOpt.php',
+            'Protos/OptSrc.php',
+            'OptReason.php',
+            'PB_Item.php',
+            'RPB_PlayerNumerical.php',
+            'RedisProto/RPB_PlayerData.php',
+            'Protos/PBS_UsrDataOpraterReturn.php',
+        ));
+        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
+        $UsrDataOpt         = new UsrDataOpt();
+        $OptSrc             = new OptSrc();
+        $PBS_UsrDataOprater->setPlayerid($playerid);
+        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
+        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+        //发送请求
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+
+        if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $result = 3003;
+            goto response;
+        }
+        if($PBS_UsrDataOpraterRespond  == 504){
+            $result = 3002;
+            goto response;
+        }
+        //接受回应
+        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
+        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+
+        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
+
+        //判断结果
+        if($ReplyCode != 1){
+            $result = $ReplyCode;
+            goto response;
+        }
+        $Base       =  $PBS_UsrDataOpraterReturn->getBase();
+        //vip 等级
+        $VipLevel   =  $Base->getVip();
+        //vip 经验
+        $VipExp     =  $Base->getVipExp();
+        //获取vip规则
+        $catVipInfoField = array(
+            'ImgCode',
+            'Describe',
+            'level',
+            'GiveInfo',
+            'experience'
+        );
+        $catVipInfo = M('jy_vip_info')
+            ->field($catVipInfoField)
+            ->order('level asc')
+            ->select();
+        if(empty($catVipInfo)){
+            $result = 5002;
+            goto response;
+        }
+        //查询奖励
+        $catVipReward = array(
+            'b.Code',
+            'b.Type',
+            'b.Name',
+            'a.Level',
+            'b.ImgCode',
+            'b.Id as GoodsID',
+            'a.Number*b.GetNum as Number',
+        );
+        $catVipReward = M('jy_vip_reward as a')
+            ->join('jy_goods_all as b on a.GoodsID = b.Id')
+            ->where('b.Isdel = 1')
+            ->field($catVipReward)
+            ->order('a.Level')
+            ->select();
+        if(empty($catVipReward)){
+            $result = 5002;
+            goto response;
+        }
+        //判断是否已经领取 1-否  2-是
+        $Status = 1;
+        $catVipRewardlogField = array(
+            'Id',
+        );
+        $strtotime = strtotime(date('Y-m-d'),time());
+        $StartTime = date('Y-m-d H:i:s',$strtotime);
+        $EndTime   = date('Y-m-d H:i:s',$strtotime+24*60*60);
+        $catVipRewardlog = M('jy_vip_reward_log')
+            ->where('playerid = '.$playerid.'  and  
+                    DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  
+                    and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
+            ->field($catVipRewardlogField)
+            ->find();
+        if(empty($catVipRewardlog) && $VipLevel > 0){
+            $Status = 2;
+        }
+        $info['Status'] = $Status;
+        $info['info']   = $catVipReward;
+        response:
+        $response = array(
+            'result' => $result,
+            'msg' => $msgArr[$result],
+            'sessionid'=>$DataInfo['sessionid'],
+            'data' => $info,
+        );
+        $this->response($response,'json');
+    }
 }

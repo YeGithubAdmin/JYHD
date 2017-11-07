@@ -399,7 +399,13 @@ class func{
         $TheBagBody = array(
             'body'=>$content
         );
-        $Respond = $this->tocurl(SERVER_PROTO,$header,$TheBagBody);
+        $Server =  '';
+        if(defined('SERVER_PROTO_IOS')){
+             $Server =  SERVER_PROTO_IOS;
+        }else{
+             $Server = SERVER_PROTO;
+        }
+        $Respond = $this->tocurl($Server,$header,$TheBagBody);
         if($Respond  == 504){
             return  504;
         }

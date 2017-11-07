@@ -143,6 +143,7 @@ class UsersAttributeController extends ComController {
                         $PB_ResourceChange->appendItems($PBS_ItemOpt);
                     }
                 }
+
             }
             //添加道具
             if(!empty($DataProp) && $IsGive ==2){
@@ -159,6 +160,7 @@ class UsersAttributeController extends ComController {
             $PB_HallNotify->setResChanged($PB_ResourceChange);
             $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
+            $PBS_UsrDataOprater->dump();
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
             //发送请求
             G('begin');

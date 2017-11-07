@@ -43,9 +43,10 @@ message PBS_AddWhiteListReturn
 // 设置服务状态
 message PBS_SetServerState
 {
-	required int32 state = 1 ;	 		// 1 正常 2 停服 3 仅限白名单
+	required int32 state = 1 ;	 		// 1 正常 2 停服 3 仅限白名单 4 退休
 	optional string channel = 2;		// 渠道
 	optional int32 after_second = 3;	// 多少秒之后执行停服操作, 0 为立即执行
+	repeated int32 serverid = 4;
 }
 
 message PBS_SetServerStateReturn
@@ -73,4 +74,35 @@ message PBS_gm_numerical_op
 	}
 	repeated data set_data = 1;
 	repeated data add_data = 2;
+}
+
+message PBS_gm_numerical_return
+{
+	required PB_ErrorCode code = 1;
+}
+
+// 捕鱼逻辑控制操作
+message PBS_gm_fish_op
+{
+	required string key 	= 1;	// open_robot (1 open 2 close), 
+	required int32 value 	= 2;		
+	repeated int32 serverid = 3;
+}
+
+message PBS_gm_fish_return
+{
+	required PB_ErrorCode code = 1;
+}
+
+// 第三方登陆
+message PBS_ThirdPartyLogin
+{
+	required string	 uid			= 1;	// 第三方平台uid
+	required string	 login_code		= 2;	// 登陆码
+	required string  channel 		= 3; 	// 渠道
+}
+
+message PBS_ThirdPartyLoginReturn
+{
+	required PB_ErrorCode code 		= 1;
 }

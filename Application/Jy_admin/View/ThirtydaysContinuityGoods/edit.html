@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+		  rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>修改签到信息</title>
+</head>
+<body>
+<div class="pd-20">
+
+	<form action="" method="post" class="form form-horizontal" id="form-menu-add">
+		<div class="row cl GiveInfo"  >
+			<input type="hidden" name="Id" value="{$info['Id']}"  id="">
+			<label class="form-label col-3"><span class="c-red">*</span>奖励</label>
+			<div class="formControls col-2">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select GoodsType"  name = "Type"  onchange="selectGoodsFun(this)" nullmsg="" >
+								<option   		>请选择类型</option>
+								 <option  <eq name = "info['Type']" value ="1">selected = "selected"</eq> 		value="1">金币</option>
+								<option  <eq name = "info['Type']" value ="2">selected = "selected"</eq>  		value="2">砖石</option>
+								<option  <eq name = "info['Type']" value ="3">selected = "selected"</eq>  		value="3">道具</option>
+								<option  <eq name = "info['Type']" value ="0">selected = "selected"</eq>  		value="0">其他</option>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="formControls col-2">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select Id" name = "GoodsID"  nullmsg="" >
+								 <option value="0">请选择商品</option>
+								<volist name = "CatGoodsAll" id="val">
+									<option class="type{$val['Type']}"  <if condition ="$val['Type'] neq $info['Type']" >style="display: none;"</if>  <if condition ="$val['Id'] eq $info['GoodsID']" >selected = "selected"</if>  value="{$val['Id']}">{$val['Name']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="formControls col-2">
+				<input type="text"  class="input-text GetNum"   value="{$info['Number']}" placeholder="请输入数量"
+					   name="Number"  nullmsg="">
+			</div>
+
+		</div>
+
+
+		<div class="row cl">
+			<div class="col-9 col-offset-3">
+				<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+<literal>
+	<script type="text/javascript">
+        $(function() {
+            var infoID = document.getElementById('Id');
+            $('.skin-minimal input').iCheck({
+                checkboxClass : 'icheckbox-blue',
+                radioClass : 'iradio-blue',
+                increaseArea : '20%'
+            });
+            $("#form-menu-add").Validform({
+                tiptype : 2,
+
+                callback : function(form) {
+                    form[0].submit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                }
+            });
+
+        });
+        function  selectGoodsFun(my) {
+            var GoodsType 			= document.getElementsByClassName('GoodsType');
+            var Id 					= document.getElementsByClassName('Id');
+            for(i=0;i<GoodsType.length;i++){
+                GoodsType[i].index = i;
+            }
+            var MyIndex 			= my.index;
+            var IdSelect 			= Id[MyIndex];
+            var seleIndex           = my.selectedIndex;
+            var selectValue			= my.options[seleIndex].value;
+            var selectOptions       = my.options;
+
+
+            var IdSelectOptionType 		= IdSelect.getElementsByClassName('type'+selectValue);
+            var IdSelectOption 		= IdSelect.options;
+
+            console.log(MyIndex);
+            for(j = 0;j<IdSelectOption.length;j++){
+                if(j>0){
+                    IdSelectOption[j].style.display = "none";
+                }
+            }
+            for(k=0;k<IdSelectOptionType.length;k++){
+                IdSelectOptionType[k].style.display = "inline-block";
+            }
+
+        }
+	</script>
+</literal>
+</body>
+</html>

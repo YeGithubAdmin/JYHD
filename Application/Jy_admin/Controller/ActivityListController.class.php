@@ -79,7 +79,7 @@ class ActivityListController extends ComController {
             $AddUpEndTime           =       I('param.AddUpEndTime','','trim');         //计费结束时间
             $ShowStartTime          =       I('param.ShowStartTime','','trim');        //显示开始时间
             $ShowEndTime            =       I('param.ShowEndTime','','trim');          //显示结束时间
-            $Describe               =       I('param.Describe ','','trim');
+            $Describe               =       I('param.Describe','','trim');
             $Channel                =       I('param.Channel',0,'intval');
             $dataActivityFatherList = array(
                 'Type'              =>      $Type,
@@ -119,9 +119,7 @@ class ActivityListController extends ComController {
         if ($Id<=0){
             $obj->showmessage('非法操作');
         }
-
         //查询信息
-
         $ActivityFatherListField = array(
             'Id',
             'Type',
@@ -134,7 +132,6 @@ class ActivityListController extends ComController {
             'ShowEndTime',
             'Describe',
         );
-
         $ActivityFatherList = M('jy_activity_father_list')
                               ->where('Id = '.$Id)
                               ->field($ActivityFatherListField)
@@ -146,17 +143,17 @@ class ActivityListController extends ComController {
             $AddUpEndTime           =       I('param.AddUpEndTime','','trim');         //计费结束时间
             $ShowStartTime          =       I('param.ShowStartTime','','trim');        //显示开始时间
             $ShowEndTime            =       I('param.ShowEndTime','','trim');          //显示结束时间
-            $Describe               =       I('param.Describe','','trim');            //描述
+            $Describe               =       I('param.Describe','','trim');
             $Channel                =       I('param.Channel',0,'intval');
             $dataActivityFatherList = array(
                 'Title'             =>      $Title,
                 'Code'              =>      $Code,
+                'Channel'           =>      $Channel,
                 'AddUpStartTime'    =>      $AddUpStartTime,
                 'AddUpEndTime'      =>      $AddUpEndTime,
                 'ShowStartTime'     =>      $ShowStartTime,
                 'ShowEndTime'       =>      $ShowEndTime,
                 'Describe'          =>      $Describe,
-                'Channel'          =>      $Channel,
             );
             $addActivityFatherList = M('jy_activity_father_list')
                 ->where('Id = '.$Id)

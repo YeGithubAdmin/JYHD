@@ -30,7 +30,7 @@
 	<div class="pd-20">
 		<form action="" method="post" class="form form-horizontal" id="form-vipInfo-add">
 			<div class="row cl">
-				<label class="form-label col-1"><span class="c-red">*</span>图片标识：</label>
+				<label class="form-label col-1"><span class="c-red"></span>图片标识：</label>
 				<div class="formControls col-1">
 					<input type="text"  class="input-text"   value="" placeholder="请输入图片标识"
 						   name="ImgCode" >
@@ -97,7 +97,7 @@
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "Type"  onchange="TypeFun(this)"   nullmsg="" >
+							<select  class="select" name = "Type"    nullmsg="" >
 								 <option value="1">金币</option>
 								 <option value="2">钻石</option>
 								 <option value="3">道具</option>
@@ -108,10 +108,6 @@
                             </select>
 						</span>
 					</div>
-				</div>
-				<div class="formControls col-1" id ="Code" style="display: none;"  >
-					<input type="text" class="input-text"  value="" placeholder="请输入商品标识"
-						   name="Code" nullmsg="">
 				</div>
 				<div class="formControls col-1 "  id = "FaceValue" style="display:none;" >
 					<input type="text"  class="input-text"   value="" placeholder="请输入面值"
@@ -127,9 +123,9 @@
 		        		<span class="select-box">
 							<select  class="select" name = "ShowType"  nullmsg="" >
 								 <option value="1">商城</option>
-								 <option value="2">首冲礼包</option>
+								 <option value="2">新手礼包</option>
 								 <option value="3">月卡</option>
-								 <option value="5">新手礼包</option>
+								 <option value="5">启航礼包</option>
 								 <option value="4">兑换商城</option>
 								 <option value="0">其他</option>
                             </select>
@@ -250,6 +246,23 @@
 						   name="Proportion" datatype="*1-20" nullmsg="首冲比例不能为空">
 				</div>
 			</div>
+			<div class="row cl">
+				<label class="form-label col-1"><span class="c-red"></span>苹果商店编码：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="" placeholder="苹果商店编码"
+						   name="IosCode"  nullmsg="获得数量不能为空">
+				</div>
+				<label class="form-label col-2"><span class="c-red">*</span>商品标识：</label>
+				<div class="formControls col-1"  >
+					<input type="text" class="input-text"  value="" datatype="*1-20"  placeholder="请输入商品标识"
+						   name="Code" nullmsg="">
+				</div>
+				<label class="form-label col-2"><span class="c-red"></span>原价：</label>
+				<div class="formControls col-1"  >
+					<input type="text" class="input-text"  value=""   placeholder="请输入原价"
+						   name="OriginalPrice" nullmsg="">
+				</div>
+			</div>
 
 			<div class="row cl">
 				<label class="form-label col-1"><span class="c-red">*</span>是否赠送：</label>
@@ -283,7 +296,7 @@
 							<select  class="select GoodsType"  name = "GiveInfo[0][Type]"  onchange="selectGoodsFun(this)" nullmsg="" >
 								 <option value="0">请选择类型</option>
 								 <option value="1">金币</option>
-								 <option value="2">砖石</option>
+								 <option value="2">钻石</option>
 								 <option value="3">道具</option>
 								 <option value="0">其他</option>
 
@@ -306,6 +319,10 @@
 					<div class="formControls col-1">
 						<input type="text"  class="input-text GetNum"   value="" placeholder="请输入倍数"
 							   name="GiveInfo[0][GetNum]"  nullmsg="充值额度不能为空">
+					</div>
+					<div class="formControls col-1">
+						<input type="text"  class="input-text GoodName"   value="" placeholder="请输入名称"
+							   name="GiveInfo[0][Name]"  nullmsg="充值额度不能为空">
 					</div>
 				</div>
 			</div>
@@ -397,34 +414,7 @@
             }else{
                 IssueNum.style.display = "block";
             }
-
         }
-        //类型
-        function TypeFun(my) {
-            var Index 		= my.selectedIndex;         				//索引
-            var Value 		= my.options[Index].value;   				//选择中值
-            var FaceValue	= document.getElementById('FaceValue');		//发行数量
-			var Code		= document.getElementById('Code');			//
-			var Hidden		= document.getElementById('Hidden');
-            if(Value == 4  || Value == 5){
-                FaceValue.style.display = "block";
-                Code.style.display = "none";
-                Hidden.style.display = "none";
-            }else if(Value == 3){
-                Code.style.display = "block";
-                Hidden.style.display = "none";
-                FaceValue.style.display = "none";
-			}
-            else{
-                FaceValue.style.display = "none";
-                Code.style.display = "none";
-                Hidden.style.display = "block";
-            }
-
-        }
-
-
-
 		//限购
 
         function LimitShopFun(my) {
@@ -492,14 +482,15 @@
             if(GiveInfo.length == 2){
                 del.style.display = "block";
 			}
-			var Id 			= document.getElementsByClassName('Id');
+			var Id 				= document.getElementsByClassName('Id');
 			var GetNum 			= document.getElementsByClassName('GetNum');
-			var GoodsType 			= document.getElementsByClassName('GoodsType');
+			var GoodsType 		= document.getElementsByClassName('GoodsType');
+			var GoodName		= 	document.getElementsByClassName('GoodName');
 			var Length			=  Id.length;
             GoodsType[Length-1].setAttribute('name','GiveInfo['+Length+'][Type]');
             GetNum[Length-1].setAttribute('name','GiveInfo['+Length+'][GetNum]');
+            GoodName[Length-1].setAttribute('name','GiveInfo['+Length+'][Name]');
             Id[Length-1].setAttribute('name','GiveInfo['+Length+'][Id]');
-            console.log(Length);
 
 
         }
@@ -529,8 +520,6 @@
 			var seleIndex           = my.selectedIndex;
 			var selectValue			= my.options[seleIndex].value;
 			var selectOptions       = my.options;
-
-
 			var IdSelectOptionType 		= IdSelect.getElementsByClassName('type'+selectValue);
 			var IdSelectOption 		= IdSelect.options;
 

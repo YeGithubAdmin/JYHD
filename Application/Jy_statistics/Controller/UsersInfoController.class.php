@@ -82,17 +82,14 @@ class UsersInfoController extends ComController {
         if( $search['login_channel'] != ''  ){
             $where .= ' and a.`login_channel`="'.$search['login_channel'].'"';
         }
-
         if($search['playerid']  == 0 ){
             $search['playerid'] = '';
         }
-
         $order =  'a.playerid desc';
         //排序
         if($search['SortName']  != '' ){
             $order = $search['SortName'].' '.$search['Sort'] ;
         }
-
         //签到
         $SignDataField = array(
             'sum(GetNum*Number) as SignData'
@@ -138,35 +135,35 @@ class UsersInfoController extends ComController {
         $GameValue['SignData']       =      $SignData[0]['SignData'];
         $GameValue['NovicePack']     =      $NovicePack[0]['NovicePack'];
         $GameValue['PayGold']        =      $PayGold[0]['PayGold'];
-        //游戏数值
-        $obj->ProtobufObj(
-            array(
-                'Protos/PBS_GetGameNumerical.php',
-                'Protos/PBS_GetGameNumericalReturn.php',
-                'RPB_GameNumerical.php'
-            )
-        );
-        $PBS_GetGameNumerical           =   new PBS_GetGameNumerical();
-        $PBS_GetGameNumericalReturn     =   new PBS_GetGameNumericalReturn();
-        $String = $PBS_GetGameNumerical->serializeToString();
-        //发送请求
-        $Respond =  $obj->ProtobufSend('protos.PBS_GetGameNumerical',$String,1);
-        if($Respond  == 504){
-        }
-        if(strlen($Respond)==0){
-        }
-        $PBS_GetGameNumericalReturn->parseFromString($Respond);
-        $ReplyCode = $PBS_GetGameNumericalReturn->getCode();
-        //判断结果
-        if($ReplyCode != 1){
-            $result = $ReplyCode;
-        }
-       $Data = $PBS_GetGameNumericalReturn->getData();
-       $GameValue['bomb_cu_history_pool']           =   $Data->getBombCuHistoryPool();        // 铜核弹产出
-       $GameValue['bomb_ag_history_pool']           =   $Data->getBombAuHistoryPool();        // 银核弹产出
-       $GameValue['bomb_au_history_pool']           =   $Data->getBombAuHistoryPool();        // 金核弹产出
-       $GameValue['fish_card_history_pool']         =   $Data->getFishCardHistoryPool();      // 鱼券产出
-       $GameValue['pump_gold_history_pool']         =   $Data->getPumpGoldHistoryPool();      // 系统抽水
+//        //游戏数值
+//        $obj->ProtobufObj(
+//            array(
+//                'Protos/PBS_GetGameNumerical.php',
+//                'Protos/PBS_GetGameNumericalReturn.php',
+//                'RPB_GameNumerical.php'
+//            )
+//        );
+//        $PBS_GetGameNumerical           =   new PBS_GetGameNumerical();
+//        $PBS_GetGameNumericalReturn     =   new PBS_GetGameNumericalReturn();
+//        $String = $PBS_GetGameNumerical->serializeToString();
+//        //发送请求
+//        $Respond =  $obj->ProtobufSend('protos.PBS_GetGameNumerical',$String,1);
+//        if($Respond  == 504){
+//        }
+//        if(strlen($Respond)==0){
+//        }
+//        $PBS_GetGameNumericalReturn->parseFromString($Respond);
+//        $ReplyCode = $PBS_GetGameNumericalReturn->getCode();
+//        //判断结果
+//        if($ReplyCode != 1){
+//            $result = $ReplyCode;
+//        }
+//        $Data = $PBS_GetGameNumericalReturn->getData();
+//        $GameValue['bomb_cu_history_pool']           =   $Data->getBombCuHistoryPool();        // 铜核弹产出
+//        $GameValue['bomb_ag_history_pool']           =   $Data->getBombAuHistoryPool();        // 银核弹产出
+//        $GameValue['bomb_au_history_pool']           =   $Data->getBombAuHistoryPool();        // 金核弹产出
+//        $GameValue['fish_card_history_pool']         =   $Data->getFishCardHistoryPool();      // 鱼券产出
+//        $GameValue['pump_gold_history_pool']         =   $Data->getPumpGoldHistoryPool();      // 系统抽水
 
         $countFiled = array(
             'count(distinct b.playerid) as num',
