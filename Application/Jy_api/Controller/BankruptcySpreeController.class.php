@@ -45,6 +45,9 @@ class BankruptcySpreeController extends ComController {
             $result = 4007;
             goto  response;
         }
+
+        $MoreThan = $playerid%10;
+
         $GiveInfo =  $catData['GiveInfo'];
         $catGiveInfo = array();
         if(!empty($GiveInfo)){
@@ -102,7 +105,7 @@ class BankruptcySpreeController extends ComController {
             $logUsersShop = array(
                 'count(Id) as num'
             );
-            $logUsersShop = M('log_users_shop_0')
+            $logUsersShop = M('log_users_shop_'.$MoreThan)
                 ->where($where)
                 ->field($logUsersShop)
                 ->select();

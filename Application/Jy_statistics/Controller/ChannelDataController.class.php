@@ -18,6 +18,9 @@ class ChannelDataController extends ComController {
         $search['datemax']     = I('param.datemax','','trim');
         $search['num']         = I('param.num',30,'intval');
         $search['channel']     = I('param.channel','','trim');
+
+
+
         $model = new Model;
         //判断管理还是运营
         $whereData = 'a.channel = 2 and a.Isdel = 1';
@@ -95,6 +98,7 @@ class ChannelDataController extends ComController {
         $count =  $model->query('
                   SELECT 
                   a.account as GroupChannel,
+              
                   date_format(c.DateTime,"%Y-%m-%d") as t  
                   FROM jy_admin_users as a INNER JOIN jy_channel_info as b on b.adminUserID = a.Id
                   INNER JOIN jy_statistics_users_pay as c on c.Channel = a.account  
@@ -105,6 +109,7 @@ class ChannelDataController extends ComController {
                   a.account as GroupChannel,
                   a.name,
                   c.PayNum,
+                  c.DateTime,
                   c.UserPayNum,
                   c.RegNum,
                   c.EquipmentRegNum,
@@ -131,7 +136,13 @@ class ChannelDataController extends ComController {
                   FROM jy_admin_users as a INNER JOIN jy_channel_info as b on b.adminUserID = a.Id
                   INNER JOIN jy_statistics_users_pay as c on c.Channel = a.account  
                   WHERE ( '.$whereData.') ORDER BY c.DateTime desc) as 
-                  catData GROUP BY  catData.`GroupChannel`,catData.`t` ORDER BY catData.`t` desc    LIMIT '.$search['num']*$page.','.$search['num']);
+                  catData GROUP BY  catData.`GroupChannel`,catData.`t` ORDER BY catData.`DateTime` desc LIMIT '.$search['num']*$page.','.$search['num']);
+
+
+
+
+
+
         $count      = count($count) ;
         $Page       = new \Common\Lib\Page($count,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出

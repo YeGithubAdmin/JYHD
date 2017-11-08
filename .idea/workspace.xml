@@ -5,75 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="0cab3356-e354-489b-a3c1-d764ac1bb749" name="默认的" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/ActiveMacroscopicController.class.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo/edit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo/info.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Common/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Model/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/View/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Cache/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Data/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Logs/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Temp/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Common" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Model" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/View" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoldStream" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" afterPath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_Thirdpay/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_Thirdpay/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/JinPayController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/JinPayController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActivityListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActivityListController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/edit.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/edit.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/MallExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/MallExchangeController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/Test1Controller.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/Test1Controller.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Conf/config.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Controller/HorseRaceLampController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/HorseRaceLampController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Controller/RealTimeOnlineController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/RealTimeOnlineController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/PayMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/PayMacroscopicController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOnlineController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOnlineController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOverviewController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOverviewController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeRevenueController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeRevenueController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/UsersInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/UsersInfoController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/Goods.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/Goods.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/PayType.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/PayType.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOnline/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOnline/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOverview/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOverview/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeRevenue/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeRevenue/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ThinkPHP/Library/Think/Db/Driver.class.php" afterPath="$PROJECT_DIR$/ThinkPHP/Library/Think/Db/Driver.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_event.proto" afterPath="$PROJECT_DIR$/proto/PB_event.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_gm_tool.proto" afterPath="$PROJECT_DIR$/proto/PB_gm_tool.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/ChannelDataController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/ChannelDataController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/ChannelData/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/ChannelData/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/BankruptcyEvent.php" afterPath="$PROJECT_DIR$/protoPhp/BankruptcyEvent.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/BigShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/BigShellUpdate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/CreateEvent.php" afterPath="$PROJECT_DIR$/protoPhp/CreateEvent.php" />
@@ -81,7 +20,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/EmailType.php" afterPath="$PROJECT_DIR$/protoPhp/EmailType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/GoldUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/GoldUpdate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/KillBossFishEvent.php" afterPath="$PROJECT_DIR$/protoPhp/KillBossFishEvent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LoginEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LoginEvent.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LogoutEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LogoutEvent.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/MidShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/MidShellUpdate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt.php" afterPath="$PROJECT_DIR$/protoPhp/PBS_GameNumericalOpt.php" />
@@ -169,11 +107,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ThirtyDaysGoodsController.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysGoodsController.class.php">
+      <file leaf-file-name="CardInfoController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
+            <state relative-caret-position="945">
+              <caret line="85" column="27" lean-forward="true" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MibackController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/MibackController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="93" column="16" lean-forward="false" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="16" />
+              <folding>
+                <element signature="e#6#25#0#PHP" expanded="true" />
+                <element signature="e#60#81#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThirdPartyLoginController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ThirdPartyLoginController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="40" column="28" lean-forward="true" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
+              <folding>
+                <element signature="e#6#314#0#PHP" expanded="true" />
+                <element signature="e#344#380#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="miapi.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/thirdpay/Mipay/miapi.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="58" column="7" lean-forward="true" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RewardController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="33" column="42" lean-forward="true" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CardReceiveRewardsController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="678">
+              <caret line="153" column="32" lean-forward="false" selection-start-line="153" selection-start-column="32" selection-end-line="153" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -183,12 +177,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$dataLogThirtydaySign</find>
-      <find>select</find>
-      <find>3004</find>
-      <find>Proportion</find>
-      <find>$Status</find>
-      <find>3000</find>
       <find>$dataLogUsersShop</find>
       <find>pr</find>
       <find>$addUsersPackageShopLog</find>
@@ -210,9 +198,15 @@
       <find>Proc</find>
       <find>$isSign</find>
       <find>7001</find>
-      <find>prin</find>
       <find>$respJson</find>
       <find>砖</find>
+      <find>curl</find>
+      <find>$OrderInfo</find>
+      <find>$paytype</find>
+      <find>log_users_shop_</find>
+      <find>$PayType</find>
+      <find>$UsersCardShopLog</find>
+      <find>prin</find>
     </findStrings>
     <replaceStrings>
       <replace>{$responseAdmin}</replace>
@@ -228,14 +222,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysSignTowController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysSignOneController.class .php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtyDaysSignOne/add.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtyDaysSignOne/edit.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtyDaysSignOne/index.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysSignOneController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysSignThreeController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtydaysContinuity/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtydaysContinuity/index.html" />
@@ -250,10 +236,7 @@
         <option value="$PROJECT_DIR$/Application/Jy_Thirdpay/Conf/config.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtydaysContinuity/edit.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/BankruptcySpreeController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
         <option value="$PROJECT_DIR$/ThinkPHP/Library/Think/Db/Driver.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtydaysContinuityController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php" />
@@ -270,15 +253,26 @@
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysSignController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtyDaysSign/edit.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/ThirtyDaysSign/index.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/edit.html" />
-        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/NewTheFirstPunchController.class.php" />
         <option value="$PROJECT_DIR$/../NotifyurlController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/TestNotifyurlController.class.php" />
-        <option value="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php" />
         <option value="$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysGoodsController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_statistics/View/ChannelData/index.html" />
+        <option value="$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_statistics/Controller/ChannelDataController.class.php" />
+        <option value="$PROJECT_DIR$/thirdpay/JinPay/createOrder.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/ThirdPartyLoginController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/BankruptcySpreeController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/NewTheFirstPunchController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/TestNotifyurlController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
+        <option value="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/MibackController.class.php" />
+        <option value="$PROJECT_DIR$/thirdpay/Mipay/miapi.php" />
       </list>
     </option>
   </component>
@@ -332,7 +326,137 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="thirdpay" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="thirdpay" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mipay" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jy_Thirdpay" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jy_Thirdpay" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jy_api" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jy_api" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jy" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Common" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -344,7 +468,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NotifyurlController.class.php" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../oauth-php-sdk-master" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/admin/Desktop/jy/Application/Jy_api/Controller/NovicePackController.class.php" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
@@ -526,12 +650,12 @@
       <workItem from="1509440288959" duration="1204000" />
       <workItem from="1509443159680" duration="54580000" />
       <workItem from="1509621124974" duration="39627000" />
-      <workItem from="1509933364085" duration="45660000" />
+      <workItem from="1509933364085" duration="83127000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1643494000" />
+    <option name="totallyTimeSpent" value="1680961000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -616,146 +740,11 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="37" lean-forward="false" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/JinPayController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="267" column="19" lean-forward="false" selection-start-line="267" selection-start-column="19" selection-end-line="270" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="298" column="0" lean-forward="false" selection-start-line="298" selection-start-column="0" selection-end-line="298" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="49" column="74" lean-forward="false" selection-start-line="49" selection-start-column="72" selection-end-line="49" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/ThirtydaysContinuity/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="44" column="44" lean-forward="true" selection-start-line="44" selection-start-column="44" selection-end-line="44" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="19" column="2" lean-forward="false" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/TheFirstPunchController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="84" column="9" lean-forward="false" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proto/PB_error_code.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersExchangeApplicationController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="82" column="16" lean-forward="false" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/SendEmailController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Library/Think/Db/Driver.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
-          <folding>
-            <marker date="1509941595441" expanded="true" signature="28191:28272" ph="INSERT INTO ${$this-&gt;parseTable($options['table'])}... " />
-            <marker date="1509941595441" expanded="true" signature="29024:29093" ph="INSERT INTO ${$this-&gt;parseTable($table)}... " />
-            <marker date="1509941595441" expanded="true" signature="30682:30694" ph="DELETE FROM " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PayOrderController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/SevenDaysSignController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1869">
           <caret line="21" column="32" lean-forward="false" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="32" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="233" column="20" lean-forward="false" selection-start-line="233" selection-start-column="19" selection-end-line="233" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="406" column="9" lean-forward="false" selection-start-line="406" selection-start-column="8" selection-end-line="406" selection-end-column="9" />
-          <folding>
-            <marker date="1509940954464" expanded="true" signature="2337:2416" ph="..." />
-            <marker date="1509940954464" expanded="false" signature="2569:2608" ph="..." />
-            <marker date="1509940954464" expanded="true" signature="2609:2914" ph="..." />
-            <marker date="1509940954464" expanded="false" signature="2663:2681" ph="..." />
-            <marker date="1509940954464" expanded="true" signature="2810:2898" ph="..." />
-            <marker date="1509940954464" expanded="true" signature="2982:3272" ph="..." />
-            <marker date="1509940954464" expanded="true" signature="3021:3253" ph="{...}" />
-            <marker date="1509940954464" expanded="true" signature="3316:3445" ph="..." />
-            <marker date="1509940954464" expanded="true" signature="3363:3426" ph="{...}" />
-            <marker date="1509940954464" expanded="true" signature="18855:19843" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -771,14 +760,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="184" column="12" lean-forward="false" selection-start-line="184" selection-start-column="12" selection-end-line="184" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="315" column="9" lean-forward="true" selection-start-line="279" selection-start-column="7" selection-end-line="315" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -855,14 +836,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="32" column="25" lean-forward="true" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/BankruptcySpreeController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="107" column="27" lean-forward="false" selection-start-line="107" selection-start-column="27" selection-end-line="107" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -967,14 +940,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/NewTheFirstPunchController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="62" column="29" lean-forward="true" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1001,34 +966,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="129" column="24" lean-forward="true" selection-start-line="129" selection-start-column="24" selection-end-line="129" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/TestNotifyurlController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="47" column="10" lean-forward="true" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="299" column="61" lean-forward="false" selection-start-line="299" selection-start-column="61" selection-end-line="299" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6063">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1049,10 +990,199 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/alipay/alipay.config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/ThirtyDaysGoodsController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
+        <state relative-caret-position="294">
+          <caret line="87" column="19" lean-forward="false" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_statistics/Controller/ChannelDataController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding>
+            <marker date="1510050101378" expanded="true" signature="3710:4092" ph="SELECT a.acc... jy_admin_users" />
+            <marker date="1510050101378" expanded="true" signature="4149:5979" ph="SELECT * FRO... account" />
+            <marker date="1510050101378" expanded="true" signature="4183:5838" ph="SELECT a.acc... jy_admin_users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_script/Controller/ChannelDataController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="251" column="75" lean-forward="true" selection-start-line="251" selection-start-column="75" selection-end-line="251" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="685">
+          <caret line="321" column="36" lean-forward="false" selection-start-line="321" selection-start-column="29" selection-end-line="321" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/openssl/openssl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="717" column="9" lean-forward="false" selection-start-line="717" selection-start-column="9" selection-end-line="717" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="35" column="16" lean-forward="false" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/JinPay/createOrder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1281">
+          <caret line="65" column="4" lean-forward="true" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_statistics/View/ChannelData/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="762">
+          <caret line="127" column="42" lean-forward="false" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/NewTheFirstPunchController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="142" column="23" lean-forward="true" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/BankruptcySpreeController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="636">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="48" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/IosBackController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="664">
+          <caret line="407" column="30" lean-forward="true" selection-start-line="407" selection-start-column="30" selection-end-line="407" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/TestNotifyurlController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="98" column="13" lean-forward="true" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="367" column="5" lean-forward="false" selection-start-line="367" selection-start-column="5" selection-end-line="367" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/PlaceOrderController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5355">
+          <caret line="117" column="30" lean-forward="false" selection-start-line="117" selection-start-column="30" selection-end-line="117" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Common/Lib/func.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+          <folding>
+            <marker date="1510131538304" expanded="true" signature="2336:2415" ph="..." />
+            <marker date="1510131538304" expanded="false" signature="2568:2607" ph="..." />
+            <marker date="1510131538304" expanded="true" signature="2608:2913" ph="..." />
+            <marker date="1510131538304" expanded="false" signature="2662:2680" ph="..." />
+            <marker date="1510131538304" expanded="true" signature="2809:2897" ph="..." />
+            <marker date="1510131538304" expanded="true" signature="2981:3271" ph="..." />
+            <marker date="1510131538304" expanded="true" signature="3020:3252" ph="{...}" />
+            <marker date="1510131538304" expanded="true" signature="3315:3444" ph="..." />
+            <marker date="1510131538304" expanded="true" signature="3362:3425" ph="{...}" />
+            <marker date="1510131538304" expanded="true" signature="18854:19842" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="678">
+          <caret line="153" column="32" lean-forward="false" selection-start-line="153" selection-start-column="32" selection-end-line="153" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="33" column="42" lean-forward="true" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="85" column="27" lean-forward="true" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ThirdPartyLoginController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="40" column="28" lean-forward="true" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
+          <folding>
+            <element signature="e#6#314#0#PHP" expanded="true" />
+            <element signature="e#344#380#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/MibackController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="93" column="16" lean-forward="false" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="16" />
+          <folding>
+            <element signature="e#6#25#0#PHP" expanded="true" />
+            <element signature="e#60#81#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thirdpay/Mipay/miapi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="58" column="7" lean-forward="true" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
           <folding />
         </state>
       </provider>

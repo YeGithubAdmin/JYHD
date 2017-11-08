@@ -41,9 +41,9 @@ class CardReceiveRewardsController extends ComController {
             $result = 4006;
             goto response;
         }
-
+        $MoreThan = $playerid%10;
         //判断是否拥有月卡
-        $UsersCardShopLog = M('jy_users_package_shop_log')
+        $UsersCardShopLog = M('log_users_shop_'.$MoreThan)
                             ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
                             ->where('playerid = '.$playerid.' and Type = 2')
                             ->order('Id desc')
@@ -69,7 +69,9 @@ class CardReceiveRewardsController extends ComController {
         //判断今天是否已经领取过  1 未领取过  2 领取过
         $IsReceive = 1;
         $UsersCardReceive = M('jy_users_card_receive_log')
-                            ->where('playerid = '.$playerid.' and  DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+                            ->where('playerid = '.$playerid.' 
+                            and  DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
+                            and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                             ->find();
         if(!empty($UsersCardReceive)){
             $IsReceive = 2;
@@ -95,7 +97,6 @@ class CardReceiveRewardsController extends ComController {
         if(empty($GoodsAll)){
             $result = 5003;
         }
-
         $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
         $GoodID             = array();
         if(empty($GiveInfo)){
@@ -131,8 +132,6 @@ class CardReceiveRewardsController extends ComController {
                 }
             }
         }
-
-        //发放奖励
         //已入protobuf 类
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
@@ -153,8 +152,6 @@ class CardReceiveRewardsController extends ComController {
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $PBS_UsrDataOprater->setReason($OptReason::get_yueka_award);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
-        $dataUsersGoodsStream     = array();      //道具流水
-        $dataUsersCurrencyStream  = array();      //金币砖石流水
         $dataUsersCardReceiveLog  = array();      //月卡奖励
         foreach ($CardGoodsInfo as $k=>$v){
             if($v['Type'] > 0){
@@ -170,20 +167,11 @@ class CardReceiveRewardsController extends ComController {
                  //金币
                  case  1 :
                      $RPB_PlayerData->setGold($v['GetNum']);
-                     $dataUsersCurrencyStream[$k]['playerid']       =   $playerid;
-                     $dataUsersCurrencyStream[$k]['Type']           =   5;
-                     $dataUsersCurrencyStream[$k]['CurrencyType']   =   1;
-                     $dataUsersCurrencyStream[$k]['Income']         =   1;
-                     $dataUsersCurrencyStream[$k]['Number']         =   $v['GetNum'];
+
                      break;
                   //砖石
                  case  2 :
                      $RPB_PlayerData->setDiamond($v['GetNum']);
-                     $dataUsersCurrencyStream[$k]['playerid']       =   $playerid;
-                     $dataUsersCurrencyStream[$k]['Type']           =   5;
-                     $dataUsersCurrencyStream[$k]['CurrencyType']   =   2;
-                     $dataUsersCurrencyStream[$k]['Income']         =   1;
-                     $dataUsersCurrencyStream[$k]['Number']         =   $v['GetNum'];
                      break;
                  //道具
                  case 3  :
@@ -191,11 +179,6 @@ class CardReceiveRewardsController extends ComController {
                      $PB_Item->setNum($v['GetNum']);
                      $PB_Item->setId($v['Code']);
                      $PBS_UsrDataOprater->appendItemOpt($PB_Item);
-                     $dataUsersGoodsStream[$k]['playerid']      =       $playerid;
-                     $dataUsersGoodsStream[$k]['Code']          =       $v['Code'];
-                     $dataUsersGoodsStream[$k]['Type']          =       5;
-                     $dataUsersGoodsStream[$k]['Income']        =       1;
-                     $dataUsersGoodsStream[$k]['Number']        =       $v['GetNum'];
                      break;
              }
         }
@@ -224,24 +207,12 @@ class CardReceiveRewardsController extends ComController {
         $dataUsersCardReceiveLog = array_values($dataUsersCardReceiveLog);
         $addUsersCardReceiveLog =M('jy_users_card_receive_log')
                                 ->addAll($dataUsersCardReceiveLog);
-        $addUsersCurrencyStream = 1;   //记录金币砖石流水
-        $addUsersGoodsStream    = 1;   //记录道具流水
-        if(!empty($dataUsersCurrencyStream)){
-            $dataUsersCurrencyStream = array_values($dataUsersCurrencyStream);
-            $addUsersCurrencyStream = M('jy_users_currency_stream')
-                                      ->addAll($dataUsersCurrencyStream);
-        }
-        if(!empty($dataUsersGoodsStream)){
-            $dataUsersGoodsStream = array_values($dataUsersGoodsStream);
-            $addUsersGoodsStream   = M('jy_users_goods_stream')
-                                    ->addAll($dataUsersGoodsStream);
-        }
         foreach ($CardGoodsInfo as $key=>$val){
             if($val['Type'] == 0){
                 unset($CardGoodsInfo[$key]);
             }
         }
-        if(!$addUsersCardReceiveLog || !$addUsersGoodsStream || !$addUsersCurrencyStream){
+        if(!$addUsersCardReceiveLog){
             $result = 3002;
             goto  response;
         }

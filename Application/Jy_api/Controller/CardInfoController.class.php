@@ -70,10 +70,12 @@ class CardInfoController extends ComController {
             }
         }
 
+        $MoreThan = $playerid%10;
+
         $ShopCard  = 1;     //是否购买过月卡      1 否  2 是
         $IsReceive = 1;     //今天是否领取过月卡  1 否   2 是
         $DayNum    = 0;     //月卡还有剩多少天
-        $UsersCardShopLog = M('jy_users_package_shop_log')
+        $UsersCardShopLog = M('log_users_shop_'.$MoreThan)
             ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
             ->where('playerid = '.$playerid.' and Type = 2')
             ->order('Id desc')

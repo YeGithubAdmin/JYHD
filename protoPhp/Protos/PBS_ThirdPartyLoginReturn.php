@@ -1,24 +1,24 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-07 01:22:53
+ * Auto generated from PB_gm_tool.proto at 2017-11-07 17:09:46
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * PBS_ClientHangUpNotify message
+ * PBS_ThirdPartyLoginReturn message
  */
-class PBS_ClientHangUpNotify extends \ProtobufMessage
+class PBS_ThirdPartyLoginReturn extends \ProtobufMessage
 {
     /* Field index constants */
-    const COMMUNIID = 1;
+    const CODE = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::COMMUNIID => array(
-            'name' => 'communiid',
-            'required' => false,
+        self::CODE => array(
+            'name' => 'code',
+            'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
@@ -38,7 +38,7 @@ class PBS_ClientHangUpNotify extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::COMMUNIID] = null;
+        $this->values[self::CODE] = null;
     }
 
     /**
@@ -52,25 +52,25 @@ class PBS_ClientHangUpNotify extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'communiid' property
+     * Sets value of 'code' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setCommuniid($value)
+    public function setCode($value)
     {
-        return $this->set(self::COMMUNIID, $value);
+        return $this->set(self::CODE, $value);
     }
 
     /**
-     * Returns value of 'communiid' property
+     * Returns value of 'code' property
      *
      * @return integer
      */
-    public function getCommuniid()
+    public function getCode()
     {
-        $value = $this->get(self::COMMUNIID);
+        $value = $this->get(self::CODE);
         return $value === null ? (integer)$value : $value;
     }
 }
