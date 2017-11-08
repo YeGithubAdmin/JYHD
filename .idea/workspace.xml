@@ -5,6 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="0cab3356-e354-489b-a3c1-d764ac1bb749" name="默认的" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo/info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo/edit.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/ActiveMacroscopicController.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/UsersInfo" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoldStream" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Cache/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Model/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Data/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf/config.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/View" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Common/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Common" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Conf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Controller/NotifyurlController.class.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Temp/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/Logs/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/View/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Runtime/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Application/Jy_ThirdpayIapppay/Model" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" afterPath="$PROJECT_DIR$/Application/Common/Lib/func.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/NotifyurlController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php" />
@@ -81,6 +106,47 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_ModuleData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_ModuleData.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_PlayerData.php" afterPath="$PROJECT_DIR$/protoPhp/RedisProto/RPB_PlayerData.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/SmallShellUpdate.php" afterPath="$PROJECT_DIR$/protoPhp/SmallShellUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoPhp/LoginEvent.php" afterPath="$PROJECT_DIR$/protoPhp/LoginEvent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/edit.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ActivityListController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ThinkPHP/Library/Think/Db/Driver.class.php" afterPath="$PROJECT_DIR$/ThinkPHP/Library/Think/Db/Driver.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeRevenue/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeRevenue/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/JinPayController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/JinPayController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOnline/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOnline/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeRevenueController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeRevenueController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_event.proto" afterPath="$PROJECT_DIR$/proto/PB_event.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ComController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActivityListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/ActivityListController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proto/PB_gm_tool.proto" afterPath="$PROJECT_DIR$/proto/PB_gm_tool.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Controller/RealTimeOnlineController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/RealTimeOnlineController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/edit.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOverviewController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOverviewController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOnlineController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/RealTimeOnlineController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_Thirdpay/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_Thirdpay/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/VipRewardController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/MallExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/MallExchangeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/ExchangeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/SevenDaysSign/add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/Test1Controller.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/Test1Controller.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/ActivityList/add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOverview/index.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/RealTimeOverview/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/PayMacroscopicController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/PayMacroscopicController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_admin/Controller/GoodsAllController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/PayType.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/PayType.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html" afterPath="$PROJECT_DIR$/Application/Jy_admin/View/GoodsAll/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_script/Controller/HorseRaceLampController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_script/Controller/HorseRaceLampController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/Controller/UsersInfoController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_statistics/Controller/UsersInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Conf/config.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php" afterPath="$PROJECT_DIR$/Application/Jy_api/Controller/MallGoodsListController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/Goods.html" afterPath="$PROJECT_DIR$/Application/Jy_statistics/View/PayMacroscopic/Goods.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -110,64 +176,35 @@
       <file leaf-file-name="CardInfoController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="945">
-              <caret line="85" column="27" lean-forward="true" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MibackController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_Thirdpay/Controller/MibackController.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="93" column="16" lean-forward="false" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="16" />
+            <state relative-caret-position="672">
+              <caret line="75" column="25" lean-forward="false" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
               <folding>
-                <element signature="e#6#25#0#PHP" expanded="true" />
-                <element signature="e#60#81#0#PHP" expanded="true" />
+                <marker date="1510138650183" expanded="true" signature="2849:2942" ph="..." />
+                <marker date="1510138650183" expanded="true" signature="2948:4166" ph="..." />
+                <marker date="1510138650183" expanded="true" signature="3297:3406" ph="..." />
+                <marker date="1510138650183" expanded="true" signature="3412:4156" ph="..." />
+                <marker date="1510138650183" expanded="true" signature="3762:3922" ph="..." />
+                <marker date="1510138650183" expanded="true" signature="4017:4070" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThirdPartyLoginController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/ThirdPartyLoginController.class.php">
+      <file leaf-file-name="TheFirstPunchController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/TheFirstPunchController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="40" column="28" lean-forward="true" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
-              <folding>
-                <element signature="e#6#314#0#PHP" expanded="true" />
-                <element signature="e#344#380#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="miapi.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/thirdpay/Mipay/miapi.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="58" column="7" lean-forward="true" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
+            <state relative-caret-position="1113">
+              <caret line="84" column="9" lean-forward="false" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RewardController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/RewardController.class.php">
+      <file leaf-file-name="NewTheFirstPunchController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/NewTheFirstPunchController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="33" column="42" lean-forward="true" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CardReceiveRewardsController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardReceiveRewardsController.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="678">
-              <caret line="153" column="32" lean-forward="false" selection-start-line="153" selection-start-column="32" selection-end-line="153" selection-end-column="32" />
+            <state relative-caret-position="363">
+              <caret line="62" column="29" lean-forward="false" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -192,7 +229,6 @@
       <find>没有玩家形</find>
       <find>没有玩家</find>
       <find>没有玩家信息</find>
-      <find>Primary</find>
       <find>Primary</find>
       <find>options</find>
       <find>Proc</find>
@@ -327,24 +363,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="thirdpay" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jy" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="thirdpay" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mipay" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -655,7 +673,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1680961000" />
+    <option name="totallyTimeSpent" value="1680965000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -667,7 +685,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22604166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -682,15 +700,26 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25264272" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22604166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -744,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1869">
           <caret line="21" column="32" lean-forward="false" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,7 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="699">
           <caret line="145" column="21" lean-forward="false" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -768,7 +795,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="63" column="23" lean-forward="false" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -776,7 +802,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="47" column="12" lean-forward="false" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -784,7 +809,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="95" column="8" lean-forward="true" selection-start-line="95" selection-start-column="8" selection-end-line="101" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -792,10 +816,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
           <caret line="31" column="56" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#3;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -803,10 +823,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
           <caret line="106" column="45" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="124" selection-end-column="7" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#3;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -814,11 +830,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="619">
           <caret line="80" column="16" lean-forward="true" selection-start-line="80" selection-start-column="16" selection-end-line="80" selection-end-column="16" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#td#8;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#1;n#td#8;n#tr#0;n#volist#0;n#tbody#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -836,26 +847,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="32" column="25" lean-forward="true" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/Test1Controller.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/Test2Controller.class.php" />
+    <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/Test1Controller.class.php" />
     <entry file="file://$PROJECT_DIR$/Application/Jy_admin/Controller/UsersAttributeController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="678">
@@ -868,7 +864,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="44" column="12" lean-forward="false" selection-start-line="44" selection-start-column="12" selection-end-line="57" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -876,7 +871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="627">
           <caret line="193" column="39" lean-forward="true" selection-start-line="193" selection-start-column="39" selection-end-line="193" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -884,7 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="60" column="14" lean-forward="false" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -892,7 +885,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -900,9 +892,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="861">
           <caret line="93" column="42" lean-forward="true" selection-start-line="93" selection-start-column="42" selection-end-line="93" selection-end-column="42" />
-          <folding>
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -910,7 +899,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="5" column="41" lean-forward="false" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -918,9 +906,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="84" selection-end-column="6" />
-          <folding>
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -928,7 +913,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="559">
           <caret line="73" column="139" lean-forward="false" selection-start-line="73" selection-start-column="137" selection-end-line="73" selection-end-column="139" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -936,7 +920,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="948">
           <caret line="274" column="31" lean-forward="true" selection-start-line="274" selection-start-column="31" selection-end-line="274" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -952,7 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -960,9 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="229" column="17" lean-forward="true" selection-start-line="229" selection-start-column="17" selection-end-line="229" selection-end-column="17" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#3;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -970,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="299" column="61" lean-forward="false" selection-start-line="299" selection-start-column="61" selection-end-line="299" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -978,7 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
           <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -986,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-21">
           <caret line="17" column="57" lean-forward="false" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -994,7 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1002,7 +977,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="87" column="19" lean-forward="false" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1010,11 +984,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-          <folding>
-            <marker date="1510050101378" expanded="true" signature="3710:4092" ph="SELECT a.acc... jy_admin_users" />
-            <marker date="1510050101378" expanded="true" signature="4149:5979" ph="SELECT * FRO... account" />
-            <marker date="1510050101378" expanded="true" signature="4183:5838" ph="SELECT a.acc... jy_admin_users" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1022,7 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8">
           <caret line="251" column="75" lean-forward="true" selection-start-line="251" selection-start-column="75" selection-end-line="251" selection-end-column="75" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,7 +999,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="685">
           <caret line="321" column="36" lean-forward="false" selection-start-line="321" selection-start-column="29" selection-end-line="321" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1038,7 +1006,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="717" column="9" lean-forward="false" selection-start-line="717" selection-start-column="9" selection-end-line="717" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1054,7 +1021,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1281">
           <caret line="65" column="4" lean-forward="true" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1062,14 +1028,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="762">
           <caret line="127" column="42" lean-forward="false" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/NewTheFirstPunchController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="142" column="23" lean-forward="true" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
+        <state relative-caret-position="363">
+          <caret line="62" column="29" lean-forward="false" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1118,18 +1083,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="567">
           <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding>
-            <marker date="1510131538304" expanded="true" signature="2336:2415" ph="..." />
-            <marker date="1510131538304" expanded="false" signature="2568:2607" ph="..." />
-            <marker date="1510131538304" expanded="true" signature="2608:2913" ph="..." />
-            <marker date="1510131538304" expanded="false" signature="2662:2680" ph="..." />
-            <marker date="1510131538304" expanded="true" signature="2809:2897" ph="..." />
-            <marker date="1510131538304" expanded="true" signature="2981:3271" ph="..." />
-            <marker date="1510131538304" expanded="true" signature="3020:3252" ph="{...}" />
-            <marker date="1510131538304" expanded="true" signature="3315:3444" ph="..." />
-            <marker date="1510131538304" expanded="true" signature="3362:3425" ph="{...}" />
-            <marker date="1510131538304" expanded="true" signature="18854:19842" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1151,9 +1105,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Jy_api/Controller/CardInfoController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="85" column="27" lean-forward="true" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="672">
+          <caret line="75" column="25" lean-forward="false" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
+          <folding>
+            <marker date="1510138650183" expanded="true" signature="2849:2942" ph="..." />
+            <marker date="1510138650183" expanded="true" signature="2948:4166" ph="..." />
+            <marker date="1510138650183" expanded="true" signature="3297:3406" ph="..." />
+            <marker date="1510138650183" expanded="true" signature="3412:4156" ph="..." />
+            <marker date="1510138650183" expanded="true" signature="3762:3922" ph="..." />
+            <marker date="1510138650183" expanded="true" signature="4017:4070" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1161,10 +1122,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="40" column="28" lean-forward="true" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
-          <folding>
-            <element signature="e#6#314#0#PHP" expanded="true" />
-            <element signature="e#344#380#0#PHP" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1172,10 +1130,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="93" column="16" lean-forward="false" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="16" />
-          <folding>
-            <element signature="e#6#25#0#PHP" expanded="true" />
-            <element signature="e#60#81#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1183,7 +1137,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="58" column="7" lean-forward="true" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
