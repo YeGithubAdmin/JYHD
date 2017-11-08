@@ -49,8 +49,6 @@ function createOrder() {
 	$post_arr['sign'] = rsa_sign($post_arr);
 	$post_arr['player_id'] = 'amigo_player001'; // 【NOTE】请填写amigo玩家id
 
-
-	print_r($post_arr);
 	$json = json_encode($post_arr);
 	
 	$return_json = https_curl($dst_url, $json);

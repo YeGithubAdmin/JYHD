@@ -1,6 +1,6 @@
 <?php
 /***
- * vip 信息
+ * 第3方登录
  * @param array   $msgArr  2*  成功  3.* 超时无响应  4.*丢失或参数缺失  5.* 服务器配置问题  6.*来不明  7.* 权限问题 8.* 配置问题
  * @param int     $page         页码
  * @param int     $num          页数
@@ -10,138 +10,84 @@
  ***/
 namespace Jy_api\Controller;
 use Jy_api\Controller\ComController;
-use Protos\OptReason;
 use Protos\OptSrc;
-use Protos\PBS_UsrDataOprater;
-use Protos\PBS_UsrDataOpraterReturn;
-use Protos\UsrDataOpt;
-use RedisProto\RPB_PlayerData;
+use Protos\PBS_ThirdPartyLogin;
+use Protos\PBS_ThirdPartyLoginReturn;
 use Think\Controller;
 use Think\Model;
-class VipInfoController extends ComController {
+class ThirdPartyLoginController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
+        include  JY_ROOT.'thirdpay/Mipay/miapi.php';
         $obj   = new \Common\Lib\func();
-        $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
+        $msgArr[2000] = "验证成功！";
+        $msgArr[3002] = "网络超时，请稍后再试！";
         $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
-        $msgArr[4006] = "用户信息缺失！";
+        $msgArr[3004] = "与游戏服务器断开，请稍后再试！";
+        $msgArr[4006] = "uid缺失！";
+        $msgArr[4007] = "LoginCode缺失！";
         $msgArr[5002] = "系统错误，请稍后再试！";
         $result = 2001;
         $info   =  array();
-        $playerid = $DataInfo['playerid'];
-        if(empty($playerid)){
-            $result = 4006;
+        $uid = $DataInfo['uid'];
+        if(empty($uid)){
+            $result  = 4006;
+            goto  response;
+        }
+
+        $LoginCode = $DataInfo['LoginCode'];
+        if(empty($LoginCode)){
+            $result  = 4007;
             goto response;
         }
-        //已入protobuf 类
-        $obj->ProtobufObj(array(
-            'Protos/PBS_UsrDataOprater.php',
-            'Protos/UsrDataOpt.php',
-            'Protos/OptSrc.php',
-            'OptReason.php',
-            'PB_Item.php',
-            'RPB_PlayerNumerical.php',
-            'RedisProto/RPB_PlayerData.php',
-            'Protos/PBS_UsrDataOpraterReturn.php',
-        ));
-        $PBS_UsrDataOprater = new PBS_UsrDataOprater();
-        $UsrDataOpt         = new UsrDataOpt();
-        $OptSrc             = new OptSrc();
-        $PBS_UsrDataOprater->setPlayerid($playerid);
-        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
-        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
-        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
-        //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $Channel = $DataInfo['channel'];
+        //验证
+        $miapi = new \Miapi();
+        $appid = '2882303761517630341';
+        $key ='bFn9ZhgrimiXJ/379DyiyA==';
 
-        if(strlen($PBS_UsrDataOpraterRespond)==0){
+        $VerificationSession = $miapi->VerificationSession($appid,$key,$uid,$LoginCode);
+
+        if($VerificationSession == 504){
+            $result  = 3001;
+            goto response;
+        }
+        $VerificationSession = json_decode($VerificationSession,true);
+
+        if($VerificationSession['errcode'] != 200){
+            $result = $VerificationSession['errcode'];
+            $msgArr[$result] = $VerificationSession['errMsg'];
+            goto response;
+        }
+        //游戏服务器
+        $obj->ProtobufObj(array(
+            'Protos/PBS_ThirdPartyLogin.php',
+            'Protos/PBS_ThirdPartyLoginReturn.php',
+        ));
+        $PBS_ThirdPartyLogin         = new PBS_ThirdPartyLogin();
+        $PBS_ThirdPartyLoginReturn   = new PBS_ThirdPartyLoginReturn();
+        $PBS_ThirdPartyLogin->setChannel($Channel);
+        $PBS_ThirdPartyLogin->setLoginCode($LoginCode);
+        $PBS_ThirdPartyLogin->setUid($uid);
+        $prcoto = $PBS_ThirdPartyLogin->serializeToString();
+        $Respond =  $obj->ProtobufSend('protos.PBS_ThirdPartyLogin',$prcoto,1);
+        if($Respond  == 504){
             $result = 3003;
             goto response;
         }
-        if($PBS_UsrDataOpraterRespond  == 504){
-            $result = 3002;
+        if(strlen($Respond)==0){
+            $result = 3004;
             goto response;
         }
-        //接受回应
-        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
-        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
 
-        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-
+        $PBS_ThirdPartyLoginReturn->parseFromString($Respond);
+        $ReplyCode = $PBS_ThirdPartyLoginReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
             goto response;
         }
-        $Base       =  $PBS_UsrDataOpraterReturn->getBase();
-        //vip 等级
-        $VipLevel   =  $Base->getVip();
-        //vip 经验
-        $VipExp     =  $Base->getVipExp();
-        //获取vip规则
-        $catVipInfoField = array(
-            'ImgCode',
-            'Describe',
-            'level',
-            'GiveInfo',
-            'experience'
-        );
-        $catVipInfo = M('jy_vip_info')
-                      ->field($catVipInfoField)
-                      ->order('level asc')
-                      ->select();
-        if(empty($catVipInfo)){
-            $result = 5002;
-            goto response;
-        }
-        $OrderVipInfo  = array();
-        foreach ($catVipInfo as $k=>$v){
-            $OrderVipInfo[$v['level']] = $v;
-            //status 是否单当前等级   1-否  2-是
-            if($v['level'] <= $VipLevel){
-                $catVipInfo[$k]['status'] = 2;
-            }else{
-                $catVipInfo[$k]['status'] = 1;
-            }
-            if($catVipInfo[$k]['level'] == 0){
-                unset($catVipInfo[$k]);
-            }
-        }
-        $MaxLevel  =  $catVipInfo[count($catVipInfo)]['level'];
-        //下个等级
-        if($MaxLevel == $VipLevel){
-            $UpVipLevel = $VipLevel;
-        }else{
-            $UpVipLevel = $VipLevel+1 ;
-        }
-
-        //下个等级升级经验
-        $UpVipExp   =  $OrderVipInfo[$UpVipLevel];
-        $info['VipInfo']  = array_values($catVipInfo);
-        $info['UpVipExp'] = $UpVipExp['experience'];
-        $info['UpVipLevel'] = $UpVipExp['level'];
-        $info['VipExp']   = $VipExp;
-
-        //判断是否已经领取 1-否  2-是
-        $Status = 1;
-        $catVipRewardlogField = array(
-            'Id',
-        );
-        $strtotime = strtotime(date('Y-m-d'),time());
-        $StartTime = date('Y-m-d H:i:s',$strtotime);
-        $EndTime   = date('Y-m-d H:i:s',$strtotime+24*60*60);
-        $catVipRewardlog = M('jy_vip_reward_log')
-            ->where('playerid = '.$playerid.'  and  
-                    DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  
-                    and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
-            ->field($catVipRewardlogField)
-            ->find();
-        if(empty($catVipRewardlog) && $VipLevel > 0){
-            $Status = 2;
-        }
-        $info['Status'] = $Status;
-
         response:
             $response = array(
                 'result' => $result,
@@ -151,4 +97,5 @@ class VipInfoController extends ComController {
             );
             $this->response($response,'json');
     }
+
 }

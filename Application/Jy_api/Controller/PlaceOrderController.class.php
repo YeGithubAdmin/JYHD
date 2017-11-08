@@ -73,6 +73,7 @@ class PlaceOrderController extends ComController {
                 goto response;
             }
         }
+        $MoreThan = $playerid%10;
         //查询物品信息
         $catGoodsAllFile = array(
             'Id',
@@ -114,7 +115,7 @@ class PlaceOrderController extends ComController {
             $logUsersShop = array(
                 'count(Id) as num'
             );
-            $logUsersShop = M('log_users_shop_0')
+            $logUsersShop = M('log_users_shop_'.$MoreThan)
                 ->where($where)
                 ->field($logUsersShop)
                 ->select();
@@ -130,7 +131,7 @@ class PlaceOrderController extends ComController {
         }
         //月卡
         if($Type == 2){
-            $UsersPackageShopLog = $model->table('log_users_shop_0')
+            $UsersPackageShopLog = $model->table('log_users_shop_'.$MoreThan)
                 ->where('playerid = '.$playerid.' and Code = 7')
                 ->field('UNIX_TIMESTAMP(DateTime) as DateTime')
                 ->order('Id desc')
@@ -154,7 +155,6 @@ class PlaceOrderController extends ComController {
             'RPB_PlayerNumerical.php',
             'Protos/UsrDataOpt.php',
         ));
-
         $UsrDataOprater         =   new  PBS_UsrDataOprater();
         $UsrDataOpraterReturn   =   new  PBS_UsrDataOpraterReturn();
         $OptSrc                 =   new  OptSrc();
@@ -162,8 +162,6 @@ class PlaceOrderController extends ComController {
         $UsrDataOprater->setPlayerid($playerid);
         $UsrDataOprater->setOpt($UsrDataOpt::Request_All);
         $UsrDataOprater->setSrc($OptSrc::Src_PHP);
-
-
         $String = $UsrDataOprater->serializeToString();
         //发送请求
         $UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$String,$playerid);
@@ -221,10 +219,15 @@ class PlaceOrderController extends ComController {
                     ->field($catGoodsAllGiveField)
                     ->select();
             }
-
         }
 
-        if($PlatformType != 5){
+
+        $dataType = array(
+            5,
+            6,
+        );
+
+        if(!in_array($PlatformType,$dataType)){
             //查询支付信息
             $CatThirdpayField = array(
                 'c.Id',
@@ -253,6 +256,9 @@ class PlaceOrderController extends ComController {
                     goto response;
                 }
             }
+        }else{
+             $CatThirdpay['PassAgeWay'] = '';
+             $CatThirdpay['Id'] = 0;
         }
         //是否首次充值
         $catUserOrder = M('jy_users_order_info')
@@ -272,7 +278,6 @@ class PlaceOrderController extends ComController {
         $Proportion = 0;
         if(empty($catUsersShopLog) && $Type == 3){
             $Proportion = $catGoodsAll['Proportion'];
-
         }
         //订单号
         $getrand = $obj->RandomNumber();
@@ -305,10 +310,6 @@ class PlaceOrderController extends ComController {
             $dataUsersOrderGoods[$num]['Type']              = $v['Type'];
             $num++;
         }
-        if($PlatformType == 5){
-            $CatThirdpay['PassAgeWay'] = '';
-            $CatThirdpay['Id'] = 0;
-        }
         //订单信息
         $dataUsersOrderInfo = array(
             'playerid'=>$playerid,
@@ -339,10 +340,10 @@ class PlaceOrderController extends ComController {
         $PayInfo = array();
         switch ($PlatformType){
             case  1:
-                $Payment = true;
+
                 break;
             case  2:
-                $Payment = true;
+
                 break;
             case  3:
                 $Payment = true;
@@ -391,6 +392,14 @@ class PlaceOrderController extends ComController {
                 $info['IosCode'] = $catGoodsAll['IosCode'];
                 $info['Order']   = $PlatformOrder;
             break;
+                //小米支付
+            case 6:
+                $Payment = true;
+                $info['mibi']        =  $catGoodsAll['CurrencyNum'];
+                $info['cpOrderId']   =  $PlatformOrder;
+                $info['cpUserInfo']  =  $playerid.'#'.$catGoodsAll['Id'];
+            break;
+
             default:
                 break;
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_event.proto at 2017-10-30 16:45:17
+ * Auto generated from PB_event.proto at 2017-11-07 17:09:45
  */
 
 namespace {
@@ -11,6 +11,8 @@ class BankruptcyEvent extends \ProtobufMessage
 {
     /* Field index constants */
     const PLAYERID = 1;
+    const CHANNEL = 2;
+    const GAME_VER = 3;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -18,6 +20,16 @@ class BankruptcyEvent extends \ProtobufMessage
             'name' => 'playerid',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::CHANNEL => array(
+            'name' => 'channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::GAME_VER => array(
+            'name' => 'game_ver',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
     );
 
@@ -37,6 +49,8 @@ class BankruptcyEvent extends \ProtobufMessage
     public function reset()
     {
         $this->values[self::PLAYERID] = null;
+        $this->values[self::CHANNEL] = null;
+        $this->values[self::GAME_VER] = null;
     }
 
     /**
@@ -70,6 +84,52 @@ class BankruptcyEvent extends \ProtobufMessage
     {
         $value = $this->get(self::PLAYERID);
         return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setChannel($value)
+    {
+        return $this->set(self::CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'channel' property
+     *
+     * @return string
+     */
+    public function getChannel()
+    {
+        $value = $this->get(self::CHANNEL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'game_ver' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setGameVer($value)
+    {
+        return $this->set(self::GAME_VER, $value);
+    }
+
+    /**
+     * Returns value of 'game_ver' property
+     *
+     * @return string
+     */
+    public function getGameVer()
+    {
+        $value = $this->get(self::GAME_VER);
+        return $value === null ? (string)$value : $value;
     }
 }
 }

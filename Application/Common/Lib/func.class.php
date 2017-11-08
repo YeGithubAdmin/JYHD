@@ -29,7 +29,6 @@ class func{
 							$return_data[$arr[0]] = isset($arr[1]) ? $arr[1] : '';
 						}
 					}
-
 				}
 			}
 
@@ -628,6 +627,5 @@ class func{
         header( "Expires: 0" );
         exit( $str );
     }
-
 
 }

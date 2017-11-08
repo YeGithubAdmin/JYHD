@@ -32,7 +32,7 @@ class NewTheFirstPunchController extends ComController {
             $result = 4006;
             goto response;
         }
-        $more =  $playerid%4;
+        $MoreThan =  $playerid%10;
         //查询物品信息
         $catGoods = M('conf_novice_pack as a')
             ->join('jy_goods_all as b on  a.`GoodsID` = b.`Id` and `IsDel` = 1')
@@ -58,7 +58,7 @@ class NewTheFirstPunchController extends ComController {
          $logUsersShopField = array(
              'count(Id) as num'
          );
-        $logUsersShopDb = M('log_users_shop_0');
+        $logUsersShopDb = M('log_users_shop_'.$MoreThan);
          foreach($catGoods as $k=>$v){
               $LimitShop =  $v['LimitShop'];
               if($v['LimitShop'] > 1) {
@@ -81,7 +81,6 @@ class NewTheFirstPunchController extends ComController {
                      ->where($where)
                      ->field($logUsersShopField)
                      ->select();
-
                  if($logUsersShop[0]['num'] >= $v['LimitShopNum'] &&  $v['LimitShop'] < 5 && $v['LimitShop'] > 1){
                      unset($catGoods[$k]);
                  }
@@ -147,7 +146,6 @@ class NewTheFirstPunchController extends ComController {
                 $info['Status']    = 1;
          }
          $info['Goods'] =  $catGoods;
-
          response:
             $response = array(
                 'result'    => $result,

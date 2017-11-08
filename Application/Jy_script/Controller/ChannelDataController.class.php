@@ -322,7 +322,6 @@ class ChannelDataController extends Controller {
             }else{
                 $info[$k]['UsersThirtyNum'] = 0.00;
             }
-            $info[$k]['DateTime'] = $StartTime;
         }
         //添加数据
         $addStatisticsUsersPay = $model
