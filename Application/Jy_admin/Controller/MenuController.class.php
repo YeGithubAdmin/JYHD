@@ -33,20 +33,28 @@ class MenuController extends ComController {
         $obj = new \Common\Lib\func();
         $db = M('jy_system_menu');
         $menuList = $db
-            ->where('upid = 0 and islock = 1')
+            ->where('islock = 1')
             ->field('id,upid,name')
             ->select();
-
         if(IS_POST){
-            $dataMenu['name'] = I('param.name','','trim');
-            $dataMenu['icon'] = I('param.icon','','trim');
-            $dataMenu['sort'] = I('param.sort',0,'intval');
+            $upid  = I('param.upid',0,'intval');
+            $towid = I('param.towid',0,'intval');
+            $dataMenu['name']   = I('param.name','','trim');
+            $dataMenu['icon']   = I('param.icon','','trim');
+            $dataMenu['sort']   = I('param.sort',0,'intval');
             $dataMenu['remark'] = I('param.remark','','trim');
-            $dataMenu['url'] = I('param.url','','trim');
-            $dataMenu['upid'] = I('param.upid',0,'intval');
+            $dataMenu['url']    = I('param.url','','trim');
             $dataMenu['islock'] = I('param.islock',1,'intval');
-
-
+            if($towid != 0){
+                $dataMenu['upid']   = $towid;
+            }else{
+                $dataMenu['upid']  = $upid;
+            }
+            $Group  = array(
+                'upid'  => $upid,
+                'towid' => $towid,
+            );
+            $dataMenu['Group'] = json_encode($Group);
 
             $addMeu = $db
                     ->add($dataMenu);
@@ -55,7 +63,6 @@ class MenuController extends ComController {
             }else{
                 $obj->showmessage('添加失败');
             }
-
         }
         $this->assign('menu',$menuList);
         $this->display('add');
@@ -68,29 +75,40 @@ class MenuController extends ComController {
         if($id == 0){
             $obj->showmessage('非法操作');
         }
-
         $db = M('jy_system_menu');
         $menuList = $db
-            ->where('upid = 0  and islock = 1')
+            ->where('islock = 1')
             ->field('id,upid,name')
             ->select();
-
         //菜单信息
         $menuInfo = $db
                     ->where('id = '.$id)
-                    ->field('id,upid,name,sort,icon,url,islock,remark,mtime')
+                    ->field('id,upid,name,sort,Group,icon,url,islock,remark,mtime')
                     ->find();
-
-
-
+        if(!empty($menuInfo)){
+            $Group = json_decode($menuInfo['Group'],true);
+        }else{
+            $Group = array();
+        }
         if(IS_POST){
-            $dataMenu['icon'] = I('param.icon','','trim');
-            $dataMenu['sort'] = I('param.sort',0,'intval');
-            $dataMenu['remark'] = I('param.remark','','trim');
-            $dataMenu['url'] = I('param.url','','trim');
-            $dataMenu['name'] = I('param.name','','trim');
-            $dataMenu['upid'] = I('param.upid',0,'intval');
-            $dataMenu['islock'] = I('param.islock',1,'intval');
+            $upid               =     I('param.upid',0,'intval');
+            $towid              =     I('param.towid',0,'intval');
+            $dataMenu['icon']   =     I('param.icon','','trim');
+            $dataMenu['sort']   =     I('param.sort',0,'intval');
+            $dataMenu['remark'] =     I('param.remark','','trim');
+            $dataMenu['url']    =     I('param.url','','trim');
+            $dataMenu['name']   =     I('param.name','','trim');
+            $dataMenu['islock'] =     I('param.islock',1,'intval');
+            if($towid != 0){
+                $dataMenu['upid']   = $towid;
+            }else{
+                $dataMenu['upid']  = $upid;
+            }
+            $Group  = array(
+                'upid'  => $upid,
+                'towid' => $towid,
+            );
+            $dataMenu['Group'] = json_encode($Group);
             $upMenu = $db
                 ->where('id = '.$id)
                 ->save($dataMenu);
@@ -100,9 +118,9 @@ class MenuController extends ComController {
                 $obj->showmessage('修改失败');
             }
         }
-
         $this->assign('menu',$menuList);
         $this->assign('info',$menuInfo);
+        $this->assign('Group',$Group);
         $this->display('edit');
     }
     //删除
@@ -117,7 +135,6 @@ class MenuController extends ComController {
             $upInfo =  $db
                 ->where('upid = '.$id)
                 ->find();
-
             if(!empty($upInfo)){
                 echo 2;
             }else{

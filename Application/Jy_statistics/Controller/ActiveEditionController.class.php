@@ -8,108 +8,66 @@ defined('THINK_PATH') or exit('Access Defined!');
 class ActiveEditionController extends ComController {
     //列表
     public function index(){
-
-        //天数
-        $DayNum = I('param.DayNum',7,'intval');
-        //选择时间
-        $DateTime = I('param.DateTime','','trim');
-        //一天的秒数
+        //默认30天
+        $page           = $this->page;              //页码
+        $num            = $this->num;               //条数
         $DayTime = 24*60*60;
-        if($DateTime == ''){
-            $DayDate  = date('Y-m-d',time());
-            $DayDate  = strtotime($DayDate)-$DayTime;
-            $DateTime =  date('Y-m-d H:i:s',$DayDate);
+        $StartTime  = date('Y-m-d',time()-$DayTime*31);
+        $EndTime    = date('Y-m-d',time()-$DayTime);
+        $search['Version'] = I('param.Version','','trim');
+        $search['DateTime'] = I('param.DateTime',$StartTime,'trim');
+        $search['datemax'] = I('param.datemax',$EndTime,'trim');
+        $where = '1';
+        if($search['DateTime'] != ''){
+            $where .= ' and DateTime >= str_to_date("'.$search['DateTime'] .'","%Y-%m-%d %H:%i:%s")';
         }
-        $strtotime = strtotime($DateTime);
-        //起始时间
-        $StartTime = date('Y-m-d H:i:s',$strtotime-($DayTime-1)*$DayNum) ;
-        //结束时间
-        $EndTime  = date('Y-m-d H:i:s',$strtotime+$DayTime);
-        //时间范围
-        $erverDay = array();
-        for ($i=0;$i<$DayNum;$i++){
-            $erverDayTime = $strtotime-$i*$DayTime;
-            $erverDay[$i]['time'] = date('n月j日',$erverDayTime);
-            $erverDay[$i]['date'] = date('Y-m-d',$erverDayTime);
+        if($search['datemax'] != ''){
+            $datemax =  date('Y-m-d',strtotime($search['datemax'])+$DayTime);
+            $where .= ' and DateTime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
         }
+        if($search['Version'] != ''){
+            $where .= ' and Version = "'.$search['Version'].'"';
+        }
+         //版本信息
+        $catGameVer  = M('jy_game_version')
+                       ->field(array(
+                           'Version',
+                       ))
+                       ->select();
 
-        //查询区间数据
-        $catGameVersionField = array(
-            'Version',
-        );
-        $catGameVersion = M('jy_game_version')
-            ->field($catGameVersionField)
-            ->select();
+
+        //条数
+        $count = M('jy_statistics_activem_acroscopic')
+                 ->where($where)
+                 ->field(array(
+                     'date_format(DateTime,"%Y-%m-%d")  as t',
+                     'VerSion',
+                 ))
+                 ->group('VerSion,t')
+                 ->select();
+
+
+        $Page       = new \Common\Lib\Page(count($count),$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show       = $Page->show();// 分页显示输出
         //查询数据
         $catDataField = array(
-            'Version',
-            'UserNum',
+            'sum(Account) as Account',
+            'sum(EquipmentAndroid)+sum(EquipmentIos) as Equipment',
+            'VerSion',
             'date_format(DateTime,"%Y-%m-%d")  as t'
         );
-        $catData = M('jy_statistics_activem_version')
-            ->where(' DateTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
-                            and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")','left')
+        $catData = M('jy_statistics_activem_acroscopic')
+            ->where($where)
             ->field($catDataField)
+            ->group('VerSion,t')
+            ->limit($page*$num,$num)
             ->select();
+//        dump($catData);
         //分组
-        $catDataSort = array();
-        foreach ($catData as $k=>$v)$catDataSort[$v['Version']]['data'][] = $v;
-        //组装
-        foreach ($catGameVersion as $k=>$v){
-            $dataGameVersion = array();
-            if($catDataSort[$v['Version']]){
-                $dataCurrency = $catDataSort[$v['Version']]['data'];
-                $dateArr      = array();
-                foreach ($dataCurrency as $key=>$val) $dateArr[$val['t']] = $val;
-                foreach ($erverDay as $key=>$val){
-                    if($dateArr[$val['date']]){
-                        $dataGameVersion[$key]['DateTime'] =$val['time'];
-                        $dataGameVersion[$key]['UserNum'] =  $dateArr[$val['date']]['UserNum'];
-                    }else{
-                        $dataGameVersion[$key]['DateTime'] = $val['time'];
-                        $dataGameVersion[$key]['UserNum'] =  0;
-                    }
-                }
-            }else{
-                foreach ($erverDay as $key=>$val){
-                    $dataGameVersion[$key]['DateTime'] = $val['time'];
-                    $dataGameVersion[$key]['UserNum'] =  0;
-                }
-            }
-            $catGameVersion[$k]['data'] = $dataGameVersion;
-        }
-        $this->assign('erverDay',$erverDay);
-        $this->assign('info',$catGameVersion);
-        $this->assign('DateTime',$DateTime);
-        $this->assign('DayNum',$DayNum);
+        $this->assign('info',$catData);
+        $this->assign('page',$show);
+        $this->assign('GameVer',$catGameVer);
+        $this->assign('search',$search);
         $this->display();
     }
-
-    //计算脚本
-    public function Script(){
-        $time = strtotime(date('Y-m-d',time()));
-        $Day  = 24*60*60;
-        $StartTime = date('Y-m-d H:i:s',$time-$Day);
-        $EndTime   = date('Y-m-d H:i:s',$time);
-        $infoFiled  = array(
-            'a.Version',
-            'count(distinct b.playerid) as UserNum'
-        );
-        $info = M('jy_game_version  as a')
-                  ->join('jy_users_login_log as  b on 
-                    a.Version = b.Version  and 
-                    b.LastTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  
-                    str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= b.LastTime','left')
-                  ->field($infoFiled)
-                  ->group('a.Version')
-                  ->select();
-         if(!empty($info)){
-             foreach ($info as $k=>$v){
-                 $info[$k]['DateTime'] = $StartTime;
-             }
-            $addDb = M('jy_statistics_activem_version')->addAll($info);
-         }
-
-    }
-
 }

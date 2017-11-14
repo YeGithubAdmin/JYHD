@@ -42,18 +42,19 @@
         <div class="text-c">
             创建时间： <input type="text"
                          onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
-                         id="datemin" value="{$DateTime}" name="DateTime"
+                         id="datemin" value="{$search['DateTime']}" name="DateTime"
                          class="input-text Wdate" style="width: 120px;">  <input
-                type="hidden"
+                type="text"
                 onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
                 id="datemax" value="{$search['datemax']}" name="datemax"
                 class="input-text Wdate" style="width: 120px;">
 
             <span style="width: 150px" class="select-box">
-                <select size="1" name="DayNum" class="select">
-                    <option value="7" <if  condition= "$DayNum eq '7'">selected</if> >7天</option>
-                    <option value="15" <if  condition= "$DayNum eq '15'">selected</if> >15天</option>
-                    <option value="30" <if  condition= "$DayNum eq '30'">selected</if> >30天</option>
+                <select size="1" name="Version" class="select">
+                    <option value=""  >版本号</option>
+                    <volist name = "GameVer" id = "val">
+                        <option value="{$val['Version']}" <if  condition= "$search['Version'] eq $val['Version']">selected</if> >{$val['Version']}</option>
+                    </volist>
 				</select>
 			</span>
             <button type="submit" class="btn btn-success" id="" name="">
@@ -66,27 +67,29 @@
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
         <thead>
         <tr class="text-c">
-            <th width="60">版本</th>
-            <volist name = "erverDay" id ="val">
-                <th width="100">{$val['time']}</th>
-            </volist>
+            <th width="30">版本</th>
+            <th width="60">日期</th>
+            <th width="60">账号活跃</th>
+            <th width="60">设备活跃</th>
         </tr>
         </thead>
         <tbody>
         <volist name ="info" id ="val">
             <tr class="text-c">
-                <th>{$val['Version']}</th>
-                <volist name ="val['data']" id = "v">
-                    <th>{$v['UserNum']}</th>
-                </volist>
+                <th>{$val['VerSion']}</th>
+                <th>{$val['t']}</th>
+                <th>{$val['Account']}</th>
+                <th>{$val['Equipment']}</th>
             </tr>
         </volist>
         </tbody>
     </table>
 </div>
-<div class="pd-20">
-    <div id="container" style="min-width:700px;height:400px"></div>
+<div class = "cl">
+    <div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+         class="dataTables_paginate paging_simple_numbers">{$page}</div>
 </div>
+
 
 
 <script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>

@@ -90,13 +90,7 @@ class  IosBackController extends Controller {
             $dir = C('YQ_ROOT').'Log/pay/'.date('Y').'/'.date('m').'/'.date('d').'/';
             $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',json_encode($DataInfo));
         }
-        //如果是沙盒模式，请求苹果测试服务器,反之，请求苹果正式的服务器
-        $isSandbox = false;
-        if ($isSandbox) {
-            $endpoint = 'https://buy.itunes.apple.com/verifyReceipt';
-        }else {
-            $endpoint = 'https://sandbox.itunes.apple.com/verifyReceipt';
-        }
+        //如果是沙盒模式，请求苹果测试服务器,反之，请求苹果正式的服务器  1 沙盒 2 -正式
         if(!$receipt){
             $result = 4003;
             goto  failed;
@@ -104,19 +98,15 @@ class  IosBackController extends Controller {
         $postData = json_encode(
             array('receipt-data' => $receipt)
         );
-        $response = $this->Curl($endpoint,$postData);
-        if($response == -2){
-            $result = 3008;
-            goto  failed;
-        }
-        if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/pay/'.date('Y').'/'.date('m').'/'.date('d').'/';
-            $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',$response);
-        }
+        $response = $this->Curl(2,$postData);
         $data = json_decode($response,true);
         if($data['status']  || $data['status'] !=0){
-            $result = 7002;
-            goto failed;
+            $response = $this->Curl(1,$postData);
+            $data = json_decode($response,true);
+            if($data['status']  || $data['status'] !=0){
+                $result = 7002;
+                goto failed;
+            }
         }
         //查询商品
         $GoodsInfoField = array(
@@ -214,7 +204,8 @@ class  IosBackController extends Controller {
             $StartTime = date('Y-m-d H:i:s',$strtotime);
             $EndTime   = date('Y-m-d H:i:s',$strtotime+24*60*60);
             $catVipRewardlog = M('jy_vip_reward_log')
-                ->where('playerid = '.$playerid.'  and  DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
+                ->where('playerid = '.$playerid.'  and  DateTime  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  
+                         and   DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")')
                 ->field($catVipRewardlogField)
                 ->find();
             if(empty($catVipRewardlog)){
@@ -235,6 +226,9 @@ class  IosBackController extends Controller {
         }
         //是否月卡
         if($CatOrderInfo['Form'] == 2){
+            $dataLogUsersShop['Number'] = 1;
+            $dataLogUsersShop['Type']   = $GoodsInfo[0]['Type'];
+            $dataLogUsersShop['Code']   = $GoodsInfo[0]['GoodsCode'];
             $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
             $PlayerData->setMcOvertime(time()+29*24*60*60);
             $PlayerData->setIsMc(true);
@@ -248,11 +242,21 @@ class  IosBackController extends Controller {
             if($CatOrderInfo['Form'] == 3){
                 $UsrDataOprater->setReason($OptReason::mall_reward_sdk);
             }
+
+
+
+
+
             foreach ($GoodsInfo as $k=>$v){
                 if($CatOrderInfo['Form'] == 3){
                     $num = $v['GetNum']*$v['Number']+($v['GetNum']*$v['Proportion'])*$v['Number']/100;
                 }else{
                     $num =  $v['GetNum']*$v['Number'];
+                }
+                if($v['IsGive'] == 1){
+                    $dataLogUsersShop['Number'] = $v['GetNum'];
+                    $dataLogUsersShop['Type']   = $v['Type'];
+                    $dataLogUsersShop['Code']   = $v['GoodsCode'];
                 }
                 switch ($v['Type']){
                     //金币
@@ -326,17 +330,13 @@ class  IosBackController extends Controller {
             goto OrderSave;
         }
         $model->startTrans();
-        //月卡 首冲
-        $addUsersPackageShopLog = 1;
-        if($CatOrderInfo['Form'] == 1 || $CatOrderInfo['Form'] == 2){
-            $dataUsersPackageShopLog = array(
-                'playerid'=>$playerid,
-                'Type'=>$CatOrderInfo['Form'],
-            );
-            $addUsersPackageShopLog = $model
-                ->table('jy_users_package_shop_log')
-                ->add($dataUsersPackageShopLog);
-        }
+        $MoreThan = $playerid%10;
+        //添加购物记录
+        $dataLogUsersShop['playerid'] = $playerid;
+        $dataLogUsersShop['GoodsID'] = $GoosID;
+        $dataLogUsersShop['Price'] = $money;
+        $dataLogUsersShop['Form'] = $CatOrderInfo['Form'];
+        $addLogUsersShop  = M('log_users_shop_'.$MoreThan)->add($dataLogUsersShop);
         //修改订单
         $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
         $dataUsersOrderInfo['PayType']       = 0;
@@ -346,7 +346,7 @@ class  IosBackController extends Controller {
             ->table('jy_users_order_info')
             ->where('playerid  = '.$playerid.'  and  PlatformOrder = "'.$Order.'"')
             ->save($dataUsersOrderInfo);
-        if($addUsersPackageShopLog  && $UpUsersOrderInfo){
+        if($addLogUsersShop  && $UpUsersOrderInfo){
             $model->commit();
             goto  success;
         }else{
@@ -403,6 +403,9 @@ class  IosBackController extends Controller {
     }
 
     public function Curl($url,$postData,$timeOut =60){
+        $buy = 'https://buy.itunes.apple.com/verifyReceipt';
+        $sandbox = 'https://sandbox.itunes.apple.com/verifyReceipt';
+        $url = $url == 1? $sandbox:$buy;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);

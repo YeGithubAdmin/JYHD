@@ -275,6 +275,10 @@ class TestNotifyurlController extends Controller {
                 $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
                 $PlayerData->setMcOvertime(time());
                 $PlayerData->setIsMc(true);
+                $dataLogUsersShop['Number'] = 1;
+                $dataLogUsersShop['Type']   = $GoodsInfo[0]['Type'];
+                $dataLogUsersShop['Code']   = $GoodsInfo[0]['GoodsCode'];
+
             }
 
 
@@ -289,20 +293,19 @@ class TestNotifyurlController extends Controller {
                     $UsrDataOprater->setReason($OptReason::mall_reward_sdk);
                 }
 
+
+
                 foreach ($GoodsInfo as $k=>$v){
                     if($CatUsersOrderInfo['Form'] == 3){
                         $num = $v['GetNum']*$v['Number']+($v['GetNum']*$v['Proportion'])*$v['Number']/100;
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
                     }
-
-
-                    if($v['IsGive'] = 1){
+                    if($v['IsGive'] == 1){
                         $dataLogUsersShop['Number'] = $v['GetNum'];
                         $dataLogUsersShop['Type']   = $v['Type'];
                         $dataLogUsersShop['Code']   = $v['GoodsCode'];
                     }
-
                     switch ($v['Type']){
                         //金币
                         case  1:

@@ -256,7 +256,7 @@ class MibackController extends Controller {
                 }else{
                     $num =  $v['GetNum']*$v['Number'];
                 }
-                if($v['IsGive'] = 1){
+                if($v['IsGive'] == 1){
                     $dataLogUsersShop['Number'] = $v['GetNum'];
                     $dataLogUsersShop['Type']   = $v['Type'];
                     $dataLogUsersShop['Code']   = $v['GoodsCode'];

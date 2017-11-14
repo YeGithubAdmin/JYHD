@@ -45,7 +45,7 @@ class CardReceiveRewardsController extends ComController {
         //判断是否拥有月卡
         $UsersCardShopLog = M('log_users_shop_'.$MoreThan)
                             ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
-                            ->where('playerid = '.$playerid.' and Type = 2')
+                            ->where('playerid = '.$playerid.' and Code = 7')
                             ->order('Id desc')
                             ->find();
         if(empty($UsersCardShopLog)){

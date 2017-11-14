@@ -68,7 +68,6 @@ class ActiveMacroscopicController extends Controller {
             ->field($EquipmentIosField)
             ->group('GroupChannel,VerSion')
             ->select();
-
         //周活跃
         $WAUStartTime  = date('Y-m-d H:i:s',$time-$DaySecond*7);
         $WAUField = array(
@@ -208,6 +207,7 @@ class ActiveMacroscopicController extends Controller {
             }
             $info[$k]['DateTime'] = $StartTime;
         }
+
         $db = M('jy_statistics_activem_acroscopic');
         $addData = $db
                   ->addAll($info);

@@ -260,21 +260,24 @@ class PlaceOrderController extends ComController {
              $CatThirdpay['PassAgeWay'] = '';
              $CatThirdpay['Id'] = 0;
         }
+
+        $MoreThan = $playerid%10;
+
         //是否首次充值
-        $catUserOrder = M('jy_users_order_info')
-                        ->where('playerid = '.$playerid.' and  Status = 2')
+        $catUserOrder = M('log_users_shop_'.$MoreThan)
+                        ->where('playerid = '.$playerid)
                         ->limit(0,1)
                         ->find();
-            $IsFirst = 1;
+        $IsFirst = 1;
         if(empty($catUserOrder)){
             $IsFirst = 2;
         }
         //是否首次购买
         $catUsersShopLog = $model
-                            ->table('jy_users_order_info as a')
-                            ->join('jy_users_order_goods as b on a.playerid = b.playerid and a.PlatformOrder = b.PlatformOrder')
-                            ->where('a.playerid = '.$playerid.'  and  a.Status = 2  and b.GoodsID = '.$catGoodsAll['Id'].' and  b.IsGive = 1')
-                            ->field('a.Id')->find();
+                            ->table('log_users_shop_'.$MoreThan)
+                            ->where('playerid = '.$playerid.'  and  GoodsID = '.$catGoodsAll['Id'])
+                            ->field('Id')
+                            ->find();
         $Proportion = 0;
         if(empty($catUsersShopLog) && $Type == 3){
             $Proportion = $catGoodsAll['Proportion'];

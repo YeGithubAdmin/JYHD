@@ -51,7 +51,9 @@ class ActivityListController extends ComController {
                             ->join('jy_goods_all as c on b.GoodsID  = c.Id')
                             ->field($activityFatherListField)
                             ->order('b.Schedule asc')
-                            ->where('a.Channel = '.$ChannelID.' and  a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")  and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
+                            ->where('a.Channel = '.$ChannelID.' and 
+                                    a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")         
+                                    and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
         $catUserOrderField = array(
@@ -62,10 +64,10 @@ class ActivityListController extends ComController {
             'a.AddUpEndTime',
             'a.AddUpStartTime'
         );
+        $MoreThan = $playerid%10;
         $catUserOrder = M('jy_activity_father_list as a')
-                        ->join('jy_users_order_info as b on b.CallbackTime <= a.AddUpEndTime 
-                                and  b.CallbackTime >= a.AddUpStartTime
-                                and b.Status = 2','left')
+                        ->join('log_users_shop_'.$MoreThan.' as b on b.DateTime <= a.AddUpEndTime 
+                                and  b.DateTime >= a.AddUpStartTime','left')
                         ->where(' a.Channel = '.$ChannelID.' and  b.playerid = '.$playerid)
                         ->group('a.Type')
                         ->field($catUserOrderField)

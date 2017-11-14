@@ -119,8 +119,6 @@ class GoodsAllController extends ComController {
             $OriginalPrice               =           I('param.OriginalPrice','','trim');                //话费卡面值
 
 
-
-
             //发行量
             if($IssueType == 1){
                 $IssueNum = 0;
@@ -172,8 +170,9 @@ class GoodsAllController extends ComController {
                 'FaceValue'         =>       $FaceValue,
                 'OriginalPrice'     =>       $OriginalPrice,
             );
+            $db = M('jy_goods_all');
             //添加
-            $addGoodsAll = M('jy_goods_all')
+            $addGoodsAll = $db
                 ->add($dataGoodsAll);
             if($addGoodsAll){
                 $obj->showmessage('添加成功','/jy_admin/GoodsAll/index');
@@ -208,6 +207,9 @@ class GoodsAllController extends ComController {
         }else{
             $catGoodsAllInfo['GiveInfo'] = json_decode($catGoodsAllInfo['GiveInfo'],true);
         }
+
+
+
         if(IS_POST){
             //数据
             $Code                        =           I('param.Code','','trim');                         //物品标识
@@ -241,6 +243,9 @@ class GoodsAllController extends ComController {
             $ImgCode                     =           I('param.ImgCode','','trim');                      //图片标识
             $FaceValue                   =           I('param.FaceValue','','trim');                     //话费卡面值
             $OriginalPrice               =           I('param.OriginalPrice','','trim');                 //原价
+
+
+
 
 
 

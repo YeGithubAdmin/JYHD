@@ -165,6 +165,7 @@ class UsersInfoController extends ComController {
 //        $GameValue['fish_card_history_pool']         =   $Data->getFishCardHistoryPool();      // 鱼券产出
 //        $GameValue['pump_gold_history_pool']         =   $Data->getPumpGoldHistoryPool();      // 系统抽水
 
+
         $countFiled = array(
             'count(distinct b.playerid) as num',
             'sum(d.Price) as Price',

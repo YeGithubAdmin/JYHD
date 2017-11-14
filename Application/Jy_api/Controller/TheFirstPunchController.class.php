@@ -29,11 +29,19 @@ class TheFirstPunchController extends ComController {
             $result = 4006;
             goto  response;
         }
+        $MoreThan = $playerid%10;
 
         //判断是否首冲过
-         $catUsersPackageShopLog  = M('jy_users_package_shop_log')
-                                    ->where('playerid = '.$playerid.' and Type = 1')
+         $catUsersPackageShopLog  = M('log_users_shop_'.$MoreThan)
+                                    ->where('playerid = '.$playerid.' and Code = 10')
                                     ->find();
+
+
+
+
+
+
+
         $Isfirst = 1;
         if(!empty($catUsersPackageShopLog)){
             $Isfirst = 2;
@@ -49,12 +57,9 @@ class TheFirstPunchController extends ComController {
         );
         $GoodsAll = M('jy_goods_all')
             ->field($GoodsInfoFile)
-            ->where('ShowType = 2 and  CateGory = 4  and IsDel = 1')
+            ->where('Code = 10 and IsDel = 1')
             ->find();
-
-
         $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
-
         $CardGoodsInfo      = array();
         if(!empty($GiveInfo)){
             $GoodID = array();
@@ -63,7 +68,6 @@ class TheFirstPunchController extends ComController {
             }
             $CardGoodsInfoFile  = array(
                 'Id',
-                'Name',
                 'GetNum',
                 'ImgCode',
                 'Type',
@@ -71,19 +75,19 @@ class TheFirstPunchController extends ComController {
             $GoodID = implode(',',$GoodID);
             $CardGoodsInfo      =  M('jy_goods_all')
                 ->field($CardGoodsInfoFile)
-                ->where('Id in('.$GoodID.')')
+                ->where('Id in('.$GoodID.') and IsDel =  1')
                 ->select();
             if(!empty($CardGoodsInfo)){
                 foreach ($CardGoodsInfo as $k=>$v){
                     foreach ($GiveInfo as $key=>$val){
                         if($val['Id'] == $v['Id']){
                             $CardGoodsInfo[$k]['GetNum'] =  $v['GetNum']*$val['GetNum'];
+                            $CardGoodsInfo[$k]['Name']   =  $val['Name'];
                         }
                     }
                 }
             }
         }
-
         $info['GoodsInfo'] = $CardGoodsInfo;
         $info['CurrencyNum'] = $GoodsAll['CurrencyNum'];
         $info['Isfirst'] = $Isfirst;

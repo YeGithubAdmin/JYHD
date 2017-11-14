@@ -259,6 +259,9 @@ class NotifyurlController extends Controller {
                 $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
                 $PlayerData->setMcOvertime(time());
                 $PlayerData->setIsMc(true);
+                $dataLogUsersShop['Number'] = 1;
+                $dataLogUsersShop['Type']   = $GoodsInfo[0]['Type'];
+                $dataLogUsersShop['Code']   = $GoodsInfo[0]['GoodsCode'];
             }
             //添加物品
             $IsGold = 1; //是否添加过金币 1-否 2是 注释：商城
@@ -275,7 +278,7 @@ class NotifyurlController extends Controller {
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
                     }
-                    if($v['IsGive'] = 1){
+                    if($v['IsGive'] == 1){
                         $dataLogUsersShop['Number'] = $v['GetNum'];
                         $dataLogUsersShop['Type']   = $v['Type'];
                         $dataLogUsersShop['Code']   = $v['GoodsCode'];

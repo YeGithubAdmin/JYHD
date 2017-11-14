@@ -23,11 +23,20 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>巨翼互动</title>
-
 </head>
 <body>
 <header class="Hui-header cl"> <a class="Hui-logo l" title="H-ui.admin v2.3" href="/">巨翼互动</a> <a class="Hui-logo-m l" href="/" title="H-ui.admin">H-ui</a> <span class="Hui-subtitle l">V1.0</span>
 
+	<nav class="mainnav cl" id="Hui-nav">
+		<ul>
+
+			<volist name = "menuList" id = "v">
+				<li class="MenuParent dropDown dropDown_click" onclick="MenuFun(this)">
+					<a href="javascript:;"> {$v['name']} </a>
+				</li>
+			</volist>
+		</ul>
+	</nav>
 	<ul class="Hui-userbar">
 		<li><eq name = "userInfo['default']" value ="1">{$userInfo['adminGroupName']}</eq></li>
 		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">{$userInfo['name']} <i class="Hui-iconfont">&#xe6d5;</i></a>
@@ -50,25 +59,27 @@
 		</li>
 	</ul>
 	<a aria-hidden="false" class="Hui-nav-toggle" href="#"></a> </header>
-<aside class="Hui-aside">
-	<input runat="server" id="divScrollValue" type="hidden" value="" />
-
-	<div class="menu_dropdown bk_2"      <if condition = "$k gt 1">style="display: none;"</if>     >
-		<volist name = "menuList" id="val" >
-		<dl id="menu-article"   >
-			<dt><i class="Hui-iconfont">&#xe616;</i> {$val['name']}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<volist name = "val['sub_menu']" id="value">
-				<ul>
-					<li><a _href="{$value['url']}" href="javascript:void(0)">{$value['name']}</a></li>
-				</ul>
+<volist name = "menuList" id = "v" key="k">
+	<div class="MenuChild" <if condition = "$k gt 1"> style="display:none;" </if>>
+		<aside    class="Hui-aside"  >
+			<input runat="server" id="divScrollValue" type="hidden" value="" />
+			<div class="menu_dropdown bk_2" >
+				<volist name = "v['sub_menu']" id="val" >
+					<dl id="menu-article"   >
+						<dt><i class="Hui-iconfont">&#xe616;</i> {$val['name']}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+						<dd>
+							<volist name = "val['sub_menu']" id="value">
+								<ul class="menu_dropdown bk_2">
+									<li><a _href="{$value['url']}" href="javascript:void(0)">{$value['name']}</a></li>
+								</ul>
+							</volist>
+						</dd>
+					</dl>
 				</volist>
-			</dd>
-		</dl>
-			</volist>
+			</div>
+		</aside>
 	</div>
-
-</aside>
+</volist>
 <div class="dislpayArrow"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
 <section class="Hui-article-box">
 	<div id="Hui-tabNav" class="Hui-tabNav">
@@ -91,6 +102,22 @@
 <script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
 <script type="text/javascript">
+
+//菜单
+function  MenuFun(my) {
+	var MenuParent = document.getElementsByClassName('MenuParent');
+	var MenuChild  = document.getElementsByClassName('MenuChild');
+	for (var i =0;i<MenuParent.length;i++){
+        MenuParent[i].index = i;
+        MenuChild[i].style.display = "none";
+	}
+	var MyIndex = my.index;
+    MenuChild[MyIndex].style.display = "block";
+}
+
+
+
+
 
 
 /*资讯-添加*/

@@ -37,10 +37,9 @@ class CardInfoController extends ComController {
         );
         $GoodsAll = M('jy_goods_all')
                      ->field($GoodsInfoFile)
-                     ->where('ShowType = 3 and  CateGory = 4  and IsDel = 1')
+                     ->where('Code = 7  and IsDel = 1')
                      ->find();
         $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
-
         $CardGoodsInfo      = array();
         if(!empty($GiveInfo)){
             $GoodID = array();
@@ -49,7 +48,6 @@ class CardInfoController extends ComController {
             }
             $CardGoodsInfoFile  = array(
                  'Id',
-                 'Name',
                  'GetNum',
                  'ImgCode',
                  'Type',
@@ -57,19 +55,19 @@ class CardInfoController extends ComController {
             $GoodID = implode(',',$GoodID);
             $CardGoodsInfo      =  M('jy_goods_all')
                                     ->field($CardGoodsInfoFile)
-                                    ->where('Id in('.$GoodID.')')
+                                    ->where('Id in('.$GoodID.') and IsDel = 1')
                                     ->select();
             if(!empty($CardGoodsInfo)){
                 foreach ($CardGoodsInfo as $k=>$v){
                     foreach ($GiveInfo as $key=>$val){
                             if($val['Id'] == $v['Id']){
                                 $CardGoodsInfo[$k]['GetNum'] =  $v['GetNum']*$val['GetNum'];
+                                $CardGoodsInfo[$k]['Name']   =  $val['Name'];
                             }
                     }
                 }
             }
         }
-
         $MoreThan = $playerid%10;
 
         $ShopCard  = 1;     //是否购买过月卡      1 否  2 是
@@ -77,9 +75,10 @@ class CardInfoController extends ComController {
         $DayNum    = 0;     //月卡还有剩多少天
         $UsersCardShopLog = M('log_users_shop_'.$MoreThan)
             ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
-            ->where('playerid = '.$playerid.' and Type = 2')
+            ->where('playerid = '.$playerid.' and  Code = 7')
             ->order('Id desc')
             ->find();
+
         if(empty($UsersCardShopLog)){
             $ShopCard  = 1;
             $IsReceive = 1;
@@ -101,7 +100,9 @@ class CardInfoController extends ComController {
                 $EndTime            =           $CurrentTime+$OneDay;
                 $EndTime =   date('Y-m-d H:i:s',$EndTime);
                 $UsersCardReceive = M('jy_users_card_receive_log')
-                    ->where('playerid = '.$playerid.' and    DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+                    ->where('playerid = '.$playerid.' and    
+                             DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
+                             and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
                     ->find();
                 
                 if(!empty($UsersCardReceive)){

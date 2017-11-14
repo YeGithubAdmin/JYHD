@@ -57,7 +57,8 @@ class MallGoodsListController extends ComController {
         );
         $GoodsAll  = M('jy_goods_all as a')
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
-            ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and  a.ShowType = '.$ShowType.' and a.IsDel = 1')
+            ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  
+                      and  a.ShowType = '.$ShowType.' and a.IsDel = 1')
             ->field($GoodsAllField)
             ->group('a.Id')
             ->order('a.Sort asc')
@@ -73,20 +74,22 @@ class MallGoodsListController extends ComController {
             }
             $GoodsAll  = M('jy_goods_all as a')
                 ->join('jy_channel_goods as b on a.Id = b.goodsID')
-                ->where('b.adminUserID = '.$Mychannel['adminUserID'].' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  and ShowType = '.$ShowType.' and IsDel = 1')
+                ->where('b.adminUserID = '.$Mychannel['adminUserID'].' and  
+                         a.Status in(1,3)  and  a.CateGory = '.$CateGory.' 
+                        and ShowType = '.$ShowType.' and IsDel = 1')
                 ->field($GoodsAllField)
                 ->group('a.Id')
                 ->order('a.Sort asc')
                 ->select();
         }
         //过滤首次充值
+        $MoreThan = $playerid%10;
         $ShopLogField = array(
-            'b.GoodsID',
+            'GoodsID',
         );
-        $ShopLog = M('jy_users_order_info as a')
-                   ->join('jy_users_order_goods as  b on  a.playerid = '.$playerid.'  and b.PlatformOrder = a.PlatformOrder and b.IsGive = 1')
+        $ShopLog = M('log_users_shop_'.$MoreThan)
                    ->field($ShopLogField)
-                   ->where('a.playerid = '.$playerid.' and a.Status = 2')
+                   ->where('playerid = '.$playerid)
                    ->select();
         $ShopLogSort = array();
         foreach ($ShopLog as $k=>$v) $ShopLogSort[$v['GoodsID']] = $v;

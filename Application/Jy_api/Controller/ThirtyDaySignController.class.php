@@ -507,7 +507,7 @@ class ThirtyDaySignController extends ComController {
               }
               if($v['Type']> 0 &&  $v['Type']<=3 ){
                   $infoData[$k]['Type']   =  $v['Type'];
-                  $infoData[$k]['Code']   =  $v['Type'];
+                  $infoData[$k]['Code']   =  $v['Code'];
                   $infoData[$k]['Number'] =  $v['Number'];
               }
               switch ($v['Type']){
@@ -553,7 +553,9 @@ class ThirtyDaySignController extends ComController {
         if($ReplyCode == 1 && $UpLogThirtydaySign && $addThirtydaySign){
             $model->commit();
         }
+
         $info = $infoData;
+
         response:
         $response = array(
             'result' => $result,
