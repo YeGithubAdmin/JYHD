@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_data.proto at 2017-11-15 14:42:27
  *
  * RedisProto package
  */
@@ -26,7 +26,6 @@ class RPB_PlayerData extends \ProtobufMessage
     const GOLD = 12;
     const DIAMOND = 13;
     const DEPOSIT = 14;
-    const PROFIT = 15;
     const GLEVEL = 16;
     const GEXP = 17;
     const GUN_LV = 18;
@@ -108,11 +107,6 @@ class RPB_PlayerData extends \ProtobufMessage
         ),
         self::DEPOSIT => array(
             'name' => 'deposit',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::PROFIT => array(
-            'name' => 'profit',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -202,7 +196,6 @@ class RPB_PlayerData extends \ProtobufMessage
         $this->values[self::GOLD] = null;
         $this->values[self::DIAMOND] = null;
         $this->values[self::DEPOSIT] = null;
-        $this->values[self::PROFIT] = null;
         $this->values[self::GLEVEL] = null;
         $this->values[self::GEXP] = null;
         $this->values[self::GUN_LV] = null;
@@ -545,29 +538,6 @@ class RPB_PlayerData extends \ProtobufMessage
     public function getDeposit()
     {
         $value = $this->get(self::DEPOSIT);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'profit' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setProfit($value)
-    {
-        return $this->set(self::PROFIT, $value);
-    }
-
-    /**
-     * Returns value of 'profit' property
-     *
-     * @return integer
-     */
-    public function getProfit()
-    {
-        $value = $this->get(self::PROFIT);
         return $value === null ? (integer)$value : $value;
     }
 

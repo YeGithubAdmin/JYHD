@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_rpc.proto at 2017-11-15 14:42:27
  *
  * protos package
  */
@@ -15,7 +15,6 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
     const CODE = 1;
     const BASE = 2;
     const ACCOUNT_DATA = 3;
-    const MODULES = 4;
     const PLAYER_NUMERICAL = 5;
     const ITEMS = 6;
 
@@ -35,11 +34,6 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
             'name' => 'account_data',
             'required' => false,
             'type' => '\RedisProto\RPB_AccountData'
-        ),
-        self::MODULES => array(
-            'name' => 'modules',
-            'repeated' => true,
-            'type' => '\RedisProto\RPB_ModuleData'
         ),
         self::PLAYER_NUMERICAL => array(
             'name' => 'player_numerical',
@@ -71,7 +65,6 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
         $this->values[self::CODE] = null;
         $this->values[self::BASE] = null;
         $this->values[self::ACCOUNT_DATA] = null;
-        $this->values[self::MODULES] = array();
         $this->values[self::PLAYER_NUMERICAL] = null;
         $this->values[self::ITEMS] = array();
     }
@@ -151,70 +144,6 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
     public function getAccountData()
     {
         return $this->get(self::ACCOUNT_DATA);
-    }
-
-    /**
-     * Appends value to 'modules' list
-     *
-     * @param \RedisProto\RPB_ModuleData $value Value to append
-     *
-     * @return null
-     */
-    public function appendModules(\RedisProto\RPB_ModuleData $value)
-    {
-        return $this->append(self::MODULES, $value);
-    }
-
-    /**
-     * Clears 'modules' list
-     *
-     * @return null
-     */
-    public function clearModules()
-    {
-        return $this->clear(self::MODULES);
-    }
-
-    /**
-     * Returns 'modules' list
-     *
-     * @return \RedisProto\RPB_ModuleData[]
-     */
-    public function getModules()
-    {
-        return $this->get(self::MODULES);
-    }
-
-    /**
-     * Returns 'modules' iterator
-     *
-     * @return \ArrayIterator
-     */
-    public function getModulesIterator()
-    {
-        return new \ArrayIterator($this->get(self::MODULES));
-    }
-
-    /**
-     * Returns element from 'modules' list at given offset
-     *
-     * @param int $offset Position in list
-     *
-     * @return \RedisProto\RPB_ModuleData
-     */
-    public function getModulesAt($offset)
-    {
-        return $this->get(self::MODULES, $offset);
-    }
-
-    /**
-     * Returns count of 'modules' list
-     *
-     * @return int
-     */
-    public function getModulesCount()
-    {
-        return $this->count(self::MODULES);
     }
 
     /**

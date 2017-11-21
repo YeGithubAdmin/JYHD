@@ -13,6 +13,7 @@ class GameReschangeActionController extends Controller {
         //渠道
         $SummaryGoodsField = array(
             'os_type as Ostype',
+            'count(distinct playerid) as UserNum',
             'login_channel as Channel',
             'game_ver as VerSion',
             'itemid as Itemid',

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_data.proto at 2017-11-15 14:42:27
  *
  * RedisProto package
  */
@@ -23,6 +23,7 @@ class RPB_ResChangeAction extends \ProtobufMessage
     const CUR_NUM = 9;
     const REASON = 10;
     const OPT_TIME = 11;
+    const ROOM_TYPE = 12;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -81,6 +82,11 @@ class RPB_ResChangeAction extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
+        self::ROOM_TYPE => array(
+            'name' => 'room_type',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -109,6 +115,7 @@ class RPB_ResChangeAction extends \ProtobufMessage
         $this->values[self::CUR_NUM] = null;
         $this->values[self::REASON] = null;
         $this->values[self::OPT_TIME] = null;
+        $this->values[self::ROOM_TYPE] = null;
     }
 
     /**
@@ -372,6 +379,29 @@ class RPB_ResChangeAction extends \ProtobufMessage
     {
         $value = $this->get(self::OPT_TIME);
         return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'room_type' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setRoomType($value)
+    {
+        return $this->set(self::ROOM_TYPE, $value);
+    }
+
+    /**
+     * Returns value of 'room_type' property
+     *
+     * @return integer
+     */
+    public function getRoomType()
+    {
+        $value = $this->get(self::ROOM_TYPE);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

@@ -1,20 +1,21 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_data.proto at 2017-11-15 14:42:27
  *
  * RedisProto package
  */
 
 namespace RedisProto {
 /**
- * RPB_ModuleData message
+ * RPB_BrokeAction message
  */
-class RPB_ModuleData extends \ProtobufMessage
+class RPB_BrokeAction extends \ProtobufMessage
 {
     /* Field index constants */
     const PLAYERID = 1;
-    const NAME = 2;
-    const DATA = 3;
+    const LOGIN_CHANNEL = 2;
+    const GAME_VER = 3;
+    const BROKE_TIME = 4;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -23,13 +24,18 @@ class RPB_ModuleData extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::NAME => array(
-            'name' => 'name',
+        self::LOGIN_CHANNEL => array(
+            'name' => 'login_channel',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
-        self::DATA => array(
-            'name' => 'data',
+        self::GAME_VER => array(
+            'name' => 'game_ver',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::BROKE_TIME => array(
+            'name' => 'broke_time',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
@@ -51,8 +57,9 @@ class RPB_ModuleData extends \ProtobufMessage
     public function reset()
     {
         $this->values[self::PLAYERID] = null;
-        $this->values[self::NAME] = null;
-        $this->values[self::DATA] = null;
+        $this->values[self::LOGIN_CHANNEL] = null;
+        $this->values[self::GAME_VER] = null;
+        $this->values[self::BROKE_TIME] = null;
     }
 
     /**
@@ -89,48 +96,71 @@ class RPB_ModuleData extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'name' property
+     * Sets value of 'login_channel' property
      *
      * @param string $value Property value
      *
      * @return null
      */
-    public function setName($value)
+    public function setLoginChannel($value)
     {
-        return $this->set(self::NAME, $value);
+        return $this->set(self::LOGIN_CHANNEL, $value);
     }
 
     /**
-     * Returns value of 'name' property
+     * Returns value of 'login_channel' property
      *
      * @return string
      */
-    public function getName()
+    public function getLoginChannel()
     {
-        $value = $this->get(self::NAME);
+        $value = $this->get(self::LOGIN_CHANNEL);
         return $value === null ? (string)$value : $value;
     }
 
     /**
-     * Sets value of 'data' property
+     * Sets value of 'game_ver' property
      *
      * @param string $value Property value
      *
      * @return null
      */
-    public function setData($value)
+    public function setGameVer($value)
     {
-        return $this->set(self::DATA, $value);
+        return $this->set(self::GAME_VER, $value);
     }
 
     /**
-     * Returns value of 'data' property
+     * Returns value of 'game_ver' property
      *
      * @return string
      */
-    public function getData()
+    public function getGameVer()
     {
-        $value = $this->get(self::DATA);
+        $value = $this->get(self::GAME_VER);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'broke_time' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setBrokeTime($value)
+    {
+        return $this->set(self::BROKE_TIME, $value);
+    }
+
+    /**
+     * Returns value of 'broke_time' property
+     *
+     * @return string
+     */
+    public function getBrokeTime()
+    {
+        $value = $this->get(self::BROKE_TIME);
         return $value === null ? (string)$value : $value;
     }
 }

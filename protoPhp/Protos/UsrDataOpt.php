@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_rpc.proto at 2017-11-15 14:42:27
  *
  * protos package
  */
@@ -17,6 +17,7 @@ final class UsrDataOpt
     const Modify_Account = 4;
     const Modify_Player = 5;
     const Clear_Email = 6;
+    const Request_Items = 7;
 
     /**
      * Returns defined enum values
@@ -32,6 +33,7 @@ final class UsrDataOpt
             'Modify_Account' => self::Modify_Account,
             'Modify_Player' => self::Modify_Player,
             'Clear_Email' => self::Clear_Email,
+            'Request_Items' => self::Request_Items,
         );
     }
 }

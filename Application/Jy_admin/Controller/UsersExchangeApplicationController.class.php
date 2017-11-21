@@ -110,6 +110,7 @@ class UsersExchangeApplicationController extends ComController {
             'a.StockNum',
             'a.Order',
             'b.Type',
+            'b.FaceValue',
             'a.DateTime',
             );
         $CatUsersExchangeLog = M('jy_users_exchange_log as a')
@@ -122,6 +123,7 @@ class UsersExchangeApplicationController extends ComController {
             $Type            =      I('param.Type',0,'intval');         //类型 4-话费卡  5-京东卡  6-西实物
             $cardNum         =      I('param.cardNum','','trim');       //卡号
             $cardPwd         =      I('param.cardPwd','','trim');       //卡密
+            $FaceValue         =      I('param.FaceValue',0,'intval');       //卡密
             $ExpressName     =      I('param.ExpressName','','trim');   //快递名称
             $ExpressOrder    =      I('param.ExpressOrder','','trim');  //快递名称
             $MessAge         =      I('param.MessAge','','trim');       //失败通知
@@ -147,15 +149,20 @@ class UsersExchangeApplicationController extends ComController {
             $UsrDataOpt                     =   new UsrDataOpt();
             $OptSrc                         =   new OptSrc();
             $OptReason                      =   new \OptReason();
+
+
+
             $PBS_UsrDataOprater->setPlayerid($CatUsersExchangeLog['playerid']);
             $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
-            $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
+
             $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
             $PB_Email = new \PB_Email();
             $PB_Email->setSender('系统');
             $PB_Email->setTitle($CatUsersExchangeLog['GoodsName']);
             if($Status == 2){
             //审核通过
+                $PBS_UsrDataOprater->setReason($OptReason::exchange);
+                $PBS_UsrDataOprater->setExchangeRmb($FaceValue);
                 if($Type == 4){
                     //话费卡
                     $PB_Email->setCardNum($cardNum);
@@ -173,6 +180,7 @@ class UsersExchangeApplicationController extends ComController {
                     $PB_Email->setData($dataText);
                 }
             }elseif($Status == 3){
+                $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
              //审核不通过
                  $PB_Item    =  new \PB_Item();
                  $PB_Item   ->  setId(6);

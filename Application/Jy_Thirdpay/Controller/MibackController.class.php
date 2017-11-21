@@ -170,6 +170,8 @@ class MibackController extends Controller {
         $OptReason              =   new \OptReason();
         $PB_HallNotify  = new \PB_HallNotify();
         $PB_PlayerVip   = new \PB_PlayerVip();
+        $PlayerData->setRmb($CatUsersOrderInfo['Price']);
+
         //设置protocbuf
         $UsrDataOprater->setPlayerid($playerid);
         $UsrDataOprater->setSrc($OptSrc::Src_PHP);

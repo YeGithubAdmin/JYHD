@@ -390,10 +390,13 @@ class func{
     * @param $content   protobuf     包体
     */
     public function   ProtobufSend($PBName,$content,$uid){
+        $addr =  CONTROLLER_NAME.ACTION_NAME;
+
         $header = array(
             'PBName:'.$PBName,
             'PBSize:'.strlen($content),
-             'UID:'.$uid
+             'UID:'.$uid,
+            'PBUrl:'.$addr,
         );
         $TheBagBody = array(
             'body'=>$content

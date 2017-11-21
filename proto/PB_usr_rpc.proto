@@ -15,6 +15,7 @@ enum UsrDataOpt
 	Modify_Account	 	 	= 4;	// 修改 account data
 	Modify_Player		 	= 5;	// 修改 player data (资源类的字段(gold...)为增量)
 	Clear_Email			 	= 6;	// 清空邮件
+	Request_Items 			= 7;	// 获取 道具信息
 }
 
 enum OptSrc
@@ -36,10 +37,10 @@ message PBS_UsrDataOprater
 	optional PB_Email send_email = 7;	// 发送邮件
 	optional OptReason reason = 8[default = OptReason_None]; // 操作原因
 	optional PB_Item use_item = 9;	// 使用道具
-	optional PB_BuyGoods buy_goods_notify = 10; // 购买物品
 	optional RPB_PlayerNumerical player_numerical_set  = 11;	// set  玩家数值相关
 	optional RPB_PlayerNumerical player_numerical_incr = 12;	// incr 玩家数值相关
 	optional PB_HallNotify notify = 13;	// 下推
+	optional int32 exchange_rmb = 14;	// 玩家兑换的rmb
 }
 
 message PBS_UsrDataOpraterReturn
@@ -47,7 +48,6 @@ message PBS_UsrDataOpraterReturn
 	required PB_ErrorCode code = 1;
 	optional RedisProto.RPB_PlayerData base = 2; 
 	optional RedisProto.RPB_AccountData account_data = 3;
-	repeated RedisProto.RPB_ModuleData modules = 4;
 	optional RPB_PlayerNumerical player_numerical = 5;
 	repeated PB_Item items = 6;
 }

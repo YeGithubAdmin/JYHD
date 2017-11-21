@@ -25,6 +25,7 @@ message RPB_AccountData
 	optional string     account_name 	 = 20;	// 账号名
 	optional string		pwd				 = 21;	// 密码
 	optional string		logout_time 	 = 22;	// 最后离线时间
+	optional int64		online_time 	 = 23;	// 在线时长
 }
 
 message RPB_PlayerData 
@@ -43,7 +44,7 @@ message RPB_PlayerData
 	optional int64		gold 			 = 12;	// 金币
 	optional int64		diamond 		 = 13;	// 钻石
 	optional int64		deposit			 = 14;	// 存款
-	optional int64		profit			 = 15;	// 当日盈利
+	//optional int64		profit			 = 15;	// 当日盈利
 	optional int32		glevel 			 = 16;	// 游戏等级
 	optional int32  	gexp   			 = 17;	// 游戏经验
 	optional int32		gun_lv			 = 18;	// 炮等级
@@ -75,6 +76,10 @@ message RPB_PlayerLoginAction
 	optional int64		deposit			 = 14;	// 存款
 	optional string 	login_time 		 = 15;	// 登陆时间
 	optional string		regtime 		 = 16;	// 注册时间
+	optional string		mac 			 = 17; 	// mac地址
+	optional string		imei 			 = 18; 	// 手机序列号
+	optional string		imsi 			 = 19; 	// 运营商序列号
+	optional string		uuid 			 = 20; 	// 苹果uuid
 }
 
 message RPB_ResChangeAction
@@ -90,6 +95,15 @@ message RPB_ResChangeAction
 	optional int32      cur_num 		 = 9;	// 当前数量
 	optional int32 		reason 			 = 10;	// 原因	取自 OptReason
 	optional string     opt_time 		 = 11;	// 操作时间
+	optional int32 		room_type 		 = 12;	// 所在游戏场
+}
+
+message RPB_BrokeAction
+{
+	optional int64 		playerid 		 = 1;
+	optional string		login_channel	 = 2;	// 登录渠道号
+	optional string		game_ver		 = 3;	// 游戏版本号
+	optional string		broke_time       = 4;	// 破产时间
 }
 
 message RPB_PlayerItem
@@ -101,12 +115,4 @@ message RPB_PlayerItem
 	optional int32		item4_num 		 = 5;
 	optional int32		item5_num 		 = 6;
 	optional int32		item6_num 		 = 7;
-}
-
-message RPB_ModuleData
-{
-	optional int64      playerid = 1;
-	optional string     name 	 = 2;	// module name(key)
-	//这里面可以存任意数据， 可以是lua table, 也可以是protobuf
-	optional bytes      data     = 3;	// module data(value)
 }

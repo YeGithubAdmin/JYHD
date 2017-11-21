@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_rpc.proto at 2017-11-15 14:42:27
  *
  * protos package
  */
@@ -21,10 +21,10 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     const SEND_EMAIL = 7;
     const REASON = 8;
     const USE_ITEM = 9;
-    const BUY_GOODS_NOTIFY = 10;
     const PLAYER_NUMERICAL_SET = 11;
     const PLAYER_NUMERICAL_INCR = 12;
     const NOTIFY = 13;
+    const EXCHANGE_RMB = 14;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -74,11 +74,6 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'required' => false,
             'type' => '\PB_Item'
         ),
-        self::BUY_GOODS_NOTIFY => array(
-            'name' => 'buy_goods_notify',
-            'required' => false,
-            'type' => '\PB_BuyGoods'
-        ),
         self::PLAYER_NUMERICAL_SET => array(
             'name' => 'player_numerical_set',
             'required' => false,
@@ -93,6 +88,11 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'name' => 'notify',
             'required' => false,
             'type' => '\PB_HallNotify'
+        ),
+        self::EXCHANGE_RMB => array(
+            'name' => 'exchange_rmb',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
 
@@ -120,10 +120,10 @@ class PBS_UsrDataOprater extends \ProtobufMessage
         $this->values[self::SEND_EMAIL] = null;
         $this->values[self::REASON] = self::$fields[self::REASON]['default'];
         $this->values[self::USE_ITEM] = null;
-        $this->values[self::BUY_GOODS_NOTIFY] = null;
         $this->values[self::PLAYER_NUMERICAL_SET] = null;
         $this->values[self::PLAYER_NUMERICAL_INCR] = null;
         $this->values[self::NOTIFY] = null;
+        $this->values[self::EXCHANGE_RMB] = null;
     }
 
     /**
@@ -381,28 +381,6 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'buy_goods_notify' property
-     *
-     * @param \PB_BuyGoods $value Property value
-     *
-     * @return null
-     */
-    public function setBuyGoodsNotify(\PB_BuyGoods $value=null)
-    {
-        return $this->set(self::BUY_GOODS_NOTIFY, $value);
-    }
-
-    /**
-     * Returns value of 'buy_goods_notify' property
-     *
-     * @return \PB_BuyGoods
-     */
-    public function getBuyGoodsNotify()
-    {
-        return $this->get(self::BUY_GOODS_NOTIFY);
-    }
-
-    /**
      * Sets value of 'player_numerical_set' property
      *
      * @param \RPB_PlayerNumerical $value Property value
@@ -466,6 +444,29 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     public function getNotify()
     {
         return $this->get(self::NOTIFY);
+    }
+
+    /**
+     * Sets value of 'exchange_rmb' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setExchangeRmb($value)
+    {
+        return $this->set(self::EXCHANGE_RMB, $value);
+    }
+
+    /**
+     * Returns value of 'exchange_rmb' property
+     *
+     * @return integer
+     */
+    public function getExchangeRmb()
+    {
+        $value = $this->get(self::EXCHANGE_RMB);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

@@ -208,6 +208,7 @@ class TestNotifyurlController extends Controller {
         $UsrDataOprater->setPlayerid($playerid);
         $UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+        $PlayerData->setRmb($CatUsersOrderInfo['Price']);
         if($TransdataResult == 0){
             //支付成功
             $BuyGoods->setErr($ErrorCode::Error_success);

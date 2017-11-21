@@ -165,6 +165,7 @@ class  IosBackController extends Controller {
         $UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $BuyGoods->setErr($ErrorCode::Error_success);
         $BuyGoods->setGoodsid($GoosID);
+        $PlayerData->setRmb($CatOrderInfo['Price']);
         //判断是否升级
         $VipLevel =    $CatOrderInfo['VipLevel'];
         $VipExp   =    $CatOrderInfo['VipExp'];
@@ -242,11 +243,6 @@ class  IosBackController extends Controller {
             if($CatOrderInfo['Form'] == 3){
                 $UsrDataOprater->setReason($OptReason::mall_reward_sdk);
             }
-
-
-
-
-
             foreach ($GoodsInfo as $k=>$v){
                 if($CatOrderInfo['Form'] == 3){
                     $num = $v['GetNum']*$v['Number']+($v['GetNum']*$v['Proportion'])*$v['Number']/100;

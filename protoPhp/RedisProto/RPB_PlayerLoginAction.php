@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_data.proto at 2017-11-15 14:42:27
  *
  * RedisProto package
  */
@@ -28,6 +28,10 @@ class RPB_PlayerLoginAction extends \ProtobufMessage
     const DEPOSIT = 14;
     const LOGIN_TIME = 15;
     const REGTIME = 16;
+    const MAC = 17;
+    const IMEI = 18;
+    const IMSI = 19;
+    const UUID = 20;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -111,6 +115,26 @@ class RPB_PlayerLoginAction extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
+        self::MAC => array(
+            'name' => 'mac',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::IMEI => array(
+            'name' => 'imei',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::IMSI => array(
+            'name' => 'imsi',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::UUID => array(
+            'name' => 'uuid',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
     );
 
     /**
@@ -144,6 +168,10 @@ class RPB_PlayerLoginAction extends \ProtobufMessage
         $this->values[self::DEPOSIT] = null;
         $this->values[self::LOGIN_TIME] = null;
         $this->values[self::REGTIME] = null;
+        $this->values[self::MAC] = null;
+        $this->values[self::IMEI] = null;
+        $this->values[self::IMSI] = null;
+        $this->values[self::UUID] = null;
     }
 
     /**
@@ -521,6 +549,98 @@ class RPB_PlayerLoginAction extends \ProtobufMessage
     public function getRegtime()
     {
         $value = $this->get(self::REGTIME);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'mac' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setMac($value)
+    {
+        return $this->set(self::MAC, $value);
+    }
+
+    /**
+     * Returns value of 'mac' property
+     *
+     * @return string
+     */
+    public function getMac()
+    {
+        $value = $this->get(self::MAC);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'imei' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setImei($value)
+    {
+        return $this->set(self::IMEI, $value);
+    }
+
+    /**
+     * Returns value of 'imei' property
+     *
+     * @return string
+     */
+    public function getImei()
+    {
+        $value = $this->get(self::IMEI);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'imsi' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setImsi($value)
+    {
+        return $this->set(self::IMSI, $value);
+    }
+
+    /**
+     * Returns value of 'imsi' property
+     *
+     * @return string
+     */
+    public function getImsi()
+    {
+        $value = $this->get(self::IMSI);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'uuid' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setUuid($value)
+    {
+        return $this->set(self::UUID, $value);
+    }
+
+    /**
+     * Returns value of 'uuid' property
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        $value = $this->get(self::UUID);
         return $value === null ? (string)$value : $value;
     }
 }

@@ -69,6 +69,7 @@ class GoodsAllController extends ComController {
             ->field($catVipInfoField)
             ->order('Sort asc')
             ->select();
+
         $this->assign('page',$show);
         $this->assign('search',$search);
         $this->assign('info',$catVipInfo);
@@ -207,7 +208,6 @@ class GoodsAllController extends ComController {
         }else{
             $catGoodsAllInfo['GiveInfo'] = json_decode($catGoodsAllInfo['GiveInfo'],true);
         }
-
 
 
         if(IS_POST){

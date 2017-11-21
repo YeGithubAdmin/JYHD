@@ -14,18 +14,29 @@ class ChannelDataController extends ComController {
         $channel   = $userInfo['channel'];
         $page      = $this->page;
         $lowerAdminUser = $this->lowerAdminUser;    //我的下级组
-        $search['datemin']     = I('param.datemin','','trim');
-        $search['datemax']     = I('param.datemax','','trim');
+        $time = date("Y-m-d",time());
+
+        $DateTime = $time;
+
+        $time = strtotime($time);
+        $Statime = date('Y-m-d',$time-15*24*60*60);
+        $Endtime = date('Y-m-d',$time);
+
+        $search['datemin']     = I('param.datemin',$Statime,'trim');
+        $search['datemax']     = I('param.datemax',$Endtime,'trim');
         $search['num']         = I('param.num',30,'intval');
         $search['channel']     = I('param.channel','','trim');
 
-
-
         $model = new Model;
+
+
+        $Channel = '';
+
         //判断管理还是运营
         $whereData = 'a.channel = 2 and a.Isdel = 1';
         if($channel == 2){
             $whereData .="  and  a.account = '".$userInfo['account']."'";
+            $Channel = $userInfo['account'];
             //渠道
         }else{
             //管理
@@ -47,31 +58,19 @@ class ChannelDataController extends ComController {
                 ->select();
             if ($search['channel'] != ''){
                 $whereData .= ' and a.`account`="'.$search['channel'].'"';
+                $Channel = $search['channel'];
             }
 
         }
         //默认前15天数据
-        $time = date("Y-m-d",time());
-        $time = strtotime($time);
-        $Statime = date('Y-m-d H:i:s',$time-15*24*60*60);
-        $Endtime = date('Y-m-d H:i:s',$time+24*60*60);
         $datemin = date('Y-m-d H:i:s',strtotime($search['datemin']));
         $datemax = date('Y-m-d H:i:s',strtotime($search['datemax'])+24*60*60);
-        $JoinGameAccount = '';
         if ($search['datemin'] != ''){
-            $JoinGameAccount = ' and  c.regtime >= str_to_date("'.$datemin.'","%Y-%m-%d %H:%i:%s")';
             $whereData .= ' and  c.DateTime >= str_to_date("'.$datemin.'","%Y-%m-%d %H:%i:%s")';
-        }else{
-            $whereData .= ' and  c.DateTime >= str_to_date("'.$Statime.'","%Y-%m-%d %H:%i:%s")';
-            $JoinGameAccount .= ' and  c.regtime >= str_to_date("'.$Statime.'","%Y-%m-%d %H:%i:%s")';
         }
 
         if ($search['datemax'] != ''){
             $whereData .= ' and  c.DateTime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
-            $JoinGameAccount .= ' and  c.regtime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
-        }else{
-            $JoinGameAccount .= ' and  c.regtime < str_to_date("'.$Endtime.'","%Y-%m-%d %H:%i:%s")';
-            $whereData .= ' and  c.DateTime < str_to_date("'.$Endtime.'","%Y-%m-%d %H:%i:%s")';
         }
         /***
         *'渠道ID',    GroupChannel
@@ -95,62 +94,29 @@ class ChannelDataController extends ComController {
         *'30日留存', UsersThirtyNum
         *
         **********/
-        $count =  $model->query('
-                  SELECT 
-                  a.account as GroupChannel,
-              
-                  date_format(c.DateTime,"%Y-%m-%d") as t  
-                  FROM jy_admin_users as a INNER JOIN jy_channel_info as b on b.adminUserID = a.Id
-                  INNER JOIN jy_statistics_users_pay as c on c.Channel = a.account  
-                  WHERE ( '.$whereData.') GROUP BY  `GroupChannel`,`t`');
-        $catData = $model->query('
-                  SELECT * FROM (
-                  SELECT 
-                  a.account as GroupChannel,
-                  a.name,
-                  c.PayNum,
-                  c.DateTime,
-                  c.UserPayNum,
-                  c.RegNum,
-                  c.EquipmentRegNum,
-                  c.ActiveNum,
-                  if(round((c.TotalMoney/c.EquipmentRegNum),2),
-                  round((c.TotalMoney/c.EquipmentRegNum),2),0)  as  RegArpu,
-                  if(round((c.TotalMoney/c.ActiveNum),2),
-                  round((c.TotalMoney/c.ActiveNum),2),0)    as  ActiveArpu,
-                  c.Success,
-                  if(round((c.UserPayNum/c.ActiveNum)*100,2),
-                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversion,
-                  if(round((c.UserPayNumOld/c.ActiveNum)*100,2),
-                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversionOld,
-                  c.TotalMoney,
-                  round(c.UsersOneNum*100,2) as UsersOneNum,
-                  round(c.UsersTowNum*100,2) as UsersTowNum,
-                  round(c.UsersThreeNum*100,2) as UsersThreeNum,
-                  round(c.UsersSevenNum*100,2) as UsersSevenNum,
-                  round(c.UsersFifteenNum*100,2) as UsersFifteenNum,
-                  round(c.UsersThirtyNum*100,2) as UsersThirtyNum,
-                  c.UserPayNumOld,
-                  c.OrderTotalOld,
-                  date_format(c.DateTime,"%Y-%m-%d") as t  
-                  FROM jy_admin_users as a INNER JOIN jy_channel_info as b on b.adminUserID = a.Id
-                  INNER JOIN jy_statistics_users_pay as c on c.Channel = a.account  
-                  WHERE ( '.$whereData.') ORDER BY c.DateTime desc) as 
-                  catData GROUP BY  catData.`GroupChannel`,catData.`t` ORDER BY catData.`DateTime` desc LIMIT '.$search['num']*$page.','.$search['num']);
+        $ChannelData  =  D('ChannelData');
+        $count        =  $ChannelData->NumberCount($whereData);
+        $info         =  $ChannelData->Info($whereData,$page,$search['num']);
+        $RealTime     =  $search['datemax'] == $DateTime ||   $search['datemin'] == $DateTime ?2:1 ;
+        if($RealTime == 2){
+            $RealTimeData = $ChannelData->RealTimeData($Channel);
+            if(!empty($RealTimeData)){
+                $count = $count+count($RealTimeData);
+                if($page < 1){
+                    $info = array_merge($RealTimeData,$info);
+                }
 
+            }
 
+        }
 
-
-
-
-        $count      = count($count) ;
         $Page       = new \Common\Lib\Page($count,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
         $this->assign('search',$search);
         $this->assign('page',$show);
         $this->assign('ChannelList',$ChannelList);
         $this->assign('userinfo',$userInfo);
-        $this->assign('info',$catData);
+        $this->assign('info',$info);
         $this->display('index');
     }
     //到出excel

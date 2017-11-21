@@ -13,6 +13,8 @@ MySQL - 5.7.20-0ubuntu0.16.04.1-log : Database - jyhd
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`jyhd` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+USE `jyhd`;
+
 /*Table structure for table `log_users_shop_0` */
 
 DROP TABLE IF EXISTS `log_users_shop_0`;
@@ -31,7 +33,7 @@ CREATE TABLE `log_users_shop_0` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_1` */
 
@@ -51,7 +53,7 @@ CREATE TABLE `log_users_shop_1` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_2` */
 
@@ -71,7 +73,7 @@ CREATE TABLE `log_users_shop_2` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_3` */
 
@@ -91,7 +93,7 @@ CREATE TABLE `log_users_shop_3` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_4` */
 
@@ -111,7 +113,7 @@ CREATE TABLE `log_users_shop_4` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=335 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_5` */
 
@@ -151,7 +153,7 @@ CREATE TABLE `log_users_shop_6` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_7` */
 
@@ -171,7 +173,7 @@ CREATE TABLE `log_users_shop_7` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_8` */
 
@@ -191,7 +193,7 @@ CREATE TABLE `log_users_shop_8` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `log_users_shop_9` */
 
@@ -211,7 +213,7 @@ CREATE TABLE `log_users_shop_9` (
   KEY `Code` (`Code`),
   KEY `DateTime` (`DateTime`),
   KEY `playerid` (`playerid`,`GoodsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

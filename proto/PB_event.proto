@@ -14,6 +14,15 @@ message LogoutEvent
 {
 }
 
+message PayInfoUpdate
+{
+	optional int32 day1_pay = 1;
+	optional int32 day3_pay = 2;
+	optional int32 day7_pay = 3;
+	optional int32 day30_pay = 4;
+	optional int64 playerid = 5;
+}
+
 // 破产
 message BankruptcyEvent
 {

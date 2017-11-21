@@ -30,9 +30,9 @@ class AdminUsersController extends ComController {
             $where .= ' and a.`islock`=' . $search['islock'];
         }
         if($userInfo['default'] == 1){
-                $lowerAdminUser[] = $userInfo['id'];
-                $lowerAdminUser  = implode(',',$lowerAdminUser);
-                $where .= ' and a.addId in('.$lowerAdminUser.')';
+            $lowerAdminUser[] = $userInfo['id'];
+            $lowerAdminUser  = implode(',',$lowerAdminUser);
+            $where .= ' and a.addId in('.$lowerAdminUser.')';
         }
         $count  = M('jy_admin_users as a')->join('jy_admin_group as b')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
@@ -94,6 +94,8 @@ class AdminUsersController extends ComController {
         $this->assign('adminGroupInfo',$adminGroupInfo);
         $this->display('add');
     }
+
+
     //修改
     public function edit(){
         $obj = new \Common\Lib\func();
@@ -117,16 +119,11 @@ class AdminUsersController extends ComController {
         }else{
             $adminGroupInfo =  $adminGroup;
         }
-
-
-
-
-
-        //管理员信息
         $adminUsersInfo = M('jy_admin_users')
-                          ->where('id = '.$id.' and isdel = 1')
-                          ->field('id,name,passwd,account,admingroup,islock,remark')
-                          ->find();
+            ->where('id = '.$id.' and isdel = 1')
+            ->field('id,name,passwd,account,admingroup,islock,remark')
+            ->find();
+        //管理员信息
 
         if(IS_POST){
             //数据

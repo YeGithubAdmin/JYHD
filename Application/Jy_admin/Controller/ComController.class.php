@@ -31,7 +31,7 @@ class ComController extends Controller {
            );
 
 
-           $response = in_array($addr,$Controller);
+            $response = in_array($addr,$Controller);
             $lowerAdmingroup = array();
             $lowerAdminUser = array();
            if(!$userInfo &&  !$response) {

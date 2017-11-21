@@ -131,8 +131,6 @@ class ComController extends RestController{
         }
 
         //token 验证
-
-
         //渠道
         if(empty($DataInfo['channel'])){
             $result  =  4002;
@@ -153,6 +151,11 @@ class ComController extends RestController{
             $result  =  4005;
             goto end;
         }
+        //脚本版本号
+//        if(empty($DataInfo['PackageVersion'])){
+//            $result  =  4004;
+//            goto end;
+//        }
         //平台号映射
         $platform = array(
             'ios'       =>  1,

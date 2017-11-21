@@ -101,7 +101,7 @@
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "Type"     nullmsg="" >
+							<select  class="select" name = "Type"   onchange="TypeFun(this)"   nullmsg="" >
 								 <option value="1"  <eq name="info['Type']" value = "1">selected="selected"</eq> >金币</option>
 								 <option value="2"  <eq name="info['Type']" value = "2">selected="selected"</eq> >钻石</option>
 								 <option value="3"  <eq name="info['Type']" value = "3">selected="selected"</eq>>道具</option>
@@ -113,14 +113,11 @@
 						</span>
 				</div>
 			</div>
-			<div class="formControls col-1 "  id = "FaceValue"  <neq name="info['Type']" value = "4">style="display:none;"</neq>>
-				<input type="text"   class="input-text"  value="{$info['FaceValue']}" placeholder="请输入面值"
+			<div class="formControls col-1 "    >
+				<input type="text"   class="input-text" id = "FaceValue"  <in name="info['Type']" value = "4,5,6"><else/>style="display:none;"</in> value="{$info['FaceValue']}" placeholder="请输入面值"
 					   name="FaceValue"  nullmsg="">
 			</div>
-			<div class="formControls col-1 "  id = "Hidden"   >
-				<input type="text"  class="input-text"  style="display:none;" value="" placeholder="请输入面值"
-					   nullmsg="">
-			</div>
+
 			<label class="form-label col-1"><span class="c-red">*</span>展示方式：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
@@ -589,6 +586,18 @@
             }
             for(k=0;k<IdSelectOptionType.length;k++){
                 IdSelectOptionType[k].style.display = "inline-block";
+            }
+
+        }
+        //物品类型
+        function TypeFun(my) {
+            var seleIndex           = my.selectedIndex;
+            var selectValue			= my.options[seleIndex].value;
+            var FaceValue           = document.getElementById('FaceValue');
+            if(selectValue >= 4){
+                FaceValue.style.display ="inline-block";
+            }else{
+                FaceValue.style.display ="none";
             }
 
         }

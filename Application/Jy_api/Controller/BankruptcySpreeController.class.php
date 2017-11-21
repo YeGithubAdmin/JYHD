@@ -40,7 +40,6 @@ class BankruptcySpreeController extends ComController {
                        'IosCode',
                    ))
                    ->find();
-
         if(empty($catData)){
             $result = 4007;
             goto  response;

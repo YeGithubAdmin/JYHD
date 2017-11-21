@@ -73,8 +73,10 @@ class UsersAttributeController extends ComController {
             $McOvertime     =       I('param.McOvertime',0,'trim,strtotime');         //月卡结束时间
             $IsGive         =       I('param.IsGive',1,'intval');                     //是否赠送道具  1 -否 2-是
             $DataProp       =       I('param.Prop','','trim');                        //道具
-            $AccountName    =       I('param.AccountName','','trim');                        //道具
-
+            $platform       =       I('param.platform',2,'intval');                        //道具
+            if($platform == 1){
+                define('SERVER_PROTO_IOS', 'http://172.18.238.60');
+            }
             if($playerid == 0){
                 $result = 4001;
                 goto  response;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-11-07 17:09:46
+ * Auto generated from PB_usr_data.proto at 2017-11-15 14:42:27
  *
  * RedisProto package
  */
@@ -34,6 +34,7 @@ class RPB_AccountData extends \ProtobufMessage
     const ACCOUNT_NAME = 20;
     const PWD = 21;
     const LOGOUT_TIME = 22;
+    const ONLINE_TIME = 23;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -147,6 +148,11 @@ class RPB_AccountData extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
+        self::ONLINE_TIME => array(
+            'name' => 'online_time',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -186,6 +192,7 @@ class RPB_AccountData extends \ProtobufMessage
         $this->values[self::ACCOUNT_NAME] = null;
         $this->values[self::PWD] = null;
         $this->values[self::LOGOUT_TIME] = null;
+        $this->values[self::ONLINE_TIME] = null;
     }
 
     /**
@@ -702,6 +709,29 @@ class RPB_AccountData extends \ProtobufMessage
     {
         $value = $this->get(self::LOGOUT_TIME);
         return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'online_time' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setOnlineTime($value)
+    {
+        return $this->set(self::ONLINE_TIME, $value);
+    }
+
+    /**
+     * Returns value of 'online_time' property
+     *
+     * @return integer
+     */
+    public function getOnlineTime()
+    {
+        $value = $this->get(self::ONLINE_TIME);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }
