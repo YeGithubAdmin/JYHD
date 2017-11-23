@@ -77,6 +77,15 @@ message LicenceUpdate
 	repeated LicenceData datas = 1;
 }
 
+// 兑换人民币事件
+message ExchangeRmbEvent
+{
+	optional int64 playerid = 1;
+	optional int32 incr_exchange = 2;
+	optional int32 day30_exchange = 3;
+	optional int32 serverid = 4;
+}
+
 message BigShellUpdate
 {
 	required int32 cur_num  = 1;
@@ -96,6 +105,7 @@ message RmbUpdate
 {
 	required int32 rmb_incr = 1;
 	required int32 rmb_cur  = 2;
+	optional int32 serverid = 3;
 }
 
 message KillFishAction

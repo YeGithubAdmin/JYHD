@@ -1,29 +1,29 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-11-15 14:42:26
+ * Auto generated from PB_gm_tool.proto at 2017-11-22 14:55:06
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * data message embedded in PBS_gm_numerical_op message
+ * PBS_gm_numerical_require_return message
  */
-class PBS_gm_numerical_op_data extends \ProtobufMessage
+class PBS_gm_numerical_require_return extends \ProtobufMessage
 {
     /* Field index constants */
-    const KEY = 1;
-    const VALUE = 2;
+    const DATA = 1;
+    const CODE = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::KEY => array(
-            'name' => 'key',
+        self::DATA => array(
+            'name' => 'data',
             'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_STRING,
+            'type' => '\Protos\game_numerical'
         ),
-        self::VALUE => array(
-            'name' => 'value',
+        self::CODE => array(
+            'name' => 'code',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -44,8 +44,8 @@ class PBS_gm_numerical_op_data extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::KEY] = null;
-        $this->values[self::VALUE] = null;
+        $this->values[self::DATA] = null;
+        $this->values[self::CODE] = null;
     }
 
     /**
@@ -59,48 +59,47 @@ class PBS_gm_numerical_op_data extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'key' property
+     * Sets value of 'data' property
      *
-     * @param string $value Property value
+     * @param \Protos\game_numerical $value Property value
      *
      * @return null
      */
-    public function setKey($value)
+    public function setData(\Protos\game_numerical $value=null)
     {
-        return $this->set(self::KEY, $value);
+        return $this->set(self::DATA, $value);
     }
 
     /**
-     * Returns value of 'key' property
+     * Returns value of 'data' property
      *
-     * @return string
+     * @return \Protos\game_numerical
      */
-    public function getKey()
+    public function getData()
     {
-        $value = $this->get(self::KEY);
-        return $value === null ? (string)$value : $value;
+        return $this->get(self::DATA);
     }
 
     /**
-     * Sets value of 'value' property
+     * Sets value of 'code' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setValue($value)
+    public function setCode($value)
     {
-        return $this->set(self::VALUE, $value);
+        return $this->set(self::CODE, $value);
     }
 
     /**
-     * Returns value of 'value' property
+     * Returns value of 'code' property
      *
      * @return integer
      */
-    public function getValue()
+    public function getCode()
     {
-        $value = $this->get(self::VALUE);
+        $value = $this->get(self::CODE);
         return $value === null ? (integer)$value : $value;
     }
 }

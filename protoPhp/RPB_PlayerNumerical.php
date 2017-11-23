@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2017-11-15 14:42:27
+ * Auto generated from PB_statistics_data.proto at 2017-11-22 14:55:06
  */
 
 namespace {
@@ -21,6 +21,16 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     const GOLD_NEWP = 9;
     const LICENCE = 10;
     const PLAYERID = 11;
+    const PAY1 = 12;
+    const PAY3 = 13;
+    const PAY7 = 14;
+    const PAY30 = 15;
+    const EXCHANGE_RMB30 = 16;
+    const BASE_CATCH_FISH_RATE_ADD = 17;
+    const KEY_CATCH_FISH_RATE_ADD = 18;
+    const FISH_CARD_RATE = 19;
+    const KEY_FISH_RATE = 20;
+    const SCORE = 21;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -79,6 +89,56 @@ class RPB_PlayerNumerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::PAY1 => array(
+            'name' => 'pay1',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::PAY3 => array(
+            'name' => 'pay3',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::PAY7 => array(
+            'name' => 'pay7',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::PAY30 => array(
+            'name' => 'pay30',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::EXCHANGE_RMB30 => array(
+            'name' => 'exchange_rmb30',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::BASE_CATCH_FISH_RATE_ADD => array(
+            'name' => 'base_catch_fish_rate_add',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
+        self::KEY_CATCH_FISH_RATE_ADD => array(
+            'name' => 'key_catch_fish_rate_add',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
+        self::FISH_CARD_RATE => array(
+            'name' => 'fish_card_rate',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
+        self::KEY_FISH_RATE => array(
+            'name' => 'key_fish_rate',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
+        self::SCORE => array(
+            'name' => 'score',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -107,6 +167,16 @@ class RPB_PlayerNumerical extends \ProtobufMessage
         $this->values[self::GOLD_NEWP] = null;
         $this->values[self::LICENCE] = null;
         $this->values[self::PLAYERID] = null;
+        $this->values[self::PAY1] = null;
+        $this->values[self::PAY3] = null;
+        $this->values[self::PAY7] = null;
+        $this->values[self::PAY30] = null;
+        $this->values[self::EXCHANGE_RMB30] = null;
+        $this->values[self::BASE_CATCH_FISH_RATE_ADD] = null;
+        $this->values[self::KEY_CATCH_FISH_RATE_ADD] = null;
+        $this->values[self::FISH_CARD_RATE] = null;
+        $this->values[self::KEY_FISH_RATE] = null;
+        $this->values[self::SCORE] = null;
     }
 
     /**
@@ -369,6 +439,236 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     public function getPlayerid()
     {
         $value = $this->get(self::PLAYERID);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pay1' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPay1($value)
+    {
+        return $this->set(self::PAY1, $value);
+    }
+
+    /**
+     * Returns value of 'pay1' property
+     *
+     * @return integer
+     */
+    public function getPay1()
+    {
+        $value = $this->get(self::PAY1);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pay3' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPay3($value)
+    {
+        return $this->set(self::PAY3, $value);
+    }
+
+    /**
+     * Returns value of 'pay3' property
+     *
+     * @return integer
+     */
+    public function getPay3()
+    {
+        $value = $this->get(self::PAY3);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pay7' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPay7($value)
+    {
+        return $this->set(self::PAY7, $value);
+    }
+
+    /**
+     * Returns value of 'pay7' property
+     *
+     * @return integer
+     */
+    public function getPay7()
+    {
+        $value = $this->get(self::PAY7);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pay30' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPay30($value)
+    {
+        return $this->set(self::PAY30, $value);
+    }
+
+    /**
+     * Returns value of 'pay30' property
+     *
+     * @return integer
+     */
+    public function getPay30()
+    {
+        $value = $this->get(self::PAY30);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'exchange_rmb30' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setExchangeRmb30($value)
+    {
+        return $this->set(self::EXCHANGE_RMB30, $value);
+    }
+
+    /**
+     * Returns value of 'exchange_rmb30' property
+     *
+     * @return integer
+     */
+    public function getExchangeRmb30()
+    {
+        $value = $this->get(self::EXCHANGE_RMB30);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'base_catch_fish_rate_add' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setBaseCatchFishRateAdd($value)
+    {
+        return $this->set(self::BASE_CATCH_FISH_RATE_ADD, $value);
+    }
+
+    /**
+     * Returns value of 'base_catch_fish_rate_add' property
+     *
+     * @return double
+     */
+    public function getBaseCatchFishRateAdd()
+    {
+        $value = $this->get(self::BASE_CATCH_FISH_RATE_ADD);
+        return $value === null ? (double)$value : $value;
+    }
+
+    /**
+     * Sets value of 'key_catch_fish_rate_add' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setKeyCatchFishRateAdd($value)
+    {
+        return $this->set(self::KEY_CATCH_FISH_RATE_ADD, $value);
+    }
+
+    /**
+     * Returns value of 'key_catch_fish_rate_add' property
+     *
+     * @return double
+     */
+    public function getKeyCatchFishRateAdd()
+    {
+        $value = $this->get(self::KEY_CATCH_FISH_RATE_ADD);
+        return $value === null ? (double)$value : $value;
+    }
+
+    /**
+     * Sets value of 'fish_card_rate' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setFishCardRate($value)
+    {
+        return $this->set(self::FISH_CARD_RATE, $value);
+    }
+
+    /**
+     * Returns value of 'fish_card_rate' property
+     *
+     * @return double
+     */
+    public function getFishCardRate()
+    {
+        $value = $this->get(self::FISH_CARD_RATE);
+        return $value === null ? (double)$value : $value;
+    }
+
+    /**
+     * Sets value of 'key_fish_rate' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setKeyFishRate($value)
+    {
+        return $this->set(self::KEY_FISH_RATE, $value);
+    }
+
+    /**
+     * Returns value of 'key_fish_rate' property
+     *
+     * @return double
+     */
+    public function getKeyFishRate()
+    {
+        $value = $this->get(self::KEY_FISH_RATE);
+        return $value === null ? (double)$value : $value;
+    }
+
+    /**
+     * Sets value of 'score' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setScore($value)
+    {
+        return $this->set(self::SCORE, $value);
+    }
+
+    /**
+     * Returns value of 'score' property
+     *
+     * @return integer
+     */
+    public function getScore()
+    {
+        $value = $this->get(self::SCORE);
         return $value === null ? (integer)$value : $value;
     }
 }

@@ -50,3 +50,18 @@ message PB_m2g_dump
 {
 	required string info = 1;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+// new version numerical
+//////////////////////////////////////////////////////////////////////////////////
+message PB_g2m_sync {
+	required int64 boss_consume = 1;
+	required int64 boss_produce_gold = 2;
+	required int64 boss_produce_bomb_gold = 3;
+}
+
+message PB_m2g_refresh {
+	required int64 boss_award_pool = 1;	
+}
+
+

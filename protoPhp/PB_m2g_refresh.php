@@ -1,23 +1,21 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-11-15 14:42:26
- *
- * protos package
+ * Auto generated from PB_numerical.proto at 2017-11-22 14:55:06
  */
 
-namespace Protos {
+namespace {
 /**
- * PBS_gm_numerical_return message
+ * PB_m2g_refresh message
  */
-class PBS_gm_numerical_return extends \ProtobufMessage
+class PB_m2g_refresh extends \ProtobufMessage
 {
     /* Field index constants */
-    const CODE = 1;
+    const BOSS_AWARD_POOL = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::CODE => array(
-            'name' => 'code',
+        self::BOSS_AWARD_POOL => array(
+            'name' => 'boss_award_pool',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -38,7 +36,7 @@ class PBS_gm_numerical_return extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::CODE] = null;
+        $this->values[self::BOSS_AWARD_POOL] = null;
     }
 
     /**
@@ -52,25 +50,25 @@ class PBS_gm_numerical_return extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'code' property
+     * Sets value of 'boss_award_pool' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setCode($value)
+    public function setBossAwardPool($value)
     {
-        return $this->set(self::CODE, $value);
+        return $this->set(self::BOSS_AWARD_POOL, $value);
     }
 
     /**
-     * Returns value of 'code' property
+     * Returns value of 'boss_award_pool' property
      *
      * @return integer
      */
-    public function getCode()
+    public function getBossAwardPool()
     {
-        $value = $this->get(self::CODE);
+        $value = $this->get(self::BOSS_AWARD_POOL);
         return $value === null ? (integer)$value : $value;
     }
 }

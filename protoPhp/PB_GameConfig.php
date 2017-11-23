@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_game_config.proto at 2017-11-15 14:42:26
+ * Auto generated from PB_game_config.proto at 2017-11-22 14:55:06
  */
 
 namespace {
@@ -19,6 +19,7 @@ class PB_GameConfig extends \ProtobufMessage
     const MAX_GUN_COIN = 7;
     const MIN_GUN_LV = 8;
     const MAX_GUN_LV = 9;
+    const VERSION = 10;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -67,6 +68,11 @@ class PB_GameConfig extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::VERSION => array(
+            'name' => 'version',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
     );
 
     /**
@@ -93,6 +99,7 @@ class PB_GameConfig extends \ProtobufMessage
         $this->values[self::MAX_GUN_COIN] = null;
         $this->values[self::MIN_GUN_LV] = null;
         $this->values[self::MAX_GUN_LV] = null;
+        $this->values[self::VERSION] = null;
     }
 
     /**
@@ -310,6 +317,29 @@ class PB_GameConfig extends \ProtobufMessage
     {
         $value = $this->get(self::MAX_GUN_LV);
         return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'version' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setVersion($value)
+    {
+        return $this->set(self::VERSION, $value);
+    }
+
+    /**
+     * Returns value of 'version' property
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        $value = $this->get(self::VERSION);
+        return $value === null ? (string)$value : $value;
     }
 }
 }

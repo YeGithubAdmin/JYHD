@@ -3,22 +3,14 @@ enum PB_GameType
 {
 	Game_None 	   = -1;	
 	Game_buyu  	   = 1; 	// 捕鱼
+	Game_shuihu    = 2;		// 水浒
 	Game_Max  	   = 100;
-}
-
-enum PB_LevelType 
-{
-	Level_None	   		= -1;
-	Level_Gun10    		= 1; 	// 十炮场
-	Level_Gun100      	= 2; 	// 百炮场
-	Level_Gun1000 	   	= 3; 	// 千炮场
-	Level_Gun10000    	= 4;	// 万炮场
 }
 
 message PB_GameConfig 
 {
 	optional int32 gameid 		= 1;	// PB_GameType
-	optional int32 level 		= 2;	// PB_LevelType
+	optional int32 level 		= 2;	// 1-4
 	optional int32 serverid 	= 3;	// 服务器id	
 	optional int32 player_max 	= 4;	// 最大人数
 	optional int32 room_max 	= 5;	// 最大房间数
@@ -26,5 +18,6 @@ message PB_GameConfig
 	optional int32 max_gun_coin = 7;	// 最大准入倍率
 	optional int32 min_gun_lv   = 8;	// 最小准入等级
 	optional int32 max_gun_lv   = 9;	// 最大准入等级
+	optional string version     = 10;	// 游戏版本号
 }
 

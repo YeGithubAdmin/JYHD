@@ -1,0 +1,461 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+		  rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>修改用户属性</title>
+</head>
+<body>
+
+<div class="pd-20">
+
+	<!--搜索 -->
+	<form action="" method="get">
+		<input type="hidden" name="m" value="jy_admin" />
+		<input type="hidden" name="c" value="Notice" />
+		<input type="hidden" name="a" value="index" />
+		<div class="text-c">
+			<input  type="text" class="input-text" style="width: 250px"  placeholder="请输入服务器ID" id="" value="{$Serverid}"
+					name="Serverid">
+			<button type="submit" class="btn btn-success" id="" name="">
+				<i class="Hui-iconfont">&#xe665;</i> 搜索
+			</button>
+		</div>
+	</form>
+
+
+
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+
+	</div>
+
+
+
+	<form action="" method="post"  class="form form-horizontal" id="form-UsersAttribute-add">
+		<input  type="hidden" id="" value="{$Serverid}"
+				name="Serverid">
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>基础抽水率：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  title = "通过奖池状态影响每个游戏场的基础抽水率" value="{$info['base']['PoolRatio']|round=2}" placeholder=""
+					   name="PoolRatio" datatype="*" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>极限系数：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="{$info['base']['LimitRatio']|round=2}" placeholder=""
+					   name="LimitRatio" datatype="*"  nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>折算值：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="{$info['base']['ChangePoint']|round=2}"  datatype="*"  placeholder=""
+					   name="ChangePoint"  nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>BOSS奖池配置[0,2000000]：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*"   value="{$info['base']['BossAwardPool']|round=2}" placeholder=""
+					   name="BossAwardPool" >
+			</div>
+			<div class="col-1"></div>
+
+		</div>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>充值返奖率P1：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP1']|round=2}" datatype="*" placeholder="" name="FishCardP1"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>充值返奖率P2：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP2']|round=2}" placeholder=""
+					   name="FishCardP2"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>[场返奖率]：影响每个游戏场的基础抽水率：</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>RoomLevel：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "RoomLevel" onchange="getReturnGoldRate(this)"   nullmsg="" >
+								 <option value="">请选择房间等级</option>
+								<volist name = "info['getReturnGoldRate']" key = "k" id = "val">
+									<option   GoldRate = "{$val['GoldRate']|round = 2}"    <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RoomLevel']}" >{$val['RoomLevel']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>GoldRate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text getReturnGoldRate" title=""  id = "GoldRate" datatype="*"  value="{$info['getReturnGoldRate'][0]['GoldRate']|round = 2}" placeholder=""
+					   name="GoldRate"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>基础捕中率加成（影响付费玩家捕中率加成）</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>AddRate：</label>
+			<div class="formControls col-1">
+				<input type="text"  id = "AddRate" class="input-text" title="" value="{$info['getRechargeEffect'][0]['AddRate']|round = 2}" datatype="*" placeholder="" name="AddRate"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>PlanRecharge：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" id ="PlanRecharge" title="" datatype="*"  value="{$info['getRechargeEffect'][0]['PlanRecharge']}" placeholder=""
+					   name="PlanRecharge"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>PayType：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "PayType"  onchange="getRechargeEffect(this)"  nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getRechargeEffect']" key = "k" id = "val">
+									<option   AddRate = "{$val['AddRate']|round=2}"   PlanRecharge = "{$val['PlanRecharge']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['PayType']}" >{$val['PayType']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>KEY鱼捕中加成（影响付费玩家接近临界值时对KEY鱼的捕中率加成）</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>KeyAddRate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  id = "KeyAddRate" title="" value="{$info['getKeyRechargeEffect'][0]['KeyAddRate']|round=2}" datatype="*" placeholder="" name="KeyAddRate"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>KeyPlanRecharge：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  id = "KeyPlanRecharge" title="" datatype="*"  value="{$info['getKeyRechargeEffect'][0]['KeyPlanRecharge']}" placeholder=""
+					   name="KeyPlanRecharge"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>KeyPayType：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "KeyPayType"  onchange="getKeyRechargeEffect(this)"  nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getKeyRechargeEffect']" key = "k" id = "val">
+									<option   KeyAddRate = "{$val['KeyAddRate']|round=2}"   KeyPlanRecharge = "{$val['KeyAddRate']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['KeyPayType']}" >{$val['KeyPayType']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>[downGrade]：控制临界值及到临界值时对玩家的补救倍数）</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>Num：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  id = "Num" value="{$info['getDownGrade'][0]['Num']}" datatype="*" placeholder="" name="Num"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>Type：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "Type" onchange="getDownGrade(this)"   nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getDownGrade']" key = "k" id = "val">
+									<option     Num = "{$val['Num']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['Type']}" >{$val['Type']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>渔券相关配置</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>FishFcMax：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "FishFcMax" onchange="getFishCardRate(this)"   nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getFishCardRate']" key = "k" id = "val">
+									<option   FishRate = "{$val['FishRate']}"   <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['FishFcMax']}" >{$val['FishFcMax']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>FishRate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title="" value="{$info['getFishCardRate'][0]['FishRate']}"  id = "FishRate" datatype="*" placeholder="" name="FishRate"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>BOSS捕中率配置 核弹掉落率配置</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red">*</span>类型：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "BossId" onchange="getBossRateParams(this)"   nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getBossRateParams']" key = "k" id = "val">
+									<option   Stage = "{$val['Stage']|round=2}"    CrrtParam = "{$val['CrrtParam']|round=2}"   CuRate = "{$val['CuRate']|round=2}"
+											  AgRate = "{$val['AgRate']|round=2}"  AuRate = "{$val['AuRate']|round=2}"
+									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['BossId']}" >BooId:{$val['BossId']},Stage:{$val['Stage']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+
+
+
+			<div class="col-1"></div>
+
+			<div class="formControls col-1" style="display: none">
+				<input type="text" class="input-text" title=""  id = "Stage" value="{$info['getBossRateParams'][0]['Stage']|round=2}"  placeholder="" name="Stage"  >
+			</div>
+
+			<label class="form-label col-1"><span class="c-red">*</span>CrrtParam：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  id = "CrrtParam" value="{$info['getBossRateParams'][0]['CrrtParam']|round=2}" datatype="*" placeholder="" name="CrrtParam"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>CuRate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  id = "CuRate" value="{$info['getBossRateParams'][0]['CuRate']|round=2}" datatype="*" placeholder="" name="CuRate"  >
+			</div>
+			<div class="col-1"></div>
+
+			<label class="form-label col-1"><span class="c-red">*</span>AgRate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  id = "AgRate"  value="{$info['getBossRateParams'][0]['AgRate']|round=2}" datatype="*" placeholder="" name="AgRate"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+
+			<label class="form-label col-1"><span class="c-red">*</span>AuRate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title="" id = "AuRate" value="{$info['getBossRateParams'][0]['AuRate']|round=2}" datatype="*" placeholder="" name="AuRate"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+			<div class="col-9 col-offset-6">
+				<input class="btn btn-primary radius"  type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+<literal>
+	<script type="text/javascript">
+        $(function() {
+            $('.skin-minimal input').iCheck({
+                checkboxClass : 'icheckbox-blue',
+                radioClass : 'iradio-blue',
+                increaseArea : '20%'
+            });
+
+            $("#form-UsersAttribute-add").Validform({
+                tiptype : 2,
+
+                callback : function(form) {
+                    form[0].submit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                }
+            });
+        });
+
+	function getReturnGoldRate(my) {
+		var GoldRate = document.getElementById('GoldRate');
+        var Index 		= my.selectedIndex;         				//索引
+		var MyGoldRate  = my.options[Index].getAttribute('GoldRate');
+        GoldRate.value = MyGoldRate;
+    }
+
+
+    function getRechargeEffect(my) {
+	    var PlanRecharge = document.getElementById('PlanRecharge');
+	    var AddRate = document.getElementById('AddRate');
+        var Index 		= my.selectedIndex;         				//索引
+		var Value		=   my.options[Index].value;   				//选择中值;
+
+        var MyOptions = my.options[Index];
+		if(Value != '') {
+            PlanRecharge.value = MyOptions.getAttribute('PlanRecharge');
+            AddRate.value = MyOptions.getAttribute('AddRate')
+        }else{
+            PlanRecharge.value = '';
+            AddRate.value = '';
+		}
+
+
+    }
+
+	function  getKeyRechargeEffect(my) {
+        var KeyPlanRecharge = document.getElementById('KeyPlanRecharge');
+        var KeyAddRate = document.getElementById('KeyAddRate');
+        var Index 		= my.selectedIndex;         				//索引
+        var MyOptions   = my.options[Index];
+        var Value		=   my.options[Index].value;   				//选择中值;
+        if(Value != ''){
+            KeyPlanRecharge.value = MyOptions.getAttribute('KeyPlanRecharge') ;
+            KeyAddRate.value = MyOptions.getAttribute('KeyAddRate');
+		}else{
+            KeyPlanRecharge.value = '' ;
+            KeyAddRate.value = '';
+		}
+    }
+
+
+	function  getDownGrade(my) {
+		var Num = document.getElementById('Num');
+		var Index 		= my.selectedIndex;         				//索引
+		var MyOptions   = my.options[Index];
+		var Value		=   my.options[Index].value;   				//选择中值;
+		if(Value != ''){
+			Num.value = MyOptions.getAttribute('Num') ;
+		}else{
+			Num.value ='';
+		}
+	}
+
+
+	function  getFishCardRate(my) {
+		var FishRate = document.getElementById('FishRate');
+		var Index 		= my.selectedIndex;         				//索引
+		var MyOptions   = my.options[Index];
+		var Value		=   my.options[Index].value;   				//选择中值;
+		if(Value != ''){
+            FishRate.value = MyOptions.getAttribute('FishRate') ;
+		}else{
+            FishRate.value ='';
+		}
+	}
+
+
+	function  getBossRateParams(my) {
+		var Stage = document.getElementById('Stage');
+		var CrrtParam = document.getElementById('CrrtParam');
+		var CuRate = document.getElementById('CuRate');
+		var AgRate = document.getElementById('AgRate');
+		var AuRate = document.getElementById('AuRate');
+
+		var Index 		= my.selectedIndex;         				//索引
+		var MyOptions   = my.options[Index];
+		var Value		=   my.options[Index].value;   				//选择中值;
+		if(Value != ''){
+            Stage.value = MyOptions.getAttribute('Stage') ;
+            CrrtParam.value = MyOptions.getAttribute('CrrtParam') ;
+            CuRate.value = MyOptions.getAttribute('CuRate') ;
+            AgRate.value = MyOptions.getAttribute('AgRate') ;
+            AuRate.value = MyOptions.getAttribute('AuRate') ;
+		}else{
+            Stage.value ='';
+            CrrtParam.value ='';
+            CuRate.value ='';
+            AgRate.value ='';
+            AuRate.value ='';
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+</literal>
+
+</body>
+</html>

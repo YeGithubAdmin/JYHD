@@ -13,7 +13,19 @@ message RPB_PlayerNumerical
 	optional int64 item_day				= 8;	// 每天获得道具数量
 	optional int64 gold_newp 			= 9;	// 新手期获得金币
 	optional bool  licence 				= 10;	// 鱼券许可证
+
+	// new numerical
 	optional int64 playerid 			= 11;	// 玩家id
+	optional int32 pay1			 		= 12;	// 当日充值
+	optional int32 pay3			 		= 13;	// 3日充值
+	optional int32 pay7			 		= 14;	// 7日充值
+	optional int32 pay30			 	= 15;	// 30日充值
+	optional int32 exchange_rmb30  		= 16;	// 玩家30天内兑换的rmb
+	optional float base_catch_fish_rate_add 	= 17; 	// 基础捕中率加成
+	optional float key_catch_fish_rate_add 		= 18; 	// KEY鱼捕中加成
+	optional float fish_card_rate 		= 19; 	// 渔券捕中率
+	optional float key_fish_rate 		= 20; 	// KEY鱼捕中率
+	optional int64 score 				= 21;	// 积分
 }
 
 message RPB_GameNumerical
@@ -41,6 +53,33 @@ message RPB_GameNumerical
 	optional int64 fish_card_history_pool		= 18;	// 鱼券产出
 	
 	optional int64 pump_gold_history_pool		= 19;	// 系统抽水
+
+	// new numerical
+	optional int64 produce_gold_1  				= 50;
+	optional int64 consume_gold_1				= 51;
+	optional int64 fish_card_1					= 52;
+	optional int64 bomb_1						= 53;
+	optional int64 score_1						= 54;
+
+	optional int64 produce_gold_2  				= 60;
+	optional int64 consume_gold_2				= 61;
+	optional int64 fish_card_2					= 62;
+	optional int64 bomb_2						= 63;
+	optional int64 score_2						= 64;
+
+	optional int64 produce_gold_3  				= 70;
+	optional int64 consume_gold_3				= 71;
+	optional int64 fish_card_3					= 72;
+	optional int64 bomb_3						= 73;
+	optional int64 score_3						= 74;
+
+	optional int64 produce_gold_4  				= 80;
+	optional int64 consume_gold_4				= 81;
+	optional int64 fish_card_4					= 82;
+	optional int64 bomb_4						= 83;
+	optional int64 score_4						= 84;
+	
+	optional int64 boss_award_pool 				= 90;
 }
 
 message PBS_GameNumericalOpt
@@ -59,3 +98,4 @@ message PBS_GameNumericalOpt
 	optional Request 	request 	= 1;
 	optional Response 	response 	= 2;
 }
+

@@ -233,7 +233,7 @@ class ThirtyDaySignController extends ComController {
         //vip奖励
         //查询奖励
         $catVipReward = array(
-            'b.Name',
+            'a.Title as Name',
             'a.Level',
             'b.ImgCode',
             'a.Number*b.GetNum as Number',
@@ -502,13 +502,14 @@ class ThirtyDaySignController extends ComController {
         foreach ($catSignGoods as $k=>$v){
               $num =  $v['Number'];
 
-              if($VipLevel>0){
+              if($VipLevel>0 && $v['Type'] == 1){
                  $num =  $num*2;
               }
               if($v['Type']> 0 &&  $v['Type']<=3 ){
                   $infoData[$k]['Type']   =  $v['Type'];
                   $infoData[$k]['Code']   =  $v['Code'];
-                  $infoData[$k]['Number'] =  $v['Number'];
+                  $infoData[$k]['Number'] =  $num;
+
               }
               switch ($v['Type']){
                   case 1:
@@ -586,13 +587,10 @@ class ThirtyDaySignController extends ComController {
             $result = 4006;
             goto response;
         }
-
-
         if(empty($Day)){
             $result = 4008;
             goto response;
         }
-
 
         //查看签到情况
         $thirtydaySign = M('log_thirtyday_sign')

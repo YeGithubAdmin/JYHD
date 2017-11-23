@@ -67,9 +67,8 @@ class ThirtydaysContinuityController extends ComController {
             ->find();
         if(IS_POST){
             //数据
-            //数据
             $ImgCode             =   I('param.ImgCode','','trim');
-            $Name                =   I('param.Name',0,'intval');
+            $Name                =   I('param.Name','','trim');
             $dataSevenDaysSign   = array(
                 'ImgCode'        =>       $ImgCode,
                 'Name'           =>       $Name,

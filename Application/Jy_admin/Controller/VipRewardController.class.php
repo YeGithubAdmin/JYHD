@@ -25,13 +25,12 @@ class VipRewardController extends ComController {
             ->join('jy_vip_reward as b on b.GoodsID = a.Id')
             ->where($where)
             ->limit($page*$num,$num)
-            ->field('b.Id,a.Name,b.Number,b.DateTime,b.Remark')
+            ->field('b.Id,a.Name,b.Number,b.Title,b.DateTime,b.Remark')
             ->select();
         $this->assign('page',$show);
         $this->assign('level',$Level);
         $this->assign('info',$catVipInfo);
         $this->display('index');
-
     }
     //添加
     public function  add(){
@@ -52,16 +51,18 @@ class VipRewardController extends ComController {
             ->select();
         if(IS_POST){
             //数据
-            $Type        =           I('param.Type',0,'intval');              //类型
-            $GoodsID     =           I('param.GoodsID',0,'intval');              //物品ID
+            $Type        =           I('param.Type',0,'intval');                //类型
+            $GoodsID     =           I('param.GoodsID',0,'intval');             //物品ID
             $Number      =           I('param.Number',0,'intval');              //数量
-            $Remark      =            I('param.Remark','','trim');                 //备注
+            $Remark      =           I('param.Remark','','trim');               //备注
+            $Title       =           I('param.Title','','trim');                 //奖励
             $dataVipInfo = array(
                 'Level'           =>          $Level,
                 'GoodsID'         =>          $GoodsID,
-                'Number'          =>          $Number,
+                'Number'          =>         $Number,
                 'Type'            =>          $Type,
-                'Remark'          =>          $Remark
+                'Remark'          =>         $Remark,
+                'Title'           =>         $Title,
             );
             //添加
             $addVipInfo = M('jy_vip_reward')
@@ -86,7 +87,7 @@ class VipRewardController extends ComController {
         //查询用户信息
         $catVipInfo = M('jy_vip_reward')
                       ->where('Id = '.$Id)
-                      ->field('Id,level,Number,GoodsID,Type,Remark')
+                      ->field('Id,level,Number,GoodsID,Title,Type,Remark')
                       ->find();
         //查询所有物品
         $catGoodsAllField = array(
@@ -102,13 +103,15 @@ class VipRewardController extends ComController {
             //数据
             $Type        =           I('param.Type',0,'intval');              //类型
             $GoodsID     =           I('param.GoodsID',0,'intval');              //物品ID
-            $Number     =           I('param.Number',0,'intval');              //数量
-            $Remark     =            I('param.Remark','','trim');                 //备注
+            $Number      =           I('param.Number',0,'intval');              //数量
+            $Remark      =            I('param.Remark','','trim');                 //备注
+            $Title       =           I('param.Title','','trim');                 //奖励
             $dataVipInfo = array(
                 'GoodsID'      =>          $GoodsID,
                 'Number'        =>         $Number,
                 'Type'         =>          $Type,
-                'Remark'        =>         $Remark
+                'Remark'        =>         $Remark,
+                'Title'        =>         $Title,
             );
             //添加
             $upVipInfo = M('jy_vip_reward')

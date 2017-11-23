@@ -65,20 +65,72 @@ message PBS_GetGameNumericalReturn
 	optional RPB_GameNumerical data = 2; 
 }
 
+message game_numerical {
+	message const_return_gold_rate {
+		required int32 room_level = 1;
+		required float rate = 2;
+	}
+	message const_recharge_effect {
+		required string pay_type = 1; 										// "pay1" "pay3" "pay7" "pay30"
+		required float add_rate = 2;
+		required int32 plan_recharge = 3;
+	}
+	message const_key_recharge_effect {
+		required string pay_type = 1; 										// "pay1" "pay3" "pay7" "pay30"
+		required float add_rate = 2;
+		required int32 plan_recharge = 3;
+	}
+	message const_down_grade {
+		required string type = 1;											// "att_useing_50" "att_useing_100" "att_useing_200"
+		required int32 num = 2;
+	}
+	message const_fish_card_rate {
+		required int32 fc_max = 1;
+		required float rate = 2;
+	}
+	message const_boss_rate_params {
+		required int32 boss_id = 1;  										// 2001 - 2006
+		required int32 stage = 2; 											// 1 - 3
+		optional float crrt_param = 3;
+		optional float cu_rate = 4;
+		optional float ag_rate = 5;
+		optional float au_rate = 6;
+	}
+
+	optional float pool_ratio = 1; 											// [poolRatio]：通过奖池状态影响每个游戏场的基础抽水率
+	optional float limit_ratio = 2;											// 极限系数：
+	optional int32 change_point = 3; 										// 折算值
+	optional float fish_card_p1 = 4; 										// 控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]
+	optional int32 fish_card_p2 = 5; 										// 控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]
+	optional int32 boss_award_pool = 6; 									// BOSS奖池配置：[0,2000000]
+	repeated const_return_gold_rate return_gold_rate = 20;      			// [场返奖率]：影响每个游戏场的基础抽水率
+	repeated const_recharge_effect recharge_effect = 21;					// 基础捕中率加成：影响付费玩家捕中率加成
+	repeated const_key_recharge_effect key_recharge_effect = 22;			// KEY鱼捕中加成：影响付费玩家接近临界值时对KEY鱼的捕中率加成
+	repeated const_down_grade down_grade = 23;      						// [downGrade]：控制临界值及到临界值时对玩家的补救倍数
+	repeated const_fish_card_rate fish_card_rate = 24;      				// 渔券相关配置
+	repeated const_boss_rate_params boss_rate_params = 25;      			// BOSS捕中率配置 核弹掉落率配置
+}
+
 // 更改数值数据
 message PBS_gm_numerical_op
 {
-	message data {
-		required string key = 1; 		// bomb_cu_pool, bomb_ag_pool, bomb_au_pool, fish_card_pool
-		required int64 value = 2;
-	}
-	repeated data set_data = 1;
-	repeated data add_data = 2;
+	required game_numerical data = 1; 
+	optional int32 serverid = 2;
 }
 
-message PBS_gm_numerical_return
+message PBS_gm_numerical_op_return
 {
 	required PB_ErrorCode code = 1;
+}
+
+// 查询数值数据
+message PBS_gm_numerical_require {
+	required int32 serverid = 1;
+}
+
+message PBS_gm_numerical_require_return {
+	required game_numerical data = 1;
+   	required PB_ErrorCode code = 2;
 }
 
 // 捕鱼逻辑控制操作

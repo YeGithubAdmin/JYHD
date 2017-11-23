@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_event.proto at 2017-11-15 14:42:26
+ * Auto generated from PB_event.proto at 2017-11-22 14:55:06
  */
 
 namespace {
@@ -12,6 +12,7 @@ class RmbUpdate extends \ProtobufMessage
     /* Field index constants */
     const RMB_INCR = 1;
     const RMB_CUR = 2;
+    const SERVERID = 3;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -23,6 +24,11 @@ class RmbUpdate extends \ProtobufMessage
         self::RMB_CUR => array(
             'name' => 'rmb_cur',
             'required' => true,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::SERVERID => array(
+            'name' => 'serverid',
+            'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
@@ -44,6 +50,7 @@ class RmbUpdate extends \ProtobufMessage
     {
         $this->values[self::RMB_INCR] = null;
         $this->values[self::RMB_CUR] = null;
+        $this->values[self::SERVERID] = null;
     }
 
     /**
@@ -99,6 +106,29 @@ class RmbUpdate extends \ProtobufMessage
     public function getRmbCur()
     {
         $value = $this->get(self::RMB_CUR);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'serverid' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setServerid($value)
+    {
+        return $this->set(self::SERVERID, $value);
+    }
+
+    /**
+     * Returns value of 'serverid' property
+     *
+     * @return integer
+     */
+    public function getServerid()
+    {
+        $value = $this->get(self::SERVERID);
         return $value === null ? (integer)$value : $value;
     }
 }

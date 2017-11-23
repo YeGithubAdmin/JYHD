@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-11-15 14:42:26
+ * Auto generated from PB_gm_tool.proto at 2017-11-22 14:55:06
  *
  * protos package
  */
@@ -12,20 +12,20 @@ namespace Protos {
 class PBS_gm_numerical_op extends \ProtobufMessage
 {
     /* Field index constants */
-    const SET_DATA = 1;
-    const ADD_DATA = 2;
+    const DATA = 1;
+    const SERVERID = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::SET_DATA => array(
-            'name' => 'set_data',
-            'repeated' => true,
-            'type' => '\Protos\PBS_gm_numerical_op_data'
+        self::DATA => array(
+            'name' => 'data',
+            'required' => true,
+            'type' => '\Protos\game_numerical'
         ),
-        self::ADD_DATA => array(
-            'name' => 'add_data',
-            'repeated' => true,
-            'type' => '\Protos\PBS_gm_numerical_op_data'
+        self::SERVERID => array(
+            'name' => 'serverid',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
 
@@ -44,8 +44,8 @@ class PBS_gm_numerical_op extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::SET_DATA] = array();
-        $this->values[self::ADD_DATA] = array();
+        $this->values[self::DATA] = null;
+        $this->values[self::SERVERID] = null;
     }
 
     /**
@@ -59,131 +59,48 @@ class PBS_gm_numerical_op extends \ProtobufMessage
     }
 
     /**
-     * Appends value to 'set_data' list
+     * Sets value of 'data' property
      *
-     * @param \Protos\PBS_gm_numerical_op_data $value Value to append
-     *
-     * @return null
-     */
-    public function appendSetData(\Protos\PBS_gm_numerical_op_data $value)
-    {
-        return $this->append(self::SET_DATA, $value);
-    }
-
-    /**
-     * Clears 'set_data' list
+     * @param \Protos\game_numerical $value Property value
      *
      * @return null
      */
-    public function clearSetData()
+    public function setData(\Protos\game_numerical $value=null)
     {
-        return $this->clear(self::SET_DATA);
+        return $this->set(self::DATA, $value);
     }
 
     /**
-     * Returns 'set_data' list
+     * Returns value of 'data' property
      *
-     * @return \Protos\PBS_gm_numerical_op_data[]
+     * @return \Protos\game_numerical
      */
-    public function getSetData()
+    public function getData()
     {
-        return $this->get(self::SET_DATA);
+        return $this->get(self::DATA);
     }
 
     /**
-     * Returns 'set_data' iterator
+     * Sets value of 'serverid' property
      *
-     * @return \ArrayIterator
-     */
-    public function getSetDataIterator()
-    {
-        return new \ArrayIterator($this->get(self::SET_DATA));
-    }
-
-    /**
-     * Returns element from 'set_data' list at given offset
-     *
-     * @param int $offset Position in list
-     *
-     * @return \Protos\PBS_gm_numerical_op_data
-     */
-    public function getSetDataAt($offset)
-    {
-        return $this->get(self::SET_DATA, $offset);
-    }
-
-    /**
-     * Returns count of 'set_data' list
-     *
-     * @return int
-     */
-    public function getSetDataCount()
-    {
-        return $this->count(self::SET_DATA);
-    }
-
-    /**
-     * Appends value to 'add_data' list
-     *
-     * @param \Protos\PBS_gm_numerical_op_data $value Value to append
+     * @param integer $value Property value
      *
      * @return null
      */
-    public function appendAddData(\Protos\PBS_gm_numerical_op_data $value)
+    public function setServerid($value)
     {
-        return $this->append(self::ADD_DATA, $value);
+        return $this->set(self::SERVERID, $value);
     }
 
     /**
-     * Clears 'add_data' list
+     * Returns value of 'serverid' property
      *
-     * @return null
+     * @return integer
      */
-    public function clearAddData()
+    public function getServerid()
     {
-        return $this->clear(self::ADD_DATA);
-    }
-
-    /**
-     * Returns 'add_data' list
-     *
-     * @return \Protos\PBS_gm_numerical_op_data[]
-     */
-    public function getAddData()
-    {
-        return $this->get(self::ADD_DATA);
-    }
-
-    /**
-     * Returns 'add_data' iterator
-     *
-     * @return \ArrayIterator
-     */
-    public function getAddDataIterator()
-    {
-        return new \ArrayIterator($this->get(self::ADD_DATA));
-    }
-
-    /**
-     * Returns element from 'add_data' list at given offset
-     *
-     * @param int $offset Position in list
-     *
-     * @return \Protos\PBS_gm_numerical_op_data
-     */
-    public function getAddDataAt($offset)
-    {
-        return $this->get(self::ADD_DATA, $offset);
-    }
-
-    /**
-     * Returns count of 'add_data' list
-     *
-     * @return int
-     */
-    public function getAddDataCount()
-    {
-        return $this->count(self::ADD_DATA);
+        $value = $this->get(self::SERVERID);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

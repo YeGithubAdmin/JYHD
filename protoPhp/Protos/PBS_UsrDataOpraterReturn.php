@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-11-15 14:42:27
+ * Auto generated from PB_usr_rpc.proto at 2017-11-22 14:55:06
  *
  * protos package
  */
@@ -15,6 +15,7 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
     const CODE = 1;
     const BASE = 2;
     const ACCOUNT_DATA = 3;
+    const SCORE = 4;
     const PLAYER_NUMERICAL = 5;
     const ITEMS = 6;
 
@@ -34,6 +35,11 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
             'name' => 'account_data',
             'required' => false,
             'type' => '\RedisProto\RPB_AccountData'
+        ),
+        self::SCORE => array(
+            'name' => 'score',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
         self::PLAYER_NUMERICAL => array(
             'name' => 'player_numerical',
@@ -65,6 +71,7 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
         $this->values[self::CODE] = null;
         $this->values[self::BASE] = null;
         $this->values[self::ACCOUNT_DATA] = null;
+        $this->values[self::SCORE] = null;
         $this->values[self::PLAYER_NUMERICAL] = null;
         $this->values[self::ITEMS] = array();
     }
@@ -144,6 +151,29 @@ class PBS_UsrDataOpraterReturn extends \ProtobufMessage
     public function getAccountData()
     {
         return $this->get(self::ACCOUNT_DATA);
+    }
+
+    /**
+     * Sets value of 'score' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setScore($value)
+    {
+        return $this->set(self::SCORE, $value);
+    }
+
+    /**
+     * Returns value of 'score' property
+     *
+     * @return integer
+     */
+    public function getScore()
+    {
+        $value = $this->get(self::SCORE);
+        return $value === null ? (integer)$value : $value;
     }
 
     /**

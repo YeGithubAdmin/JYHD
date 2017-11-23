@@ -379,7 +379,7 @@ class func{
         foreach ($Class as $k=>$v){
             $dir =  PROTOC_PATH.$v;
             if(file_exists($dir)){
-                include  $dir;
+                include_once  $dir;
             }
         }
     }
