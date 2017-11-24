@@ -1,85 +1,119 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
-<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
-<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
-<![endif]-->
-<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
-	type="text/css" />
-<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
-	rel="stylesheet" type="text/css" />
-<!--[if IE 6]>
-<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
-<script>DD_belatedPNG.fix('*');</script>
-<![endif]-->
-<title>物品列表</title>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+		  rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>反馈处理</title>
 </head>
 <body>
-	<nav class="breadcrumb">
-		<i class="Hui-iconfont">&#xe67f;</i> 用户中心 <span class="c-gray en">&gt;所有订单</span>
-		 <span class="c-gray en">&gt;物品列表</span> <a
-			class="btn btn-success radius r mr-20"
-			style="line-height: 1.6em; margin-top: 3px"
-			href="javascript:location.replace(location.href);" title="刷新"><i
-			class="Hui-iconfont">&#xe68f;</i></a>
-	</nav>
-	<div class="pd-20">
-		<!--搜索 -->
+<div class="pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-vipInfo-add">
+		<input type="hidden" name="Id"  value="{$info['Id']}" id="">
+		<div class="row cl">
+			<label class="form-label col-1"><span class="c-red"></span>用户ID：</label>
+			<div class="formControls col-1">
+				<input type="text"  class="input-text"  disabled = "true"  value="{$info['playerid']}" placeholder="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red"></span>QQ：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="{$info['TxQq']}" disabled = "true"  placeholder="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red"></span>手机号码：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="{$info['Phone']}" disabled = "true" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red"></span>提交时间：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" value="{$info['DateTime']}" disabled = "true" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-1">玩家信息：</label>
+			<div class="formControls col-10">
+				<textarea cols="" rows="10"  style="width: 100%;"  disabled = "true" placeholder="玩家信息"    dragonfly="true" nullmsg="备注不能为空！" >{$info['Fcontent']}</textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-1">客服回复：</label>
+			<div class="formControls col-10">
+				<textarea name="Rcontent" cols="" rows="25"  style="width: 100%;"  placeholder="请输入回复信息"  <eq name ="info['Status']" value = "2">disabled = "true"</eq> datatype="*" dragonfly="true" nullmsg="备注不能为空！" >{$info['Rcontent']}</textarea>
+			</div>
+		</div>
 
+		<neq name = "info['Status']" value = "2">
+		<div class="row cl">
+			<div class="col-10 col-offset-3">
+				<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;回复&nbsp;&nbsp;">
 
-		<table
-			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
-			<thead>
-				<tr class="text-c">
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+		</neq>
+	</form>
+</div>
+</div>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
 
-					<th width="60">物品编码</th>
-					<th width="60">物品名</th>
-					<th width="60">金额/元</th>
-					<th width="60">是否赠品</th>
-					<th width="60">数量</th>
+<literal>
+	<script type="text/javascript">
+        $(function() {
+            $('.skin-minimal input').iCheck({
+                checkboxClass : 'icheckbox-blue',
+                radioClass : 'iradio-blue',
+                increaseArea : '20%'
+            });
+            $("#form-vipInfo-add").Validform({
+                tiptype : 2,
 
-				</tr>
-			</thead>
-			<tbody>
-				<volist name ="info" id ="val">
-					<tr class="text-c">
-						<td>{$val['GoodsCode']}</td>
-						<td>{$val['GoodsName']}</td>
-						<td>{$val['Price']}</td>
-						<td><eq name = "val['IsGive']" value = "1">否<else/>是</eq></td>
-						<td>{$val['Number']}</td>
-					</tr>
-				</volist>
-			</tbody>
-		</table>
-	</div>
-	<div class = "cl">
+                callback : function(form) {
+                    form[0].submit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                }
+            });
+        });
 
-		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
-			 class="dataTables_paginate paging_simple_numbers">{$page}</div>
-	</div>
-
-
-	<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
-	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
-	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	</script>
+	<script type="text/javascript">
+	</script>
+</literal>
 
 </body>
 </html>
-<literal>
-<script>
-
-
-</script>
-</literal>

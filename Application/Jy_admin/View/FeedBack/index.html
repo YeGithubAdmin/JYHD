@@ -22,12 +22,12 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>所有订单</title>
+<title>反馈列表</title>
 </head>
 <body>
 	<nav class="breadcrumb">
 		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;用户中心</span>
-		 <span class="c-gray en">&gt;所有订单</span> <a
+		 <span class="c-gray en">&gt;反馈列表</span> <a
 			class="btn btn-success radius r mr-20"
 			style="line-height: 1.6em; margin-top: 3px"
 			href="javascript:location.replace(location.href);" title="刷新"><i
@@ -60,22 +60,20 @@
 				</span>
 				<span style="width: 6%"
 					  class="select-box">
-					<select size="1" name="PayPlatform"
+					<select size="1" name="Type"
 							class="select">
-						<option value="">问题</option>
-						<option value="1" <if  condition= "$search['PayPlatform'] eq '1'">selected</if>>支付宝</option>
-						<option value="2" <if  condition="$search['PayPlatform'] eq '2'" >selected</if>>微信</option>
-						<option value="3" <if  condition="$search['PayPlatform'] eq '3'" >selected</if>>爱贝</option>
-						<option value="4" <if  condition="$search['PayPlatform'] eq '4'" >selected</if>>银联</option>
+						<option value="">全部问题</option>
+						<option value="1" <if  condition= "$search['Type'] eq '1'">selected</if>>充值问题</option>
+						<option value="2" <if  condition="$search['Type'] eq '2'" >selected</if>>游戏体验</option>
 				</select>
 				</span>
 				<span style="width: 6%"
 					  class="select-box">
-					<select size="1" name="Platform"
+					<select size="1" name="Status"
 							class="select">
 						<option value="">状态</option>
-						<option value="1" <if  condition= "$search['Platform'] eq '1'">selected</if>>苹果</option>
-						<option value="2" <if  condition="$search['Platform'] eq '2'" >selected</if>>安卓</option>
+						<option value="1" <if  condition= "$search['Status'] eq '1'">selected</if>>待回复</option>
+						<option value="2" <if  condition="$search['Status'] eq '3'" >selected</if>>已回复</option>
 				</select>
 				</span>
 				<button type="submit" class="btn btn-success" id="" name="">
@@ -93,80 +91,56 @@
 			<thead>
 				<tr class="text-c">
 				    <th width="30">id</th>
-					<th width="60">用ID</th>
+					<th width="60">用户ID</th>
 					<th width="60">问题类型</th>
-					<th width="60">问题描述</th>
 					<th width="60">状态</th>
+					<th width="60">QQ</th>
+					<th width="60">手机号码</th>
 					<th width="60">上报时间</th>
-					<th width="60">更新时间</th>
 					<th width="60">更新人</th>
+					<th width="60">更新时间</th>
 					<th width="60">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<volist name ="info" id ="val">
 					<tr class="text-c">
-					<td width="30">{$val['Id']}</td>
-					<td width="60">{$val['OrderName']}</td>
-					<td width="60">{$val['PlatformOrder']}</td>
-					<td width="60">{$val['Price']}</td>
-					<td width="60">{$val['UsersName']}</td>
-					<td width="60">{$val['playerid']}</td>
-					<td width="60">
-						<a  style="color:red" onclick="UsersOrder_authority('物品列表','/jy_admin/UsersOrder/authority/playerid/{$val['playerid']}/PlatformOrder/{$val['PlatformOrder']}')">查看</a>
-					</td>
-					<td width="60">
-						<switch name = "val['Status']" >
-							<case value = "1">
-								待支付
-							</case>
-							<case value = "2">
-								已支付
-							</case>
-							<case value = "3">
-								订单过期
-							</case>
-							<case value = "4">
-								支付失败
-							</case>
-							<default/>
-							...
-						</switch>
-					</td>
-					<td width="60">{$val['PayChannel']}</td>
-					<td width="60">
-						<switch name = "val['Platform']" >
-							<case value = "1">
-								苹果
-							</case>
-							<case value = "2">
-								安卓
-							</case>
-							<default/>
-							...
-						</switch>
-					</td>
-					<td width="60">
-						<switch name = "val['PayPlatform']" >
-							<case value = "1">
-								支付宝
-							</case>
-							<case value = "2">
-								微信
-							</case>
-							<case value = "3">
-								爱贝
-							</case>
-							<case value = "4">
-								金立
-							</case>
-							<default/>
-							...
-						</switch>
-					</td>
-					<td width="60">{$val['PayPassAgeWay']}</td>
-					<td width="60">{$val['CallbackTime']}</td>
-					<td width="60">{$val['FoundTime']}</td>
+						<td>{$val['Id']}</td>
+						<td>{$val['playerid']}</td>
+						<td>
+							<switch name = "val['Type']" >
+								<case value = "1">
+									充值问题
+								</case>
+								<case value = "2">
+									游戏体验
+								</case>
+								<default/>
+								...
+							</switch>
+						</td>
+						<td>
+							<switch name = "val['Status']" >
+								<case value = "1">
+									待回复
+								</case>
+								<case value = "2">
+									已回复
+								</case>
+								<default/>
+								...
+							</switch>
+						</td>
+						<td>{$val['TxQq']}</td>
+						<td>{$val['Phone']}</td>
+						<td>{$val['DateTime']}</td>
+						<td>{$val['UpName']}</td>
+						<td>{$val['UpDateTime']}</td>
+						<td>
+							<a title="编辑" href="javascript:;" onclick="Authority('编辑','/jy_admin/FeedBack/authority/Id/{$val['Id']}','','600')" class="ml-5" style="text-decoration:none">
+								<i class="Hui-iconfont">&#xe6df;</i>
+							</a>
+						</td>
 					</tr>
 				</volist>
 			</tbody>
@@ -188,7 +162,7 @@
 <script>
 
 
-function UsersOrder_authority(title,url,id,w,h){
+function Authority(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
