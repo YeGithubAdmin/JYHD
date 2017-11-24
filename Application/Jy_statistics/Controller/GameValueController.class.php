@@ -17,21 +17,18 @@ class GameValueController extends ComController {
         $obj = new  \Common\Lib\func();
         $page           = $this->page;              //页码
         $num            = $this->num;               //条数
-        $time = strtotime(date('Y-m-d',time()));
-        $StartTime = date("Y-m-d",$time);
-        $EndTime   =  date("Y-m-d",$time+24*60*60);
-        $search['datemin']                   =      I('param.datemin','','trim');                 //注册时间
-        $search['datemax']                   =      I('param.datemax','','trim');                 //注册时间
-        $search['playerid']                  =      I('param.playerid','','intval');              //用户ID
-        $search['Status']                    =      I('param.Status',0,'intval');                 //游戏状态
-        $search['glevel']                    =      I('param.glevel',0,'intval');                 //游戏等级
-        $search['VerSion']                   =      I('param.VerSion','','trim');                 //游戏版本
-        $search['reg_channel']               =      I('param.regchannel','','trim');             //注册渠道号
-        $search['login_channel']             =      I('param.loginchannel','','trim');           //登录渠道号
-        $search['SortName']                  =      I('param.SortName','','trim');                //排序类型
-        $search['Sort']                      =      I('param.Sort','','trim');                    //排序
-        $search['num']                       =      I('param.num',0,'intval');                    //条数
+        $Day = 24*60*60;
 
+        $time = strtotime(date('Y-m-d',time()));
+        $StartTime = date("Y-m-d",$time-$Day*29);
+        $EndTime   =  date("Y-m-d",$time);
+        $search['datemin']                   =      I('param.datemin',$StartTime,'trim');                 //注册时间
+        $search['datemax']                   =      I('param.datemax',$EndTime,'trim');                 //注册时间
+        $search['Status']                    =      I('param.Status',0,'intval');                 //游戏状态
+        $search['VerSion']                   =      I('param.VerSion','','trim');                 //脚本游戏版本
+        $search['PackageVersion']            =      I('param.PackageVersion','','trim');                 //脚本游戏版本
+        $search['Channel']                   =      I('param.regchannel','','trim');              //渠道
+        $search['num']                       =      I('param.num',0,'intval');                    //条数
         $num =  $search['num'] == 0? $num: $search['num'] ;
         $where = '1';
         //查询渠道
@@ -45,112 +42,51 @@ class GameValueController extends ComController {
             ->select();
         //注册时间
         if($search['datemin']  != '' ){
-            $where .= ' and   a.regtime >=  str_to_date("'.$search['datemin'].'","%Y-%m-%d  %H:%i:%s") ';
+            $where .= ' and   `mdate` >=  str_to_date("'.$search['datemin'].'","%Y-%m-%d  %H:%i:%s") ';
         }
         if($search['datemax']  != '' ){
             $datemax  =   date("Y-m-d H:i:s",strtotime($search['datemax'])+24*60*60);
-            $where .= ' and   a.regtime < str_to_date("'.$datemax.'","%Y-%m-%d  %H:%i:%s") ';
+            $where .= ' and   `mdate` < str_to_date("'.$datemax.'","%Y-%m-%d  %H:%i:%s") ';
         }
-        //用户ID
-        if ($search['playerid'] != '' && $search['playerid'] != 0 ){
-            $where .= ' and a.`playerid`='.$search['playerid'];
-        }
-        //游戏状态
-        if( $search['Status'] != 0  ){
-            if($search['Status']  == 2){
-                $where .= ' and b.`status`>='.$search['Status'];
-            }else{
-                $where .= ' and b.`status`='.$search['Status'];
-            }
-        }
-        //游戏等级
-        if( $search['glevel'] != 0  ){
-            $where .= ' and b.`glevel`='.$search['glevel'];
-        }
-        //游戏版本
-        if( $search['VerSion'] != ''  ){
-            $where .= ' and a.`game_ver`="'.$search['VerSion'].'"';
-        }
-        //注册渠道号
-        if( $search['reg_channel'] != ''  ){
-            $where .= ' and a.`reg_channel`="'.$search['reg_channel'].'"';
-        }
-        //登录渠道号
-        if( $search['login_channel'] != ''  ){
-            $where .= ' and a.`login_channel`="'.$search['login_channel'].'"';
-        }
-        if($search['playerid']  == 0 ){
-            $search['playerid'] = '';
-        }
-        $order =  'a.playerid desc';
-        //排序
-        if($search['SortName']  != '' ){
-            $order = $search['SortName'].' '.$search['Sort'] ;
-        }
-        $countFiled = array(
-            'count(distinct b.playerid) as num',
-            'sum(d.Price) as Price',
-            'sum(c.item1_num) as item1_num',
-            'sum(c.item2_num) as item2_num',
-            'sum(c.item3_num) as item3_num',
-            'sum(c.item4_num) as item4_num',
-            'sum(c.item5_num) as item5_num',
-            'sum(c.item6_num) as item6_num',
-            'sum(b.gold) as gold',
-            'sum(b.diamond) as diamond',
-        );
-        $count  =M('game_player as b')
-            ->join('game_account as a  on b.playerid = a.playerid')
-            ->join('game_item as c on  b.playerid = c.playerid','left')
-            ->join('(SELECT SUM(`Price`) AS Price,playerid FROM  jy_users_order_info  WHERE  `Status` = 2  GROUP BY playerid) as d ON d.playerid = a.playerid','left')
-            ->where($where)
-            ->field($countFiled)
-            ->select();
-        $TheNumberOf = $count[0]['num'];
-        $Page       = new \Common\Lib\Page($TheNumberOf,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        $count  =M('game_numerical')
+                ->where($where)
+                ->count();
+        $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
         $infoField = array(
-            'a.playerid',
-            'b.name',
-            'b.glevel',
-            'b.vip',
-            'b.gold',
-            'b.diamond',
-            'b.deposit',
-            'b.profit',
-            'a.online_time as onlineTime',
-            'a.account_type',
-            'a.os_type',
-            'a.accountstate',
-            'b.status',
-            'a.regtime',
-            'a.logout_time',
-            'a.reg_channel',
-            'a.login_channel',
-            'a.game_ver',
-            'a.phone_os_ver',
-            'c.item1_num',
-            'c.item2_num',
-            'c.item3_num',
-            'c.item4_num',
-            'c.item5_num',
-            'c.item6_num',
+            'mdate',
+            'produce_gold_1',
+            'consume_gold_1',
+            'fish_card_1',
+            'bomb_1',
+            'score_1',
+            'produce_gold_2',
+            'consume_gold_2',
+            'fish_card_2',
+            'bomb_2',
+            'score_2',
+            'produce_gold_3',
+            'consume_gold_3',
+            'fish_card_3',
+            'bomb_3',
+            'score_3',
+            'produce_gold_4',
+            'consume_gold_4',
+            'fish_card_4',
+            'score_4',
+            'boss_award_pool',
         );
-        $info = M('game_account as a')
-                ->join('game_player as b  on a.playerid = b.playerid')
-                ->join('game_item as c on  a.playerid = c.playerid','left')
+        $info = M('game_numerical')
                 ->where($where)
                 ->limit($page*$num,$num)
-                ->group('a.playerid')
-                ->order($order)
+                ->order('mdate desc')
                 ->field($infoField)
                 ->select();
         $this->assign('page',$show);
         $this->assign('info',$info);
         $this->assign('Channel',$Channel);
-        $this->assign('count',$count);
         $this->assign('search',$search);
-//        $this->assign('GameValue',$GameValue);
         $this->display('index');
     }
 

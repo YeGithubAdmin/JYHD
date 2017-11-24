@@ -152,10 +152,10 @@ class ComController extends RestController{
             goto end;
         }
         //脚本版本号
-//        if(empty($DataInfo['PackageVersion'])){
-//            $result  =  4004;
-//            goto end;
-//        }
+        if(empty($DataInfo['PackageVersion'])){
+            $result  =  4004;
+            goto end;
+        }
         //平台号映射
         $platform = array(
             'ios'       =>  1,
@@ -166,11 +166,6 @@ class ComController extends RestController{
             $result  =  6002;
             goto end;
         }
-        if($platform == 1){
-            define('SERVER_PROTO_IOS', 'http://172.18.238.60');
-
-        }
-
 
         //渠道号信息验证
         $ChannelInfo = M('jy_admin_users as a')

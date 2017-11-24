@@ -5,7 +5,7 @@
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport"
-		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
@@ -44,72 +44,71 @@
 		</div>
 	</form>
 
-
-
-	<div class="cl pd-5 bg-1 bk-gray mt-20">
-
-	</div>
-
-
-
+	<div class="mt-20">
 	<form action="" method="post"  class="form form-horizontal" id="form-UsersAttribute-add">
 		<input  type="hidden" id="" value="{$Serverid}"
 				name="Serverid">
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>基础抽水率：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>基础抽水率（pool_ratio）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  title = "通过奖池状态影响每个游戏场的基础抽水率" value="{$info['base']['PoolRatio']|round=2}" placeholder=""
+				<input type="text" class="input-text"  title = "[poolRatio]：通过奖池状态影响每个游戏场的基础抽水率，
+调整后会同时影响渔券和BOSS的捕中及积分抽奖时渔券的权重" value="{$info['base']['PoolRatio']|round=2}" placeholder=""
 					   name="PoolRatio" datatype="*" nullmsg="">
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>极限系数：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>极限系数（limit_ratio）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" value="{$info['base']['LimitRatio']|round=2}" placeholder=""
+				<input type="text" class="input-text"  title="【limit_ratio】
+极限系数：影响资产折算对玩家捕中率的影响上限。" value="{$info['base']['LimitRatio']|round=2}" placeholder=""
 					   name="LimitRatio" datatype="*"  nullmsg="">
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>折算值：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>折算值（change_point）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" value="{$info['base']['ChangePoint']|round=2}"  datatype="*"  placeholder=""
+				<input type="text" class="input-text"  title="【change_point】
+折算值：人民币兑换金币的比例。"   value="{$info['base']['ChangePoint']|round=2}"  datatype="*"  placeholder=""
 					   name="ChangePoint"  nullmsg="">
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>BOSS奖池配置[0,2000000]：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text"  datatype="*"   value="{$info['base']['BossAwardPool']|round=2}" placeholder=""
-					   name="BossAwardPool" >
 			</div>
 			<div class="col-1"></div>
 
 		</div>
+
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>充值返奖率P1：</label>
+
+			<label class="form-label col-2"><span class="c-red">*</span>BOSS奖池配置(boss_award_pool)：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*" title="BOSS奖池配置：[0,2000000]"   value="{$info['base']['BossAwardPool']|round=2}" placeholder=""
+					   name="BossAwardPool" >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>充值返奖率(fish_card_p1)：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP1']|round=2}" datatype="*" placeholder="" name="FishCardP1"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>充值返奖率P2：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>充值返奖率P2（fish_card_p2）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP2']|round=2}" placeholder=""
 					   name="FishCardP2"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
-
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>[场返奖率]：影响每个游戏场的基础抽水率：</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【return_gold_rate】
+					[场返奖率]：影响每个游戏场的基础抽水率，当前为[1.2,1,0.9,0.8]
+					调整后会同时影响渔券和BOSS的捕中及积分抽奖时渔券的权重</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>RoomLevel：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>房间等级（room_level）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "RoomLevel" onchange="getReturnGoldRate(this)"   nullmsg="" >
-								 <option value="">请选择房间等级</option>
+							<select  class="select" name = "RoomLevel"  title="" onchange="getReturnGoldRate(this)"   nullmsg="" >
+								 <option value="">请选择等级</option>
 								<volist name = "info['getReturnGoldRate']" key = "k" id = "val">
 									<option   GoldRate = "{$val['GoldRate']|round = 2}"    <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RoomLevel']}" >{$val['RoomLevel']}</option>
 								</volist>
@@ -118,34 +117,36 @@
 				</div>
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>GoldRate：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>概率（rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text getReturnGoldRate" title=""  id = "GoldRate" datatype="*"  value="{$info['getReturnGoldRate'][0]['GoldRate']|round = 2}" placeholder=""
 					   name="GoldRate"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
-
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>基础捕中率加成（影响付费玩家捕中率加成）</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【recharge_effect】
+					基础捕中率加成：
+					影响付费玩家捕中率加成
+					[10,15,10,15][200,400,600,2000]</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>AddRate：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>概率（add_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text"  id = "AddRate" class="input-text" title="" value="{$info['getRechargeEffect'][0]['AddRate']|round = 2}" datatype="*" placeholder="" name="AddRate"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>PlanRecharge：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>充值金额（plan_recharge）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" id ="PlanRecharge" title="" datatype="*"  value="{$info['getRechargeEffect'][0]['PlanRecharge']}" placeholder=""
 					   name="PlanRecharge"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>PayType：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>类型（pay_type）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -163,23 +164,25 @@
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>KEY鱼捕中加成（影响付费玩家接近临界值时对KEY鱼的捕中率加成）</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【key_recharge_effect】KEY鱼捕中加成：
+					影响付费玩家接近临界值时对KEY鱼的捕中率加成
+					[20,15,10,5][200,400,600,2000]</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>KeyAddRate：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>概率（add_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text"  id = "KeyAddRate" title="" value="{$info['getKeyRechargeEffect'][0]['KeyAddRate']|round=2}" datatype="*" placeholder="" name="KeyAddRate"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>KeyPlanRecharge：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>充值金额（plan_recharge）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text"  id = "KeyPlanRecharge" title="" datatype="*"  value="{$info['getKeyRechargeEffect'][0]['KeyPlanRecharge']}" placeholder=""
 					   name="KeyPlanRecharge"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>KeyPayType：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>类型（pay_type）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -197,17 +200,17 @@
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>[downGrade]：控制临界值及到临界值时对玩家的补救倍数）</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【down_grade】：控制临界值及到临界值时对玩家的补救倍数</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>Num：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>数量（num）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title=""  id = "Num" value="{$info['getDownGrade'][0]['Num']}" datatype="*" placeholder="" name="Num"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>Type：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>类型（type）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -225,12 +228,12 @@
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>渔券相关配置</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【fish_card_rate】渔券<1000时的捕中率配置</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>FishFcMax：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>最大渔劵数（fc_max）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -245,7 +248,7 @@
 			</div>
 
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>FishRate：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>概率（rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title="" value="{$info['getFishCardRate'][0]['FishRate']}"  id = "FishRate" datatype="*" placeholder="" name="FishRate"  >
 			</div>
@@ -255,12 +258,13 @@
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>BOSS捕中率配置 核弹掉落率配置</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【boss_rate_params】
+					BOSS捕中率配置：（每个BOSS在奖池三种状态下的掉落）</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-1"><span class="c-red">*</span>类型：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>boss_id&状态值（stage）;：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -275,42 +279,39 @@
 						</span>
 				</div>
 			</div>
-
-
-
 			<div class="col-1"></div>
 
 			<div class="formControls col-1" style="display: none">
 				<input type="text" class="input-text" title=""  id = "Stage" value="{$info['getBossRateParams'][0]['Stage']|round=2}"  placeholder="" name="Stage"  >
 			</div>
 
-			<label class="form-label col-1"><span class="c-red">*</span>CrrtParam：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>校正系数（crrt_param）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title=""  id = "CrrtParam" value="{$info['getBossRateParams'][0]['CrrtParam']|round=2}" datatype="*" placeholder="" name="CrrtParam"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>CuRate：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>铜核弹概率（cu_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title=""  id = "CuRate" value="{$info['getBossRateParams'][0]['CuRate']|round=2}" datatype="*" placeholder="" name="CuRate"  >
 			</div>
 			<div class="col-1"></div>
 
-			<label class="form-label col-1"><span class="c-red">*</span>AgRate：</label>
+
+		</div>
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>银核弹概率（ag_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title=""  id = "AgRate"  value="{$info['getBossRateParams'][0]['AgRate']|round=2}" datatype="*" placeholder="" name="AgRate"  >
 			</div>
 			<div class="col-1"></div>
-		</div>
-		<div class="row cl">
-
-			<label class="form-label col-1"><span class="c-red">*</span>AuRate：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>金核弹概率（au_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title="" id = "AuRate" value="{$info['getBossRateParams'][0]['AuRate']|round=2}" datatype="*" placeholder="" name="AuRate"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
 		<div class="row cl">
-			<div class="col-9 col-offset-6">
+			<div class="col-5 col-offset-6">
 				<input class="btn btn-primary radius"  type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 			</div>
 		</div>

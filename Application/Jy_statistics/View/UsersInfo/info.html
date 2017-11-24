@@ -234,17 +234,35 @@
 				<th width="40">渔劵</th>
 				<td width="40">{$catGameItem['item6_num']}</td>
 			</tr>
+
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 14>充值</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 14>游戏数值</td>
 			</tr>
 			<tr class="text-c">
-				<th  width="30">总充值</th>
-				<td width="30">  <if condition = "$catUserOderInfo[0]['Price']"> {$catUserOderInfo[0]['Price']|round = "2"}<else/>0.00</if></td>
-				<th width="15">今天充值</th>
-				<td width="15"><if condition = "$catToDayUserOderInfo[0]['Price']"> {$catToDayUserOderInfo[0]['Price']|round = "2"}<else/>0.00</if></td>
-				<th width="40">昨日充值</th>
-				<td width="40"><if condition = "$catTowDayUserOderInfo[0]['Price']"> {$catTowDayUserOderInfo[0]['Price']|round = "2"}<else/>0.00</if></td>
+				<th  width="30">当日充值</th>
+				<td width="30">{$catGamePlayerNumerical['pay1']}</td>
+				<th width="15">3日充值</th>
+				<td width="15">{$catGamePlayerNumerical['pay3']}</td>
+				<th width="40">7日充值</th>
+				<td width="40">{$catGamePlayerNumerical['pay7']}</td>
+				<th width="40">30日充值</th>
+				<td width="40">{$catGamePlayerNumerical['pay30']}</td>
+				<th width="40">玩家30天内兑换的rmb</th>
+				<td width="40">{$catGamePlayerNumerical['exchange_rmb30']}</td>
+				<th width="40">基础捕中率加成</th>
+				<td width="40">{$catGamePlayerNumerical['base_catch_fish_rate_add']}</td>
 			</tr>
+			<tr class="text-c">
+				<th width="40">KEY鱼捕中加成</th>
+				<td width="40">{$catGamePlayerNumerical['key_catch_fish_rate_add']}</td>
+				<th width="40">渔券捕中率</th>
+				<td width="40">{$catGamePlayerNumerical['fish_card_rate']}</td>
+				<th width="30">KEY鱼捕中率</th>
+				<td width="40">{$catGamePlayerNumerical['key_fish_rate']}</td>
+				<th width="40">积分</th>
+				<td width="40">{$catGamePlayerNumerical['score']}</td>
+			</tr>
+
 			</thead>
 		</table>
 	</form>

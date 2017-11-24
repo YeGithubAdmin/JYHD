@@ -223,24 +223,11 @@ class UsersInfoController extends ComController {
                           ->where('playerid = '.$playerid)
                           ->field($catGamePlayerField)
                           ->find();
-
-
-
-
-
-
         //道具信息
         $catGameItem   =  M('game_item')
                          ->where('playerid = '.$playerid)
                          ->find();
-        //总充值
-        $catUserOderInfoField = array(
-            'sum(Price) as Price'
-        );
-        $catUserOderInfo = M('jy_users_order_info')
-                           ->where('playerid = '.$playerid.' and  Status = 2')
-                            ->field($catUserOderInfoField)
-                            ->select();
+
         $time = strtotime(date("Y-m-d",time()));
         //今日时间
         $day = 24*60*60;
@@ -249,20 +236,7 @@ class UsersInfoController extends ComController {
         //昨日时间
         $TowStart = date('Y-m-d H:i:s',$time-$day);
         $TowEnd = date('Y-m-d H:i:s',$time);
-        //今日充值
-         $catToDayUserOderInfo =    M('log_users_shop_'.$MoreThan)
-             ->where('playerid = '.$playerid.' 
-                      and  DateTime < str_to_date("'.$OneEnd.'","%Y-%m-%d %H:%i:%s")  
-                      and  DateTime  >= str_to_date("'.$OneStart.'","%Y-%m-%d %H:%i:%s")')
-             ->field($catUserOderInfoField)
-             ->select();
-        //昨日充值
-        $catTowDayUserOderInfo = M('log_users_shop_'.$MoreThan)
-            ->where('playerid = '.$playerid.' 
-                      and  DateTime < str_to_date("'.$TowEnd.'","%Y-%m-%d %H:%i:%s")  
-                      and  DateTime  >= str_to_date("'.$TowStart.'","%Y-%m-%d %H:%i:%s")')
-            ->field($catUserOderInfoField)
-            ->select();
+
         //今日启动
         $GameLoginActionField = array(
             'count(id) as num'
@@ -280,13 +254,17 @@ class UsersInfoController extends ComController {
                       and  login_time  >= str_to_date("'.$TowStart.'","%Y-%m-%d %H:%i:%s")')
             ->field($GameLoginActionField)
             ->select();
+        //游戏数值
+        $catGamePlayerNumericalField = array();
 
+        $catGamePlayerNumerical = M('game_player_numerical')
+                                  ->where('playerid = '.$playerid)
+                                  ->field($catGamePlayerNumericalField)
+                                  ->find();
         $this->assign('catGameAccount',$catGameAccount);
-        $this->assign('catUserOderInfo',$catUserOderInfo);
-        $this->assign('catToDayUserOderInfo',$catToDayUserOderInfo);
-        $this->assign('catTowDayUserOderInfo',$catTowDayUserOderInfo);
         $this->assign('catTowDayGameLoginAction',$catTowDayGameLoginAction);
         $this->assign('catToDayGameLoginAction',$catToDayGameLoginAction);
+        $this->assign('catGamePlayerNumerical',$catGamePlayerNumerical);
         $this->assign('catGameItem',$catGameItem);
         $this->assign('catGamePlayer',$catGamePlayer);
         $this->display('info');
