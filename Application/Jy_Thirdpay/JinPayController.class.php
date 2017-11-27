@@ -13,13 +13,15 @@ use Think\Controller;
 use Think\Model;
 class JinPayController extends Controller {
     public function index(){
+	    set_time_limit(5);
         $ObjFun = new \Common\Lib\func();
         $dataThirdpay = $_POST;
         if(C('ACCESS_lOGS')){
             $dir = C('YQ_ROOT').'Log/pay/'.date('Y').'/'.date('m').'/'.date('d').'/';
             $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',json_encode($dataThirdpay));
         }
-       // $dataThirdpay =  file_get_contents('php://input');
+
+
         if(!is_array($dataThirdpay)){
             $dataThirdpay = json_decode($dataThirdpay,true);
         }
@@ -47,6 +49,20 @@ class JinPayController extends Controller {
             $result = 4001;
             goto  failed;
         }
+		 $dataJinpayLog = array(
+            'api_key'=>$dataThirdpay['api_key'],
+            'close_time'=>$dataThirdpay['close_time'],
+            'create_time'=>$dataThirdpay['create_time'],
+            'deal_price'=>$dataThirdpay['deal_price'],
+            'out_order_no'=>$dataThirdpay['out_order_no'],
+            'pay_channel'=>$dataThirdpay['pay_channel'],
+            'submit_time'=>$dataThirdpay['submit_time'],
+            'user_id'=>$dataThirdpay['user_id'],
+            'sign'=>$dataThirdpay['sign'],
+            'DateTime'=>$dataThirdpay['DateTime'],
+        );
+
+        $addJinpayLog = M('jy_jinpay_log')->add($dataJinpayLog);
         //订单号
         $OrderID        = $dataThirdpay['out_order_no'];
 
@@ -61,8 +77,8 @@ class JinPayController extends Controller {
             'VipExp',
             'playerid',
             'appuserid',
-            'Price',
             'Status',
+            'Price',
             'PayID',
             'Form',
         );
@@ -70,14 +86,11 @@ class JinPayController extends Controller {
             ->table('jy_users_order_info')
             ->where(' PlatformOrder = "'.$OrderID.'"')
             ->field($CatUsersOrderInfoField)
+	    ->order('FoundTime desc')	
             ->find();
         if(empty($CatUsersOrderInfo)){
             $result = 5001;
             goto failed;
-        }
-
-        if($CatUsersOrderInfo['Status'] == 2){
-            goto success;
         }
         $appuserid      = $CatUsersOrderInfo['appuserid'];
         $appuserid      = explode('#',$appuserid);
@@ -100,6 +113,7 @@ class JinPayController extends Controller {
             ->field($ThirdpayField)
             ->where('Id = '.$CatUsersOrderInfo['PayID'].' and  IsDel = 1')
             ->find();
+
         if(empty($Thirdpay)){
             $result = 5002;
             goto OrderSave;
@@ -120,39 +134,54 @@ class JinPayController extends Controller {
             'GetNum',
             'Proportion',
             'GoodsID',
-
             'IsGive',
             'Number',
             'Type',
         );
         $GoodsInfo = $model
             ->table('jy_users_order_goods')
-            ->where('playerid = '.$CatUsersOrderInfo['playerid'].' and  PlatformOrder = "'.$OrderID.'"')
-            ->field($GoodsInfoField)
+            ->where('playerid = '.$CatUsersOrderInfo['playerid'].' and  PlatformOrder = "'.$OrderID.'"'	)
+            ->field($GoodsInfoField)	
             ->select();
         if(empty($GoodsInfo)){
             $result = 5003;
             goto OrderSave;
         }
 
+        if($CatUsersOrderInfo['Status'] == 2){
+            $result = 7003;
+            goto success;
+        }
+
+        //金币 砖石
+        //$dataUsersCurrencyStream = array();
+        //foreach ($GoodsInfo as $k=>$v){
+          //  if($v['Type'] == 1 || $v['Type'] == 2){
+            //    $dataUsersCurrencyStream[$k]['playerid']      =   $playerid;
+              //  $dataUsersCurrencyStream[$k]['Type']          =   2;
+               // $dataUsersCurrencyStream[$k]['CurrencyType']  =   $v['Type'];
+               // $dataUsersCurrencyStream[$k]['Income']        =   1;
+               // $dataUsersCurrencyStream[$k]['Number']        =   $v['Number']*$v['GetNum'];
+
+           // }
+       // }
+       // $dataUsersCurrencyStream = array_values($dataUsersCurrencyStream);
+       // $DatausersGoodsStream = array();
+        //道具
+       // foreach ($GoodsInfo as $k=>$v){
+         //   if($v['Type'] == 3){
+           //     $DatausersGoodsStream[$k]['playerid'] =      $playerid;
+             //   $DatausersGoodsStream[$k]['Code']     =      $v['GoodsCode'];
+              //  $DatausersGoodsStream[$k]['Type']     =      2;
+               // $DatausersGoodsStream[$k]['Income']   =      1;
+              //  $DatausersGoodsStream[$k]['Number']   =      $v['Number']*$v['GetNum'];
+           // }
+        //}
+       // $DatausersGoodsStream = array_values($DatausersGoodsStream);
         /**
          * 服务器查询
          * statr
          */
-        $dataJinpayLog = array(
-            'api_key'=>$dataThirdpay['api_key'],
-            'close_time'=>$dataThirdpay['close_time'],
-            'create_time'=>$dataThirdpay['create_time'],
-            'deal_price'=>$dataThirdpay['deal_price'],
-            'out_order_no'=>$dataThirdpay['out_order_no'],
-            'pay_channel'=>$dataThirdpay['pay_channel'],
-            'submit_time'=>$dataThirdpay['submit_time'],
-            'user_id'=>$dataThirdpay['user_id'],
-            'sign'=>$dataThirdpay['sign'],
-            'DateTime'=>$dataThirdpay['DateTime'],
-        );
-        $addJinpayLog = M('jy_jinpay_log')->add($dataJinpayLog);
-
         $ObjFun->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',
@@ -253,11 +282,8 @@ class JinPayController extends Controller {
             //是否月卡
             if($CatUsersOrderInfo['Form'] == 2){
                 $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
-                $PlayerData->setMcOvertime(time());
+                $PlayerData->setMcOvertime(time()+29*60*60*24);
                 $PlayerData->setIsMc(true);
-                $dataLogUsersShop['Number'] = 1;
-                $dataLogUsersShop['Type']   = $GoodsInfo[0]['Type'];
-                $dataLogUsersShop['Code']   = $GoodsInfo[0]['GoodsCode'];
             }
             //添加物品
             $IsGold = 1; //是否添加过金币 1-否 2是 注释：商城
@@ -273,11 +299,6 @@ class JinPayController extends Controller {
                         $num = $v['GetNum']*$v['Number']+($v['GetNum']*$v['Proportion'])*$v['Number']/100;
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
-                    }
-                    if($v['IsGive'] = 1){
-                        $dataLogUsersShop['Number'] = $num;
-                        $dataLogUsersShop['Type']   = $v['Type'];
-                        $dataLogUsersShop['Code']   = $v['GoodsCode'];
                     }
                     switch ($v['Type']){
                         //金币
@@ -298,6 +319,7 @@ class JinPayController extends Controller {
                             $PB_Item->setNum($num);
                             $PB_Item->setId(9);
                             $PB_ResourceChange->appendItems($PB_Item);
+
                             break;
                         //道具
                         case  3:
@@ -309,10 +331,12 @@ class JinPayController extends Controller {
                             $PB_Item->setNum($num);
                             $PB_Item->setId($v['GoodsCode']);
                             $PB_ResourceChange->appendItems($PB_Item);
+
                             break;
                     }
                 }
             }
+
             $PlayerData->setRmb($money);
             if($IsGold == 2){
                 $OptReason  =  new \OptReason();
@@ -330,6 +354,7 @@ class JinPayController extends Controller {
             }elseif ($CatUsersOrderInfo['Form'] == 3){
                 $PB_ResourceChange->setReason($OptReason::mall_reward_sdk);
             }
+
             $PB_ResourceChange->setPlayerid($playerid);
             $PB_HallNotify->setResChanged($PB_ResourceChange);
             $PB_HallNotify->setBuyNotify($BuyGoods);
@@ -360,26 +385,32 @@ class JinPayController extends Controller {
             $result = 3004;
             goto OrderSave;
         }
-
-        $MoreThan = $playerid%10;
         if($result == 2001 || $result == 1){
             //开启事物
             $model->startTrans();
+            //月卡 首冲
+            $addUsersPackageShopLog = 1;
+            $addUsersGoodsStream    = 1;
+            $addUsersCurrencyStream = 1;
+            $addUsersCardReceiveLog  = 1;
+            if($CatUsersOrderInfo['Form'] == 1 || $CatUsersOrderInfo['Form'] == 2){
+                $dataUsersPackageShopLog = array(
+                    'playerid'=>$CatUsersOrderInfo['playerid'],
+                    'Type'=>$CatUsersOrderInfo['Form'],
+                );
+                $addUsersPackageShopLog = $model
+                    ->table('jy_users_package_shop_log')
+                    ->add($dataUsersPackageShopLog);
 
-            //添加购买物品记录
-            $dataLogUsersShop = array(
-                'playerid'  => $playerid,
-                'GoodsID'   => $GoosID,
-                'Code'      => $playerid,
-                'Price'     => $money,
-                'Form'      => $CatUsersOrderInfo['Form'],
-            );
-            $dataLogUsersShop['playerid'] = $playerid;
-            $dataLogUsersShop['GoodsID'] = $GoosID;
-            $dataLogUsersShop['Price'] = $money;
-            $dataLogUsersShop['Form'] = $CatUsersOrderInfo['Form'];
-            $addLogUsersShop  = M('log_users_shop_'.$MoreThan)->add($dataLogUsersShop);
-
+            }
+            //金币砖石
+           // if(!empty($dataUsersCurrencyStream)){
+             //   $addUsersCurrencyStream  =   $model->table('jy_users_currency_stream')->addAll($dataUsersCurrencyStream);
+           // }
+            //道具
+           // if(!empty($DatausersGoodsStream)){
+           //     $addUsersGoodsStream = $model->table('jy_users_goods_stream')->addAll($DatausersGoodsStream);
+           // }
             //修改订单
             $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
             $dataUsersOrderInfo['PayType']       = 0;
@@ -390,7 +421,7 @@ class JinPayController extends Controller {
                 ->where('playerid  = '.$playerid.'  and    PlatformOrder = "'.$OrderID.'"')
                 ->save($dataUsersOrderInfo);
 
-            if($addLogUsersShop && $UpUsersOrderInfo){
+            if($addUsersPackageShopLog && $addUsersGoodsStream && $addUsersCurrencyStream && $UpUsersOrderInfo){
                 $model->commit();
                 goto  success;
             }else{
@@ -410,17 +441,18 @@ class JinPayController extends Controller {
             'msg' => $msgArr[$result],
             'data' => array(),
         );
-        echo json_encode($response);
+        echo 'success'."\n";;
         exit();
         failed:
         $dataApiVisitLog = array(
             'Name'=>'支付订单',
             'Url'=>'/Jy_ThirdpayIapppay/MallShopBack/index',
-            'Msg'=>$msgArr[$result],
+            'Msg'=>$msgArr[$result].json_encode($dataThirdpay),
             'Code'=>$result,
             'TimeOut'=>'',
             'AccessIP'=>$_SERVER['REMOTE_ADDR'],
         );
+
         $addApiVisitLog = M('jy_api_visit_log')
             ->add($dataApiVisitLog);
         echo 'failed'."\n";
@@ -429,7 +461,7 @@ class JinPayController extends Controller {
         $dataUsersOrderInfo = array();   //订单数据
         $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
         $dataUsersOrderInfo['PayType']       = 0;
-        $dataUsersOrderInfo['MessAge']       = '状态码：'.$result.'说明：'.$msgArr[$result].';';
+        $dataUsersOrderInfo['MessAge']       = '状态码：'.$result.'说明：'.$msgArr[$result].';'.json_encode($dataThirdpay);
         $dataUsersOrderInfo['Status']        = 4;
 
         $UpUsersOrderInfo = $model

@@ -135,6 +135,7 @@ class UsersInfoController extends ComController {
             'c.item4_num',
             'c.item5_num',
             'c.item6_num',
+            'b.rmb',
         );
         $info = M('game_account as a')
                 ->join('game_player as b  on a.playerid = b.playerid')

@@ -1,0 +1,22 @@
+game_player         rmb
+
+game_account        online_time  app_ver    
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+

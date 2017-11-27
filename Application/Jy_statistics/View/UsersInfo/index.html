@@ -98,7 +98,7 @@
 					<select size="1" name="SortName"
 							class="select">
 							<option value="">排序</option>
-							<option <if condition = "$search['SortName']  eq 'Price'">selected</if>    value="Price">充值</option>
+							<option <if condition = "$search['SortName']  eq 'rmb'">selected</if>    value="rmb">充值</option>
 							<option <if condition = "$search['SortName']  eq 'b.gold'">selected</if>   value="b.gold">金币</option>
 							<option <if condition = "$search['SortName']  eq 'b.diamond'">selected</if>  value="b.diamond">砖石</option>
 							<option <if condition = "$search['SortName']  eq 'c.item6_num'">selected</if>  value="c.item6_num">渔劵</option>
@@ -214,7 +214,7 @@
 						<td>{$val['glevel']}</td>
 						<td>{$val['vip']}</td>
 						<td>{$val['gold']}</td>
-						<td> <if condition = "$val['Price']">{$val['Price']|round = "2"}<else/>0.00</if></td>
+						<td> <if condition = "$val['rmb']">{$val['rmb']|round = "2"}<else/>0.00</if></td>
 						<td>{$val['diamond']}</td>
 						<td><if condition = "$val['item1_num']">{$val['item1_num']}<else/>0</if></td>
 						<td><if condition = "$val['item2_num']">{$val['item2_num']}<else/>0</if></td>

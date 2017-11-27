@@ -173,6 +173,9 @@ class SendEmailController extends ComController {
                         }
                     }
                 }
+
+                $PB_Email->setType($EmailType::EmailType_Sys);
+
             }else{
                 //普通文字邮件
                 $PB_Email->setType($EmailType::EmailType_Sys);
@@ -206,6 +209,8 @@ class SendEmailController extends ComController {
 
                 $PBS_SendEmail2All          =   new  PBS_SendEmail2All();
                 $PBS_SendEmail2AllReturn    =   new  PBS_SendEmail2AllReturn();
+
+                $PB_Email->setType($EmailType::EmailType_Sys);
                 if($Channel == 2 ){
                     $PBS_SendEmail2All->setChannel('global');
                 }else{

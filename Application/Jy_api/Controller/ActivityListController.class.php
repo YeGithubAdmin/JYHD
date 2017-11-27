@@ -55,6 +55,11 @@ class ActivityListController extends ComController {
                                     a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")         
                                     and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
+
+
+
+
+
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
         $catUserOrderField = array(
             'count(b.Id) as Id',
@@ -76,6 +81,7 @@ class ActivityListController extends ComController {
         foreach ($catUserOrder as $k=>$v){
             $newUserOder[$v['Type']] = $v;
         }
+
         //查询领奖记录
         $catUsersActivityTheawardFile = array(
                                             'a.activityID',
@@ -89,6 +95,10 @@ class ActivityListController extends ComController {
                                         ->field($catUsersActivityTheawardFile)
                                         ->group('a.activityID')
                                         ->select();
+
+
+
+
         $UsersTheawardLog = array();
         foreach ($catUsersActivityTheawardLog as $key=>$val){
             $UsersTheawardLog[$val['activityID']] = $val;
@@ -199,6 +209,11 @@ class ActivityListController extends ComController {
             $NewactivityFatherList[$v['Type']]['Describe']              =     $v['Describe']  ;
         }
         //组装数组
+
+
+
+
+
         foreach ($NewactivityFatherList as $k=>$v){
                 $info[] =  $v;
         }

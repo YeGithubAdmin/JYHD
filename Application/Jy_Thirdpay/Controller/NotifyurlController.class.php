@@ -16,7 +16,7 @@ class NotifyurlController extends Controller {
         include IAPPPAY.'base.php';
         $ObjFun   = new \Common\Lib\func();
 
-        $dataThirdpay =  $_POST;
+       $dataThirdpay =  $_POST;
 
         if(!is_array($dataThirdpay)){
             $dataThirdpay = json_decode($dataThirdpay,'true');

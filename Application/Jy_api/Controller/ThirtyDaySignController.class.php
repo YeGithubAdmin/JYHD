@@ -662,11 +662,12 @@ class ThirtyDaySignController extends ComController {
             'Continuity'=>$Day,
             'Primary'=>$thirtydaySign['Primary'],
         );
+
         $addThirtydayContinuity = M('log_thirtyday_continuity')
                                  ->add($dataThirtydayContinuity);
         if(!$addThirtydayContinuity){
             $model->rollback();
-            $result = 3002;
+            $result = 3003;
             goto response;
         }
 
