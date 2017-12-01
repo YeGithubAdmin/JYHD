@@ -46,14 +46,14 @@
 
 	<div class="mt-20">
 	<form action="" method="post"  class="form form-horizontal" id="form-UsersAttribute-add">
-		<input  type="hidden" id="" value="{$Serverid}"
+		<input  type="hidden"  value="{$Serverid}"
 				name="Serverid">
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>基础抽水率（pool_ratio）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text"  title = "[poolRatio]：通过奖池状态影响每个游戏场的基础抽水率，
 调整后会同时影响渔券和BOSS的捕中及积分抽奖时渔券的权重" value="{$info['base']['PoolRatio']|round=2}" placeholder=""
-					   name="PoolRatio" datatype="*" nullmsg="">
+					  disabled = "true" nullmsg="">
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>极限系数（limit_ratio）：</label>
@@ -90,6 +90,14 @@
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP2']|round=2}" placeholder=""
 					   name="FishCardP2"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>gold_pool_pump_rate：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*" title=""   value="{$info['base']['GoldPoolPumpRate']|round=2}" placeholder=""
+					   name="GoldPoolPumpRate" >
 			</div>
 			<div class="col-1"></div>
 		</div>
@@ -189,7 +197,7 @@
 							<select  class="select" name = "KeyPayType"  onchange="getKeyRechargeEffect(this)"  nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getKeyRechargeEffect']" key = "k" id = "val">
-									<option   KeyAddRate = "{$val['KeyAddRate']|round=2}"   KeyPlanRecharge = "{$val['KeyAddRate']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['KeyPayType']}" >{$val['KeyPayType']}</option>
+									<option   KeyAddRate = "{$val['KeyAddRate']|round=2}"   KeyPlanRecharge = "{$val['KeyPlanRecharge']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['KeyPayType']}" >{$val['KeyPayType']}</option>
 								</volist>
                             </select>
 						</span>
@@ -240,7 +248,7 @@
 							<select  class="select" name = "FishFcMax" onchange="getFishCardRate(this)"   nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getFishCardRate']" key = "k" id = "val">
-									<option   FishRate = "{$val['FishRate']}"   <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['FishFcMax']}" >{$val['FishFcMax']}</option>
+									<option   FishRate = "{$val['FishRate']|round = 2}"   <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['FishFcMax']}" >{$val['FishFcMax']}</option>
 								</volist>
                             </select>
 						</span>
@@ -310,6 +318,106 @@
 			</div>
 			<div class="col-1"></div>
 		</div>
+
+
+
+
+
+
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool_ratio】奖池系数[a,b,c]</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>low：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""    value="{$info['getGoldPoolRatio']['low']|round=2}" datatype="*" placeholder="" name="Ratiolow"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>mid：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolRatio']['mid']|round=2}" datatype="*" placeholder="" name="RatioMid"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>high）：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolRatio']['high']|round=2}" datatype="*" placeholder="" name="RatioHigh"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool_level】奖池高低线[A,B]]</td>
+			</tr>
+			</thead>
+		</table>
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>low：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""    value="{$info['getGoldPoolLevel']['low']|round=2}" datatype="*" placeholder="" name="LevelLow"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>high：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolLevel']['high']|round=2}" datatype="*" placeholder="" name="LevelHigh"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+
+		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+			<tr class="text-c" >
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool】奖池抽水pool_ratio </td>
+			</tr>
+			</thead>
+		</table>
+
+
+
+
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>room_level：</label>
+			<div class="formControls col-1">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select"  onchange="getDynamicGoldPool(this)"   nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getDynamicGoldPool']" key = "k" id = "val">
+									<option   DynamicPoolRatio = "{$val['PoolRatio']|round=2}"    DynamicPool = "{$val['Pool']|round=2}"   DynamicPump = "{$val['Pump']|round=2}"
+
+									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RoomLevel']}" >{$val['RoomLevel']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>pool：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  disabled="true" id = "DynamicPool" value="{$info['getDynamicGoldPool'][0]['Pool']|round=2}" datatype="*" placeholder=""  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>pump：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  disabled="true" id = "DynamicPump" value="{$info['getDynamicGoldPool'][0]['Pump']|round=2}" datatype="*" placeholder=""  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>pool_ratio：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  disabled="true" id = "DynamicPoolRatio"  value="{$info['getDynamicGoldPool'][0]['PoolRatio']|round=2}" datatype="*" placeholder=""   >
+			</div>
+			<div class="col-1"></div>
+
+		</div>
+
+
 		<div class="row cl">
 			<div class="col-5 col-offset-6">
 				<input class="btn btn-primary radius"  type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -420,35 +528,56 @@
 	}
 
 
-	function  getBossRateParams(my) {
-		var Stage = document.getElementById('Stage');
-		var CrrtParam = document.getElementById('CrrtParam');
-		var CuRate = document.getElementById('CuRate');
-		var AgRate = document.getElementById('AgRate');
-		var AuRate = document.getElementById('AuRate');
+	function  getDynamicGoldPool(my) {
+		var DynamicPool = document.getElementById('DynamicPool');
+		var DynamicPump = document.getElementById('DynamicPump');
+		var DynamicPoolRatio = document.getElementById('DynamicPoolRatio');
 
 		var Index 		= my.selectedIndex;         				//索引
 		var MyOptions   = my.options[Index];
 		var Value		=   my.options[Index].value;   				//选择中值;
 		if(Value != ''){
-            Stage.value = MyOptions.getAttribute('Stage') ;
-            CrrtParam.value = MyOptions.getAttribute('CrrtParam') ;
-            CuRate.value = MyOptions.getAttribute('CuRate') ;
-            AgRate.value = MyOptions.getAttribute('AgRate') ;
-            AuRate.value = MyOptions.getAttribute('AuRate') ;
+            DynamicPool.value = MyOptions.getAttribute('DynamicPool') ;
+            DynamicPump.value = MyOptions.getAttribute('DynamicPump') ;
+            DynamicPoolRatio.value = MyOptions.getAttribute('DynamicPoolRatio') ;
+
 		}else{
-            Stage.value ='';
-            CrrtParam.value ='';
-            CuRate.value ='';
-            AgRate.value ='';
-            AuRate.value ='';
+            DynamicPool.value ='';
+            DynamicPump.value ='';
+            DynamicPoolRatio.value ='';
+
 		}
 	}
 
 
+//
 
 
 
+        function  getBossRateParams(my) {
+            var Stage = document.getElementById('Stage');
+            var CrrtParam = document.getElementById('CrrtParam');
+            var CuRate = document.getElementById('CuRate');
+            var AgRate = document.getElementById('AgRate');
+            var AuRate = document.getElementById('AuRate');
+
+            var Index 		= my.selectedIndex;         				//索引
+            var MyOptions   = my.options[Index];
+            var Value		=   my.options[Index].value;   				//选择中值;
+            if(Value != ''){
+                Stage.value = MyOptions.getAttribute('Stage') ;
+                CrrtParam.value = MyOptions.getAttribute('CrrtParam') ;
+                CuRate.value = MyOptions.getAttribute('CuRate') ;
+                AgRate.value = MyOptions.getAttribute('AgRate') ;
+                AuRate.value = MyOptions.getAttribute('AuRate') ;
+            }else{
+                Stage.value ='';
+                CrrtParam.value ='';
+                CuRate.value ='';
+                AgRate.value ='';
+                AuRate.value ='';
+            }
+        }
 
 
 

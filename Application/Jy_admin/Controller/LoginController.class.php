@@ -8,10 +8,19 @@ defined('THINK_PATH') or exit('Access Defined!');
 class LoginController extends ComController {
     public function sign(){
         $obj = new \Common\Lib\func();
-        $userInfo = session('userInfo');
+       // $userInfo = session('userInfo');
+        $AesKey = C('AesKey');
+        $userInfo = cookie('userInfo');
+        if(!empty($userInfo)){
+            //解密
+            $userInfo  =  base64_decode($userInfo,true);
+            $Decrypt   =  $obj->Decrypt($userInfo,$AesKey);
+            if(!$Decrypt){
+                cookie('userInfo',null);
+            }else{
+                header("Location:/jy_admin/index/index");
+            }
 
-        if(!empty($userInfo['name'])){
-            header("Location:/jy_admin/index/index");
         }
       
         if(IS_POST){
@@ -40,7 +49,14 @@ class LoginController extends ComController {
                     //判断密码
                     if($adminInfo['passwd'] == $password){
                         if($adminInfo['islock'] == 1 && $adminInfo['grouplock'] == 1){
-                            session('userInfo',$adminInfo);
+                            //加密cookie
+                          $Encrypted  =  $obj->Encrypted(json_encode($adminInfo),$AesKey);
+                          if(!$Encrypted){
+                              $msg = '密码错误';
+                              $result = 2;
+                          }else{
+                              cookie('userInfo',base64_encode($Encrypted),7*24*60*60);
+                          }
                         }else{
                             //被锁定
                             $obj->showmessage('该用户被管理锁定，暂时禁止登陆请与管理员联系');
@@ -99,16 +115,15 @@ class LoginController extends ComController {
     }
     //退出登录
     public  function  signout(){
-        session('userInfo',null);
+        cookie('userInfo',null);
         header("Location:/jy_admin/login/index");
     }
 
 
     //登录界面
     public function index(){
-
-        $userInfo = session('userInfo');
-        if(!empty($userInfo['name'])){
+        $userInfo = cookie('userInfo');
+        if(!empty($userInfo)) {
             header("Location:/jy_admin/index/index");
         }
         $this->display();
@@ -116,13 +131,7 @@ class LoginController extends ComController {
     //登录验证
     public function Verification(){
         $obj = new \Common\Lib\func();
-        $userInfo = session('userInfo');
-
-
-
-        if(!empty($userInfo['name'])){
-        header("Location:/jy_admin/index/index");
-        }
+        $AesKey = C('AesKey');
         if(IS_POST){
             $code= I('param.vcode','','trim');
             $username = I('param.username','','trim');
@@ -130,7 +139,6 @@ class LoginController extends ComController {
             $codes = $this->check_verify($code);
             $result  =  1;
             $msg     = '';
-
                 //判断用户
                 $adminInfo = M('jy_admin_users')
                     ->where('account = "%s"',$username)
@@ -148,7 +156,13 @@ class LoginController extends ComController {
                     //判断密码
                     if($adminInfo['passwd'] == $password){
                         if($adminInfo['islock'] == 1 && $adminInfo['grouplock'] == 1){
-                            session('userInfo',$adminInfo);
+                            $Encrypted  =  $obj->Encrypted(json_encode($adminInfo),$AesKey);
+                            if(!$Encrypted){
+                                $msg = '加密失败';
+                                $result = 2;
+                            }else{
+                                cookie('userInfo',base64_encode($Encrypted),7*24*60*60);
+                            }
                         }else{
                             //被锁定
                             $obj->showmessage('该用户被管理锁定，暂时禁止登陆请与管理员联系');

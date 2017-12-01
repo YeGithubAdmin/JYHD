@@ -86,16 +86,9 @@ class ComController extends RestController{
 //        }
 
         //设置超时时间
-        ini_set("max_execution_time",10);
-        set_time_limit(10);
-
-
-
-
-
-
+        //ini_set("max_execution_time",10);
+        set_time_limit(20);
         $tagKey = '/Jy_api/'.CONTROLLER_NAME.'/'.ACTION_NAME;
-
         //判断请求方式
         $RequestType =  $this->_method;
         $RequestTypeData =  array(
@@ -105,7 +98,6 @@ class ComController extends RestController{
                 $result  =  6001;
                 goto end;
         }
-
         //请求数据
         $DataInfo = file_get_contents('php://input');
         //数据是否为空你

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-11-22 14:55:06
+ * Auto generated from PB_gm_tool.proto at 2017-11-29 17:29:42
  *
  * protos package
  */
@@ -18,12 +18,16 @@ class game_numerical extends \ProtobufMessage
     const FISH_CARD_P1 = 4;
     const FISH_CARD_P2 = 5;
     const BOSS_AWARD_POOL = 6;
+    const GOLD_POOL_PUMP_RATE = 7;
     const RETURN_GOLD_RATE = 20;
     const RECHARGE_EFFECT = 21;
     const KEY_RECHARGE_EFFECT = 22;
     const DOWN_GRADE = 23;
     const FISH_CARD_RATE = 24;
     const BOSS_RATE_PARAMS = 25;
+    const GOLD_POOL_RATIO = 26;
+    const GOLD_POOL_LEVEL = 27;
+    const GOLD_POOL = 28;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -57,6 +61,11 @@ class game_numerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::GOLD_POOL_PUMP_RATE => array(
+            'name' => 'gold_pool_pump_rate',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
         self::RETURN_GOLD_RATE => array(
             'name' => 'return_gold_rate',
             'repeated' => true,
@@ -87,6 +96,21 @@ class game_numerical extends \ProtobufMessage
             'repeated' => true,
             'type' => '\Protos\game_numerical_const_boss_rate_params'
         ),
+        self::GOLD_POOL_RATIO => array(
+            'name' => 'gold_pool_ratio',
+            'required' => false,
+            'type' => '\Protos\game_numerical_const_gold_pool_ratio'
+        ),
+        self::GOLD_POOL_LEVEL => array(
+            'name' => 'gold_pool_level',
+            'required' => false,
+            'type' => '\Protos\game_numerical_const_gold_pool_level'
+        ),
+        self::GOLD_POOL => array(
+            'name' => 'gold_pool',
+            'repeated' => true,
+            'type' => '\Protos\game_numerical_dynamic_gold_pool'
+        ),
     );
 
     /**
@@ -110,12 +134,16 @@ class game_numerical extends \ProtobufMessage
         $this->values[self::FISH_CARD_P1] = null;
         $this->values[self::FISH_CARD_P2] = null;
         $this->values[self::BOSS_AWARD_POOL] = null;
+        $this->values[self::GOLD_POOL_PUMP_RATE] = null;
         $this->values[self::RETURN_GOLD_RATE] = array();
         $this->values[self::RECHARGE_EFFECT] = array();
         $this->values[self::KEY_RECHARGE_EFFECT] = array();
         $this->values[self::DOWN_GRADE] = array();
         $this->values[self::FISH_CARD_RATE] = array();
         $this->values[self::BOSS_RATE_PARAMS] = array();
+        $this->values[self::GOLD_POOL_RATIO] = null;
+        $this->values[self::GOLD_POOL_LEVEL] = null;
+        $this->values[self::GOLD_POOL] = array();
     }
 
     /**
@@ -264,6 +292,29 @@ class game_numerical extends \ProtobufMessage
     {
         $value = $this->get(self::BOSS_AWARD_POOL);
         return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'gold_pool_pump_rate' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setGoldPoolPumpRate($value)
+    {
+        return $this->set(self::GOLD_POOL_PUMP_RATE, $value);
+    }
+
+    /**
+     * Returns value of 'gold_pool_pump_rate' property
+     *
+     * @return double
+     */
+    public function getGoldPoolPumpRate()
+    {
+        $value = $this->get(self::GOLD_POOL_PUMP_RATE);
+        return $value === null ? (double)$value : $value;
     }
 
     /**
@@ -648,6 +699,114 @@ class game_numerical extends \ProtobufMessage
     public function getBossRateParamsCount()
     {
         return $this->count(self::BOSS_RATE_PARAMS);
+    }
+
+    /**
+     * Sets value of 'gold_pool_ratio' property
+     *
+     * @param \Protos\game_numerical_const_gold_pool_ratio $value Property value
+     *
+     * @return null
+     */
+    public function setGoldPoolRatio(\Protos\game_numerical_const_gold_pool_ratio $value=null)
+    {
+        return $this->set(self::GOLD_POOL_RATIO, $value);
+    }
+
+    /**
+     * Returns value of 'gold_pool_ratio' property
+     *
+     * @return \Protos\game_numerical_const_gold_pool_ratio
+     */
+    public function getGoldPoolRatio()
+    {
+        return $this->get(self::GOLD_POOL_RATIO);
+    }
+
+    /**
+     * Sets value of 'gold_pool_level' property
+     *
+     * @param \Protos\game_numerical_const_gold_pool_level $value Property value
+     *
+     * @return null
+     */
+    public function setGoldPoolLevel(\Protos\game_numerical_const_gold_pool_level $value=null)
+    {
+        return $this->set(self::GOLD_POOL_LEVEL, $value);
+    }
+
+    /**
+     * Returns value of 'gold_pool_level' property
+     *
+     * @return \Protos\game_numerical_const_gold_pool_level
+     */
+    public function getGoldPoolLevel()
+    {
+        return $this->get(self::GOLD_POOL_LEVEL);
+    }
+
+    /**
+     * Appends value to 'gold_pool' list
+     *
+     * @param \Protos\game_numerical_dynamic_gold_pool $value Value to append
+     *
+     * @return null
+     */
+    public function appendGoldPool(\Protos\game_numerical_dynamic_gold_pool $value)
+    {
+        return $this->append(self::GOLD_POOL, $value);
+    }
+
+    /**
+     * Clears 'gold_pool' list
+     *
+     * @return null
+     */
+    public function clearGoldPool()
+    {
+        return $this->clear(self::GOLD_POOL);
+    }
+
+    /**
+     * Returns 'gold_pool' list
+     *
+     * @return \Protos\game_numerical_dynamic_gold_pool[]
+     */
+    public function getGoldPool()
+    {
+        return $this->get(self::GOLD_POOL);
+    }
+
+    /**
+     * Returns 'gold_pool' iterator
+     *
+     * @return \ArrayIterator
+     */
+    public function getGoldPoolIterator()
+    {
+        return new \ArrayIterator($this->get(self::GOLD_POOL));
+    }
+
+    /**
+     * Returns element from 'gold_pool' list at given offset
+     *
+     * @param int $offset Position in list
+     *
+     * @return \Protos\game_numerical_dynamic_gold_pool
+     */
+    public function getGoldPoolAt($offset)
+    {
+        return $this->get(self::GOLD_POOL, $offset);
+    }
+
+    /**
+     * Returns count of 'gold_pool' list
+     *
+     * @return int
+     */
+    public function getGoldPoolCount()
+    {
+        return $this->count(self::GOLD_POOL);
     }
 }
 }

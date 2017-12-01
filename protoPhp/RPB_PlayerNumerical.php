@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2017-11-22 14:55:06
+ * Auto generated from PB_statistics_data.proto at 2017-11-29 17:29:43
  */
 
 namespace {
@@ -10,16 +10,6 @@ namespace {
 class RPB_PlayerNumerical extends \ProtobufMessage
 {
     /* Field index constants */
-    const GOLD_PAY = 1;
-    const GOLD_NEWP_INDEX = 2;
-    const DIAMOND_DAY = 3;
-    const DIAMOND_NEWP = 4;
-    const DIAMOND_NEWP_INDEX = 5;
-    const FISH_CARD_NEWP = 6;
-    const CATCH_FISH_NUM = 7;
-    const ITEM_DAY = 8;
-    const GOLD_NEWP = 9;
-    const LICENCE = 10;
     const PLAYERID = 11;
     const PAY1 = 12;
     const PAY3 = 13;
@@ -31,59 +21,15 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     const FISH_CARD_RATE = 19;
     const KEY_FISH_RATE = 20;
     const SCORE = 21;
+    const CHANNEL = 22;
+    const GAME_VER = 23;
+    const APP_VER = 24;
+    const DRAW_COUNT = 25;
+    const DIAMOND_DAY = 26;
+    const ITEM_DAY = 27;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::GOLD_PAY => array(
-            'name' => 'gold_pay',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_NEWP_INDEX => array(
-            'name' => 'gold_newp_index',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::DIAMOND_DAY => array(
-            'name' => 'diamond_day',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::DIAMOND_NEWP => array(
-            'name' => 'diamond_newp',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::DIAMOND_NEWP_INDEX => array(
-            'name' => 'diamond_newp_index',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::FISH_CARD_NEWP => array(
-            'name' => 'fish_card_newp',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::CATCH_FISH_NUM => array(
-            'name' => 'catch_fish_num',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::ITEM_DAY => array(
-            'name' => 'item_day',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_NEWP => array(
-            'name' => 'gold_newp',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::LICENCE => array(
-            'name' => 'licence',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_BOOL,
-        ),
         self::PLAYERID => array(
             'name' => 'playerid',
             'required' => false,
@@ -139,6 +85,36 @@ class RPB_PlayerNumerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::CHANNEL => array(
+            'name' => 'channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::GAME_VER => array(
+            'name' => 'game_ver',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::APP_VER => array(
+            'name' => 'app_ver',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::DRAW_COUNT => array(
+            'name' => 'draw_count',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::DIAMOND_DAY => array(
+            'name' => 'diamond_day',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::ITEM_DAY => array(
+            'name' => 'item_day',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -156,16 +132,6 @@ class RPB_PlayerNumerical extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::GOLD_PAY] = null;
-        $this->values[self::GOLD_NEWP_INDEX] = null;
-        $this->values[self::DIAMOND_DAY] = null;
-        $this->values[self::DIAMOND_NEWP] = null;
-        $this->values[self::DIAMOND_NEWP_INDEX] = null;
-        $this->values[self::FISH_CARD_NEWP] = null;
-        $this->values[self::CATCH_FISH_NUM] = null;
-        $this->values[self::ITEM_DAY] = null;
-        $this->values[self::GOLD_NEWP] = null;
-        $this->values[self::LICENCE] = null;
         $this->values[self::PLAYERID] = null;
         $this->values[self::PAY1] = null;
         $this->values[self::PAY3] = null;
@@ -177,6 +143,12 @@ class RPB_PlayerNumerical extends \ProtobufMessage
         $this->values[self::FISH_CARD_RATE] = null;
         $this->values[self::KEY_FISH_RATE] = null;
         $this->values[self::SCORE] = null;
+        $this->values[self::CHANNEL] = null;
+        $this->values[self::GAME_VER] = null;
+        $this->values[self::APP_VER] = null;
+        $this->values[self::DRAW_COUNT] = null;
+        $this->values[self::DIAMOND_DAY] = null;
+        $this->values[self::ITEM_DAY] = null;
     }
 
     /**
@@ -187,236 +159,6 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     public function fields()
     {
         return self::$fields;
-    }
-
-    /**
-     * Sets value of 'gold_pay' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPay($value)
-    {
-        return $this->set(self::GOLD_PAY, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pay' property
-     *
-     * @return integer
-     */
-    public function getGoldPay()
-    {
-        $value = $this->get(self::GOLD_PAY);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_newp_index' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldNewpIndex($value)
-    {
-        return $this->set(self::GOLD_NEWP_INDEX, $value);
-    }
-
-    /**
-     * Returns value of 'gold_newp_index' property
-     *
-     * @return integer
-     */
-    public function getGoldNewpIndex()
-    {
-        $value = $this->get(self::GOLD_NEWP_INDEX);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'diamond_day' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setDiamondDay($value)
-    {
-        return $this->set(self::DIAMOND_DAY, $value);
-    }
-
-    /**
-     * Returns value of 'diamond_day' property
-     *
-     * @return integer
-     */
-    public function getDiamondDay()
-    {
-        $value = $this->get(self::DIAMOND_DAY);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'diamond_newp' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setDiamondNewp($value)
-    {
-        return $this->set(self::DIAMOND_NEWP, $value);
-    }
-
-    /**
-     * Returns value of 'diamond_newp' property
-     *
-     * @return integer
-     */
-    public function getDiamondNewp()
-    {
-        $value = $this->get(self::DIAMOND_NEWP);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'diamond_newp_index' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setDiamondNewpIndex($value)
-    {
-        return $this->set(self::DIAMOND_NEWP_INDEX, $value);
-    }
-
-    /**
-     * Returns value of 'diamond_newp_index' property
-     *
-     * @return integer
-     */
-    public function getDiamondNewpIndex()
-    {
-        $value = $this->get(self::DIAMOND_NEWP_INDEX);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'fish_card_newp' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setFishCardNewp($value)
-    {
-        return $this->set(self::FISH_CARD_NEWP, $value);
-    }
-
-    /**
-     * Returns value of 'fish_card_newp' property
-     *
-     * @return integer
-     */
-    public function getFishCardNewp()
-    {
-        $value = $this->get(self::FISH_CARD_NEWP);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'catch_fish_num' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setCatchFishNum($value)
-    {
-        return $this->set(self::CATCH_FISH_NUM, $value);
-    }
-
-    /**
-     * Returns value of 'catch_fish_num' property
-     *
-     * @return integer
-     */
-    public function getCatchFishNum()
-    {
-        $value = $this->get(self::CATCH_FISH_NUM);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'item_day' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setItemDay($value)
-    {
-        return $this->set(self::ITEM_DAY, $value);
-    }
-
-    /**
-     * Returns value of 'item_day' property
-     *
-     * @return integer
-     */
-    public function getItemDay()
-    {
-        $value = $this->get(self::ITEM_DAY);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_newp' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldNewp($value)
-    {
-        return $this->set(self::GOLD_NEWP, $value);
-    }
-
-    /**
-     * Returns value of 'gold_newp' property
-     *
-     * @return integer
-     */
-    public function getGoldNewp()
-    {
-        $value = $this->get(self::GOLD_NEWP);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'licence' property
-     *
-     * @param boolean $value Property value
-     *
-     * @return null
-     */
-    public function setLicence($value)
-    {
-        return $this->set(self::LICENCE, $value);
-    }
-
-    /**
-     * Returns value of 'licence' property
-     *
-     * @return boolean
-     */
-    public function getLicence()
-    {
-        $value = $this->get(self::LICENCE);
-        return $value === null ? (boolean)$value : $value;
     }
 
     /**
@@ -669,6 +411,144 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     public function getScore()
     {
         $value = $this->get(self::SCORE);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setChannel($value)
+    {
+        return $this->set(self::CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'channel' property
+     *
+     * @return string
+     */
+    public function getChannel()
+    {
+        $value = $this->get(self::CHANNEL);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'game_ver' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setGameVer($value)
+    {
+        return $this->set(self::GAME_VER, $value);
+    }
+
+    /**
+     * Returns value of 'game_ver' property
+     *
+     * @return string
+     */
+    public function getGameVer()
+    {
+        $value = $this->get(self::GAME_VER);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'app_ver' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setAppVer($value)
+    {
+        return $this->set(self::APP_VER, $value);
+    }
+
+    /**
+     * Returns value of 'app_ver' property
+     *
+     * @return string
+     */
+    public function getAppVer()
+    {
+        $value = $this->get(self::APP_VER);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'draw_count' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setDrawCount($value)
+    {
+        return $this->set(self::DRAW_COUNT, $value);
+    }
+
+    /**
+     * Returns value of 'draw_count' property
+     *
+     * @return integer
+     */
+    public function getDrawCount()
+    {
+        $value = $this->get(self::DRAW_COUNT);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'diamond_day' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setDiamondDay($value)
+    {
+        return $this->set(self::DIAMOND_DAY, $value);
+    }
+
+    /**
+     * Returns value of 'diamond_day' property
+     *
+     * @return integer
+     */
+    public function getDiamondDay()
+    {
+        $value = $this->get(self::DIAMOND_DAY);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'item_day' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setItemDay($value)
+    {
+        return $this->set(self::ITEM_DAY, $value);
+    }
+
+    /**
+     * Returns value of 'item_day' property
+     *
+     * @return integer
+     */
+    public function getItemDay()
+    {
+        $value = $this->get(self::ITEM_DAY);
         return $value === null ? (integer)$value : $value;
     }
 }

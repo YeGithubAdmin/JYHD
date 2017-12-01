@@ -30,8 +30,10 @@ class RetainedController extends Controller {
         //次日 UsersOneNum
         $OneNumStartTime        =   date("Y-m-d H:i:s",$time-24*60*60);
         $OneNumEndTime          =   date('Y-m-d H:i:s',$time) ;
+
         $UsersOneNumSql         =   $this->UpdateDb($EndTime,$StartTime,$OneNumEndTime,$OneNumStartTime,'UsersOneNum');
         $SelectUpdate           =   $model->query($UsersOneNumSql);
+
         if(!$SelectUpdate){
             $result = 1;
         }
@@ -103,7 +105,7 @@ class RetainedController extends Controller {
                             a.regtime,
                             b.login_time,
                             count(distinct b.playerid) as UsersOneNum,
-                            count(distinct b.playerid)/count(a.playerid)  Retained 
+                            count(distinct b.playerid)/count(distinct a.playerid)  Retained 
                             FROM game_account as a left JOIN game_login_action as b on  a.reg_channel = b.login_channel 
                             and  a.playerid = b.playerid  
                             and  b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 

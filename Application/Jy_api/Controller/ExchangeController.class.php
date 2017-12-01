@@ -90,6 +90,7 @@ class ExchangeController extends ComController {
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $PBS_UsrDataOprater->setReason($OptReason::exchange);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+
         $PBS_ItemOpt->setId(6);
         $PBS_ItemOpt->setNum(-$catGoodsAll['CurrencyNum']);
         $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
@@ -141,6 +142,7 @@ class ExchangeController extends ComController {
             //话费卡
             default:
              $Status = 1;
+                $PBS_UsrDataOprater->setExchangeRmb($catGoodsAll['FaceValue']);
                 break;
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);

@@ -10,6 +10,8 @@ class IndexController extends ComController {
         //已入方法类
         $obj = new \Common\Lib\func();
 
+
+
         //管理组
 
         //所有菜单
@@ -33,7 +35,6 @@ class IndexController extends ComController {
                     $admingroupMenu[] = $val;
                 }
             }
-
         }
         $newMenuAll = $obj->make_tree($admingroupMenu);
         $this->assign('menuList',$newMenuAll);

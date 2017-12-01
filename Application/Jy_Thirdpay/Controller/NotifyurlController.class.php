@@ -320,7 +320,7 @@ class NotifyurlController extends Controller {
                 }
             }
 
-            $PlayerData->setRmb($money);
+
             if($IsGold == 2){
                 $OptReason  =  new \OptReason();
                 $UsrDataOprater->setReason($OptReason::pay_gold);

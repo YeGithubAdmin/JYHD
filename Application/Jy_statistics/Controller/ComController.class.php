@@ -15,46 +15,58 @@ class ComController extends Controller {
     public function __construct(){
            //
            parent::__construct();
-           $userInfo  = session('userInfo');
+           $userInfo  = cookie('userInfo');
+//           var_dump($userInfo);die;
            $addr =  CONTROLLER_NAME.ACTION_NAME;
+
            //后台资源
            $responseAdmin = C('RESOURCES_ADMIN');
+
           //控制器
            $Controller = array(
                'Loginindex',
                'Loginsign',
-               'LoginVerification',
+               'Loginverification',
                'Logincode',
                'Loginsignout'
            );
 
-
-           $response = in_array($addr,$Controller);
+            $response = in_array($addr,$Controller);
             $lowerAdmingroup = array();
             $lowerAdminUser = array();
-           if(!$userInfo &&  !$response) {
+           if(empty($userInfo) &&  !$response) {
                header('Location:/jy_admin/login/index');
                die;
-           }else{
+           }elseif(!$response){
+
+               //解密cookie
+                $AesKey = C('AesKey');
+                $obj = new \Common\Lib\func();
+
+                $Decrypt  =  $obj->Decrypt(base64_decode($userInfo),$AesKey);
+                if(!$Decrypt){
+                    cookie('userInfo',null);
+                    header('Location:/jy_admin/login/index');
+                    die;
+                }
+                $userInfo = json_decode(base64_decode($Decrypt),true);
+
                 $page = I('param.page','','trim');
                 $num  = I('param.num','','trim');
                 $this->page  = !empty($page) ?  $page-1 : C('ADMIN_PAGE');
                 $this->num   = !empty($num)  ?  $num  : C('ADMIN_NUM');
-
-               $adminGroup = M('jyhd.jy_admin_group')
+                $adminGroup = M('jyhd.jy_admin_group')
                    ->field('id,upid,addId')
                    ->select();
-               $lowerAdmingroup = array();
-               $lowerAdminUser  = array();
+                $lowerAdmingroup = array();
+                $lowerAdminUser  = array();
                if($userInfo['default'] == 1){
                    $admingroup =  $userInfo['admingroup'];
                    //我的下级组
-
                    $lowerAdmingroup = $this->make_tree($adminGroup,'id','upid','',$admingroup);
-
                    //我的下级组员
                    $lowerAdminUser = array();
-                   $adminUser = M('jyhd.jy_admin_users')
+                   $adminUser = M('jy_admin_users')
                                 ->field('id,admingroup')
                                 ->select();
                    foreach ($adminUser as $k=>$v){

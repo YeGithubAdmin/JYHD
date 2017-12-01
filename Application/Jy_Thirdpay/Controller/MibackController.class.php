@@ -298,7 +298,7 @@ class MibackController extends Controller {
                 }
             }
         }
-        $PlayerData->setRmb($money);
+
         if($IsGold == 2){
             $OptReason  =  new \OptReason();
             $UsrDataOprater->setReason($OptReason::pay_gold);
@@ -351,7 +351,7 @@ class MibackController extends Controller {
             //添加购买物品记录
             $dataLogUsersShop['playerid'] = $playerid;
             $dataLogUsersShop['GoodsID'] = $GoosID;
-            $dataLogUsersShop['Price'] = $money;
+            $dataLogUsersShop['Price'] = $CatUsersOrderInfo['Price'];
             $dataLogUsersShop['Form'] = $CatUsersOrderInfo['Form'];
             $addLogUsersShop  = M('log_users_shop_'.$MoreThan)->add($dataLogUsersShop);
             echo M('log_users_shop_0')->getLastSql();

@@ -9,7 +9,6 @@ class ActivityListController extends ComController {
         $page           = $this->page;              //页码
         $num            = $this->num;               //条数
 
-
         //渠道号
         $channel = I('param.channel',0,'intval');
         $where = '1';
@@ -94,6 +93,7 @@ class ActivityListController extends ComController {
             );
             $addActivityFatherList = M('jy_activity_father_list')
                 ->add($dataActivityFatherList);
+
             if($addActivityFatherList){
                 $obj->showmessage('添加成功','/jy_admin/ActivityList/index');
             }else{

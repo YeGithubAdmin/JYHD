@@ -16,11 +16,14 @@ class ActivityListController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
 
+
+        $obj = new  \Common\Lib\func();
+
         $ChannelID =   $this->channelid;
         $result = 2001;
         $info   =  array();
         //当前时间
-        $time = date('Y-m-d h:i:s',time());
+        $time = date('Y-m-d H:i:s',time());
         //状态码
         $msgArr[4006] = "用户信息缺失！";
 
@@ -56,10 +59,6 @@ class ActivityListController extends ComController {
                                     and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
 
-
-
-
-
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
         $catUserOrderField = array(
             'count(b.Id) as Id',
@@ -77,11 +76,12 @@ class ActivityListController extends ComController {
                         ->group('a.Type')
                         ->field($catUserOrderField)
                         ->select();
+
+
         $newUserOder  =  array();
         foreach ($catUserOrder as $k=>$v){
             $newUserOder[$v['Type']] = $v;
         }
-
         //查询领奖记录
         $catUsersActivityTheawardFile = array(
                                             'a.activityID',

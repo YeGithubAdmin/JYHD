@@ -124,10 +124,14 @@ class PlaceOrderController extends ComController {
                 $result =  7002;
                 goto  response;
             }
-            if($catGoodsAll['LimitShop'] != 5 && $logUsersShop[0]['num'] >= 1){
+            if($catGoodsAll['LimitShop'] == 5 && $logUsersShop[0]['num'] >= 1){
                 $result =  7002;
                 goto  response;
             }
+
+
+
+
         }
         //月卡
         if($Type == 2){

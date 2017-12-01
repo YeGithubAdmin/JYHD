@@ -120,7 +120,6 @@ class JinPayController extends Controller {
             'GetNum',
             'Proportion',
             'GoodsID',
-
             'IsGive',
             'Number',
             'Type',
@@ -274,7 +273,7 @@ class JinPayController extends Controller {
                     }else{
                         $num =  $v['GetNum']*$v['Number'];
                     }
-                    if($v['IsGive'] = 1){
+                    if($v['IsGive'] == 1){
                         $dataLogUsersShop['Number'] = $num;
                         $dataLogUsersShop['Type']   = $v['Type'];
                         $dataLogUsersShop['Code']   = $v['GoodsCode'];
@@ -365,15 +364,6 @@ class JinPayController extends Controller {
         if($result == 2001 || $result == 1){
             //开启事物
             $model->startTrans();
-
-            //添加购买物品记录
-            $dataLogUsersShop = array(
-                'playerid'  => $playerid,
-                'GoodsID'   => $GoosID,
-                'Code'      => $playerid,
-                'Price'     => $money,
-                'Form'      => $CatUsersOrderInfo['Form'],
-            );
             $dataLogUsersShop['playerid'] = $playerid;
             $dataLogUsersShop['GoodsID'] = $GoosID;
             $dataLogUsersShop['Price'] = $money;

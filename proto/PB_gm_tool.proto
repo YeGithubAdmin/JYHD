@@ -96,19 +96,38 @@ message game_numerical {
 		optional float ag_rate = 5;
 		optional float au_rate = 6;
 	}
+	message const_gold_pool_ratio {
+		required float low = 1;
+		required float mid = 2;
+		required float high = 3;
+	}
+	message const_gold_pool_level {
+		required int32 low = 1;
+		required int32 high = 2;
+	}
+	message dynamic_gold_pool {
+		required int32 room_level = 1;
+		required float pool_ratio = 2;
+		required int64 pool = 3;
+		required int64 pump = 4;
+	}
 
-	optional float pool_ratio = 1; 											// [poolRatio]：通过奖池状态影响每个游戏场的基础抽水率
+	optional float pool_ratio = 1; 											// [poolRatio]：通过奖池状态影响每个游戏场的基础抽水率  					【dynamic】
 	optional float limit_ratio = 2;											// 极限系数：
 	optional int32 change_point = 3; 										// 折算值
 	optional float fish_card_p1 = 4; 										// 控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]
 	optional int32 fish_card_p2 = 5; 										// 控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]
 	optional int32 boss_award_pool = 6; 									// BOSS奖池配置：[0,2000000]
+	optional float gold_pool_pump_rate = 7; 								// 1 - 抽水比例
 	repeated const_return_gold_rate return_gold_rate = 20;      			// [场返奖率]：影响每个游戏场的基础抽水率
 	repeated const_recharge_effect recharge_effect = 21;					// 基础捕中率加成：影响付费玩家捕中率加成
 	repeated const_key_recharge_effect key_recharge_effect = 22;			// KEY鱼捕中加成：影响付费玩家接近临界值时对KEY鱼的捕中率加成
 	repeated const_down_grade down_grade = 23;      						// [downGrade]：控制临界值及到临界值时对玩家的补救倍数
 	repeated const_fish_card_rate fish_card_rate = 24;      				// 渔券相关配置
 	repeated const_boss_rate_params boss_rate_params = 25;      			// BOSS捕中率配置 核弹掉落率配置
+	optional const_gold_pool_ratio gold_pool_ratio = 26;					// 奖池系数[a,b,c]
+	optional const_gold_pool_level gold_pool_level = 27;					// 奖池高低线[A,B]
+	repeated dynamic_gold_pool gold_pool = 28;								// 奖池  抽水  pool_ratio 													【dynamic】
 }
 
 // 更改数值数据

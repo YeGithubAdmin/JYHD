@@ -99,8 +99,12 @@ class  IosBackController extends Controller {
             array('receipt-data' => $receipt)
         );
         $response = $this->Curl(2,$postData);
+
+        $IsTest = 2;
+
         $data = json_decode($response,true);
         if($data['status']  || $data['status'] !=0){
+            $IsTest = 1;
             $response = $this->Curl(1,$postData);
             $data = json_decode($response,true);
             if($data['status']  || $data['status'] !=0){
@@ -165,7 +169,9 @@ class  IosBackController extends Controller {
         $UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $BuyGoods->setErr($ErrorCode::Error_success);
         $BuyGoods->setGoodsid($GoosID);
-        $PlayerData->setRmb($CatOrderInfo['Price']);
+        if($IsTest == 2){
+            $PlayerData->setRmb($CatOrderInfo['Price']);
+        }
         //判断是否升级
         $VipLevel =    $CatOrderInfo['VipLevel'];
         $VipExp   =    $CatOrderInfo['VipExp'];
@@ -289,7 +295,7 @@ class  IosBackController extends Controller {
             }
 
         }
-        $PlayerData->setRmb($money);
+
         if($IsGold == 2){
             $OptReason  =  new \OptReason();
             $UsrDataOprater->setReason($OptReason::pay_gold);
@@ -330,12 +336,16 @@ class  IosBackController extends Controller {
         //添加购物记录
         $dataLogUsersShop['playerid'] = $playerid;
         $dataLogUsersShop['GoodsID'] = $GoosID;
-        $dataLogUsersShop['Price'] = $money;
+        $dataLogUsersShop['Price'] = $CatOrderInfo['Price'];
         $dataLogUsersShop['Form'] = $CatOrderInfo['Form'];
+
+
+
         $addLogUsersShop  = M('log_users_shop_'.$MoreThan)->add($dataLogUsersShop);
         //修改订单
         $dataUsersOrderInfo['CallbackTime']  = date('Y-m-d H:i:s',time());
         $dataUsersOrderInfo['PayType']       = 0;
+        $dataUsersOrderInfo['IsTest'] = $IsTest;
         $dataUsersOrderInfo['MessAge']       = '状态码：'.$result.'说明：'.$msgArr[$result].';';
         $dataUsersOrderInfo['Status']        = 2;
         $UpUsersOrderInfo = $model

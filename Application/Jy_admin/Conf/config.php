@@ -17,7 +17,7 @@ return array(
     'DB_PWD'                =>  '.123456',                        // 密码
     'DB_PORT'               =>  '3306',                          // 端口
     'DB_PREFIX'             =>  '',                           // 数据库表前缀
-    'DB_DEBUG'  			=>  false,                           // 数据库调试模式 开启后可以记录SQL日志
+    'DB_DEBUG'  			=>  true,                           // 数据库调试模式 开启后可以记录SQL日志
     'DB_FIELDS_CACHE'       =>  false,                            // 启用字段缓存
     'DB_CHARSET'            =>  'utf8',                          // 数据库编码默认采用utf8
     'URL_MODEL'             =>  2,       // URL访问模式,可选参数0、1、2、3,代表以下四种模式：

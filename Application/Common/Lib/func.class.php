@@ -630,5 +630,37 @@ class func{
         header( "Expires: 0" );
         exit( $str );
     }
+    //AES 加密
+    public function Encrypted($Data,$Key){
+        # 为 CBC 模式创建随机的初始向量
+        $key = pack('H*', md5($Key));
+        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        # 创建和 AES 兼容的密文（Rijndael 分组大小 = 128）
+        # 仅适用于编码后的输入不是以 00h 结尾的
+        # （因为默认是使用 0 来补齐数据）
+        $ciphertext = mcrypt_encrypt(MCRYPT_RIJNDAEL_128,$key,
+            base64_encode($Data), MCRYPT_MODE_CBC, $iv);
+        # 将初始向量附加在密文之后，以供解密时使用
+        $ciphertext = array(
+            'iv'=>base64_encode($iv),
+            'cipher'=>base64_encode($ciphertext),
+        );
+        # 对密文进行 base64 编码
+        $ciphertext_base64 = json_encode($ciphertext);
+       return $ciphertext_base64;
+
+    }
+    //AES 解密
+    public function Decrypt($Data,$Key){
+        $key = pack('H*', md5($Key));
+        $encryptedData = json_decode($Data,true);
+        $decrypted = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key,base64_decode($encryptedData['cipher']), MCRYPT_MODE_CBC, base64_decode($encryptedData['iv']));
+        if($decrypted){
+            return $decrypted;
+        }else{
+            return false;
+        }
+    }
 
 }

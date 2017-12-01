@@ -22,6 +22,7 @@ class ChannelDataModel extends Model{
                   c.DateTime,
                   c.UserPayNum,
                   c.RegNum,
+                  c.TotalMoney/UserPayNum as ARPPU ,
                   c.EquipmentRegNum,
                   CONVERT(a.account USING gbk) as OrderChannel,
                   c.ActiveNum,
@@ -30,10 +31,8 @@ class ChannelDataModel extends Model{
                   if(round((c.TotalMoney/c.ActiveNum),2),
                   round((c.TotalMoney/c.ActiveNum),2),0)    as  ActiveArpu,
                   c.Success,
-                  if(round((c.UserPayNum/c.ActiveNum)*100,2),
-                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversion,
-                  if(round((c.UserPayNumOld/c.ActiveNum)*100,2),
-                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversionOld,
+                  if(round((c.UserPayNum/c.ActiveNum)*100,2),round((c.UserPayNum/c.ActiveNum)*100,2) ,0) as   PayConversion,
+                  if(round((c.UserPayNumOld/c.ActiveNum)*100,2),round((c.UserPayNumOld/c.ActiveNum)*100,2) ,0)  as  PayConversionOld,
                   c.TotalMoney,
                   round(c.UsersOneNum*100,2) as UsersOneNum,
                   round(c.UsersTowNum*100,2) as UsersTowNum,
@@ -52,16 +51,28 @@ class ChannelDataModel extends Model{
         return $info;
 
     }
-    //查询条数
+
+    //查询列表数据
     public function  NumberCount($where){
+        $Field = array(
+            'count(c.Id)            as Num',
+            'sum(c.RegNum)          as RegNum',
+            'sum(c.UserPayNum)      as UserPayNum',
+            'sum(c.EquipmentRegNum) as EquipmentRegNum',
+            'sum(c.TotalMoney)      as TotalMoney',
+            'sum(c.OrderTotalOld)   as OrderTotalOld',
+            'sum(c.ActiveNum)       as ActiveNum',
+            'sum(c.UserPayNumOld)   as UserPayNumOld',
+            'sum(c.Success)         as Success',
+        );
         $info = M('jy_admin_users as a')
-                ->join('jy_channel_info as b on b.adminUserID = a.Id')
-                ->join('log_channel_data as c on c.Channel = a.account')
-                ->where($where)
-                ->count();
+            ->join('jy_channel_info as b on b.adminUserID = a.Id')
+            ->join('log_channel_data as c on c.Channel = a.account')
+            ->field($Field)
+            ->where($where)
+            ->select();
         return $info;
     }
-    //查询列表数据
     public function  Info($where,$page,$num){
 
 
@@ -78,6 +89,7 @@ class ChannelDataModel extends Model{
                   c.RegNum,
                   c.EquipmentRegNum,
                   c.ActiveNum,
+                  c.TotalMoney/UserPayNum as ARPPU,
                   if(round((c.TotalMoney/c.EquipmentRegNum),2),
                   round((c.TotalMoney/c.EquipmentRegNum),2),0)  as  RegArpu,
                   if(round((c.TotalMoney/c.ActiveNum),2),
@@ -86,7 +98,7 @@ class ChannelDataModel extends Model{
                   if(round((c.UserPayNum/c.ActiveNum)*100,2),
                   round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversion,
                   if(round((c.UserPayNumOld/c.ActiveNum)*100,2),
-                  round((c.UserPayNum/c.ActiveNum)*100,2) ,0)  PayConversionOld,
+                  round((c.UserPayNumOld/c.ActiveNum)*100,2) ,0)  PayConversionOld,
                   c.TotalMoney,
                   round(c.UsersOneNum*100,2) as UsersOneNum,
                   round(c.UsersTowNum*100,2) as UsersTowNum,
@@ -102,4 +114,11 @@ class ChannelDataModel extends Model{
             ->select();
         return $info;
     }
+
+
+
+
+
+
+
 }

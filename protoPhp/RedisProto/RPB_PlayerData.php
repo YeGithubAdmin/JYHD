@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_data.proto at 2017-11-22 14:55:06
+ * Auto generated from PB_usr_data.proto at 2017-11-29 17:29:43
  *
  * RedisProto package
  */
@@ -37,6 +37,7 @@ class RPB_PlayerData extends \ProtobufMessage
     const MC_OVERTIME = 24;
     const RMB = 26;
     const IS_GOT_XSLB = 27;
+    const BATTERY = 28;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -165,6 +166,11 @@ class RPB_PlayerData extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_BOOL,
         ),
+        self::BATTERY => array(
+            'name' => 'battery',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -207,6 +213,7 @@ class RPB_PlayerData extends \ProtobufMessage
         $this->values[self::MC_OVERTIME] = null;
         $this->values[self::RMB] = null;
         $this->values[self::IS_GOT_XSLB] = null;
+        $this->values[self::BATTERY] = null;
     }
 
     /**
@@ -792,6 +799,29 @@ class RPB_PlayerData extends \ProtobufMessage
     {
         $value = $this->get(self::IS_GOT_XSLB);
         return $value === null ? (boolean)$value : $value;
+    }
+
+    /**
+     * Sets value of 'battery' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setBattery($value)
+    {
+        return $this->set(self::BATTERY, $value);
+    }
+
+    /**
+     * Returns value of 'battery' property
+     *
+     * @return integer
+     */
+    public function getBattery()
+    {
+        $value = $this->get(self::BATTERY);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

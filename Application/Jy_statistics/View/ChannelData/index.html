@@ -81,7 +81,36 @@
 			</span>
         </form>
     </div>
+    <table
+            class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c" >
+            <td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>汇总</td>
+        </tr>
+        <tr class="text-c">
+            <th width="30">注册人数</th>
+            <th width="30">付费用户</th>
+            <th width="30">付费金额</th>
+            <th width="30">付费用户（老用户）</th>
+            <th width="30">付费金额（老用户）</th>
+            <th width="30">活跃用户</th>
+            <th width="30">订单数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-c">
+            <td>{$count[0]['RegNum']}</td>
+            <td>{$count[0]['UserPayNum']}</td>
+            <td>{$count[0]['TotalMoney']|round ="2"}</td>
+            <td>{$count[0]['UserPayNumOld']}</td>
+            <td>{$count[0]['OrderTotalOld']|round ="2"}</td>
+            <td>{$count[0]['ActiveNum']}</td>
+            <td>{$count[0]['Success']}</td>
 
+        </tr>
+
+        </tbody>
+    </table>
     <table
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
         <thead>
@@ -96,13 +125,15 @@
                 <th width="30">设备新增</th>
             </eq>
             <th width="30">付费金额</th>
+            <th width="30">付费用户数</th>
             <th width="40">注册ARPU</th>
             <th width="40">活跃ARPU</th>
+            <th width="40">ARPPU</th>
             <th width="30">次日留存</th>
             <th width="70">付费金额（老用户）</th>
             <th width="30">活跃用户</th>
             <th width="30">付费转化</th>
-            <th width="70">付费用户（老用户）</th>
+            <th width="70">付费用户数（老用户）</th>
             <th width="70">付费转化（老用户）</th>
             <th width="40">订单数量</th>
             <th width="40">2日留存</th>
@@ -120,19 +151,33 @@
                     <td>{$val['name']}</td>
                     <td>{$val['t']}</td>
                     <eq name = "userinfo['channel']" value = "2">
-                        <td>{$val['EquipmentRegNum']}</td>
+                        <switch name = "val['GroupChannel']" >
+                            <case value = "JYHD_MI">
+                                <td>{$val['RegNum']}</td>
+                            </case>
+                            <default/>
+                            <td>{$val['EquipmentRegNum']}</td>
+                        </switch>
                         <else/>
                         <td>{$val['RegNum']}</td>
-                        <td>{$val['EquipmentRegNum']}</td>
+                        <switch name = "val['GroupChannel']" >
+                            <case value = "JYHD_MI">
+                                <td>{$val['RegNum']}</td>
+                            </case>
+                            <default/>
+                            <td>{$val['EquipmentRegNum']}</td>
+                        </switch>
                     </eq>
                     <td>{$val['TotalMoney']}</td>
+                    <td>{$val['UserPayNum']}</td>
                     <td>{$val['RegArpu']}</td>
                     <td>{$val['ActiveArpu']}</td>
+                    <td> <if condition = "$val['ARPPU']" >{$val['ARPPU']|round = 2}<else/>0.00</if> </td>
                     <td>{$val['UsersOneNum']}%</td>
                     <td>{$val['OrderTotalOld']}</td>
                     <td>{$val['ActiveNum']}</td>
-                    <td>{$val['PayConversion']}</td>
-                    <td>{$val['UserPayNumOld']}%</td>
+                    <td>{$val['PayConversion']}%</td>
+                    <td>{$val['UserPayNumOld']}</td>
                     <td>{$val['PayConversionOld']}%</td>
                     <td>{$val['Success']}</td>
                     <td>{$val['UsersTowNum']}%</td>

@@ -68,7 +68,6 @@ class ChannelDataController extends ComController {
         if ($search['datemin'] != ''){
             $whereData .= ' and  c.DateTime >= str_to_date("'.$datemin.'","%Y-%m-%d %H:%i:%s")';
         }
-
         if ($search['datemax'] != ''){
             $whereData .= ' and  c.DateTime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
         }
@@ -98,25 +97,38 @@ class ChannelDataController extends ComController {
         $count        =  $ChannelData->NumberCount($whereData);
         $info         =  $ChannelData->Info($whereData,$page,$search['num']);
         $RealTime     =  $search['datemax'] == $DateTime ||   $search['datemin'] == $DateTime ?2:1 ;
+        $countNum     =  $count[0]['Num'];
+
+
+
         if($RealTime == 2){
             $RealTimeData = $ChannelData->RealTimeData($Channel);
             if(!empty($RealTimeData)){
-                $count = $count+count($RealTimeData);
+                $countNum = $countNum+count($RealTimeData);
                 if($page < 1){
+                    foreach ($RealTimeData as $k=>$v){
+                        $count[0]['RegNum']        += $v['RegNum'];
+                        $count[0]['UserPayNum']    += $v['UserPayNum'];
+                        $count[0]['TotalMoney']    += $v['TotalMoney'];
+                        $count[0]['OrderTotalOld'] += $v['OrderTotalOld'];
+                        $count[0]['ActiveNum']     += $v['ActiveNum'];
+                        $count[0]['UserPayNumOld'] += $v['UserPayNumOld'];
+                        $count[0]['Success']       += $v['Success'];
+                    }
                     $info = array_merge($RealTimeData,$info);
                 }
 
             }
 
         }
-
-        $Page       = new \Common\Lib\Page($count,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $Page       = new \Common\Lib\Page($countNum,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
         $this->assign('search',$search);
         $this->assign('page',$show);
         $this->assign('ChannelList',$ChannelList);
         $this->assign('userinfo',$userInfo);
         $this->assign('info',$info);
+        $this->assign('count',$count);
         $this->display('index');
     }
     //到出excel

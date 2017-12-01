@@ -162,7 +162,6 @@ class UsersExchangeApplicationController extends ComController {
             if($Status == 2){
             //审核通过
                 $PBS_UsrDataOprater->setReason($OptReason::exchange);
-                $PBS_UsrDataOprater->setExchangeRmb($FaceValue);
                 if($Type == 4){
                     //话费卡
                     $PB_Email->setCardNum($cardNum);
