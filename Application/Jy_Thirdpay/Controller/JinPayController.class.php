@@ -253,7 +253,7 @@ class JinPayController extends Controller {
             if($CatUsersOrderInfo['Form'] == 2){
                 $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
                 $PlayerData->setMcOvertime(time());
-                $PlayerData->setIsMc(true);
+                $PlayerData->setIsMc(true+29*24*60*60);
                 $dataLogUsersShop['Number'] = 1;
                 $dataLogUsersShop['Type']   = $GoodsInfo[0]['Type'];
                 $dataLogUsersShop['Code']   = $GoodsInfo[0]['GoodsCode'];

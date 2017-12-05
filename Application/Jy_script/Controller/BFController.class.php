@@ -95,16 +95,30 @@ class BFController extends Controller {
             '599676',
             '590110',
             '591797',
-            '592993'
+            '592993',
+            '632989',
+            '633087',
         );
-
         $d = array(
             '632989',
             '633087',
         );
-        //print_r(count(array_unique($a)));
+        $e= array(
+            '632044',
+            '630781',
+            '633227',
+            '632558',
+            '633411',
+            '633546',
+        );
+
+         $g = array_unique($a);
+
+        $f = array_merge($e,$g);
+
+        print_r(implode(',',$f));
         $c= array();
-        foreach ($d as $k=>$v){
+        foreach ($e as $k=>$v){
             $num =    $v%10;
             //查询
             $cat = M('log_users_shop_'.$num)
@@ -113,7 +127,6 @@ class BFController extends Controller {
             $c[$v] = $cat;
         }
 
-        dump($c);
 
     }
 
@@ -165,5 +178,67 @@ class BFController extends Controller {
         $Base->dump();
         response:
         ;
+    }
+    public  function yueka(){
+        //查询充值的月卡
+        $UserOrder  = M('jy_users_order_info as a')
+                      ->where('a.`Form` = 2 and  a.`Status` = 2')
+                      ->select();
+        $playerid = array(
+
+        );
+        foreach ($UserOrder as $k=>$v){
+            $playerid[] = array(
+                'playerid'      =>$v['playerid'],
+                'CallbackTime'  =>$v['CallbackTime'],
+            );
+            $b[] = $v['playerid'];
+        }
+
+        $a= array(
+            '490478',
+            '581705',
+            '376197',
+            '357226',
+            '471638',
+            '561935',
+            '494760',
+            '301836',
+            '280056',
+            '275050',
+            '238194',
+            '240223',
+            '101507',
+            '629707',
+            '630638',
+            '631826',
+            '629707',
+            '630638',
+            '631826',
+            '625992',
+            '618881',
+            '595806',
+            '599676',
+            '590110',
+            '591797',
+            '592993',
+            '632989',
+            '633087',
+        );
+        $d = array(
+            '632989',
+            '633087',
+        );
+
+        foreach ($b as $k=>$v){
+            if(!in_array($v,$a)){
+                $c[] = $v;
+            }
+        }
+
+
+        dump($c);
+
+        dump($a);
     }
 }

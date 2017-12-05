@@ -127,8 +127,12 @@ class UsersAttributeController extends ComController {
             if($IsMc == 2){
                 $RPB_PlayerData->setIsMc(true);
                 $RPB_PlayerData->setMcOvertime($McOvertime);
+            }else{
+                $RPB_PlayerData->setIsMc(false);
+                $RPB_PlayerData->setMcOvertime(0);
             }
             foreach ($DataInfo as $k=>$v){
+
                 if($v != 0 && $v != '' ){
                     $setData = "set".$k;
                     $RPB_PlayerData->$setData($v);
@@ -162,6 +166,7 @@ class UsersAttributeController extends ComController {
             $PB_HallNotify->setResChanged($PB_ResourceChange);
             $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
+            $PBS_UsrDataOprater->dump();
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
             //发送请求
             G('begin');
