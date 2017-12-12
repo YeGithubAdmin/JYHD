@@ -66,6 +66,7 @@ class FeedBackController extends ComController {
                         'Phone',
                         'Channel',
                         'VerSion',
+                        'UpName',
                         'UpDateTime',
                         'DateTime',
                    ))

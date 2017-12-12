@@ -58,15 +58,15 @@
 						</volist>
 					</select>
 				</span>
-				<span style="width: 6%"
-					  class="select-box">
-					<select size="1" name="Type"
-							class="select">
-						<option value="">全部问题</option>
-						<option value="1" <if  condition= "$search['Type'] eq '1'">selected</if>>充值问题</option>
-						<option value="2" <if  condition="$search['Type'] eq '2'" >selected</if>>游戏体验</option>
-				</select>
-				</span>
+				<!--<span style="width: 6%"-->
+					  <!--class="select-box">-->
+					<!--<select size="1" name="Type"-->
+							<!--class="select">-->
+						<!--<option value="">全部问题</option>-->
+						<!--<option value="1" <if  condition= "$search['Type'] eq '1'">selected</if>>充值问题</option>-->
+						<!--<option value="2" <if  condition="$search['Type'] eq '2'" >selected</if>>游戏体验</option>-->
+				<!--</select>-->
+				<!--</span>-->
 				<span style="width: 6%"
 					  class="select-box">
 					<select size="1" name="Status"
@@ -81,18 +81,12 @@
 				</button>
 			</div>
 		</form>
-		<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l"> <a href="javascript:;" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
-					导出excel</a>
-			</span>
-		</div>
 		<table
 			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
 				    <th width="30">id</th>
 					<th width="60">用户ID</th>
-					<th width="60">问题类型</th>
 					<th width="60">状态</th>
 					<th width="60">QQ</th>
 					<th width="60">手机号码</th>
@@ -107,34 +101,13 @@
 					<tr class="text-c">
 						<td>{$val['Id']}</td>
 						<td>{$val['playerid']}</td>
-						<td>
-							<switch name = "val['Type']" >
-								<case value = "1">
-									充值问题
-								</case>
-								<case value = "2">
-									游戏体验
-								</case>
-								<default/>
-								...
-							</switch>
-						</td>
-						<td>
-							<switch name = "val['Status']" >
-								<case value = "1">
-									待回复
-								</case>
-								<case value = "2">
-									已回复
-								</case>
-								<default/>
-								...
-							</switch>
-						</td>
+						<td class="td-status"><span
+								class="<if condition ="$val['Status'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>"><if
+								condition="$val['Status'] eq 2">已回复<else/>未回复</if></span></td>
 						<td>{$val['TxQq']}</td>
 						<td>{$val['Phone']}</td>
 						<td>{$val['DateTime']}</td>
-						<td>{$val['UpName']}</td>
+						<td><if condition = "$val['UpName']">{$val['UpName']}<else/>...</if></td>
 						<td>{$val['UpDateTime']}</td>
 						<td>
 							<a title="编辑" href="javascript:;" onclick="Authority('编辑','/jy_admin/FeedBack/authority/Id/{$val['Id']}','','600')" class="ml-5" style="text-decoration:none">

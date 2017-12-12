@@ -57,12 +57,36 @@
 			<div class="col-4"></div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-3"><span class="c-red">*</span>赠送信息：</label>
+			<label class="form-label col-3"><span class="c-red">*</span>武器：</label>
 			<div class="formControls col-5">
 				<input type="text" class="input-text" value="{$info['GiveInfo']}" placeholder=""
 					   name="GiveInfo" datatype="*1-16" nullmsg="">
 			</div>
 			<div class="col-4"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>特殊字符（奖励数量）：</label>
+			<div class="formControls col-2">
+				<input type="text" class="input-text" value="{$info['Number']}" placeholder=""
+					   name="Number" datatype="*1-16" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>特殊字符（类型）：</label>
+			<div class="formControls col-2">
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "Type"   nullmsg="" >
+								<option   <eq name = "info['Type']" value = "1">selected = "true"</eq>   value="1">金币</option>
+								<option <eq name = "info['Type']" value = "2">selected = "true"</eq>   value="2">钻石</option>
+                            </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>描述：</label>

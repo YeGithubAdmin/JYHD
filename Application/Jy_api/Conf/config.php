@@ -18,5 +18,4 @@ return array(
     'DB_RW_SEPARATE'        =>  false,                                          // 数据库读写是否分离 主从式有效
     'DB_PARAMS'             =>array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),  //数据字段名区分大小写
 
-
 );

@@ -15,7 +15,7 @@ class VipInfoController extends ComController {
         $catVipInfo = M('jy_vip_info')
             ->where($where)
             ->limit($page*$num,$num)
-            ->field('level,experience,Describe,mtime')
+            ->field('level,experience,GiveInfo,Describe,mtime')
             ->order('level asc')
             ->select();
         $this->assign('page',$show);
@@ -34,12 +34,16 @@ class VipInfoController extends ComController {
             $ImgCode       =            I('param.ImgCode','','trim');                  //图片
             $Describe       =           I('param.Describe','','trim');                 //描述
             $GiveInfo      =            I('param.GiveInfo','','trim');                 //赠送信息
+            $Type           =            I('param.Type',1,'intval');            //赠送信息
+            $Number         =            I('param.Number',0,'intval');            //赠送信息
             $dataVipInfo = array(
                 'level'           =>       $level,
                 'experience'      =>       $experience,
                 'Describe'        =>       $Describe,
                 'ImgCode'         =>       $ImgCode,
-                'GiveInfo'        =>       $GiveInfo
+                'GiveInfo'        =>       $GiveInfo,
+                'Type'            =>       $Type,
+                'Number'          =>       $Number
             );
             //添加
 
@@ -64,20 +68,24 @@ class VipInfoController extends ComController {
         //查询用户信息
         $catVipInfo = M('jy_vip_info')
                       ->where('level = '.$level)
-                      ->field('level,experience,Describe,ImgCode,GiveInfo')
+                      ->field('level,experience,Describe,Number,Type,ImgCode,GiveInfo')
                       ->find();
 
         if(IS_POST){
             //数据
             $experience     =           I('param.experience',0,'intval');         //充值额度
             $Describe       =           I('param.Describe',0,'trim');             //描述
-            $ImgCode       =            I('param.ImgCode','','trim');             //图片
-            $GiveInfo      =            I('param.GiveInfo','','trim');            //赠送信息
+            $ImgCode        =            I('param.ImgCode','','trim');             //图片
+            $GiveInfo       =            I('param.GiveInfo','','trim');            //赠送信息
+            $Type           =            I('param.Type',1,'intval');            //赠送信息
+            $Number         =            I('param.Number',1,'intval');            //赠送信息
             $dataVipInfo = array(
                 'experience'      =>       $experience,
                 'Describe'        =>       $Describe,
                 'ImgCode'         =>       $ImgCode,
-                'GiveInfo'         =>       $GiveInfo
+                'GiveInfo'        =>       $GiveInfo,
+                'Type'            =>       $Type,
+                'Number'          =>       $Number
             );
             //添加
             $upVipInfo = M('jy_vip_info')

@@ -85,6 +85,8 @@ class VipInfoController extends ComController {
             'Describe',
             'level',
             'GiveInfo',
+            'Number',
+            'Type',
             'experience'
         );
         $catVipInfo = M('jy_vip_info')

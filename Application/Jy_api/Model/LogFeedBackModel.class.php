@@ -44,37 +44,37 @@ class LogFeedBackModel extends Model{
         }
         return true;
     }
-
     //一个小时是否发送6次
     public function SendCount($playerid){
         $StartTime = date('Y-m-d H:i:s',time()-60*60);
         $EndTime   = date('Y-m-d H:i:s',time());
         $Data = M('log_feed_back')
-            ->where('playerid =  '.$playerid.' and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") >= DateTime 
-                    and str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") <= DateTime')
+            ->where('playerid =  '.$playerid.' and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") <= DateTime 
+                    and str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") >= DateTime')
             ->field('Id')
             ->select();
+
         $count = count($Data);
         if($count >= 6) {
             return false;
         }
         return true;
     }
-
-
     //过滤敏感词
     public function  SensitiveWords($Content){
         $SensitiveWords = @file_get_contents(JY_ROOT.'/resources/Words/SensitiveWords.txt');
         $SensitiveWords = explode("\n",$SensitiveWords);
         $Replace = $Content;
         foreach ($SensitiveWords as $k=>$v){
-            $Replace =   str_replace($v,"*",$Replace);
+            $Lenth = mb_strlen($v);
+            $str = "";
+            for($i = 0;$i<$Lenth;$i++){
+                $str .= "*";
+            }
+            $Replace =   str_replace($v,$str,$Replace);
         }
         return $Replace;
     }
-
-
-
      public  function TimeAgo($agoTime){
         $agoTime = (int)$agoTime;
         // 计算出当前日期时间到之前的日期时间的毫秒数，以便进行下一步的计算

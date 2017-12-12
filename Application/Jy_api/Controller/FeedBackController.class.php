@@ -57,6 +57,7 @@ class FeedBackController extends ComController {
              $strtotime= strtotime($v['DateTime']);
              $CatFeedBack[$k]['DateTime'] =$LogFeedBack->TimeAgo($strtotime);
         }
+
         $info = $CatFeedBack;
         response:
             $response = array(
@@ -78,6 +79,8 @@ class FeedBackController extends ComController {
         $msgArr[4007]   = "内容缺失！";
         $msgArr[4008]   = "问题类型缺失！";
         $msgArr[4009]   = "请填写一个或者以上的联系方式！";
+        $msgArr[7001]   = "内容长度不符合！";
+        $msgArr[7003]   = "超过提交次数提交次数，一个小时内最多提交6次！";
         $result = 2001;
         $info = array();
         //用户ID
@@ -114,11 +117,11 @@ class FeedBackController extends ComController {
         //是否超过条数
         //查询时间
 
-        $CatCunt =  $LogFeedBack->CatCount($playerid);
-        if(!$CatCunt){
-            $result = 7002;
-            goto response;
-        }
+//        $CatCunt =  $LogFeedBack->CatCount($playerid);
+//        if(!$CatCunt){
+//            $result = 7002;
+//            goto response;
+//        }
         //是否超过次数
         $SendCount = $LogFeedBack->SendCount($playerid);
         if(!$SendCount){
