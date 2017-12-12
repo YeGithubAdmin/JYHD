@@ -19,9 +19,10 @@ class CardInfoController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
-        $obj   = new \Common\Lib\func();
+        $MonthCard      =       D('MonthCard');
         $result = 2001;
         $info   =  array();
+        $msgArr[3001] = '与游戏服务器断开！';
         $msgArr[4006] = '用户信息缺失！';
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
@@ -36,83 +37,27 @@ class CardInfoController extends ComController {
 
         );
         $GoodsAll = M('jy_goods_all')
-                     ->field($GoodsInfoFile)
-                     ->where('Code = 7  and IsDel = 1')
-                     ->find();
-        $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
-        $CardGoodsInfo      = array();
-        if(!empty($GiveInfo)){
-            $GoodID = array();
-            foreach ($GiveInfo as $k=>$v){
-                $GoodID[] = $v['Id'];
-            }
-            $CardGoodsInfoFile  = array(
-                 'Id',
-                 'GetNum',
-                 'ImgCode',
-                 'Type',
-            );
-            $GoodID = implode(',',$GoodID);
-            $CardGoodsInfo      =  M('jy_goods_all')
-                                    ->field($CardGoodsInfoFile)
-                                    ->where('Id in('.$GoodID.') and IsDel = 1')
-                                    ->select();
-            if(!empty($CardGoodsInfo)){
-                foreach ($CardGoodsInfo as $k=>$v){
-                    foreach ($GiveInfo as $key=>$val){
-                            if($val['Id'] == $v['Id']){
-                                $CardGoodsInfo[$k]['GetNum'] =  $v['GetNum']*$val['GetNum'];
-                                $CardGoodsInfo[$k]['Name']   =  $val['Name'];
-                            }
-                    }
-                }
-            }
-        }
-        $MoreThan = $playerid%10;
-
-        $ShopCard  = 1;     //是否购买过月卡      1 否  2 是
-        $IsReceive = 1;     //今天是否领取过月卡  1 否   2 是
-        $DayNum    = 0;     //月卡还有剩多少天
-        $UsersCardShopLog = M('log_users_shop_'.$MoreThan)
-            ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
-            ->where('playerid = '.$playerid.' and  Code = 7')
-            ->order('Id desc')
+            ->field($GoodsInfoFile)
+            ->where('Code = 7  and IsDel = 1')
             ->find();
-
-        if(empty($UsersCardShopLog)){
-            $ShopCard  = 1;
-            $IsReceive = 1;
-            $DayNum    = 0;
-        }else{
-            //判断月卡是否过期
-
-            $DateTime           =           strtotime($UsersCardShopLog['DateTime']);
-            $CurrentTime        =           strtotime(date('Y-m-d',time()));
-            $OneDay             =           24*60*60;
-            $DayNum             =           ($CurrentTime-$DateTime)/$OneDay;
-            if($DayNum > 29){
-                $ShopCard  = 1;
-                $DayNum    = 0;
-                $IsReceive = 1;
-            }else{
-                $StartTime          =           $CurrentTime;
-                $StartTime =   date('Y-m-d H:i:s',$StartTime);
-                $EndTime            =           $CurrentTime+$OneDay;
-                $EndTime =   date('Y-m-d H:i:s',$EndTime);
-                $UsersCardReceive = M('jy_users_card_receive_log')
-                    ->where('playerid = '.$playerid.' and    
-                             DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
-                             and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                    ->find();
-                
-                if(!empty($UsersCardReceive)){
-                    $IsReceive = 2;
-                }
-                $ShopCard  = 2;
-                $DayNum  =  30-$DayNum;
-            }
+        $CardGoodsInfo = $MonthCard->GoodsList($GoodsAll);
+        //用信息
+        $UserInfo      = $MonthCard->UserInfo($playerid);
+        if(!$UserInfo){
+            $result = 3001;
+            goto  response;
         }
+        $ShopCard = $UserInfo['IsMc']?2:1;  //是否购买过月卡      1 否  2 是
+        $IsReceive = $MonthCard->IsReceive($playerid)?2:1;     //今天是否领取过月卡  false 否   true 是
+        $Time = strtotime(date('Y-m-d',time()));
+        $McOvertime =  strtotime(date('Y-m-d',$UserInfo['McOvertime']));
 
+        if ($McOvertime < $Time){
+            $DayNum = 0;
+        }else{
+            $DayNum = ($McOvertime-$Time)/(24*60*60)+1;
+
+        }
         //信息
         $info['GoodsInfo']   = $CardGoodsInfo;
         $info['CurrencyNum'] = $GoodsAll['CurrencyNum'];

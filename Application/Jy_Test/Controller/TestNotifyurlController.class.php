@@ -273,7 +273,7 @@ class TestNotifyurlController extends Controller {
             //是否月卡
             if($CatUsersOrderInfo['Form'] == 2){
                 $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
-                $PlayerData->setMcOvertime(time());
+                $PlayerData->setMcOvertime(time()+29*24*60*60);
                 $PlayerData->setIsMc(true);
             }
 

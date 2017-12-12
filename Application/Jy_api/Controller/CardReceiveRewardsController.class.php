@@ -22,66 +22,35 @@ class CardReceiveRewardsController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
-        $obj   = new \Common\Lib\func();
+        $MonthCard      =       D('MonthCard');
         $result = 2001;
         $info   =  array();
-
         $msgArr[3003] = "网络错误，请稍后再试！";
+        $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
         $msgArr[4006] = "用户信息缺失！";
         $msgArr[5003] = "系统错误，请稍后再试！";
-        $msgArr[5004] = "系统错误，请稍后再试！";
         $msgArr[5005] = "系统错误，请稍后再试！";
         $msgArr[7002] = "您还未购过买月卡，请先购买月卡！";
-        $msgArr[7003] = "您的月卡已经过期，请先购买月卡！";
         $msgArr[7004] = "当天已经领取过，请明天在来！";
-        $msgArr[7005] = "您的月卡已经过期，请先购买月卡！";
-
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
             goto response;
         }
-        $MoreThan = $playerid%10;
-        //判断是否拥有月卡
-        $UsersCardShopLog = M('log_users_shop_'.$MoreThan)
-                            ->field('date_format(DateTime,"%Y-%m-%d") as DateTime')
-                            ->where('playerid = '.$playerid.' and Code = 7')
-                            ->order('Id desc')
-                            ->find();
-        if(empty($UsersCardShopLog)){
+        $UserInfo = $MonthCard->UserInfo($playerid);
+        if(!$UserInfo){
             $result = 7002;
             goto response;
         }
-        //判断月卡是否过期
-        $DateTime           =           $UsersCardShopLog['DateTime'];
-        $DateTime           =           strtotime($DateTime);
-        $CurrentTime        =           strtotime(date('Y-m-d',time()));
-        $DayNum             =           ($CurrentTime-$DateTime)/(24*60*60);
-        $OneDay             =           24*60*60;
-        $StartTime          =           $CurrentTime;
-        $StartTime          =           date("Y-m-d H:i:s",$StartTime);
-        $EndTime            =           $CurrentTime+$OneDay;
-        $EndTime            =           date("Y-m-d H:i:s",$EndTime);
-        if($DayNum >= 30){
-             $result = 7003;
-             goto response;
-        }
-        //判断今天是否已经领取过  1 未领取过  2 领取过
-        $IsReceive = 1;
-        $UsersCardReceive = M('jy_users_card_receive_log')
-                            ->where('playerid = '.$playerid.' 
-                            and  DateTime <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
-                            and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                            ->find();
-        if(!empty($UsersCardReceive)){
-            $IsReceive = 2;
-        }
-        if($IsReceive == 2){
+        //判断今天是否已经领取过  false 未领取过  true 领取过
+        $IsReceive = $MonthCard->IsReceive($playerid);
+        if($IsReceive){
             $result = 7004;
             goto response;
         }
-        if($IsReceive == 1 && $DayNum == 30){
-            $result = 7005;
+        //判断是否月卡
+        if(!$UserInfo['IsMc']){
+            $result = 7002;
             goto response;
         }
         //查询奖励
@@ -92,136 +61,49 @@ class CardReceiveRewardsController extends ComController {
         );
         $GoodsAll = M('jy_goods_all')
                      ->field($GoodsInfoFile)
-                     ->where('ShowType = 3 and CateGory = 4  and IsDel = 1')
+                     ->where('Code = 7  and IsDel = 1')
                      ->find();
         if(empty($GoodsAll)){
             $result = 5003;
         }
-        $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
-        $GoodID             = array();
-        if(empty($GiveInfo)){
-            $result = 5004;
-            goto  response;
-        }
-        foreach ($GiveInfo as $k=>$v){
-            $GoodID[] = $v['Id'];
-        }
-
-        $GoodID = implode(',',$GoodID);
-        $CardGoodsInfoFile  = array(
-            'Id',
-            'Name',
-            'Code',
-            'GetNum',
-             'Type',
-        );
-        $CardGoodsInfo      =  M('jy_goods_all')
-            ->field($CardGoodsInfoFile)
-            ->where('Id in('.$GoodID.')')
-            ->select();
+        $CardGoodsInfo = $MonthCard->GoodsList($GoodsAll);
         if(empty($CardGoodsInfo)){
             $result = 5005;
             goto  response;
         }
-        foreach ($CardGoodsInfo as $k=>$v){
-            foreach ($GiveInfo as $key=>$val){
-                if($val['Id'] == $v['Id']){
-                    $CardGoodsInfo[$k]['GetNum'] =  $v['GetNum']*$val['GetNum'];
-                    $CardGoodsInfo[$k]['Number'] =  $val['GetNum'];
-                    $CardGoodsInfo[$k]['GetNumGive'] =  $v['GetNum'];
-                }
-            }
-        }
-        //已入protobuf 类
-        $obj->ProtobufObj(array(
-            'Protos/PBS_UsrDataOprater.php',
-            'Protos/PBS_UsrDataOpraterReturn.php',
-            'Protos/OptSrc.php',
-            'Protos/UsrDataOpt.php',
-            'OptReason.php',
-            'RPB_PlayerNumerical.php',
-            'RedisProto/RPB_PlayerData.php',
-            'PB_Item.php',
-        ));
-        $PBS_UsrDataOprater  = new PBS_UsrDataOprater();
-        $RPB_PlayerData      = new RPB_PlayerData();
-        $UsrDataOpt          = new UsrDataOpt();
-        $OptSrc              = new OptSrc();
-        $OptReason           = new \OptReason();
-        $PBS_UsrDataOprater->setPlayerid($playerid);
-        $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
-        $PBS_UsrDataOprater->setReason($OptReason::get_yueka_award);
-        $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
-        $dataUsersCardReceiveLog  = array();      //月卡奖励
-        foreach ($CardGoodsInfo as $k=>$v){
-            if($v['Type'] > 0){
-                $dataUsersCardReceiveLog[$k]['playerid']   =    $playerid;
-                $dataUsersCardReceiveLog[$k]['GoodsID']    =    $v['Id'];
-                $dataUsersCardReceiveLog[$k]['Type']       =    $v['Type'];
-                $dataUsersCardReceiveLog[$k]['Code']       =    $v['Code'];
-                $dataUsersCardReceiveLog[$k]['GetNum']     =    $v['GetNumGive'];
-                $dataUsersCardReceiveLog[$k]['Number']     =    $v['Number'];
-                $dataUsersCardReceiveLog[$k]['Channel']    =    $DataInfo['channel']  ;
-            }
-             switch ($v['Type']){
-                 //金币
-                 case  1 :
-                     $RPB_PlayerData->setGold($v['GetNum']);
-
-                     break;
-                  //砖石
-                 case  2 :
-                     $RPB_PlayerData->setDiamond($v['GetNum']);
-                     break;
-                 //道具
-                 case 3  :
-                     $PB_Item  = new \PB_Item();
-                     $PB_Item->setNum($v['GetNum']);
-                     $PB_Item->setId($v['Code']);
-                     $PBS_UsrDataOprater->appendItemOpt($PB_Item);
-                     break;
-             }
-        }
-        $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
-        $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
-        //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
-        if($PBS_UsrDataOpraterRespond  == 504){
+        $GoodsAdd = $MonthCard->AddGoods($CardGoodsInfo,$playerid);
+        if(!$GoodsAdd){
             $result = 3003;
-            goto response;
-        }
-        if(strlen($PBS_UsrDataOpraterRespond)==0){
-            $result = 3004;
-            goto response;
-        }
-        //接受回应
-        $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
-        $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
-        $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-        //判断结果
-        if($ReplyCode != 1){
-            $result = $ReplyCode;
-            goto response;
+            goto  response;
         }
         //记录
-        $dataUsersCardReceiveLog = array_values($dataUsersCardReceiveLog);
-        $addUsersCardReceiveLog =M('jy_users_card_receive_log')
-                                ->addAll($dataUsersCardReceiveLog);
+        $dataUsersCardReceiveLog = array();
         foreach ($CardGoodsInfo as $key=>$val){
+            if($val['Type'] > 0){
+                $dataUsersCardReceiveLog[$key]['playerid']   =    $playerid;
+                $dataUsersCardReceiveLog[$key]['GoodsID']    =    $val['Id'];
+                $dataUsersCardReceiveLog[$key]['Type']       =    $val['Type'];
+                $dataUsersCardReceiveLog[$key]['Code']       =    $val['Code'];
+                $dataUsersCardReceiveLog[$key]['GetNum']     =    $val['GetNum'];
+                $dataUsersCardReceiveLog[$key]['Number']     =    $val['Number'];
+                $dataUsersCardReceiveLog[$key]['Channel']    =    $DataInfo['channel']  ;
+            }
             if($val['Type'] == 0){
                 unset($CardGoodsInfo[$key]);
             }
+            if($val['Type'] >= 1){
+                $info[$key]['Number'] =  $val['GetNum']*$val['Number'];
+                $info[$key]['Code']   =  $val['Code'];
+                $info[$key]['Type']   =  $val['Type'];
+            }
         }
+        $dataUsersCardReceiveLog = array_values($dataUsersCardReceiveLog);
+        $addUsersCardReceiveLog =M('jy_users_card_receive_log')
+            ->addAll($dataUsersCardReceiveLog);
         if(!$addUsersCardReceiveLog){
             $result = 3002;
+            $info = array();
             goto  response;
-        }
-        foreach ($CardGoodsInfo as $k=>$v){
-            if($v['Type'] >= 1){
-                $info[$k]['Number'] =  $v['GetNum'];
-                $info[$k]['Code']   =  $v['Code'];
-                $info[$k]['Type']   =  $v['Type'];
-            }
         }
         $info = array_values($info);
         response:

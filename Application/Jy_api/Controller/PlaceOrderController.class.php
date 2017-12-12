@@ -129,25 +129,8 @@ class PlaceOrderController extends ComController {
                 goto  response;
             }
 
-
-
-
         }
-        //月卡
-        if($Type == 2){
-            $UsersPackageShopLog = $model->table('log_users_shop_'.$MoreThan)
-                ->where('playerid = '.$playerid.' and Code = 7')
-                ->field('UNIX_TIMESTAMP(DateTime) as DateTime')
-                ->order('Id desc')
-                ->find();
-            $DateTime = $UsersPackageShopLog['DateTime']+24*60*60*30;
-            if(!empty($UsersPackageShopLog)){
-                if($time < $DateTime){
-                    $result = 7003;
-                    goto response;
-                }
-            }
-        }
+
         //查询用户信息
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
@@ -222,6 +205,15 @@ class PlaceOrderController extends ComController {
                     ->where('  Id in('.$GiveGoodsID.')  and  IsDel = 1')
                     ->field($catGoodsAllGiveField)
                     ->select();
+            }
+        }
+
+        //月卡
+        if($Type == 2){
+            $IsMc = $ReturnBase->getIsMc();
+            if($IsMc){
+                $result = 7003;
+                goto  response;
             }
         }
 
