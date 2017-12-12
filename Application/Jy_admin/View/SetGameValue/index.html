@@ -320,10 +320,6 @@
 		</div>
 
 
-
-
-
-
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
@@ -332,42 +328,51 @@
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>low：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>room_level：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""    value="{$info['getGoldPoolRatio']['low']|round=2}" datatype="*" placeholder="" name="Ratiolow"  >
+				<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "RatioRoomLevel" onchange="getGoldPoolRatio(this)"   nullmsg="" >
+								 <option value="">请选择类型</option>
+								<volist name = "info['getGoldPoolRatio']" key = "k" id = "val">
+									<option   Ratiolow = "{$val['Ratiolow']|round=2}"    RatioHigh = "{$val['RatioHigh']|round=2}"   RatioMid = "{$val['RatioMid']|round=2}"
+											  RatioPoolHigh = "{$val['RatioPoolHigh']|round=2}"  RatioPoolLow = "{$val['RatioPoolLow']|round=2}"
+									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RatioRoomLevel']}" >{$val['RatioRoomLevel']}</option>
+								</volist>
+                            </select>
+						</span>
+				</div>
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>mid：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>low ：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolRatio']['mid']|round=2}" datatype="*" placeholder="" name="RatioMid"  >
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>high）：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolRatio']['high']|round=2}" datatype="*" placeholder="" name="RatioHigh"  >
-			</div>
-			<div class="col-1"></div>
-		</div>
-
-		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
-			<thead>
-			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool_level】奖池高低线[A,B]]</td>
-			</tr>
-			</thead>
-		</table>
-		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>low：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""    value="{$info['getGoldPoolLevel']['low']|round=2}" datatype="*" placeholder="" name="LevelLow"  >
+				<input type="text" class="input-text" title=""  id = "Ratiolow" value="{$info['getGoldPoolRatio'][0]['Ratiolow']|round=2}" datatype="*" placeholder="" name="Ratiolow"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>high：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolLevel']['high']|round=2}" datatype="*" placeholder="" name="LevelHigh"  >
+				<input type="text" class="input-text" title=""  id = "RatioHigh" value="{$info['getGoldPoolRatio'][0]['RatioHigh']|round=2}" datatype="*" placeholder="" name="RatioHigh"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span>mid：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  id = "RatioMid"  value="{$info['getGoldPoolRatio'][0]['RatioMid']|round=2}" datatype="*" placeholder="" name="RatioMid"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>pool_high：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title="" id = "RatioPoolHigh" value="{$info['getGoldPoolRatio'][0]['RatioPoolHigh']|round=2}" datatype="*" placeholder="" name="RatioPoolHigh"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>pool_low ：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title="" id = "RatioPoolLow" value="{$info['getGoldPoolRatio'][0]['RatioPoolLow']|round=2}" datatype="*" placeholder="" name="RatioPoolLow"  >
+			</div>
+			<div class="col-1"></div>
+		</div>
+
 
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
@@ -376,9 +381,6 @@
 			</tr>
 			</thead>
 		</table>
-
-
-
 
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>room_level：</label>
@@ -579,6 +581,32 @@
             }
         }
 
+
+
+        function  getGoldPoolRatio(my) {
+            var Ratiolow      = document.getElementById('Ratiolow');
+            var RatioHigh     = document.getElementById('RatioHigh');
+            var RatioMid      = document.getElementById('RatioMid');
+            var RatioPoolHigh = document.getElementById('RatioPoolHigh');
+            var RatioPoolLow  = document.getElementById('RatioPoolLow');
+
+            var Index 		= my.selectedIndex;         				//索引
+            var MyOptions   = my.options[Index];
+            var Value		= my.options[Index].value;   				//选择中值;
+            if(Value != ''){
+                Ratiolow.value      = MyOptions.getAttribute('Ratiolow') ;
+                RatioHigh.value     = MyOptions.getAttribute('RatioHigh') ;
+                RatioMid.value      = MyOptions.getAttribute('RatioMid') ;
+                RatioPoolHigh.value = MyOptions.getAttribute('RatioPoolHigh') ;
+                RatioPoolLow.value  = MyOptions.getAttribute('RatioPoolLow') ;
+            }else{
+                Ratiolow.value ='';
+                RatioHigh.value ='';
+                RatioMid.value ='';
+                RatioPoolHigh.value ='';
+                RatioPoolLow.value ='';
+            }
+        }
 
 
 

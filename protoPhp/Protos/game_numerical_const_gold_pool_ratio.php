@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-11-29 17:29:42
+ * Auto generated from PB_gm_tool.proto at 2017-12-06 14:11:23
  *
  * protos package
  */
@@ -12,12 +12,20 @@ namespace Protos {
 class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
 {
     /* Field index constants */
-    const LOW = 1;
-    const MID = 2;
-    const HIGH = 3;
+    const ROOM_LEVEL = 1;
+    const LOW = 2;
+    const MID = 3;
+    const HIGH = 4;
+    const POOL_LOW = 5;
+    const POOL_HIGH = 6;
 
     /* @var array Field descriptors */
     protected static $fields = array(
+        self::ROOM_LEVEL => array(
+            'name' => 'room_level',
+            'required' => true,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
         self::LOW => array(
             'name' => 'low',
             'required' => true,
@@ -32,6 +40,16 @@ class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
             'name' => 'high',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
+        self::POOL_LOW => array(
+            'name' => 'pool_low',
+            'required' => true,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
+        self::POOL_HIGH => array(
+            'name' => 'pool_high',
+            'required' => true,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
 
@@ -50,9 +68,12 @@ class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
      */
     public function reset()
     {
+        $this->values[self::ROOM_LEVEL] = null;
         $this->values[self::LOW] = null;
         $this->values[self::MID] = null;
         $this->values[self::HIGH] = null;
+        $this->values[self::POOL_LOW] = null;
+        $this->values[self::POOL_HIGH] = null;
     }
 
     /**
@@ -63,6 +84,29 @@ class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
     public function fields()
     {
         return self::$fields;
+    }
+
+    /**
+     * Sets value of 'room_level' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setRoomLevel($value)
+    {
+        return $this->set(self::ROOM_LEVEL, $value);
+    }
+
+    /**
+     * Returns value of 'room_level' property
+     *
+     * @return integer
+     */
+    public function getRoomLevel()
+    {
+        $value = $this->get(self::ROOM_LEVEL);
+        return $value === null ? (integer)$value : $value;
     }
 
     /**
@@ -132,6 +176,52 @@ class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
     {
         $value = $this->get(self::HIGH);
         return $value === null ? (double)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pool_low' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPoolLow($value)
+    {
+        return $this->set(self::POOL_LOW, $value);
+    }
+
+    /**
+     * Returns value of 'pool_low' property
+     *
+     * @return integer
+     */
+    public function getPoolLow()
+    {
+        $value = $this->get(self::POOL_LOW);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'pool_high' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setPoolHigh($value)
+    {
+        return $this->set(self::POOL_HIGH, $value);
+    }
+
+    /**
+     * Returns value of 'pool_high' property
+     *
+     * @return integer
+     */
+    public function getPoolHigh()
+    {
+        $value = $this->get(self::POOL_HIGH);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

@@ -225,12 +225,11 @@ class PlaceOrderController extends ComController {
             }
         }
 
-
         $dataType = array(
             5,
             6,
+            7,
         );
-
         if(!in_array($PlatformType,$dataType)){
             //查询支付信息
             $CatThirdpayField = array(
@@ -406,7 +405,21 @@ class PlaceOrderController extends ComController {
                 $info['cpOrderId']   =  $PlatformOrder;
                 $info['cpUserInfo']  =  $playerid.'#'.$catGoodsAll['Id'];
             break;
-
+                //华为支付
+            case 7:
+                $Payment = true;
+                include     HUAWEISDK.'HuaWeiFun.php';
+                $HuaWeiFun  = new \HuaWeiFun();
+                $CurrencyNum = sprintf("%01.2f",$catGoodsAll['CurrencyNum']);
+                $info['userID']        =        "900086000020554310";
+                $info['applicationID'] =        100106371;
+                $info['amount']        =       "$CurrencyNum" ;
+                $info['productName']   =        $catGoodsAll['Name'];
+                $info['requestId']     =        $PlatformOrder;
+                $info['productDesc']   =        $catGoodsAll['Name'];
+                $info['sign']          =        $HuaWeiFun->redSignkey($info);
+                $info['userName']      =       '深圳市巨翼互动科技有限公司';
+              break;
             default:
                 break;
         }

@@ -35,6 +35,9 @@ define('IAPPPAY',JY_ROOT.'thirdpay/iapppayforphp/');
 //金立支付
 define('JINPAY',JY_ROOT.'thirdpay/JinPay/');
 
+//华为SDK
+define('HUAWEISDK',JY_ROOT.'thirdpay/HUAWEI/');
+
 //proto-php 文件
 define('PROTOC_PATH', JY_ROOT.'protoPhp/');
 

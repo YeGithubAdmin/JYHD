@@ -82,7 +82,7 @@ class ChannelDataModel extends Model{
         $UsersOrder = M('jy_users_order_info')
                       ->where('PayChannel in ('.$ChannelIn.')   and  
                                FoundTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
-                               and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= FoundTime')
+                               and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= FoundTime and IsTest = 2')
                       ->field($UsersOrderFiled)
                       ->group('GroupChannel')
                       ->select();
@@ -106,7 +106,7 @@ class ChannelDataModel extends Model{
                                     b.FoundTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
                                     and str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= b.FoundTime ')
                                     ->where(' a.reg_channel in('.$ChannelIn.')    and a.regtime < str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                            ->group('GroupChannel')
+                            ->group('GroupChannel  and IsTest = 2')
                             ->field($GameAccountOldField)
                             ->select();
         $GameAccountOldSort      = array();

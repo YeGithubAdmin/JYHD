@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2017-11-29 17:29:42
+ * Auto generated from PB_gm_tool.proto at 2017-12-06 14:11:23
  *
  * protos package
  */
@@ -26,8 +26,7 @@ class game_numerical extends \ProtobufMessage
     const FISH_CARD_RATE = 24;
     const BOSS_RATE_PARAMS = 25;
     const GOLD_POOL_RATIO = 26;
-    const GOLD_POOL_LEVEL = 27;
-    const GOLD_POOL = 28;
+    const GOLD_POOL = 27;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -98,13 +97,8 @@ class game_numerical extends \ProtobufMessage
         ),
         self::GOLD_POOL_RATIO => array(
             'name' => 'gold_pool_ratio',
-            'required' => false,
+            'repeated' => true,
             'type' => '\Protos\game_numerical_const_gold_pool_ratio'
-        ),
-        self::GOLD_POOL_LEVEL => array(
-            'name' => 'gold_pool_level',
-            'required' => false,
-            'type' => '\Protos\game_numerical_const_gold_pool_level'
         ),
         self::GOLD_POOL => array(
             'name' => 'gold_pool',
@@ -141,8 +135,7 @@ class game_numerical extends \ProtobufMessage
         $this->values[self::DOWN_GRADE] = array();
         $this->values[self::FISH_CARD_RATE] = array();
         $this->values[self::BOSS_RATE_PARAMS] = array();
-        $this->values[self::GOLD_POOL_RATIO] = null;
-        $this->values[self::GOLD_POOL_LEVEL] = null;
+        $this->values[self::GOLD_POOL_RATIO] = array();
         $this->values[self::GOLD_POOL] = array();
     }
 
@@ -702,21 +695,31 @@ class game_numerical extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'gold_pool_ratio' property
+     * Appends value to 'gold_pool_ratio' list
      *
-     * @param \Protos\game_numerical_const_gold_pool_ratio $value Property value
+     * @param \Protos\game_numerical_const_gold_pool_ratio $value Value to append
      *
      * @return null
      */
-    public function setGoldPoolRatio(\Protos\game_numerical_const_gold_pool_ratio $value=null)
+    public function appendGoldPoolRatio(\Protos\game_numerical_const_gold_pool_ratio $value)
     {
-        return $this->set(self::GOLD_POOL_RATIO, $value);
+        return $this->append(self::GOLD_POOL_RATIO, $value);
     }
 
     /**
-     * Returns value of 'gold_pool_ratio' property
+     * Clears 'gold_pool_ratio' list
      *
-     * @return \Protos\game_numerical_const_gold_pool_ratio
+     * @return null
+     */
+    public function clearGoldPoolRatio()
+    {
+        return $this->clear(self::GOLD_POOL_RATIO);
+    }
+
+    /**
+     * Returns 'gold_pool_ratio' list
+     *
+     * @return \Protos\game_numerical_const_gold_pool_ratio[]
      */
     public function getGoldPoolRatio()
     {
@@ -724,25 +727,35 @@ class game_numerical extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'gold_pool_level' property
+     * Returns 'gold_pool_ratio' iterator
      *
-     * @param \Protos\game_numerical_const_gold_pool_level $value Property value
-     *
-     * @return null
+     * @return \ArrayIterator
      */
-    public function setGoldPoolLevel(\Protos\game_numerical_const_gold_pool_level $value=null)
+    public function getGoldPoolRatioIterator()
     {
-        return $this->set(self::GOLD_POOL_LEVEL, $value);
+        return new \ArrayIterator($this->get(self::GOLD_POOL_RATIO));
     }
 
     /**
-     * Returns value of 'gold_pool_level' property
+     * Returns element from 'gold_pool_ratio' list at given offset
      *
-     * @return \Protos\game_numerical_const_gold_pool_level
+     * @param int $offset Position in list
+     *
+     * @return \Protos\game_numerical_const_gold_pool_ratio
      */
-    public function getGoldPoolLevel()
+    public function getGoldPoolRatioAt($offset)
     {
-        return $this->get(self::GOLD_POOL_LEVEL);
+        return $this->get(self::GOLD_POOL_RATIO, $offset);
+    }
+
+    /**
+     * Returns count of 'gold_pool_ratio' list
+     *
+     * @return int
+     */
+    public function getGoldPoolRatioCount()
+    {
+        return $this->count(self::GOLD_POOL_RATIO);
     }
 
     /**

@@ -34,9 +34,7 @@ class SetGameValueModel extends Model{
             'Protos/game_numerical_const_key_recharge_effect.php',
             'Protos/game_numerical_const_recharge_effect.php',
             'Protos/game_numerical_const_return_gold_rate.php',
-
             'Protos/game_numerical_const_gold_pool_ratio.php',
-            'Protos/game_numerical_const_gold_pool_level.php',
             'Protos/game_numerical_dynamic_gold_pool.php',
         ));
     }
@@ -46,6 +44,7 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical_require->setServerid($Serverid);
         $PBS_gm_numerical_require_string    =  $PBS_gm_numerical_require->serializeToString();
         $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend('protos.PBS_gm_numerical_require',$PBS_gm_numerical_require_string,1);
+
         if($PBS_gm_numerical_require_respond == 504){
                 return $PBS_gm_numerical_require_respond;
         }
@@ -105,15 +104,15 @@ class SetGameValueModel extends Model{
         }
 
         $getGoldPoolRatio       = $Data->getGoldPoolRatio();
-        $getGoldPoolRatioArray['low']     = $getGoldPoolRatio->getLow();
-        $getGoldPoolRatioArray['mid']     = $getGoldPoolRatio->getMid();
-        $getGoldPoolRatioArray['high']    = $getGoldPoolRatio->getHigh();
-
-
-        $getGoldPoolLevel       = $Data->getGoldPoolLevel();
-        $getGoldPoolLevelArray['low']     = $getGoldPoolLevel->getLow();
-        $getGoldPoolLevelArray['high']    = $getGoldPoolLevel->getHigh();
-
+        $getGoldPoolRatioArray = array();
+        for($i=0;$i<$Data->getGoldPoolRatioCount();$i++){
+            $getGoldPoolRatioArray[$i]['Ratiolow']          =   $getGoldPoolRatio[$i]->getLow();
+            $getGoldPoolRatioArray[$i]['RatioHigh']         =   $getGoldPoolRatio[$i]->getHigh();
+            $getGoldPoolRatioArray[$i]['RatioMid']          =   $getGoldPoolRatio[$i]->getMid();
+            $getGoldPoolRatioArray[$i]['RatioRoomLevel']    =   $getGoldPoolRatio[$i]->getRoomLevel();
+            $getGoldPoolRatioArray[$i]['RatioPoolHigh']     =   $getGoldPoolRatio[$i]->getPoolHigh();
+            $getGoldPoolRatioArray[$i]['RatioPoolLow']      =   $getGoldPoolRatio[$i]->getPoolLow();
+        }
         $getDynamicGoldPool       = $Data->getGoldPool();
         $getDynamicGoldPoolArray = array();
         for($i=0;$i<$Data->getGoldPoolCount();$i++){
@@ -130,7 +129,6 @@ class SetGameValueModel extends Model{
             'getFishCardRate'     =>    $getFishCardRateArray,
             'getBossRateParams'   =>    $getBossRateParamsArray,
             'getGoldPoolRatio'    =>    $getGoldPoolRatioArray,
-            'getGoldPoolLevel'    =>    $getGoldPoolLevelArray,
             'getDynamicGoldPool'  =>    $getDynamicGoldPoolArray,
             'base'=>array(
                 'PoolRatio'=>$Data->getPoolRatio(),
@@ -207,25 +205,22 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical->appendBossRateParams($const_boss_rate_params);
 
         $const_gold_pool_ratio  =   new game_numerical_const_gold_pool_ratio();
+        $RatioRoomLevel         =   I('param.RatioRoomLevel',0,'intval');
         $Ratiolow               =   I('param.Ratiolow',0,'intval');
         $RatioMid               =   I('param.RatioMid',0,'intval');
         $RatioHigh              =   I('param.RatioHigh',0,'intval');
+        $RatioPoolHigh          =   I('param.RatioPoolHigh',0,'intval');
+        $RatioPoolLow           =   I('param.RatioPoolLow ',0,'intval');
         $const_gold_pool_ratio->setHigh($RatioHigh);
+        $const_gold_pool_ratio->setRoomLevel($RatioRoomLevel);
         $const_gold_pool_ratio->setLow($Ratiolow);
         $const_gold_pool_ratio->setMid($RatioMid);
-        $const_gold_pool_ratio->dump();
-        $PBS_gm_numerical->setGoldPoolRatio($const_gold_pool_ratio);
+        $const_gold_pool_ratio->setPoolHigh($RatioPoolHigh);
+        $const_gold_pool_ratio->setPoolLow($RatioPoolLow);
+        $PBS_gm_numerical->appendGoldPoolRatio($const_gold_pool_ratio);
 
 
-        $const_gold_pool_level  =   new game_numerical_const_gold_pool_level();
-        $LevelLow                =   I('param.LevelLow',0,'intval');
-        $LevelHigh               =   I('param.LevelHigh',0,'intval');
-        $const_gold_pool_level->setHigh($LevelLow);
-        $const_gold_pool_level->setLow($LevelHigh);
-
-        $PBS_gm_numerical->setGoldPoolLevel($const_gold_pool_level);
         $PBS_gm_numerical_op->setData($PBS_gm_numerical);
-
 
         $LimitRatio         = I('param.LimitRatio','','trim');
         $ChangePoint        = I('param.ChangePoint','','trim');

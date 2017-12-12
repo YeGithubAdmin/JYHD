@@ -97,14 +97,14 @@ message game_numerical {
 		optional float au_rate = 6;
 	}
 	message const_gold_pool_ratio {
-		required float low = 1;
-		required float mid = 2;
-		required float high = 3;
+		required int32 room_level = 1;
+		required float low = 2;
+		required float mid = 3;
+		required float high = 4;
+		required int32 pool_low = 5;
+		required int32 pool_high = 6;
 	}
-	message const_gold_pool_level {
-		required int32 low = 1;
-		required int32 high = 2;
-	}
+
 	message dynamic_gold_pool {
 		required int32 room_level = 1;
 		required float pool_ratio = 2;
@@ -125,9 +125,8 @@ message game_numerical {
 	repeated const_down_grade down_grade = 23;      						// [downGrade]：控制临界值及到临界值时对玩家的补救倍数
 	repeated const_fish_card_rate fish_card_rate = 24;      				// 渔券相关配置
 	repeated const_boss_rate_params boss_rate_params = 25;      			// BOSS捕中率配置 核弹掉落率配置
-	optional const_gold_pool_ratio gold_pool_ratio = 26;					// 奖池系数[a,b,c]
-	optional const_gold_pool_level gold_pool_level = 27;					// 奖池高低线[A,B]
-	repeated dynamic_gold_pool gold_pool = 28;								// 奖池  抽水  pool_ratio 													【dynamic】
+	repeated const_gold_pool_ratio gold_pool_ratio = 26;					// 奖池系数[a,b,c, A, B]
+	repeated dynamic_gold_pool gold_pool = 27;								// 奖池  抽水  pool_ratio 													【dynamic】
 }
 
 // 更改数值数据

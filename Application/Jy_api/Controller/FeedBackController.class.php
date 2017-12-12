@@ -40,7 +40,6 @@ class FeedBackController extends ComController {
         $StartTime   = date('Y-m-d H:i:s',$DayTime-15*$DayNum);
         $EndTime     = date('Y-m-d H:i:s',$DayTime+$DayNum);
 
-
         $LogFeedBack = D('LogFeedBack');
         //反馈记录
         $Field = array(
@@ -52,8 +51,12 @@ class FeedBackController extends ComController {
             'DateTime',
         );
         $where = 'playerid = '.$playerid.' and  DateTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
-                 and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")';
+                 and  DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") and IsDel = 1';
         $CatFeedBack =  $LogFeedBack->Info($Field,$where);
+        foreach ($CatFeedBack as $k=>$v){
+             $strtotime= strtotime($v['DateTime']);
+             $CatFeedBack[$k]['DateTime'] =$LogFeedBack->TimeAgo($strtotime);
+        }
         $info = $CatFeedBack;
         response:
             $response = array(
@@ -68,6 +71,7 @@ class FeedBackController extends ComController {
     public  function Submit(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
+        $LogFeedBack    =       D('LogFeedBack');
         $msgArr[2001]   = "请求成功";
         $msgArr[3001]   = "网络错误,请稍后在试！";
         $msgArr[4006]   = "用户信息缺失！";
@@ -101,32 +105,46 @@ class FeedBackController extends ComController {
             $result = 4009;
             goto  response;
         }
+        //判断字符
+        $Lenth = mb_strlen($Fcontent);
+        if($Lenth >200){
+            $result = 7001;
+            goto response;
+        }
+        //是否超过条数
+        //查询时间
 
-        $LogFeedBack = D('LogFeedBack');
+        $CatCunt =  $LogFeedBack->CatCount($playerid);
+        if(!$CatCunt){
+            $result = 7002;
+            goto response;
+        }
+        //是否超过次数
+        $SendCount = $LogFeedBack->SendCount($playerid);
+        if(!$SendCount){
+            $result = 7003;
+            goto response;
+        }
+        //过滤敏感
+        $Fcontent = $LogFeedBack->SensitiveWords($Fcontent);
         $DateAdd = array(
             'playerid'       =>    $playerid,
             'Status'         =>    1,
             'Fcontent'       =>    $Fcontent,
+            'Rcontent'       =>    '',
             'Type'           =>    $Type,
             'Phone'          =>    $Phone,
             'TxQq'           =>    $TxQq,
             'PackageVersion' =>    $DataInfo['PackageVersion'],
-            'Channel'        =>    $DataInfo['Channel'],
-            'VerSion'        =>    $DataInfo['$DataInfo'],
+            'Channel'        =>    $DataInfo['channel'],
+            'VerSion'        =>    $DataInfo['version'],
         );
         $AddDate =$LogFeedBack->AddDate($DateAdd);
-
 
         if(!$AddDate){
             $result = 3001;
             goto  response;
         }
-
-
-
-
-
-
 
         response:
         $response = array(

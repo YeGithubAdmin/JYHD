@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_usr_rpc.proto at 2017-11-29 17:29:43
+ * Auto generated from PB_usr_rpc.proto at 2017-12-06 14:11:24
  *
  * protos package
  */
@@ -25,6 +25,7 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     const PLAYER_NUMERICAL_INCR = 12;
     const NOTIFY = 13;
     const EXCHANGE_RMB = 14;
+    const ADD_KILL_KEY_FISH = 15;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -94,6 +95,11 @@ class PBS_UsrDataOprater extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::ADD_KILL_KEY_FISH => array(
+            'name' => 'add_kill_key_fish',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
+        ),
     );
 
     /**
@@ -124,6 +130,7 @@ class PBS_UsrDataOprater extends \ProtobufMessage
         $this->values[self::PLAYER_NUMERICAL_INCR] = null;
         $this->values[self::NOTIFY] = null;
         $this->values[self::EXCHANGE_RMB] = null;
+        $this->values[self::ADD_KILL_KEY_FISH] = null;
     }
 
     /**
@@ -466,6 +473,29 @@ class PBS_UsrDataOprater extends \ProtobufMessage
     public function getExchangeRmb()
     {
         $value = $this->get(self::EXCHANGE_RMB);
+        return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'add_kill_key_fish' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setAddKillKeyFish($value)
+    {
+        return $this->set(self::ADD_KILL_KEY_FISH, $value);
+    }
+
+    /**
+     * Returns value of 'add_kill_key_fish' property
+     *
+     * @return integer
+     */
+    public function getAddKillKeyFish()
+    {
+        $value = $this->get(self::ADD_KILL_KEY_FISH);
         return $value === null ? (integer)$value : $value;
     }
 }

@@ -46,7 +46,7 @@ class  IosBackController extends Controller {
         $DataInfo = json_decode($DataInfo,true);
         $receipt     =   $DataInfo['strReceipt'];
         $Order       =   $DataInfo['Order'];
-        $isSandbox   =   $DataInfo['isSandbox'];
+       // $isSandbox   =   $DataInfo['isSandbox'];
         $playerid    =   $DataInfo['playerid'];
         if(!$playerid){
             $result = 4004;
@@ -100,18 +100,33 @@ class  IosBackController extends Controller {
         );
         $response = $this->Curl(2,$postData);
 
+        if($response == -2){
+            $result = 7004;
+            goto  failed;
+        }
         $IsTest = 2;
-
         $data = json_decode($response,true);
-        if($data['status']  || $data['status'] !=0){
+
+        if(C('ACCESS_lOGS')){
+            $dir = C('YQ_ROOT').'Log/test/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',$response.'|'.json_encode($DataInfo));
+        }
+        if($data['status'] !=0){
             $IsTest = 1;
             $response = $this->Curl(1,$postData);
+            if(C('ACCESS_lOGS')){
+                $dir = C('YQ_ROOT').'Log/test/'.date('Y').'/'.date('m').'/'.date('d').'/';
+                $ObjFun->record_log($dir,'access_test'.date('Ymd').'.log',$response.'|'.json_encode($DataInfo));
+            }
             $data = json_decode($response,true);
             if($data['status']  || $data['status'] !=0){
                 $result = 7002;
                 goto failed;
             }
         }
+
+
+
         //查询商品
         $GoodsInfoField = array(
             'GoodsName',

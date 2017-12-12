@@ -112,6 +112,8 @@ class UsersAttributeController extends ComController {
                 'PB_Item.php',
             ));
 
+
+            $AddKillKeyFish = I('param.AddKillKeyFish',0,'intval');
             $PBS_UsrDataOprater = new PBS_UsrDataOprater();
             $RPB_PlayerData     = new RPB_PlayerData();
             $PB_HallNotify      = new \PB_HallNotify();
@@ -119,20 +121,25 @@ class UsersAttributeController extends ComController {
             $OptReason          = new \OptReason();
             $OptSrc             = new OptSrc();
             $UsrDataOpt         = new UsrDataOpt();
-
             $PBS_UsrDataOprater->setPlayerid($playerid);
             $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
             $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
             $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+            $ExchangeRmb = I('param.ExchangeRmb',0,'intval');
+            if($AddKillKeyFish != 0){
+                $PBS_UsrDataOprater->setAddKillKeyFish($AddKillKeyFish);
+            }
+            if($ExchangeRmb != 0){
+                $PBS_UsrDataOprater->setExchangeRmb($ExchangeRmb);
+            }
             if($IsMc == 2){
                 $RPB_PlayerData->setIsMc(true);
                 $RPB_PlayerData->setMcOvertime($McOvertime);
-            }else{
+            }elseif($IsMc == 1){
                 $RPB_PlayerData->setIsMc(false);
                 $RPB_PlayerData->setMcOvertime(0);
             }
             foreach ($DataInfo as $k=>$v){
-
                 if($v != 0 && $v != '' ){
                     $setData = "set".$k;
                     $RPB_PlayerData->$setData($v);
@@ -141,7 +148,6 @@ class UsersAttributeController extends ComController {
                         $PBS_ItemOpt->setId(8);
                         $PBS_ItemOpt->setNum($v);
                         $PB_ResourceChange->appendItems($PBS_ItemOpt);
-
                     }elseif ($k == "Diamond"){
                         $PBS_ItemOpt        = new \PB_Item();
                         $PBS_ItemOpt->setId(9);
@@ -166,7 +172,6 @@ class UsersAttributeController extends ComController {
             $PB_HallNotify->setResChanged($PB_ResourceChange);
             $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
-            $PBS_UsrDataOprater->dump();
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
             //发送请求
             G('begin');
