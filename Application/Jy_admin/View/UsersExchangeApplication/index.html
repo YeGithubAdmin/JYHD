@@ -51,6 +51,16 @@
 				<input type="text" class="input-text" style="width: 250px" placeholder="请输入用户ID" id="" value="{$search['playerid']}" name="playerid">
 				<input type="text" class="input-text" style="width: 250px" placeholder="请输入兑换单号" id="" value="{$search['Order']}" name="Order">
 				<span style="width: 150px" class="select-box">
+				<select size="1" name="Type"
+						class="select">
+						<option value="">物品</option>
+						<option value="1"<if  condition= "$search['Type'] eq '1'">selected</if>>金币</option>
+					    <option value="2"<if condition="$search['Type'] eq '2'" >selected</if>>砖石</option>
+					    <option value="3"<if condition="$search['Type'] eq '3'" >selected</if>>道具</option>
+					   <option value="4"<if condition="$search['Type'] eq '4'" >selected</if>>卡类</option>
+				</select>
+				</span>
+				<span style="width: 150px" class="select-box">
 				<select size="1" name="Status"
 					class="select">
 						<option value="">状态</option>

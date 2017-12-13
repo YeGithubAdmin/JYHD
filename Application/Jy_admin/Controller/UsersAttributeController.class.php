@@ -73,15 +73,10 @@ class UsersAttributeController extends ComController {
             $McOvertime     =       I('param.McOvertime',0,'trim,strtotime');         //月卡结束时间
             $IsGive         =       I('param.IsGive',1,'intval');                     //是否赠送道具  1 -否 2-是
             $DataProp       =       I('param.Prop','','trim');                        //道具
-            $platform       =       I('param.platform',2,'intval');                        //道具
-            if($platform == 1){
-                define('SERVER_PROTO_IOS', 'http://172.18.238.60');
-            }
             if($playerid == 0){
                 $result = 4001;
                 goto  response;
             }
-
             $DataInfo = array(
                 'Name'                 =>          $Name,
                 'Sex'                  =>          $Sex,
@@ -111,8 +106,6 @@ class UsersAttributeController extends ComController {
                 'RPB_PlayerNumerical.php',
                 'PB_Item.php',
             ));
-
-
             $AddKillKeyFish = I('param.AddKillKeyFish',0,'intval');
             $PBS_UsrDataOprater = new PBS_UsrDataOprater();
             $RPB_PlayerData     = new RPB_PlayerData();
@@ -166,11 +159,11 @@ class UsersAttributeController extends ComController {
                     $PB_ResourceChange->appendItems($PBS_ItemOpt);
                     $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
                 }
+                $PB_ResourceChange->setReason($OptReason::gm_tool);
+                $PB_ResourceChange->setPlayerid($playerid);
+                $PB_HallNotify->setResChanged($PB_ResourceChange);
+                $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             }
-            $PB_ResourceChange->setReason($OptReason::gm_tool);
-            $PB_ResourceChange->setPlayerid($playerid);
-            $PB_HallNotify->setResChanged($PB_ResourceChange);
-            $PBS_UsrDataOprater->setNotify($PB_HallNotify);
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
             //发送请求

@@ -74,6 +74,7 @@ class GameValueController extends ComController {
             'produce_gold_4',
             'consume_gold_4',
             'fish_card_4',
+            'bomb_4',
             'score_4',
             'boss_award_pool',
         );

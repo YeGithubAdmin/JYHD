@@ -252,7 +252,8 @@ class  IosBackController extends Controller {
             $dataLogUsersShop['Type']   = $GoodsInfo[0]['Type'];
             $dataLogUsersShop['Code']   = $GoodsInfo[0]['GoodsCode'];
             $UsrDataOprater->setReason($OptReason::buy_yueka_ok);
-            $PlayerData->setMcOvertime(time()+29*24*60*60);
+            $McOvertime = strtotime(date('Y-m-d',time()))+30*24*60*60;
+            $PlayerData->setMcOvertime($McOvertime);
             $PlayerData->setIsMc(true);
         }
         //添加物品
