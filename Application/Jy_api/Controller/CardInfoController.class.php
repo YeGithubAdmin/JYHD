@@ -55,7 +55,7 @@ class CardInfoController extends ComController {
         if ($McOvertime < $Time){
             $DayNum = 0;
         }else{
-            $DayNum = ($McOvertime-$Time)/(24*60*60)+1;
+            $DayNum = ($McOvertime-$Time)/(24*60*60);
 
         }
         //信息

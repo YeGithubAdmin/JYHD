@@ -19,6 +19,7 @@ class UsersExchangeApplicationController extends ComController {
         $search['Order']        =      I('param.Order','','trim');
         $search['playerid']     =      I('param.playerid','','trim');
         $search['Status']       =      I('param.Status',1,'intval');
+        $search['Type']         =      I('param.Type',0,'intval');
         $where = '1';
         if ($search['datemax'] != ''){
             $where .= ' and `DateTime`  <=  str_to_date("'.$search['datemax'].'","%Y-%m-%d %H:%i:%s")';
@@ -35,6 +36,14 @@ class UsersExchangeApplicationController extends ComController {
         if ($search['Status'] != 0) {
             $where .= ' and `Status`=' . $search['Status'];
         }
+        if ($search['Type'] != 0) {
+            if($search['Type'] >3){
+                $where .= ' and `Type`>=' . $search['Type'];
+            }else{
+                $where .= ' and `Type`=' . $search['Type'];
+            }
+        }
+        print_r($where);
         $count  = M('jy_users_exchange_log')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
