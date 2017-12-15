@@ -151,7 +151,7 @@ class SetGameValueModel extends Model{
         $const_return_gold_rate         =    new game_numerical_const_return_gold_rate();
         $PBS_gm_numerical_op->setServerid($Serverid);
 
-        $RoomLevel                      =    I('param.RoomLevel',0,'intval');
+        $RoomLevel                      =    I('param.RoomLevel',0,'trim');
         $Rate                           =    I('param.GoldRate',0,'trim');
         $const_return_gold_rate->setRate($Rate);
         $const_return_gold_rate->setRoomLevel($RoomLevel);
@@ -169,7 +169,7 @@ class SetGameValueModel extends Model{
 
         $KeyPayType        = I('param.KeyPayType','','trim');
         $KeyAddRate        = I('param.KeyAddRate','','trim');
-        $KeyPlanRecharge   = I('param.KeyPlanRecharge',0,'intval');
+        $KeyPlanRecharge   = I('param.KeyPlanRecharge',0,'trim');
         $const_key_recharge_effect->setPayType($KeyPayType);
         $const_key_recharge_effect->setAddRate($KeyAddRate);
         $const_key_recharge_effect->setPlanRecharge($KeyPlanRecharge);
@@ -177,40 +177,43 @@ class SetGameValueModel extends Model{
 
         $const_down_grade               =   new game_numerical_const_down_grade();
         $Type                           =    I('param.Type','','trim');
-        $Num                            =    I('param.Num',0,'intval');
+        $Num                            =    I('param.Num',0,'trim');
         $const_down_grade->setType($Type);
         $const_down_grade->setNum($Num);
         $PBS_gm_numerical->appendDownGrade($const_down_grade);
 
         $const_fish_card_rate           =   new game_numerical_const_fish_card_rate();
-        $FishFcMax                      =    I('param.FishFcMax',0,'intval');
-        $FishRate                       =    I('param.FishRate',0,'intval');
+        $FishFcMax                      =    I('param.FishFcMax',0,'trim');
+        $FishRate                       =    I('param.FishRate',0,'trim');
         $const_fish_card_rate->setRate($FishRate);
         $const_fish_card_rate->setFcMax($FishFcMax);
         $PBS_gm_numerical->appendFishCardRate($const_fish_card_rate);
 
         $const_boss_rate_params   =   new game_numerical_const_boss_rate_params();
-        $BossId                   =   I('param.BossId',0,'intval');
-        $Stage                    =   I('param.Stage',0,'intval');
-        $CrrtParam                =   I('param.CrrtParam',0,'intval');
-        $CuRate                   =   I('param.CuRate',0,'intval');
-        $AgRate                   =   I('param.AgRate',0,'intval');
-        $Aurate                   =   I('param.AuRate',0,'intval');
+        $BossId                   =   I('param.BossId',0,'trim');
+        $Stage                    =   I('param.Stage',0,'trim');
+        $CrrtParam                =   I('param.CrrtParam',0,'trim');
+        $CuRate                   =   I('param.CuRate',0,'trim');
+        $AgRate                   =   I('param.AgRate',0,'trim');
+        $Aurate                   =   I('param.AuRate',0,'trim');
+
+
         $const_boss_rate_params->setBossId($BossId);
         $const_boss_rate_params->setStage($Stage);
         $const_boss_rate_params->setCrrtParam($CrrtParam);
         $const_boss_rate_params->setCuRate($CuRate);
         $const_boss_rate_params->setAgRate($AgRate);
         $const_boss_rate_params->setAuRate($Aurate);
+        $const_boss_rate_params->dump();
         $PBS_gm_numerical->appendBossRateParams($const_boss_rate_params);
 
         $const_gold_pool_ratio  =   new game_numerical_const_gold_pool_ratio();
-        $RatioRoomLevel         =   I('param.RatioRoomLevel',0,'intval');
-        $Ratiolow               =   I('param.Ratiolow',0,'intval');
-        $RatioMid               =   I('param.RatioMid',0,'intval');
-        $RatioHigh              =   I('param.RatioHigh',0,'intval');
-        $RatioPoolHigh          =   I('param.RatioPoolHigh',0,'intval');
-        $RatioPoolLow           =   I('param.RatioPoolLow ',0,'intval');
+        $RatioRoomLevel         =   I('param.RatioRoomLevel',0,'trim');
+        $Ratiolow               =   I('param.Ratiolow',0,'trim');
+        $RatioMid               =   I('param.RatioMid',0,'trim');
+        $RatioHigh              =   I('param.RatioHigh',0,'trim');
+        $RatioPoolHigh          =   I('param.RatioPoolHigh',0,'trim');
+        $RatioPoolLow           =   I('param.RatioPoolLow ',0,'trim');
         $const_gold_pool_ratio->setHigh($RatioHigh);
         $const_gold_pool_ratio->setRoomLevel($RatioRoomLevel);
         $const_gold_pool_ratio->setLow($Ratiolow);
@@ -234,7 +237,6 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical->setFishCardP1($FishCardP1);
         $PBS_gm_numerical->setFishCardP2($FishCardP2);
         $PBS_gm_numerical->setGoldPoolPumpRate($GoldPoolPumpRate);
-
         $PBS_gm_numerical_op_string =  $PBS_gm_numerical_op->serializeToString();
 
         $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend('protos.PBS_gm_numerical_op',$PBS_gm_numerical_op_string,1);

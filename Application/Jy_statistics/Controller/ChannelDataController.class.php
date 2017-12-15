@@ -99,8 +99,6 @@ class ChannelDataController extends ComController {
         $RealTime     =  $search['datemax'] == $DateTime ||   $search['datemin'] == $DateTime ?2:1 ;
         $countNum     =  $count[0]['Num'];
 
-
-
         if($RealTime == 2){
             $RealTimeData = $ChannelData->RealTimeData($Channel);
             if(!empty($RealTimeData)){

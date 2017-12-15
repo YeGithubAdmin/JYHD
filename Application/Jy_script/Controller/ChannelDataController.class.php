@@ -87,6 +87,7 @@ class ChannelDataController extends Controller {
             $info[$k]['UsersFifteenNum'] = 0.00;
             $info[$k]['UsersThirtyNum'] = 0.00;
         }
+
         //添加数据
         $addStatisticsUsersPay = $model
             ->table('jy_statistics_users_pay')

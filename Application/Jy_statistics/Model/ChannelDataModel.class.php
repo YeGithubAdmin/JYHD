@@ -48,6 +48,7 @@ class ChannelDataModel extends Model{
                   WHERE (  a.channel = 2 and a.Isdel = 1 and   c.DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") 
                           and  c.DateTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") '.$where.'  ) ORDER BY c.DateTime desc) as 
                   catData GROUP BY  catData.`GroupChannel`,catData.`t`');
+
         return $info;
 
     }

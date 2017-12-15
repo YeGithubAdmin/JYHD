@@ -105,8 +105,8 @@ class ChannelDataModel extends Model{
                                     a.reg_channel = b.PayChannel  and b.Status = 2 and 
                                     b.FoundTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
                                     and str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= b.FoundTime ')
-                                    ->where(' a.reg_channel in('.$ChannelIn.')    and a.regtime < str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                            ->group('GroupChannel  and IsTest = 2')
+                                    ->where(' a.reg_channel in('.$ChannelIn.')    and a.regtime < str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") and IsTest = 2')
+                            ->group('GroupChannel')
                             ->field($GameAccountOldField)
                             ->select();
         $GameAccountOldSort      = array();
