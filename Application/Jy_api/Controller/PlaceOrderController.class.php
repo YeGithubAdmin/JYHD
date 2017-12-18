@@ -207,7 +207,6 @@ class PlaceOrderController extends ComController {
                     ->select();
             }
         }
-
         //月卡
         if($Type == 2){
             $IsMc = $ReturnBase->getIsMc();
@@ -216,12 +215,12 @@ class PlaceOrderController extends ComController {
                 goto  response;
             }
         }
-
         $dataType = array(
             5,
             6,
             7,
             8,
+
         );
         if(!in_array($PlatformType,$dataType)){
             //查询支付信息
@@ -413,6 +412,7 @@ class PlaceOrderController extends ComController {
                 $info['sign']          =        $HuaWeiFun->redSignkey($info);
                 $info['userName']      =       '深圳市巨翼互动科技有限公司';
               break;
+              //联想
             case 8:
                 $Payment = true;
                 $info['appkey']         ='';
