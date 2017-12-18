@@ -221,6 +221,7 @@ class PlaceOrderController extends ComController {
             5,
             6,
             7,
+            8,
         );
         if(!in_array($PlatformType,$dataType)){
             //查询支付信息
@@ -412,6 +413,15 @@ class PlaceOrderController extends ComController {
                 $info['sign']          =        $HuaWeiFun->redSignkey($info);
                 $info['userName']      =       '深圳市巨翼互动科技有限公司';
               break;
+            case 8:
+                $Payment = true;
+                $info['appkey']         ='';
+                $info['appid']          ='';
+                $info['waresid']        ='';
+                $info['Exorderno']      ='';
+                $info['price']          ='';
+                $info['cpprivateinfo']  ='';
+                break;
             default:
                 break;
         }

@@ -38,6 +38,9 @@ define('JINPAY',JY_ROOT.'thirdpay/JinPay/');
 //华为SDK
 define('HUAWEISDK',JY_ROOT.'thirdpay/HUAWEI/');
 
+//联想SDK
+define('LENOVOSDK',JY_ROOT.'thirdpay/Lenovo/');
+
 //proto-php 文件
 define('PROTOC_PATH', JY_ROOT.'protoPhp/');
 

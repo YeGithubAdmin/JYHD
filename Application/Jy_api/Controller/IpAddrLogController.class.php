@@ -20,9 +20,15 @@ use Think\Controller;
 use Think\Model;
 class IpAddrLogController extends Controller {
     public function index(){
+
+        $ObjFun   = new \Common\Lib\func();
         $DataInfo = file_get_contents('php://input');
         if(!is_array($DataInfo)){
             $DataInfo = json_decode($DataInfo,true);
+        }
+        if(C('ACCESS_lOGS')){
+            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',json_encode($DataInfo));
         }
         $msgArr = array(
             2001=>'请求成功！',
