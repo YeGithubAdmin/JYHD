@@ -41,13 +41,7 @@
             <input type="hidden" name="c" value="ThirdpayInfo" />
             <input type="hidden" name="a" value="index" />
 			<div class="text-c">
-				<span style="width: 150px" class="select-box">
-					<select size="1" name="Platform" class="select">
-						<option value="">平台</option>
-						<option value="1"<if  condition= "$search['Type'] eq '1'">selected</if>>苹果</option>
-						<option value="2"<if condition="$search['Type'] eq '2'" >selected</if>>安卓</option>
-					</select>
-				</span>
+
 				<span style="width: 150px" class="select-box">
 					<select size="1" name="Type" class="select">
 						<option value="">支付类型</option>
@@ -91,9 +85,7 @@
 				    <th width="30">id</th>
 					<th width="60">支付名称</th>
 					<th width="60">支付渠道</th>
-					<th width="60">支付类型</th>
 					<th width="60">版本支持</th>
-					<th width="60">平台</th>
 					<th width="60">通道描述</th>
 					<th width="60">创建时间</th>
 					<th width="30">操作</th>
@@ -105,21 +97,7 @@
 						<td>{$val['Id']}</td>
 						<td>{$val['Name']}</td>
 						<td>{$val['PassAgeWay']}</td>
-						<td>
-							<switch name = "val['Type']" >
-								<case value = "1">
-									支付宝
-								</case>
-								<case value = "2">
-									微信
-								</case>
-								<case value = "3">
-									爱贝
-								</case>
-								<default/>
-								...
-							</switch>
-						</td>
+
 						<td>
 							<switch name = "val['Support']" >
 								<case value = "1">
@@ -127,18 +105,6 @@
 								</case>
 								<case value = "2">
 									所有版本
-								</case>
-								<default/>
-								...
-							</switch>
-						</td>
-						<td>
-							<switch name = "val['Platform']" >
-								<case value = "1">
-									苹果
-								</case>
-								<case value = "2">
-									安卓
 								</case>
 								<default/>
 								...
