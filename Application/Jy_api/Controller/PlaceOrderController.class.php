@@ -415,12 +415,30 @@ class PlaceOrderController extends ComController {
               //联想
             case 8:
                 $Payment = true;
-                $info['appkey']         ='';
-                $info['appid']          ='';
-                $info['waresid']        ='';
-                $info['Exorderno']      ='';
-                $info['price']          ='';
-                $info['cpprivateinfo']  ='';
+                $PayInfo = array(
+                    'appid'          =>         "3017088500 ",
+                    'waresid'        =>         1,
+                    'waresname'      =>         $catGoodsAll['Name'],
+                    'cporderid'      =>         "$PlatformOrder",
+                    'price'          =>         (float)$catGoodsAll['CurrencyNum'],        //货币
+                    'currency'       =>         "RMB",                                     //货币类型
+                    'appuserid'      =>         $playerid.'#'.$catGoodsAll['Id'],          //用户在商户应用的唯一标识
+                    'cpprivateinfo'  =>         "$PlatformOrder",                          //商户私有信息，支付完成后发送支付结果通知时会透传给商户
+                    'notifyurl'      =>         $notifyurl,                                //回调地址
+                );
+                $Private = 'MIICXAIBAAKBgQDKcquZQQB9AhAor2xBmWbmZJ8wnvc8tJe7c/EXbe1B/6pc/9Ch0nd5jS72I/zcuNqozn79ykiCs0rpeqoC3UkUmIzu5DliaQErTukBaDJ+YCDH8CIeN4oVLY7z2gcwrktIKPqZao9CghvUp+wSnCEX75oHuAXSURBMbKz7j4nlxQIDAQABAoGAEHogyUpnFcWTNxx//R7VJy9NXZGyobg5GUKofrWtt89tOECB5InSu4voJJRtQjGxakfUQieymyComjQnnjAQgH1hopu4KCSae+ykGm+bIuTe4scX5wXBiNiCvPnqP44V3EZArNdQv5OHBWJaT+mdITLlN/X7Fu8n2FEou9MB+QECQQD8KD9bMqyvnoD3ArfW6M21F18rVByubtd2pmwLBbzZnd3IwPBu/s886uMXcPCgCzRl8FOZ1rYsBFukW4QXTqflAkEAzYh9XVCgkgAPdfFGOM60mnD/R2lnruYhfelSsiaHfgc+N0ns8VAxBnt7h3kCHsh7xgTyc9nUJFZbR+6NRXaoYQJAMJstg03kXcIHCBZdC686n/LOZJLFKJazL+rqnsFPYv98VgtjDXJOzmZUuhsKNz+RrSjDZL8vxJJee/MsJjYCRQJAWD6j5K67YjQYb0EaL0XAkRa25AhDdfpkotTMpqSYQ+oEMmTREIKnqerWjMHNwT2+trRlDIyX4soZAvdPPGXHwQJBAI6d56qKeUqk8Jc+atITXMLYFlg1bhteVToUB9PDvdiHWOnYC/Don8yVzZUJMaYYMVsOuQMf71VNbkBIg2m7zH4=';
+                $Public  =  'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAuta/pwkiJAumtuVmUIFw4AZqZ3o4EoPwjBH+z1KqM7WHxADIlmCjsZI41GgH3CHLGm7C23y7QsDwZdNFkBfbw9iAHgprBeIZSgtxnH5mrtjqENm70mEPvUPrERJjShAHJAMuQ2XnK1PQ0qfXyldbvm4Ec5VJcXhXB0h6aXibJQIDAQAB';
+                $transid = $obj->IapppayOrder($PayInfo,$Private,$Public);
+           
+                if($transid){
+                    $info['transid'] = $transid;
+                }else{
+                    $result = 40010;
+                    goto  response;
+                }
+                $PayInfo['paytype'] = 1;
+                $PayInfo['result'] = 0;
+                $PayInfo['money'] = (float)$catGoodsAll['CurrencyNum'];
                 break;
             default:
                 break;
