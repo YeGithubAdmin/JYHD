@@ -31,6 +31,7 @@ class UsersAttributeController extends ComController {
                 3002=>"与游戏服务器断开，请稍后再试！",
                 3003=>"与游戏服务器断开，请稍后再试！",
                 4001=>"用户信息缺失！",
+                4002=>"没有玩家信息！",
                 0=> "占位符",
                 1=>"请求成功",
                 2=>"重复创建",
@@ -54,6 +55,8 @@ class UsersAttributeController extends ComController {
                 20=>"操作不合法",
                 21=>"账号密码不匹配",
             );
+
+
             $result  = 2001;
             $playerid       =       I('param.playerid',0,'intval');                   //用户ID
             $Name           =       I('param.Name',0,'trim');                         //昵称
@@ -77,6 +80,13 @@ class UsersAttributeController extends ComController {
                 $result = 4001;
                 goto  response;
             }
+            $Com = D('Com');
+            $Version = $Com->CatGameVer($playerid);
+            if(!$Version){
+                $result = 4002;
+                goto  response;
+            }
+
             $DataInfo = array(
                 'Name'                 =>          $Name,
                 'Sex'                  =>          $Sex,
@@ -166,9 +176,18 @@ class UsersAttributeController extends ComController {
             }
             $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+
+            $Header = array(
+                'PBName:'.'protos.PBS_UsrDataOprater',
+                'PBSize:'.strlen($PBSUsrDataOpraterString),
+                'UID:'.$playerid,
+                'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+                'Version:'.$Version,
+            );
+
             //发送请求
             G('begin');
-            $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+            $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
             G('end');
 
             if($PBS_UsrDataOpraterRespond  == 504){

@@ -238,7 +238,14 @@ class LenovoController extends Controller {
         //反序列化
         $serialize = $UsrDataOprater->serializeToString();
         //发送请求
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$serialize,$playerid);
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($serialize),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$CatOrder['Version'],
+        );
+        $Respond =  $ObjFun->ProtobufSend($Header,$serialize);
         if(strlen($Respond)!=0 && $Respond != 504){
             $UsrDataOpraterReturn->parseFromString($Respond);
             $ReplyCode = $UsrDataOpraterReturn->getCode();
