@@ -35,7 +35,7 @@
 </nav>
 <div class="pd-20">
     <!--搜索 -->
-    <form action="" method="post">
+    <form action="" method="get">
         <div class="text-c">
             创建时间： <input type="text"
                          onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
@@ -45,17 +45,11 @@
                 onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
                 id="datemax" value="{$search['datemax']}" name="datemax"
                 class="input-text Wdate" style="width: 120px;">
-
             <span style="width: 150px" class="select-box">
-                <select size="1" name="Type" class="select">
-                        <option value="1">注册</option>
-				</select>
-			</span>
-            <span style="width: 150px" class="select-box">
-                <select size="1" name="Channel" class="select">
+                <select size="1" name="channel" class="select">
                         <option value="">渠道</option>
-                        <volist name = "ChannelData" id = "val">
-                              <option  value="{$val['account']}"   <if condition  = "$search['Channel'] eq $val['account']"> selected = "true"</if>   >{$val['name']}</option>
+                        <volist name = "ChannelList" id = "val">
+                              <option  value="{$val['account']}"   <if condition  = "$search['channel'] eq $val['account']"> selected = "true"</if>   >{$val['name']}</option>
                         </volist>
 				</select>
 			</span>
@@ -77,10 +71,9 @@
         <tr class="text-c">
             <th width="30">日期</th>
             <th width="30">渠道</th>
-            <eq name = "search['Type']"  value = "1">
-                <th width="30" class = "ths">账号新增</th>
-                <th width="30" class = "ths">设备新增</th>
-            </eq>
+            <th width="30">渠道号</th>
+            <th width="30" class = "ths">账号新增</th>
+            <th width="30" class = "ths">设备新增</th>
             <th width="60">次日留存</th>
             <th width="60">3天留存</th>
             <th width="60">7日天留存</th>
@@ -89,14 +82,24 @@
         </tr>
         </thead>
         <tbody  class = "Tables" >
-        <volist name = "info['data']" id = "val">
+        <volist name = "info" id = "val">
             <tr   class="text-c">
             <th width="60">{$val['t']}</th>
             <th width="60">{$val['name']}</th>
-                <eq name = "search['Type']"  value = "1">
-                    <td wdidth="30" class = "ths">{$val['RegNum']}</td>
-                    <td width="30" class = "ths">{$val['EquipmentRegNum']}</td>
-                </eq>
+            <th width="60">{$val['GroupChannel']}</th>
+            <td wdidth="30" class = "ths">{$val['RegNum']}</td>
+            <td width="30" class = "ths">
+                <switch name = "val['GroupChannel']" >
+                    <case value = "JYHD_MI">
+                        {$val['RegNum']}
+                    </case>
+                    <case value = "JYHD_HUAWEI">
+                        {$val['RegNum']}
+                    </case>
+                    <default/>
+                    {$val['EquipmentRegNum']}
+                </switch>
+            </td>
             <th width="60">{$val['UsersOneNum']}%</th>
             <th width="60">{$val['UsersThreeNum']}%</th>
             <th width="60">{$val['UsersSevenNum']}%</th>
@@ -107,16 +110,12 @@
         </tbody>
     </table>
 
-    <div class="row cl">
-        <label class="form-label col-1"></label>
-
-
-    </div>
-
-
 </div>
 
-
+<div class = "cl">
+    <div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+         class="dataTables_paginate paging_simple_numbers">{$page}</div>
+</div>
 <script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>

@@ -26,9 +26,7 @@ class ChannelDataController extends ComController {
         $search['datemax']     = I('param.datemax',$Endtime,'trim');
         $search['num']         = I('param.num',30,'intval');
         $search['channel']     = I('param.channel','','trim');
-
         $model = new Model;
-
 
         $Channel = '';
 
@@ -96,6 +94,7 @@ class ChannelDataController extends ComController {
         $ChannelData  =  D('ChannelData');
         $count        =  $ChannelData->NumberCount($whereData);
         $info         =  $ChannelData->Info($whereData,$page,$search['num']);
+
         $RealTime     =  $search['datemax'] == $DateTime ||   $search['datemin'] == $DateTime ?2:1 ;
         $countNum     =  $count[0]['Num'];
 

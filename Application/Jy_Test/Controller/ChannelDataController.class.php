@@ -5,7 +5,7 @@ use Think\Model;
 class ChannelDataController extends Controller {
     public function index(){
         //统计时间
-        $time = strtotime(date('Y-m-d'),time());
+        $time = strtotime('2017-12-18',time());
         $day  = 24*60*60;
         $model = new Model();
         //渠道列表
@@ -93,7 +93,7 @@ class ChannelDataController extends Controller {
                 $info[$k]['UsersThirtyNum'] = 0.00;
                 $info[$k]['DateTime'] = $StartTime;
             }
-
+            print_r($info);die;
             //添加数据
             $addStatisticsUsersPay = $model
                 ->table('jy_statistics_users_pay')
