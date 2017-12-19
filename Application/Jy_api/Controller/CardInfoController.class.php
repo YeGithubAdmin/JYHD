@@ -42,7 +42,9 @@ class CardInfoController extends ComController {
             ->find();
         $CardGoodsInfo = $MonthCard->GoodsList($GoodsAll);
         //用信息
-        $UserInfo      = $MonthCard->UserInfo($playerid);
+
+
+        $UserInfo      = $MonthCard->UserInfo($playerid,$DataInfo);
         if(!$UserInfo){
             $result = 3001;
             goto  response;

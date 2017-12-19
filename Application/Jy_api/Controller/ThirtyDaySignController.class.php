@@ -53,8 +53,15 @@ class ThirtyDaySignController extends ComController {
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_All);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
             goto response;
@@ -318,8 +325,19 @@ class ThirtyDaySignController extends ComController {
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+
+
+
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
             goto response;
@@ -526,15 +544,17 @@ class ThirtyDaySignController extends ComController {
                       break;
               }
         }
-
-
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
-
-
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
-
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3004;
             goto response;

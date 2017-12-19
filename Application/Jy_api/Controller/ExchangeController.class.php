@@ -95,7 +95,14 @@ class ExchangeController extends ComController {
         $PBS_ItemOpt->setNum(-$catGoodsAll['CurrencyNum']);
         $PBS_UsrDataOprater->appendItemOpt($PBS_ItemOpt);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
             goto response;
@@ -104,6 +111,7 @@ class ExchangeController extends ComController {
             $result = 3003;
             goto response;
         }
+
         //接受回应
         $PBS_UsrDataOpraterReturn =  new PBS_UsrDataOpraterReturn();
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
@@ -148,7 +156,16 @@ class ExchangeController extends ComController {
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+
+
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
             goto response;
@@ -189,7 +206,16 @@ class ExchangeController extends ComController {
         $PBS_UsrDataOprater->setSendEmail($PB_Email);
         $UsrDataString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
-        $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
+
+
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($UsrDataString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+        $Respond =  $obj->ProtobufSend($Header,$UsrDataString);
         if($Respond  == 504){
             $result = 3003;
             goto response;

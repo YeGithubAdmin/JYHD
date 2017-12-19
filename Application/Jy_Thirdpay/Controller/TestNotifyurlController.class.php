@@ -95,6 +95,7 @@ class TestNotifyurlController extends Controller {
             'Price',
             'PayID',
             'Form',
+            'Version',
         );
         $CatUsersOrderInfo = $model
                      ->table('jy_users_order_info')
@@ -373,7 +374,17 @@ class TestNotifyurlController extends Controller {
         //反序列化
         $serialize = $UsrDataOprater->serializeToString();
         //发送请求
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$serialize,$playerid);
+
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($serialize),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$CatUsersOrderInfo['version'],
+        );
+
+
+        $Respond =  $ObjFun->ProtobufSend($Header,$serialize);
         if(strlen($Respond)!=0 && $Respond != 504){
             $UsrDataOpraterReturn->parseFromString($Respond);
             $ReplyCode = $UsrDataOpraterReturn->getCode();

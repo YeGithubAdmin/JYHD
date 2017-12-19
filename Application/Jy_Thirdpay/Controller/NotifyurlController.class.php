@@ -90,6 +90,7 @@ class NotifyurlController extends Controller {
             'Price',
             'PayID',
             'Form',
+            'Version',
         );
         $CatUsersOrderInfo = $model
                      ->table('jy_users_order_info')
@@ -356,8 +357,15 @@ class NotifyurlController extends Controller {
         //反序列化
 
         $serialize = $UsrDataOprater->serializeToString();
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($serialize),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$CatUsersOrderInfo['Version'],
+        );
         //发送请求
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$serialize,$playerid);
+        $Respond =  $ObjFun->ProtobufSend($Header,$serialize);
         if(strlen($Respond)!=0 && $Respond != 504){
             $UsrDataOpraterReturn->parseFromString($Respond);
             $ReplyCode = $UsrDataOpraterReturn->getCode();
