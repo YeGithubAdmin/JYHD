@@ -46,7 +46,7 @@ class LenovoController extends Controller {
             3006=>'服务器错误！',
             3007=>'支付并发',
             4001=>'回调数据为空！',
-            4002=>'订单不存在！',
+            4002=>'数据不存在！',
             5001=>'订单不存在',
             5002=>'支付信息不存在！',
             5003=>'商品部存在！',
@@ -88,7 +88,7 @@ class LenovoController extends Controller {
         //实例化数据
         $model = new Model();
         //查询订单信息
-        $CatOrder =$ObjFun->CatOrder($OrderID);
+        $CatOrder =$PayCom->CatOrder($OrderID);
         if(empty($CatOrder)){
             $result = 5001;
             goto failed;
@@ -110,7 +110,7 @@ class LenovoController extends Controller {
         }
 
         //查询商品
-        $GoodsInfo = $this->CatGoods($OrderID,$playerid);
+        $GoodsInfo = $PayCom->CatGoods($OrderID,$playerid);
         if(empty($GoodsInfo)){
             $result = 5003;
             goto OrderSave;
