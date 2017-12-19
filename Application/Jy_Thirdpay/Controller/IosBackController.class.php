@@ -64,6 +64,7 @@ class  IosBackController extends Controller {
             'Status',
             'Price',
             'Form',
+            'Version',
         );
         //查询订单信息
         $CatOrderInfo = $model
@@ -335,7 +336,14 @@ class  IosBackController extends Controller {
         $UsrDataOprater->setPlayerData($PlayerData);
         $serialize = $UsrDataOprater->serializeToString();
         //发送请求
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$serialize,$playerid);
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($serialize),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$CatOrderInfo['Version'],
+        );
+        $Respond =  $ObjFun->ProtobufSend($Header,$serialize);
         if(strlen($Respond)!=0 && $Respond != 504){
             $UsrDataOpraterReturn->parseFromString($Respond);
             $ReplyCode = $UsrDataOpraterReturn->getCode();

@@ -70,7 +70,14 @@ class HuaWeiLoginController extends ComController {
         $PBS_ThirdPartyLogin->setLoginCode($LoginCode);
         $PBS_ThirdPartyLogin->setUid($LoginPlayerId);
         $prcoto = $PBS_ThirdPartyLogin->serializeToString();
-        $Respond =  $obj->ProtobufSend('protos.PBS_ThirdPartyLogin',$prcoto,1);
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($prcoto),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+        $Respond =  $obj->ProtobufSend($Header,$prcoto);
         if($Respond  == 504){
             $result = 3003;
             goto response;

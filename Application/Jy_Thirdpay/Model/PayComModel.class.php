@@ -82,6 +82,7 @@ class PayComModel extends Model{
             'Status',
             'PayID',
             'Form',
+            'Version',
         );
         if(!empty($playerid)){
             $where = 'playerid = '.$playerid.' PlatformOrder = "'.$OrderID.'"';

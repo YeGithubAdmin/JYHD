@@ -389,25 +389,15 @@ class func{
     * @param $PBName    string       包名
     * @param $content   protobuf     包体
     */
-    public function   ProtobufSend($PBName,$content,$uid){
-        $addr =  CONTROLLER_NAME.ACTION_NAME;
-
-        $header = array(
-            'PBName:'.$PBName,
-            'PBSize:'.strlen($content),
-             'UID:'.$uid,
-            'PBUrl:'.$addr,
-        );
+    public function   ProtobufSend($Header,$content,$Server=''){
         $TheBagBody = array(
             'body'=>$content
         );
-        $Server =  '';
-        if(defined('SERVER_PROTO_IOS')){
-             $Server =  SERVER_PROTO_IOS;
-        }else{
-             $Server = SERVER_PROTO;
+        if(empty($Server)){
+            $Server = SERVER_PROTO;
         }
-        $Respond = $this->tocurl($Server,$header,$TheBagBody);
+
+        $Respond = $this->tocurl($Server,$Header,$TheBagBody);
         if($Respond  == 504){
             return  504;
         }

@@ -209,8 +209,15 @@ class RewardController extends ComController {
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString,$playerid);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3003;
             goto response;

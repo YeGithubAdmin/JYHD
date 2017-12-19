@@ -151,7 +151,14 @@ class PlaceOrderController extends ComController {
         $UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $String = $UsrDataOprater->serializeToString();
         //发送请求
-        $UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$String,$playerid);
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($String),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+        $UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$String);
         if(strlen($UsrDataOpraterRespond)==0){
             $result = 3001;
             goto response;
@@ -329,6 +336,7 @@ class PlaceOrderController extends ComController {
             'PayPlatform'=>$PlatformType,
             'PayPassAgeWay'=>$CatThirdpay['PassAgeWay'],
             'PayID'=>$CatThirdpay['Id'],
+            'Version'=>$DataInfo['version'],
         );
         // 3-商城  1-首充  2-月卡
         $appid = $CatThirdpay['appid'];

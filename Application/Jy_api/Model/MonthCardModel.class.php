@@ -14,7 +14,7 @@ class MonthCardModel extends Model{
         $this->ObjFun = new \Common\Lib\func();
     }
     //获取用户信息
-    public function UserInfo($playerid){
+    public function UserInfo($playerid,$DataInfo){
          $this->ObjFun->ProtobufObj(
              array(
                  'Protos/PBS_UsrDataOprater.php',
@@ -35,7 +35,16 @@ class MonthCardModel extends Model{
          $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
          $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
          $ToString   =  $PBS_UsrDataOprater->serializeToString();
-         $Respond =  $this->ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$ToString,$playerid);
+
+
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($ToString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+         $Respond =  $this->ObjFun->ProtobufSend($Header,$ToString);
         if($Respond  == 504 || strlen($Respond)==0){
                 return false;
         }
@@ -107,7 +116,7 @@ class MonthCardModel extends Model{
         return false;
     }
     //添加物品
-    public function AddGoods($CardGoodsInfo,$playerid){
+    public function AddGoods($CardGoodsInfo,$playerid,$DataInfo){
         //已入protobuf 类
         $this->ObjFun->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
@@ -151,9 +160,17 @@ class MonthCardModel extends Model{
             }
         }
         $PBS_UsrDataOprater->setPlayerData($RPB_PlayerData);
+
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $this->ObjFun->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$playerid);
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($PBSUsrDataOpraterString),
+            'UID:'.$playerid,
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$DataInfo['version'],
+        );
+        $PBS_UsrDataOpraterRespond =  $this->ObjFun->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if(strlen($PBS_UsrDataOpraterRespond)==0 || $PBS_UsrDataOpraterRespond  == 504){
            return false;
         }
