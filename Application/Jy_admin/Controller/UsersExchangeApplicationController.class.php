@@ -43,7 +43,6 @@ class UsersExchangeApplicationController extends ComController {
                 $where .= ' and `Type`=' . $search['Type'];
             }
         }
-        print_r($where);
         $count  = M('jy_users_exchange_log')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
@@ -56,6 +55,8 @@ class UsersExchangeApplicationController extends ComController {
             'StockNum',
             'GoodsID',
             'UpTime',
+            'UpName',
+            'Remark',
             'DateTime',
         );
         $UsersExchangeLog = M('jy_users_exchange_log')
@@ -72,6 +73,10 @@ class UsersExchangeApplicationController extends ComController {
     //审核
     public function ToExamine(){
         $obj = new  \Common\Lib\func();
+
+
+        $UserInfo = $this->userInfo;
+
         $Id= I('param.Id',0,'intval');
 
         $msgArr = array(
@@ -132,10 +137,10 @@ class UsersExchangeApplicationController extends ComController {
             $Type            =      I('param.Type',0,'intval');         //类型 4-话费卡  5-京东卡  6-西实物
             $cardNum         =      I('param.cardNum','','trim');       //卡号
             $cardPwd         =      I('param.cardPwd','','trim');       //卡密
-            $FaceValue         =      I('param.FaceValue',0,'intval');       //卡密
             $ExpressName     =      I('param.ExpressName','','trim');   //快递名称
             $ExpressOrder    =      I('param.ExpressOrder','','trim');  //快递名称
             $MessAge         =      I('param.MessAge','','trim');       //失败通知
+            $Remark        =      I('param.Remark','','trim');       //失败通知
 
             if($Status<=1){
                 $result = 4001;
@@ -262,10 +267,7 @@ class UsersExchangeApplicationController extends ComController {
                 //接受回应
                 $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
                 $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-
             }
-
-
             //判断结果
             if($ReplyCode != 1){
                $result =  $ReplyCode;
@@ -275,6 +277,8 @@ class UsersExchangeApplicationController extends ComController {
                 $dataUsersExchangeLog = array(
                     'MessAge'=>$MessAge,
                     'Status'=>$Status,
+                    'UpName'=>$UserInfo['name'],
+                    'Remark'=>$Remark,
                     'UpTime'=>date('Y-m-d H:i:s',time())
                 );
                 $upUsersExchangeLog = M('jy_users_exchange_log')
