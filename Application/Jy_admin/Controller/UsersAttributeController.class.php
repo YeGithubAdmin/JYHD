@@ -185,6 +185,9 @@ class UsersAttributeController extends ComController {
                 'Version:'.$Version,
             );
 
+
+
+
             //发送请求
             G('begin');
             $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
