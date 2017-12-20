@@ -38,12 +38,23 @@ class SetGameValueModel extends Model{
             'Protos/game_numerical_dynamic_gold_pool.php',
         ));
     }
-    public function GetVal($Serverid,$obj){
+    public function GetVal($Serverid,$obj,$Version){
         $PBS_gm_numerical_require           =  new PBS_gm_numerical_require();
         $PBS_gm_numerical_require_return    =   new PBS_gm_numerical_require_return();
         $PBS_gm_numerical_require->setServerid($Serverid);
         $PBS_gm_numerical_require_string    =  $PBS_gm_numerical_require->serializeToString();
-        $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend('protos.PBS_gm_numerical_require',$PBS_gm_numerical_require_string,1);
+
+
+
+        $Header = array(
+            'PBName:'.'protos.PBS_gm_numerical_require',
+            'PBSize:'.strlen($PBS_gm_numerical_require_string),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+
+        $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend($Header,$PBS_gm_numerical_require_string);
 
         if($PBS_gm_numerical_require_respond == 504){
                 return $PBS_gm_numerical_require_respond;
@@ -144,7 +155,7 @@ class SetGameValueModel extends Model{
     }
 
     //设置数值
-    public function SetVal($Serverid,$obj){
+    public function SetVal($Serverid,$obj,$Version){
         $PBS_gm_numerical_op            =    new PBS_gm_numerical_op();
         $PBS_gm_numerical_op_return     =    new PBS_gm_numerical_op_return();
         $PBS_gm_numerical               =    new game_numerical();
@@ -204,7 +215,7 @@ class SetGameValueModel extends Model{
         $const_boss_rate_params->setCuRate($CuRate);
         $const_boss_rate_params->setAgRate($AgRate);
         $const_boss_rate_params->setAuRate($Aurate);
-        $const_boss_rate_params->dump();
+
         $PBS_gm_numerical->appendBossRateParams($const_boss_rate_params);
 
         $const_gold_pool_ratio  =   new game_numerical_const_gold_pool_ratio();
@@ -238,8 +249,14 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical->setFishCardP2($FishCardP2);
         $PBS_gm_numerical->setGoldPoolPumpRate($GoldPoolPumpRate);
         $PBS_gm_numerical_op_string =  $PBS_gm_numerical_op->serializeToString();
-
-        $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend('protos.PBS_gm_numerical_op',$PBS_gm_numerical_op_string,1);
+        $Header = array(
+            'PBName:'.'protos.PBS_gm_numerical_op',
+            'PBSize:'.strlen($PBS_gm_numerical_op_string),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend($Header,$PBS_gm_numerical_op_string);
         if($PBS_gm_numerical_require_respond == 504){
             return false;
         }

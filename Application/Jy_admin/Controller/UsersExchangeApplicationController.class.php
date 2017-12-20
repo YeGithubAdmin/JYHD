@@ -159,8 +159,6 @@ class UsersExchangeApplicationController extends ComController {
             $OptSrc                         =   new OptSrc();
             $OptReason                      =   new \OptReason();
 
-
-
             $PBS_UsrDataOprater->setPlayerid($CatUsersExchangeLog['playerid']);
             $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
 
@@ -201,7 +199,20 @@ class UsersExchangeApplicationController extends ComController {
             $PBS_UsrDataOprater->setSendEmail($PB_Email);
             $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
             //发送请求
-            $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$CatUsersExchangeLog['playerid']);
+
+            $Com = D('Com');
+            $Version = $Com->CatGameVer($CatUsersExchangeLog['playerid']);
+            if(!$Version){
+                $result = 4003;
+            }
+            $Header = array(
+                'PBName:'.'protos.PBS_UsrDataOprater',
+                'PBSize:'.strlen($PBSUsrDataOpraterString),
+                'UID:'.$CatUsersExchangeLog['playerid'],
+                'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+                'Version:'.$Version,
+            );
+            $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
 
             if($PBS_UsrDataOpraterRespond  == 504){
                $result = 3002;
@@ -218,7 +229,6 @@ class UsersExchangeApplicationController extends ComController {
                 $PBS_UsrDataOprater->reset();
                 $PB_Email->reset();
                 $PBS_UsrDataOpraterReturn->reset();
-
                 $PBS_UsrDataOprater->setPlayerid($CatUsersExchangeLog['playerid']);
                 $PBS_UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
                 $PBS_UsrDataOprater->setReason($OptReason::gm_tool);
@@ -231,14 +241,22 @@ class UsersExchangeApplicationController extends ComController {
                 $PBS_UsrDataOprater->setSendEmail($PB_Email);
                 $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
                 //发送请求
-                $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$PBSUsrDataOpraterString,$CatUsersExchangeLog['playerid']);
 
+                $Header = array(
+                    'PBName:'.'protos.PBS_UsrDataOprater',
+                    'PBSize:'.strlen($PBSUsrDataOpraterString),
+                    'UID:'.$CatUsersExchangeLog['playerid'],
+                    'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+                    'Version:'.$Version,
+                );
+
+                $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
                 if($PBS_UsrDataOpraterRespond  == 504){
-                    $result = 3002;
+                    $result = 3004;
                     goto response;
                 }
                 if(strlen($PBS_UsrDataOpraterRespond)==0){
-                    $result = 3003;
+                    $result = 3005;
                     goto response;
                 }
                 //接受回应

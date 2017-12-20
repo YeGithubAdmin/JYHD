@@ -41,20 +41,33 @@
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
-			<div class="formControls col-6">
+			<div class="formControls col-1">
 				<div style="width:150px;text-align:center;float:left">
 		        		<span class="select-box">
 							<select size="1" name="Channel" class="select">
 								<option value="0">全服</option>
 								<volist name = "catChannel" id = "val">
-									<option value="{$val['id']}" <if condition = "$val['id'] eq  $info['Channel']"> selected="selected"</if>>{$val['name']}</option>
+									<option value="{$val['id']}" >{$val['name']}</option>
 								</volist>
 						    </select>
 						</span>
 				</div>
 			</div>
-			<input type="hidden" value="0" id="upid" name="upid" />
-			<div class="col-4"></div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>游戏版本：</label>
+			<div class="formControls col-1">
+				<div style="text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1"  name="Version"  datatype="*"  class="select">
+								<option value="" >请选择游戏版本</option>
+								<volist name = "Versionlist" id = "val">
+									<option  <if condition = "$val eq  $info['Version']"> selected="selected"</if> value="{$val}">{$val}</option>
+								</volist>
+						    </select>
+						</span>
+				</div>
+			</div>
+			<div class="col-1"></div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>是否定时发送：</label>

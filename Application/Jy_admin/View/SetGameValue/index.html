@@ -38,6 +38,14 @@
 		<div class="text-c">
 			<input  type="text" class="input-text" style="width: 250px"  placeholder="请输入服务器ID" id="" value="{$Serverid}"
 					name="Serverid">
+			<span style="width: 150px" class="select-box">
+					<select size="1" name="Version" class="select">
+						<option value="">游戏版本</option>
+						<volist name = "Versionlist" id = "val">
+							    <option value="{$val}"  <if condition="$channel eq $val['id']" >selected</if>>{$val}</option>
+						</volist>
+				</select>
+		   </span>
 			<button type="submit" class="btn btn-success" id="" name="">
 				<i class="Hui-iconfont">&#xe665;</i> 搜索
 			</button>
@@ -46,8 +54,8 @@
 
 	<div class="mt-20">
 	<form action="" method="post"  class="form form-horizontal" id="form-UsersAttribute-add">
-		<input  type="hidden"  value="{$Serverid}"
-				name="Serverid">
+		<input  type="hidden"  value="{$Serverid}" name="Serverid">
+		<input  type="hidden"  value="{$Version}" name="Version">
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>基础抽水率（pool_ratio）：</label>
 			<div class="formControls col-1">

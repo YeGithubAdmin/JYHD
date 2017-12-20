@@ -27,7 +27,12 @@ class GameConfigController extends ComController {
     }
     //添加
     public function  add(){
-        $obj = new \Common\Lib\func();
+        $Com = D('Com');
+        $obj =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $catChannelField = array(
             'name',
             'account',
@@ -45,6 +50,7 @@ class GameConfigController extends ComController {
             $Second =  I('param.Second',0,'intval');
             $Status=  I('param.Status',1,'intval');
             $Channel =  I('param.Channel','','trim');
+            $Version =  I('param.Version','','trim');
             if($Type == 1){
                 $Channel = '';
             }
@@ -55,10 +61,11 @@ class GameConfigController extends ComController {
                 'Status'          =>      $Status,
                 'Second'          =>      $Second,
                 'Channel'         =>      $Channel,
+                'Version'         =>      $Version,
             );
 
             if($Status == 2){
-                      $StopServiceFun = $this->StopService($StopService,$Channel,$Second);
+                      $StopServiceFun = $this->StopService($StopService,$Channel,$Second,$Version);
                       if(!$StopServiceFun){
                           $obj->showmessage('系统错误');
                       }
@@ -74,11 +81,17 @@ class GameConfigController extends ComController {
             }
         }
         $this->assign('catChannel',$catChannel);
+        $this->assign('Versionlist',$Versionlist);
         $this->display('add');
     }
     //修改
     public function edit(){
-        $obj = new \Common\Lib\func();
+        $Com = D('Com');
+        $obj =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $Id = I('param.Id',0,'intval');
         if($Id<=0){
             $obj->showmessage('非法操作');
@@ -90,6 +103,7 @@ class GameConfigController extends ComController {
             'Second',
             'Status',
             'Channel',
+            'Version',
             'Id',
         );
         $catGameCofing = M('jy_game_config')
@@ -110,6 +124,7 @@ class GameConfigController extends ComController {
             $StopPay =  I('param.StopPay',1,'intval');
             $Second =  I('param.Second',0,'intval');
             $Type =  I('param.Type',1,'intval');
+            $Version =  I('param.Version','','trim');
             $Channel =  I('param.Channel','','trim');
             $Status=  I('param.Status',3,'intval');
             $dataGameCofing  = array(
@@ -119,9 +134,10 @@ class GameConfigController extends ComController {
                 'Status'          =>      $Status,
                 'Second'          =>      $Second,
                 'Channel'         =>      $Channel,
+                'Version'         =>      $Version,
             );
             if($Status == 2){
-                $StopServiceFun = $this->StopService($StopService,$Channel,$Second);
+                $StopServiceFun = $this->StopService($StopService,$Channel,$Second,$Version);
                 if(!$StopServiceFun){
                     $obj->showmessage('系统错误');
                 }
@@ -137,6 +153,7 @@ class GameConfigController extends ComController {
         }
         $this->assign('catChannel',$catChannel);
         $this->assign('info',$catGameCofing);
+        $this->assign('Versionlist',$Versionlist);
         $this->display('edit');
     }
     //删除
@@ -157,7 +174,7 @@ class GameConfigController extends ComController {
         }
         exit();
     }
-    public function StopService($state,$channel,$after_second){
+    public function StopService($state,$channel,$after_second,$Version){
         $ObjFun = new \Common\Lib\func();
         //已入protobuf 类
         $ObjFun->ProtobufObj(array(
@@ -172,11 +189,17 @@ class GameConfigController extends ComController {
         }else{
             $PBS_SetServerState->setChannel('global');
         }
-
         $PBS_SetServerState->setAfterSecond($after_second);
-
         $String = $PBS_SetServerState->serializeToString();
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_SetServerState',$String,1);
+
+        $Header = array(
+            'PBName:'.'protos.PBS_SetServerState',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $Respond =  $ObjFun->ProtobufSend($Header,$String);
         if(strlen($Respond)==0){
             return false;
         }

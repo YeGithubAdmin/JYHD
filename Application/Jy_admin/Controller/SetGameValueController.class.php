@@ -17,20 +17,23 @@ use Protos\PBS_gm_numerical_require_return;
 
 class SetGameValueController extends ComController {
     public function index(){
-        $obj = new \Common\Lib\func();
+        $Com = D('Com');
+        $obj =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $Serverid = I('param.Serverid',0,'intval');
-        if($Serverid != 0){
+        $Version  = I('param.Version','','trim');
+
+        if($Serverid != 0 && $Version !='' ){
             $GetModel = D('SetGameValue');
-            $infoVal = $GetModel->GetVal($Serverid,$obj);
+            $infoVal = $GetModel->GetVal($Serverid,$obj,$Version);
         }
         if(IS_POST){
-            $platform       =       I('param.platform',2,'intval');
-            if($platform == 1){
-                define('SERVER_PROTO_IOS', 'http://172.18.238.60');
-            }
-            if($Serverid != 0){
+            if($Serverid != 0 && $Version !='' ){
                 $GetModel = D('SetGameValue');
-                $SetVal =  $GetModel->SetVal($Serverid,$obj);
+                $SetVal =  $GetModel->SetVal($Serverid,$obj,$Version);
             }else{
                 $obj->showmessage('服务器ID');
             }
@@ -42,6 +45,8 @@ class SetGameValueController extends ComController {
         }
         $this->assign('info',$infoVal);
         $this->assign('Serverid',$Serverid);
+        $this->assign('Version',$Version);
+        $this->assign('Versionlist',$Versionlist);
         $this->display();
     }
 

@@ -8,6 +8,7 @@ use Protos\PBS_AddWhiteListReturn;
 use Think\Controller;
 class WhiteListController extends ComController {
     public function index(){
+
         $catWhiteListField = array(
             'Id',
             'Account',
@@ -18,22 +19,29 @@ class WhiteListController extends ComController {
                         ->field($catWhiteListField)
                         ->select();
         $this->assign('info',$catWhiteList);
+
         $this->display('index');
     }
     //添加
     public function  add(){
-        $obj = new \Common\Lib\func();
+        $Com = D('Com');
+        $obj =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $obj->showmessage('服务器出错！');
+        }
 
         if(IS_POST){
             //数据
             $Account =  I('param.Account','','trim');
+            $Version =  I('param.Version','','trim');
             $dataWhiteList  = array(
                 'Account'     =>      $Account,
+                'Version'     =>      $Version,
 
             );
             //添加
-            $StopService = $this->StopService($Account);
-
+            $StopService = $this->StopService($Account,$Version);
             if(!$StopService){
                 $obj->showmessage('系统错误');
             }
@@ -47,29 +55,13 @@ class WhiteListController extends ComController {
                  $obj->showmessage('添加失败');
             }
         }
+        $this->assign('Versionlist',$Versionlist);
         $this->display('add');
     }
 
-//    //删除
-//    public function  del(){
-//        $id = I('param.Id',0,'intval');
-//        if($id == 0){
-//            echo  0;
-//        }else{
-//            $db = M('jy_game_config');
-//            $info = $db
-//                ->where('id = '.$id)
-//                ->delete();
-//            if($info){
-//                echo 1;
-//            }else{
-//                echo 0;
-//            }
-//        }
-//        exit();
-//    }
+
     //添加白名单
-    public function StopService($Account){
+    public function StopService($Account,$Version){
         $ObjFun = new \Common\Lib\func();
         //已入protobuf 类
         $ObjFun->ProtobufObj(array(
@@ -80,10 +72,16 @@ class WhiteListController extends ComController {
         $PBS_AddWhiteListReturn  = new PBS_AddWhiteListReturn();
         $PBS_AddWhiteList->setAccountName($Account);
         $String = $PBS_AddWhiteList->serializeToString();
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_AddWhiteList',$String,0);
+        $Header = array(
+            'PBName:'.'protos.PBS_AddWhiteList',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $Respond =  $ObjFun->ProtobufSend($Header,$String);
         if($Respond  == 504){
            return false;
-
         }
         if(strlen($Respond)==0){
             return false;

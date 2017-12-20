@@ -67,8 +67,26 @@
 						</span>
 				</div>
 			</div>
-				<input type="hidden" value="0" id="upid" name="upid" />
+			<div class="col-1"></div>
+
+			<div id = "Version" style="display: none;">
+				<label class="form-label col-1">
+					<span class="c-red">*</span>游戏版本：</label>
+				<div class="formControls col-1">
+					<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select VersionList"   name = "Version"    nullmsg="" >
+								 <option value="">请选择版本</option>
+								<volist name = "VersionList" id = "val">
+								 	<option value="{$val}">{$val}</option>
+								</volist>
+                            </select>
+						</span>
+					</div>
+				</div>
 				<div class="col-1"></div>
+			</div>
+
 		</div>
 
 		<div class="row cl  TypeTow" style="display: none;">
@@ -249,11 +267,17 @@
 
 		function  ChannelFun(my) {
 			var  playerid = document.getElementById('playerid');
+			var  Version  = document.getElementById('Version');
+			var  Selected = Version.getElementsByClassName('VersionList')[0];
 			var  MyValue  = my.value;
 			if(MyValue == 1){
                 playerid.style.display = "block";
+                Version.style.display = "none";
+                Selected.removeAttribute('datatype');
 			}else{
                 playerid.style.display = "none";
+                Version.style.display = "block";
+                Selected.setAttribute('datatype',"*1-16");
 			}
         }
 

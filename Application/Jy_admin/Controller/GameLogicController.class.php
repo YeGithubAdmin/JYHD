@@ -23,13 +23,19 @@ class GameLogicController extends ComController {
     }
     //添加
     public  function add(){
-        $obj = new \Common\Lib\func();
+        $Com = D('Com');
+        $obj =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $userInfo = $this->userInfo;
         if(IS_POST){
             $Type       =   I('param.Type','','trim');
             $Status     =   I('param.Status',1,'intval');
             $ServerID   =   I('param.ServerID','','trim');
             $IsGive     =   I('param.IsGive',1,'intval');
+            $Version     =   I('param.Version',1,'intval');
             $AdminID    =   $userInfo['id'];
             $AdminName  =   $userInfo['name'];
             $dataGameLogic = array(
@@ -37,6 +43,7 @@ class GameLogicController extends ComController {
                 'Status'    =>  $Status,
                 'AdminID'   =>  $AdminID,
                 'AdminName' =>  $AdminName,
+                'Version'   =>  $Version,
             );
 
             if($IsGive == 1){
@@ -44,7 +51,7 @@ class GameLogicController extends ComController {
             }
 
 
-            $Res = $this->OptServer($Type,$Status,$ServerID);
+            $Res = $this->OptServer($Type,$Status,$ServerID,$Version);
             if(!$Res){
                 $obj->showmessage('系统错误');
             }
@@ -57,11 +64,18 @@ class GameLogicController extends ComController {
                 $obj->showmessage('操作失败！');
             }
         }
+        $this->assign('Versionlist',$Versionlist);
         $this->display();
+
     }
     //修改
     public function  edit(){
-        $obj = new \Common\Lib\func();
+        $Com = D('Com');
+        $obj =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $Type       =   I('param.Type','','trim');
         $userInfo = $this->userInfo;
         if($Type == ''){
@@ -73,6 +87,7 @@ class GameLogicController extends ComController {
             'Status',
             'AdminID',
             'AdminName',
+            'Version',
         );
         $catGameLogic = M('conf_game_logic')
                         ->where('Type = "'.$Type.'"')
@@ -84,15 +99,17 @@ class GameLogicController extends ComController {
             $AdminID    =   $userInfo['id'];
             $AdminName  =   $userInfo['name'];
             $IsGive     =   I('param.IsGive',1,'intval');
+            $Version     =   I('param.Version','trim');
             $dataGameLogic = array(
                 'Status'    =>  $Status,
                 'AdminID'   =>  $AdminID,
                 'AdminName' =>  $AdminName,
+                'Version'   =>  $Version,
             );
             if($IsGive == 1){
                 $ServerID = array();
             }
-            $Res = $this->OptServer($Type,$Status,$ServerID);
+            $Res = $this->OptServer($Type,$Status,$ServerID,$Version);
             if(!$Res){
                 $obj->showmessage('系统错误');
             }
@@ -106,6 +123,7 @@ class GameLogicController extends ComController {
             }
         }
         $this->assign('info',$catGameLogic);
+        $this->assign('Versionlist',$Versionlist);
         $this->display();
     }
     //删除
@@ -128,7 +146,7 @@ class GameLogicController extends ComController {
             exit();
     }
     //服务器操作
-    public  function  OptServer($key,$value,$ServerID){
+    public  function  OptServer($key,$value,$ServerID,$Version){
         $obj = new \Common\Lib\func();
         $obj->ProtobufObj(array(
             'Protos/PBS_gm_fish_op.php',
@@ -145,7 +163,16 @@ class GameLogicController extends ComController {
         }
 
         $String = $GmFishOp->serializeToString();
-        $Respond =  $obj->ProtobufSend('protos.PBS_gm_fish_op',$String,1);
+
+        $Header = array(
+            'PBName:'.'protos.PBS_gm_fish_op',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+
+        $Respond =  $obj->ProtobufSend($Header,$String);
         if(strlen($Respond)==0){
             return false;
         }

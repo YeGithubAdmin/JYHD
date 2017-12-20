@@ -39,7 +39,7 @@
 			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
-				<div class="formControls col-3">
+				<div class="formControls col-1">
 					<div style="text-align:center;float:left">
 		        		<span class="select-box">
 							<select size="1" name="Channel" class="select">
@@ -51,8 +51,21 @@
 						</span>
 					</div>
 				</div>
-				<input type="hidden" value="0" id="upid" name="upid" />
-				<div class="col-4"></div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>游戏版本：</label>
+				<div class="formControls col-1">
+					<div style="text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1"  name="Version"  datatype="*"  class="select">
+								<option value="" >请选择游戏版本</option>
+								<volist name = "Versionlist" id = "val">
+									<option value="{$val}">{$val}</option>
+								</volist>
+						    </select>
+						</span>
+					</div>
+				</div>
+				<div class="col-1"></div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>是否定时发送：</label>
@@ -103,7 +116,7 @@
 				<div class="col-1"> </div>
 			</div>
 			<div class="row cl">
-				<label class="form-label  col-3"><span class="c-red">*</span>备注：</label>
+				<label class="form-label  col-3"><span class="c-red"></span>备注：</label>
 				<div class="formControls  col-6">
 					<textarea  style="width: 100%;" name="Remark"   rows="5" ></textarea>
 				</div>
