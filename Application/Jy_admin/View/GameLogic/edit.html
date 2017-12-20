@@ -44,6 +44,22 @@
 			</div>
 			<div class="col-1"> </div>
 		</div>
+		<div class="row cl" >
+			<label class="form-label col-3"><span class="c-red">*</span>游戏版本：</label>
+			<div class="formControls col-5">
+				<div style="width:45%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select"  datatype="*" name ="Version" >
+								<option value="">请选择游戏版本</option>
+								<volist name = "Versionlist" id="val">
+									<option <if condition = "$val eq $info['Version']">selected</if>  value="{$val}">{$val}</option>
+								</volist>
+							</select>
+						</span>
+				</div>
+			</div>
+			<div class="col-4"></div>
+		</div>
 		<div class="row cl"  >
 			<label class="form-label col-3"><span class="c-red"></span>服务器ID：</label>
 			<div class="formControls col-2">
@@ -79,7 +95,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-10 col-offset-3">
-				<button onClick="article_save_submit();" class="btn btn-primary radius"  type="button"><i class="Hui-iconfont">&#xe632;</i> 立即执行</button>
+				<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;立即执行&nbsp;&nbsp;">
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -119,81 +135,16 @@
 
         });
 
-        //
-        //        //保存草稿
-        //        function article_save() {
-        //			var Status = document.getElementById('StatusFun');
-        //			var FormMenuAdd = document.getElementById('form-menu-add');
-        //            Status.value = 1;
-        //            FormMenuAdd.submit();
-        //
-        //        }
         //立即执行
         function article_save_submit() {
-            // var Status = document.getElementById('StatusFun');
             var FormMenuAdd = document.getElementById('form-menu-add');
-            // Status.value = 2;
-
-
-
             FormMenuAdd.submit();
         }
 
-        function  TypeFun(my) {
-            var Myvalue = my.value;
-            var Channel  = document.getElementById('Channel');
-            if(Myvalue == 1){
-                Channel.style.display = "none";
-            }else if(Myvalue == 2){
-                Channel.style.display = "block";
-            }
-        }
 
-        //赠送 增加
-        function GiveInfoAdd() {
-            var  parent = document.getElementById('parent');
-            var  child  = document.getElementById('child');
-            var  GiveInfo = document.getElementsByClassName('GiveInfo');
-            var  del      = document.getElementById('del');
-            child.innerHTML +=  parent.innerHTML;
-            if(GiveInfo.length == 2){
-                del.style.display = "block";
-            }
-        }
-        //赠送 减少
-        function GiveInfoDel() {
-            var  child  = document.getElementById('child');
-            var  GiveInfo = document.getElementsByClassName('GiveInfo');
-            var  del      = document.getElementById('del');
-            var length	  = GiveInfo.length;
-            if(length>1){
-                child.removeChild(GiveInfo[length-1])
-            }
 
-            if(length == 2){
-                del.style.display = "none";
-            }
-        }
-        //赠送
-        function GiveInfoFun(my) {
-            var Index 		= my.selectedIndex;         						//索引
-            var Value 		= my.options[Index].value;   						//选择中值
-            var operation	= document.getElementById('operation');				//操作
-            var GiveInfo	= document.getElementsByClassName('GiveInfo');		//赠送
 
-            if(Value == 1 ){
-                operation.style.display = "none";
-                for(i = 0 ;i<GiveInfo.length;i++){
-                    GiveInfo[i].style.display = "none";
-                }
 
-            }else{
-                operation.style.display = "block";
-                for(i = 0 ;i<GiveInfo.length;i++){
-                    GiveInfo[i].style.display = "block";
-                }
-            }
-        }
 
 	</script>
 </literal>

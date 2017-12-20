@@ -15,18 +15,18 @@ use Think\Controller;
 class SendEmailController extends ComController {
     public function index(){
         //查询物品
+        $Com = D('Com');
+        $VersionList = $Com->GetVersionList();
+        if(!$VersionList){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $catPropListField = array(
             'Name',
             'Code',
         );
-
-
-
         $catPropList = M('jy_prop_list')
                        ->field($catPropListField)
                        ->select();
-
-
         //渠道
         $catChannelField = array(
             'name',
@@ -37,16 +37,16 @@ class SendEmailController extends ComController {
             ->where('channel = 2 and isdel = 1')
             ->field($catChannelField)
             ->select();
-
-
-
         $this->assign('catChannel',$catChannel);
         $this->assign('PropList',$catPropList);
+        $this->assign('VersionList',$VersionList);
         $this->display('index');
     }
 
     public  function  send(){
-        $obj = new  \Common\Lib\func();
+
+        $Com = D('Com');
+        $obj = $Com->ObjFun;
         $msgArr = array(
             2001=>'更新成功！',
             3002=>'与游戏服务器断开，请稍后再试！',
@@ -78,7 +78,6 @@ class SendEmailController extends ComController {
             21=>"账号密码不匹配",
         );
         $result = 2001;
-
             $Type = I('param.Type','','intval');
             if(empty($Type)){
                 $result = 4001;
@@ -100,7 +99,8 @@ class SendEmailController extends ComController {
             $CardNum  = I('param.CardNum','','trim');
             //卡密
             $CardPwd  = I('param.CardPwd','','trim');
-
+            //版本号
+            $Version  = I('param.Version','','trim');
             //是否添加道具
             $IsGive  = I('param.IsGive',1,'intval');
             //渠道或个人
@@ -127,7 +127,6 @@ class SendEmailController extends ComController {
                 'PB_Item.php',
             ));
             //实话对象
-
             if($Channel == 1){
                 $UsrData        =   new  PBS_UsrDataOprater();
                 $UsrDataReturn  =   new  PBS_UsrDataOpraterReturn();
@@ -186,7 +185,17 @@ class SendEmailController extends ComController {
                 //序列化
                 $UsrDataString = $UsrData->serializeToString();
                 //发送请求
-                $Respond =  $obj->ProtobufSend('protos.PBS_UsrDataOprater',$UsrDataString,$playerid);
+                $Version =  $Com->CatGameVer;
+
+
+                $Header = array(
+                    'PBName:'.'protos.PBS_UsrDataOprater',
+                    'PBSize:'.strlen($UsrDataString),
+                    'UID:'.$playerid,
+                    'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+                    'Version:'.$Version,
+                );
+                $Respond =  $obj->ProtobufSend($Header,$UsrDataString);
                 if($Respond  == 504){
                     $result = 3003;
                     goto response;
@@ -218,7 +227,17 @@ class SendEmailController extends ComController {
                 }
                 $PBS_SendEmail2All->setSendEmail($PB_Email);
                 $String = $PBS_SendEmail2All->serializeToString();
-                $Respond =  $obj->ProtobufSend('protos.PBS_SendEmail2All',$String,1);
+
+
+                $Header = array(
+                    'PBName:'.'protos.PBS_SendEmail2All',
+                    'PBSize:'.strlen($String),
+                    'UID:1',
+                    'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+                    'Version:'.$Version,
+                );
+
+                $Respond =  $obj->ProtobufSend($Header,$String);
                 if(strlen($Respond)==0){
                     $result = 3003;
                     goto response;

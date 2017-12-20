@@ -14,7 +14,8 @@ class HorseRaceLampController extends Controller {
             'b.account as Channel',
             'a.Content',
             'a.Status',
-            'a.Id'
+            'a.Id',
+            'a.Version',
         );
         $CatHorseRaceLamp = M('jy_horse_race_lamp as a')
                              ->join('jy_admin_users as b on b.id = a.Channel and b.Isdel = 1','left')
@@ -49,7 +50,15 @@ class HorseRaceLampController extends Controller {
             }
             $SysBroadcast->setPhpBc($PhpBroadcast);
             $String = $SysBroadcast->serializeToString();
-            $Respond =  $ObjFun->ProtobufSend('protos.PBS_SysBroadcast',$String,1);
+
+            $Header = array(
+                'PBName:'.'protos.PBS_SysBroadcast',
+                'PBSize:'.strlen($String),
+                'UID:1',
+                'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+                'Version:'.$v['Version'],
+            );
+            $Respond =  $ObjFun->ProtobufSend($Header,$String);
             if(strlen($Respond)==0){
                 return false;
             }

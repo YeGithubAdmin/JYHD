@@ -22,6 +22,12 @@ class ComModel extends Model{
    *  查看游戏游戏版本号
    * @param  int  $playerid 用户ID
    */
+   public $ObjFun;
+
+   public function __construct(){
+      $this->ObjFun = new \Common\Lib\func();
+   }
+
    public function CatGameVer($playerid){
         $field = array(
             'game_ver'
@@ -34,6 +40,26 @@ class ComModel extends Model{
             return false;
         }
         return $CatData['game_ver'];
+   }
+   /***
+   * 获取版本信息
+   */
+   public function  GetVersionList($Server = ''){
+       if(empty($Server)){
+           $Url = SERVER_PROTO.'/server_info';
+       }else{
+           $Url = $Server.'/server_info';
+       }
+       $VersionList =  $this->ObjFun->curl($Url);
+       if($VersionList == -2){
+           return false;
+       }
+       $VersionList = json_decode($VersionList,true);
+       $info = array();
+       foreach ($VersionList as $k=>$v){
+           $info[] = $v['Version'];
+       }
+       return $info;
    }
 
 }

@@ -61,7 +61,13 @@ class HorseRaceLampController extends ComController {
     }
     //添加
     public function  add(){
-        $ObjFun = new \Common\Lib\func();
+
+        $Com = D('Com');
+        $ObjFun =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $catChannelField = array(
             'name',
             'account',
@@ -72,13 +78,14 @@ class HorseRaceLampController extends ComController {
             ->field($catChannelField)
             ->select();
         if(IS_POST){
-            $Status = I('param.Status',1,'intval');
-            $Content = I('param.Content','','trim');
-            $Timing  = I('param.Timing',1,'intval');
-            $Btime  = I('param.Btime','','trim');
-            $Sort  = I('param.Sort',0,'intval');
+            $Status   = I('param.Status',1,'intval');
+            $Content  = I('param.Content','','trim');
+            $Timing   = I('param.Timing',1,'intval');
+            $Btime    = I('param.Btime','','trim');
+            $Sort     = I('param.Sort',0,'intval');
             $Channel  = I('param.Channel',0,'intval');
-            $Remark  = I('param.Remark','','trim');
+            $Remark   = I('param.Remark','','trim');
+            $Version  = I('param.Version','','trim');
             $dataGameNotice = array(
                 'Content' =>    $Content,
                 'Status'  =>    $Status,
@@ -86,8 +93,8 @@ class HorseRaceLampController extends ComController {
                 'Sort'   =>    $Sort,
                 'Channel' =>    $Channel,
                 'Remark'  =>    $Remark,
+                'Version'  =>    $Version,
             );
-
             if($Timing == 2){
                 $dataGameNotice['Btime'] = $Btime;
             }
@@ -97,7 +104,7 @@ class HorseRaceLampController extends ComController {
                     ->where('id = '.$Channel)
                     ->field('account')
                     ->find();
-                $SendProtoc = $this->SendProtoc($Content,$ChannelString['account']);
+                $SendProtoc = $this->SendProtoc($Content,$ChannelString['account'],$Version);
                 if(!$SendProtoc){
                     $ObjFun->showmessage('系统');
                 }
@@ -111,12 +118,18 @@ class HorseRaceLampController extends ComController {
             }
         }
         $this->assign('catChannel',$catChannel);
+        $this->assign('Versionlist',$Versionlist);
         $this->display();
 
     }
     //修改
     public function edit(){
-        $ObjFun = new \Common\Lib\func();
+        $Com = D('Com');
+        $ObjFun =$Com->ObjFun ;
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $Id = I('param.Id',0,'intval');
         $catChannelField = array(
             'name',
@@ -139,22 +152,24 @@ class HorseRaceLampController extends ComController {
             'Btime',
             'Sort',
             'Remark',
+            'Version',
         );
         $catGameNotice = M('jy_horse_race_lamp')
                          ->field($GameNoticeField)
                          ->where('Id = '.$Id)
                          ->find();
         if(IS_POST){
-            $Status = I('param.Status',1,'intval');
-            $Content = I('param.Content','','trim');
-            $Timing  = I('param.Timing',1,'intval');
-            $Btime  = I('param.Btime','','trim');
-            $Sort  = I('param.Sort',0,'intval');
+            $Status   = I('param.Status',1,'intval');
+            $Content  = I('param.Content','','trim');
+            $Timing   = I('param.Timing',1,'intval');
+            $Btime    = I('param.Btime','','trim');
+            $Sort     = I('param.Sort',0,'intval');
             $Channel  = I('param.Channel',0,'intval');
-            $Remark  = I('param.Remark','','trim');
+            $Remark   = I('param.Remark','','trim');
+            $Version  = I('param.Version','','trim');
             if($Status == 2){
                     $ChannelString = M('jy_admin_users')->where('id = '.$Channel)->field('account')->find();
-                   $SendProtoc = $this->SendProtoc($Content,$ChannelString['account']);
+                   $SendProtoc = $this->SendProtoc($Content,$ChannelString['account'],$Version);
                    if(!$SendProtoc){
                        $ObjFun->showmessage('系统');
                    }
@@ -166,6 +181,7 @@ class HorseRaceLampController extends ComController {
                 'Sort'   =>    $Sort,
                 'Channel' =>    $Channel,
                 'Remark'  =>    $Remark,
+                'Version'  =>    $Version,
             );
             if($Timing == 2){
                 $dataGameNotice['Btime'] = $Btime;
@@ -183,13 +199,13 @@ class HorseRaceLampController extends ComController {
         }
         $this->assign('info',$catGameNotice);
         $this->assign('catChannel',$catChannel);
+        $this->assign('Versionlist',$Versionlist);
         $this->display();
     }
     //发送
     public function Send(){
-        $Id   = I('param.Id',0,'intval');
-        $type = I('param.Type',1,'intval');
-
+        $Id      = I('param.Id',0,'intval');
+        $type    = I('param.Type',1,'intval');
         $Code = 1;
         if($Id<=0){
             $Code = 0;
@@ -200,6 +216,7 @@ class HorseRaceLampController extends ComController {
             'b.account as Channel',
             'a.Content',
             'a.Status',
+            'a.Version',
         );
         $catGameNotice = M('jy_horse_race_lamp as a')
                         ->join('jy_admin_users as b on a.Channel =  b.id and b.Isdel = 1','left')
@@ -210,7 +227,8 @@ class HorseRaceLampController extends ComController {
             $Code = 0;
             goto end;
         }
-        $SendProtoc = $this->SendProtoc($catGameNotice['Content'],$catGameNotice['Channel']);
+
+        $SendProtoc = $this->SendProtoc($catGameNotice['Content'],$catGameNotice['Channel'],$catGameNotice['Version']);
         if(!$SendProtoc){
             $Code = 0;
             goto end;
@@ -252,7 +270,7 @@ class HorseRaceLampController extends ComController {
         exit();
     }
 
-    public function  SendProtoc($contet,$Channel){
+    public function  SendProtoc($contet,$Channel,$Version){
         $ObjFun = new \Common\Lib\func();
         //已入protobuf 类
         $ObjFun->ProtobufObj(array(
@@ -269,10 +287,16 @@ class HorseRaceLampController extends ComController {
         }else{
             $SysBroadcast->setChannel('global');
         }
-
         $SysBroadcast->setPhpBc($PhpBroadcast);
         $String = $SysBroadcast->serializeToString();
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_SysBroadcast',$String,1);
+        $Header = array(
+            'PBName:'.'protos.PBS_SysBroadcast',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $Respond =  $ObjFun->ProtobufSend($Header,$String);
         if(strlen($Respond)==0){
            return false;
         }
