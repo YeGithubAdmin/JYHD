@@ -84,9 +84,10 @@
 					<th width="60">物品</th>
 					<th width="30">渔劵</th>
 					<th width="60">状态</th>
-					<th width="60">申请时间</th>
-					<th width="60">更新时间</th>
-					<th width="30">操作</th>
+					<th width="30">申请时间</th>
+					<th width="30">操作时间</th>
+					<th width="30">操作人</th>
+					<th width="60">备注</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -102,22 +103,17 @@
 							class="<if condition ="$val['Status'] eq 1" >label label-primary radius
 						<elseif condition  = "$val['Status'] eq 2"/>label label-success  radius</td>
 						<elseif condition  = "$val['Status'] eq 3"/>label label-danger   radius</if>">
-					<if condition ="$val['Status'] eq 1" >兑换申请
+					<if condition ="$val['Status'] eq 1" >
+						<a title="编辑" href="javascript:;"  onclick="ToExamine('编辑','/jy_admin/UsersExchangeApplication/ToExamine/Id/{$val['Id']}')"  class="ml-5" style="text-decoration: none;color: #ffffff;">
+							兑换申请
+						</a>
 					<elseif condition  = "$val['Status'] eq 2"/>兑换成功</td>
 					<elseif condition  = "$val['Status'] eq 3"/>兑换失败</if></span></td>
 					<td>{$val['DateTime']}</td>
 					<td>{$val['UpTime']}</td>
-					<td class="td-manage">
-						<eq name = "val['Status']" value = "1">
-							<a title="编辑" href="javascript:;"
-							   onclick="ToExamine('编辑','/jy_admin/UsersExchangeApplication/ToExamine/Id/{$val['Id']}')"
-							   class="ml-5" style="text-decoration: none">
-							<i class="Hui-iconfont">&#xe60c;</i>
-							</a>
-						<else/>
-							已处理
-						</eq>
-					</td>
+					<td >{$val['UpName']}</td>
+					<td>{$val['Remark']}</td>
+
 				</tr>
 				</volist>
 			</tbody>
