@@ -217,7 +217,7 @@ class RewardController extends ComController {
             'Version:'.$DataInfo['version'],
         );
         //发送请求
-        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString,$playerid);
+        $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3003;
             goto response;
