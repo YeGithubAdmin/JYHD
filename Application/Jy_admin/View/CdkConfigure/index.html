@@ -27,7 +27,7 @@
 <body>
 	<nav class="breadcrumb">
 		<i class="Hui-iconfont">&#xe67f;</i> 游戏大厅 <span class="c-gray en">&gt;</span>
-		礼包配置 <span class="c-gray en">&gt;</span>CDK <a
+		CDK配置 <span class="c-gray en">&gt;</span>产出CDK <a
 			class="btn btn-success radius r mr-20"
 			style="line-height: 1.6em; margin-top: 3px"
 			href="javascript:location.replace(location.href);" title="刷新"><i
@@ -36,9 +36,9 @@
 	<div class="pd-20">
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"> <a href="javascript:;"
-				onclick="Add('添加等级','/jy_admin/CdkGoodsConfigure/add','','600')"
+				onclick="Add('添加等级','/jy_admin/CdkConfigure/add','','600')"
 				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
-					添加礼包</a>
+					添加配置</a>
 			</span>
 		</div>
 		<table
@@ -46,9 +46,10 @@
 			<thead>
 				<tr class="text-c">
 					<th width="30">活动名称</th>
-					<th width="30">商品编码</th>
-					<th width="30">是否已发布</th>
-					<th width="30">添加时间</th>
+					<th width="30">礼包编码</th>
+					<th width="30">长度</th>
+					<th width="30">产出量</th>
+					<th width="30">有效期</th>
 					<th width="80">备注</th>
 					<th width="30">操作人</th>
 					<th width="30">操作</th>
@@ -59,25 +60,13 @@
 					<tr class="text-c">
 						<td>{$val['Aname']}</td>
 						<td>{$val['Code']}</td>
-						<td class="td-status">
-							<span class="
-							<if condition ="$val['Status'] eq 2" >
-							label label-success radius
-							<else/>
-							label label-defaunt radius
-							</if>">
-							<if condition ="$val['Status'] eq 2">
-							是
-							<else/>
-							否
-						   </if>
-							</span>
-						</td>
+						<td>{$val['Lenth']}</td>
+						<td>{$val['Number']}</td>
 						<td>{$val['DateTime']}</td>
 						<td>{$val['Remark']}</td>
 						<td>{$val['UpName']}</td>
 						<td>
-							<a title="编辑" href="javascript:;" onclick="Edit('编辑','/jy_admin/CdkGoodsConfigure/edit/Id/{$val['Id']}')" class="ml-5" style="text-decoration:none">
+							<a title="编辑" href="javascript:;" onclick="Edit('编辑','/jy_admin/CdkConfigure/edit/Id/{$val['Id']}')" class="ml-5" style="text-decoration:none">
 								<i class="Hui-iconfont">&#xe6df;</i>
 							</a>
 						</td>
@@ -120,10 +109,10 @@ function Add(title,url){
     layer.full(index);
 }
 
-/*vip等级-删除*/
-function vipInfo_del(obj,id){
+/*删除*/
+function Del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
-		$.post('/jy_admin/CdkGoodsConfigure/del',{'level':id},function(msg){
+		$.post('/jy_admin/CdkConfigure/del',{'level':id},function(msg){
 			if(msg == 1){
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});

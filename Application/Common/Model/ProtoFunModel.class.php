@@ -1,0 +1,117 @@
+<?php
+namespace Common\Model;
+use Protos\OptSrc;
+use Protos\PBS_UsrDataOprater;
+use Protos\PBS_UsrDataOpraterReturn;
+use Protos\UsrDataOpt;
+use RedisProto\RPB_PlayerData;
+use Think\Model;
+class ProtoFunModel extends Model{
+    protected $autoCheckFields = false;
+    public $UsrDataOprater;
+    public $UsrDataOpraterReturn;
+    public $PlayerData;
+    public $EmailType;
+    public $Email;
+    public $OptSrc;
+    public $UsrDataOpt;
+    public $ErrorCode;
+    public $BuyGoods;
+    public $PB_ResourceChange;
+    public $OptReason;
+    public $PB_HallNotify;
+    public $PB_PlayerVip;
+    public $PB_Item;
+    public $ObjFun;
+    public $playerid;
+    public function __construct(){
+        $this->ObjFun = new \Common\Lib\func();
+        $this->ObjFun->ProtobufObj(
+            array(
+                'Protos/PBS_UsrDataOprater.php',
+                'Protos/PBS_UsrDataOpraterReturn.php',
+                'RedisProto/RPB_PlayerData.php',
+                'Protos/OptSrc.php',
+                'Protos/UsrDataOpt.php',
+                'OptReason.php',
+                'PB_PlayerVip.php',
+                'PB_HallNotify.php',
+                'RPB_PlayerNumerical.php',
+                'PB_Email.php',
+                'PB_Item.php',
+                'PB_ResourceChange.php',
+                'PB_ErrorCode.php',
+                'PB_BuyGoods.php',
+                'EmailType.php',
+            )
+        );
+        $this->UsrDataOprater           =   new PBS_UsrDataOprater();
+        $this->UsrDataOpraterReturn     =   new PBS_UsrDataOpraterReturn();
+        $this->PlayerData               =   new RPB_PlayerData();
+        $this->EmailType                =   new \EmailType();
+        $this->Email                    =   new \PB_Email();
+        $this->OptSrc                   =   new OptSrc();
+        $this->UsrDataOpt               =   new UsrDataOpt();
+        $this->ErrorCode                =   new \PB_ErrorCode();
+        $this->BuyGoods                 =   new \PB_BuyGoods();
+        $this->PB_ResourceChange        =   new \PB_ResourceChange();
+        $this->OptReason                =   new \OptReason();
+        $this->PB_HallNotify            =   new \PB_HallNotify();
+        $this->PB_PlayerVip             =   new \PB_PlayerVip();
+    }
+    //添加物品
+    public  function  UserGoodsAdd($Goods){
+        foreach ($Goods as $k=>$v){
+            switch ($v['Type']){
+                case 1:
+                    $this->PlayerData->setGold($v['Num']);
+                    break;
+                case 2:
+                    $this->PlayerData->setDiamond($v['Num']);
+                    break;
+                case 3:
+                    $Item = new \PB_Item();
+                    $Item->setId($v['GoodsCode']);
+                    $Item->setNum($v['Num']);
+                    $this->UsrDataOprater->appendItemOpt($Item);
+                    break;
+            }
+        }
+
+    }
+    //发送邮件
+    public function SendMail($param,$type,$Goods = array()){
+        $Email      = $this->Email;
+        $EmailType  = $this->EmailType;
+        if($type == 1){
+            $Email->setType($EmailType::EmailType_Sys);
+            foreach ($Goods as $k=>$v){
+                switch ($v['Type']){
+                    //金币
+                    case 1:
+                        $Email->setGold($v['Number']);
+                        break;
+                    //钻石
+                    case 2:
+                        $Email->setDiamond($v['Number']);
+                        break;
+                    //道具
+                    case 3:
+                        $PBS_ItemOpt  = new \PB_Item();
+                        $PBS_ItemOpt->setId($v['Code']);
+                        $PBS_ItemOpt->setNum($v['Number']);
+                        $Email->appendItems($PBS_ItemOpt);
+                        break;
+                }
+            }
+        }else if ($type == 2){
+            $Email->setCardPwd($param['CardPwd']);
+            $Email->setCardNum($param['CardNum']);
+            $Email->setType($EmailType::EmailType_Card);
+        }
+        $Email->setTitle($param['Title']);
+        $Email->setSender($param['Sender']);
+        $Email->setData($param['Data']);
+        $this->UsrDataOprater->setSendEmail($Email);
+    }
+}

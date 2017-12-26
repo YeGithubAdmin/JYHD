@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+		  type="text/css" />
+	<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+		  rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>修改配置</title>
+</head>
+<body>
+<div class="pd-20">
+	<form action="" method="post"  onsubmit=" return false" class="form form-horizontal" id="form-vipInfo-add">
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>活动名称：</label>
+			<div class="formControls col-2">
+				<input type="text" class="input-text" disabled = "true" value="{$info['Aname']}" placeholder=""
+					   name="Aname" datatype="*1-16" id = "Aname" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>礼包：</label>
+			<div class="formControls col-1">
+					<span class="select-box">
+						<select size="1"   disabled = "true" name="Code" id = "Code"  datatype="*"  class="select">
+							<option value="" >请选择礼包</option>
+							<volist name = "PackList" id = "val">
+								<option value="{$val['Code']}"   <if condition = "$info['Code'] eq $val['Code']">selected = "true"</if>   >{$val['Aname']}</option>
+							</volist>
+						</select>
+					</span>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>CDK长度：</label>
+			<div class="formControls col-2">
+				<input type="text" disabled = "true" class="input-text" value="{$info['Lenth']}" placeholder=""
+					   name="Lenth" datatype="*2-3" id ="Lenth"  nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red">*</span>产出数量：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" disabled = "true"  value="{$info['Number']}" placeholder=""
+					   name="Number" datatype="*" id ="Number" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>有效期：</label>
+			<div class="formControls col-1">
+				<input type="text" disabled = "true"   class="input-text Wdate" value="{$info['StartTime']}"  placeholder ="起始时间"  onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'EndTime\')||\'2080-10-01\'}'})</literal>" value="{$info['Number']}"
+					   id ="StartTime"  name="StartTime"   datatype="*" nullmsg="">
+			</div>
+			<div class="formControls col-1">
+				<input type="text" disabled = "true"  class="input-text Wdate" onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'StartTime\')}',maxDate:'2080-10-01'})</literal>" value="{$info['EndTime']}"
+					   id = "EndTime"  name="EndTime" placeholder ="截止时间"  datatype="*" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red"></span>备注：</label>
+			<div class="formControls col-5">
+				<textarea  disabled = "true"    name="Remark"  id ="Remark" style="width:100%" rows="7" cols="10" >{$info['Remark']}</textarea>
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row cl" >
+			<div class="col-1 col-offset-4">
+				<button class="btn btn-primary radius"  onclick="EditFun(this)"   id = "Edit";   type="button" name="submit" value="">修改配置</button>
+			</div>
+			<div class="col-1">
+				<input class="btn disabled radius"      IsSave = 2  id = "Save";   type="submit" name="submit" value="保存配置">
+			</div>
+			<div class="col-1" >
+				<input class="btn btn-primary radius"     id = "Produce"  CdkID = {$info['Id']}     type="submit" name="submit" value="生成CDKEY">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+
+<literal>
+	<script type="text/javascript">
+        $(function() {
+            $('.skin-minimal input').iCheck({
+                checkboxClass : 'icheckbox-blue',
+                radioClass : 'iradio-blue',
+                increaseArea : '20%'
+            });
+            $("#form-vipInfo-add").Validform({
+                tiptype : 2,
+                callback : function(form) {
+                    var Save	   = document.getElementById('Save');
+                    var IsSave     =Save.getAttribute('IsSave');
+                    if(IsSave == 1){
+                        var SaveDataRetrun = SaveData();
+                        Save.setAttribute('IsSave',2);
+
+                    }else if(IsSave == 2){
+                        ProduceData();
+                        Save.setAttribute('IsSave',2);
+                    }
+                }
+            });
+        });
+        //修改配置
+		function EditFun(my) {
+            var Aname  		= document.getElementById('Aname');
+            var Lenth  		= document.getElementById('Lenth');
+            var Code 		= document.getElementById('Code');
+            var Save		= document.getElementById('Save');
+            var StartTime 	= document.getElementById('StartTime');
+            var EndTime 	= document.getElementById('EndTime');
+            var Remark 		= document.getElementById('Remark');
+            var Number 		= document.getElementById('Number');
+            var Produce	    = document.getElementById('Produce');
+            Aname.removeAttribute('disabled');
+            Code.removeAttribute('disabled');
+            Lenth.removeAttribute('disabled');
+            Number.removeAttribute('disabled');
+            StartTime.removeAttribute('disabled');
+            EndTime.removeAttribute('disabled');
+            Remark.removeAttribute('disabled');
+            Save.className = "btn btn-primary radius";
+            Save.setAttribute('IsSave',1);
+            Produce.className = "btn disabled radius";
+        }
+
+        function SaveData() {
+            var Aname  		= document.getElementById('Aname').value;
+            var Lenth  		= document.getElementById('Lenth').value;
+            var Code 		= document.getElementById('Code').value;
+            var Save		= document.getElementById('Save');
+            var StartTime 	= document.getElementById('StartTime').value;
+            var EndTime 	= document.getElementById('EndTime').value;
+            var Remark 		= document.getElementById('Remark').value;
+            var Number 		= document.getElementById('Number').value;
+            var Produce	    = document.getElementById('Produce');
+            var Cid       = Produce.getAttribute('cdkid');
+            var Is = false;
+            $.ajax({
+                type: 'POST',
+                url: "/jy_admin/CdkConfigure/editAjax",
+                asysc:false,
+                data: {
+                    'Id':Cid,
+                    'Aname':Aname,
+                    'Lenth':Lenth,
+                    'Code':Code,
+                    'StartTime':StartTime,
+                    'EndTime':EndTime,
+                    'Remark':Remark,
+                    'Number':Number
+                },
+                success: function (msg) {
+                    console.log(msg);
+
+                    var IsJson = isJSON(msg);
+                    if(IsJson) {
+                        var obj = JSON.parse(msg);
+                        if(obj.result > 0){
+                            Produce.setAttribute('class','btn btn-primary radius');
+                            Save.setAttribute('class','btn disabled radius');
+                            Produce.setAttribute('CdkID',obj.result);
+                            Is = true;
+                            layer.msg('保存成功!',{icon:1,time:1000});
+                        }else{
+                            layer.msg('保存失败!',{icon:1,time:1000});
+                        }
+                    }else{
+                        layer.msg('登录时间超时请重新登录!',{icon:1,time:1000});
+                    }
+                }
+            });
+            return Is;
+        }
+        function ProduceData() {
+            var Aname  		= document.getElementById('Aname').value;
+            var Lenth  		= document.getElementById('Lenth').value;
+            var Code 		= document.getElementById('Code').value;
+            var StartTime 	= document.getElementById('StartTime').value;
+            var EndTime 	= document.getElementById('EndTime').value;
+            var Remark 		= document.getElementById('Remark').value;
+            var Number 		= document.getElementById('Number').value;
+            var Produce	   =  document.getElementById('Produce');
+            var Cid         = Produce.getAttribute('cdkid');
+            $.ajax({
+                type: 'POST',
+                url: "/jy_admin/CdkConfigure/GenerateCDK",
+                data: {
+                    'Aname':Aname,
+                    'Lenth':Lenth,
+                    'Code':Code,
+                    'StartTime':StartTime,
+                    'EndTime':EndTime,
+                    'Remark':Remark,
+                    'Number':Number,
+                    'Cid':Cid,
+                },
+                success: function (msg) {
+                    var IsJson = isJSON(msg);
+                    if(IsJson) {
+                        var obj = JSON.parse(msg);
+                        if(obj.result > 0){
+                            layer.msg('生成完毕!',{icon:1,time:1000});
+                        }else{
+                            layer.msg('生成失败!',{icon:1,time:1000});
+                        }
+                    }else{
+                        layer.msg('登录时间超时请重新登录!',{icon:1,time:1000});
+                    }
+                }
+            });
+        }
+        function isJSON(str) {
+            if (typeof str == 'string') {
+                try {
+                    JSON.parse(str);
+                    return true;
+                } catch(e) {
+                    console.log(e);
+                    return false;
+                }
+            }
+            console.log('It is not a string!')
+        }
+	</script>
+</literal>
+</body>
+</html>

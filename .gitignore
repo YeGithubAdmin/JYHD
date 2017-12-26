@@ -4,6 +4,7 @@ Uploads
 Runtime
 #svn
 .svn
+.svn/wc.db
 #.idea
 .idea
 
