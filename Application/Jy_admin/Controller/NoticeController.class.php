@@ -13,6 +13,8 @@ use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
 use RedisProto\RPB_PlayerData;
 use Think\Controller;
+use Think\Model;
+
 class NoticeController extends ComController {
     public function index(){
         $page = $this->page;
@@ -60,12 +62,23 @@ class NoticeController extends ComController {
     }
     //添加
     public function  add(){
-        $ObjFun = new \Common\Lib\func();
+
+        $ProtoFun =  D('ProtoFun');
+        $Com = D('Com');
+        $ObjFun = $ProtoFun->ObjFun;
+
+        $Model = new  Model();
+
         $catChannelField = array(
             'name',
             'account',
             'id',
         );
+
+        $Versionlist = $Com->GetVersionList();
+        if(!$Versionlist){
+            $Com->ObjFun->showmessage('服务器出错！');
+        }
         $catChannel = M('jy_admin_users')
             ->where('channel = 2 and isdel = 1')
             ->field($catChannelField)
@@ -83,6 +96,7 @@ class NoticeController extends ComController {
             $Channel        = I('param.Channel',0,'intval');
             $Btime          = I('param.Btime','','trim');
             $Remark         = I('param.Remark','','trim');
+            $Version        = I('param.Version','','trim');
             $dataGameNotice = array(
                 'Content'       =>    $Content,
                 'SendEmail'     =>    $SendEmail,
@@ -96,30 +110,46 @@ class NoticeController extends ComController {
                 'Title'         =>    $Title,
                 'Remark'        =>    $Remark,
                 'Sort'          =>    $Sort,
+                'Version'       =>    $Version,
             );
+
+            $ChannelString = M('jy_admin_users')->where('id = '.$Channel)->field('account')->find();
+            if(!empty($ChannelString)){
+                $ChannelString = $ChannelString['account'];
+            }else{
+                $ChannelString = 'global';
+            }
             //发送邮件
             if($SendEmail == 2){
-                $ChannelString = M('jy_admin_users')->where('id = '.$Channel)->field('account')->find();
-                $sendMail  =  $this->sendMail($EmailContent,$ChannelString['account'],$TitleContent);
+                $sendMail  =  $this->sendMail($EmailContent,$ChannelString,$TitleContent,$ProtoFun,$Version);
                 if(!$sendMail){
                     $ObjFun->showmessage('发送邮件异常');
                 }
             }
-            $addGameNotice = M('jy_game_notice')
+            $Model->startTrans();
+            $addGameNotice =$Model->table('jy_game_notice')
                 ->add($dataGameNotice);
+
             if($addGameNotice){
+                $Model->commit();
                 $ObjFun->showmessage('添加成功',"/jy_admin/notice/index");
             }else{
+                $Model->rollback();
                 $ObjFun->showmessage('添加失败');
             }
         }
         $this->assign('catChannel',$catChannel);
+        $this->assign('Versionlist',$Versionlist);
         $this->display();
 
     }
     //修改
     public function edit(){
-        $ObjFun = new \Common\Lib\func();
+        $ProtoFun =  D('ProtoFun');
+        $Com = D('Com');
+        $ObjFun = $ProtoFun->ObjFun;
+        $Versionlist = $Com->GetVersionList();
+        $Model = new  Model();
         $Id = I('param.Id',0,'intval');
         $catChannelField = array(
             'name',
@@ -147,6 +177,7 @@ class NoticeController extends ComController {
             'Btime',
             'Title',
             'Remark',
+            'Version',
         );
         $catGameNotice = M('jy_game_notice')
                          ->field($GameNoticeField)
@@ -165,6 +196,7 @@ class NoticeController extends ComController {
             $Channel        = I('param.Channel',0,'intval');
             $Btime          = I('param.Btime','','trim');
             $Remark         = I('param.Remark','','trim');
+            $Version        = I('param.Version','','trim');
             $dataGameNotice = array(
                 'SendEmail' => $SendEmail,
                 'Content'   =>    $Content,
@@ -178,25 +210,37 @@ class NoticeController extends ComController {
                 'Title'     =>    $Title,
                 'Remark'    =>    $Remark,
                 'Sort'      =>    $Sort,
+                'Version'   =>    $Version,
             );
+
+            $ChannelString = M('jy_admin_users')->where('id = '.$Channel)->field('account')->find();
+            if(!empty($ChannelString)){
+                $ChannelString = $ChannelString['account'];
+            }else{
+                $ChannelString = 'global';
+            }
+
+
             //发送邮件
             if($SendEmail == 2){
-                $ChannelString = M('jy_admin_users')->where('id = '.$Channel)->field('account')->find();
-                $sendMail  =  $this->sendMail($EmailContent,$ChannelString['account'],$TitleContent);
+                $sendMail  =  $this->sendMail($EmailContent,$ChannelString,$TitleContent,$ProtoFun,$Version);
                 if(!$sendMail){
                     $ObjFun->showmessage('发送邮件异常');
                 }
             }
-
-            $UpGameNotice = M('jy_game_notice')
+            $Model->startTrans();
+            $UpGameNotice = $Model->table('jy_game_notice')
                 ->where('Id = '.$Id)
                 ->save($dataGameNotice);
-            if($UpGameNotice !== false ){
+            if($UpGameNotice !== false){
+                $Model->commit();
                 $ObjFun->showmessage('修改成功',"/jy_admin/notice/index");
             }else{
+                $Model->rollback();
                 $ObjFun->showmessage('修改失败');
             }
         }
+        $this->assign('Versionlist',$Versionlist);
         $this->assign('catChannel',$catChannel);
         $this->assign('info',$catGameNotice);
         $this->display();
@@ -286,18 +330,12 @@ class NoticeController extends ComController {
     }
 
     //发送邮件
-    public function  sendMail($content,$channel,$title){
-        $ObjFun = new \Common\Lib\func();
+    public function  sendMail($content,$channel,$title,$ProtoFun,$Version){
+        $ObjFun = $ProtoFun->ObjFun;
         //已入protobuf 类
-        $ObjFun->ProtobufObj(array(
-            'Protos/PBS_SendEmail2All.php',
-            'Protos/PBS_SendEmail2AllReturn.php',
-            'PB_Email.php',
-            'EmailType.php',
-        ));
-        $PB_Email                   =   new \PB_Email();
-        $PBS_SendEmail2All          =   new  PBS_SendEmail2All();
-        $PBS_SendEmail2AllReturn    =   new  PBS_SendEmail2AllReturn();
+        $PB_Email                   =   $ProtoFun->Email;
+        $PBS_SendEmail2All          =   $ProtoFun->PBS_SendEmail2All;
+        $PBS_SendEmail2AllReturn    =   $ProtoFun->PBS_SendEmail2AllReturn;
         $EmailType                  =   new  \EmailType();
         $PB_Email->setType($EmailType::EmailType_Sys);
         $PB_Email->setTitle($title);
@@ -308,12 +346,16 @@ class NoticeController extends ComController {
         }
         $PB_Email->setData($content);
         $PBS_SendEmail2All->setSendEmail($PB_Email);
-
-
-
-
         $String = $PBS_SendEmail2All->serializeToString();
-        $Respond =  $ObjFun->ProtobufSend('protos.PBS_SendEmail2All',$String,1);
+
+        $Header = array(
+            'PBName:'.'protos.PBS_SendEmail2All',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $Respond =  $ObjFun->ProtobufSend($Header,$String);
         if(strlen($Respond)==0){
             return false;
         }

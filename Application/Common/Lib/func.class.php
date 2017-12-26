@@ -79,7 +79,7 @@ class func{
  * @param string $url_forward		跳转地址
  * @param number $ms				等待时间
  */
-   public function showmessage($info='参数错误', $url_forward='goback', $ms=3){
+   public function showmessage($info='参数错误', $url_forward='goback'){
         echo
         '<div class="layui-layer-shade" id="layui-layer-shade1" times="1" style="z-index:19891014; background-color:#000; opacity:0.3; filter:alpha(opacity=30);"></div>
          <div class="layui-layer layui-anim layui-layer-dialog " id="layui-layer1" type="dialog" times="1" showtime="0" contype="string" style="z-index: 19891015; top: 40%; left: 40%;">
@@ -90,20 +90,24 @@ class func{
          </div>
          </div>';
         if($url_forward != "goback" ){
-            echo "<script>      
+
+                echo "<script>      
         function showmessage() {
-            var obj = window.parent.document;obj.location.reload()
+            var obj = window.parent.document;
+            obj.location.reload();
             var index = parent.layer.getFrameIndex(window.name);
             parent.$('.btn-refresh').click();
             parent.layer.close(index);
             }
           </script>";
         }else{
-            echo "<script>      
+                echo "<script>      
                 function showmessage() {
                    window.history.back();
                   }
-          </script>";
+                </script>";
+
+
         }
 
     }

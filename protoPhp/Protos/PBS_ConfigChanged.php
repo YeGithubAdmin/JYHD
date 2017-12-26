@@ -1,19 +1,27 @@
 <?php
 /**
- * Auto generated from PB_notify.proto at 2017-12-26 10:10:52
+ * Auto generated from PB_gm_tool.proto at 2017-12-26 10:53:15
+ *
+ * protos package
  */
 
-namespace {
+namespace Protos {
 /**
- * PB_ConfigUpdate message
+ * PBS_ConfigChanged message
  */
-class PB_ConfigUpdate extends \ProtobufMessage
+class PBS_ConfigChanged extends \ProtobufMessage
 {
     /* Field index constants */
-    const CFG_TYPE = 1;
+    const CHANNEL = 1;
+    const CFG_TYPE = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
+        self::CHANNEL => array(
+            'name' => 'channel',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
         self::CFG_TYPE => array(
             'name' => 'cfg_type',
             'required' => false,
@@ -36,6 +44,7 @@ class PB_ConfigUpdate extends \ProtobufMessage
      */
     public function reset()
     {
+        $this->values[self::CHANNEL] = null;
         $this->values[self::CFG_TYPE] = null;
     }
 
@@ -47,6 +56,29 @@ class PB_ConfigUpdate extends \ProtobufMessage
     public function fields()
     {
         return self::$fields;
+    }
+
+    /**
+     * Sets value of 'channel' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setChannel($value)
+    {
+        return $this->set(self::CHANNEL, $value);
+    }
+
+    /**
+     * Returns value of 'channel' property
+     *
+     * @return string
+     */
+    public function getChannel()
+    {
+        $value = $this->get(self::CHANNEL);
+        return $value === null ? (string)$value : $value;
     }
 
     /**

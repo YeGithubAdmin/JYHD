@@ -1,6 +1,10 @@
 <?php
 namespace Common\Model;
 use Protos\OptSrc;
+use Protos\PBS_ConfigChanged;
+use Protos\PBS_ConfigChangedReturn;
+use Protos\PBS_SendEmail2All;
+use Protos\PBS_SendEmail2AllReturn;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
@@ -24,6 +28,10 @@ class ProtoFunModel extends Model{
     public $PB_Item;
     public $ObjFun;
     public $playerid;
+    public $PBS_ConfigChanged;
+    public $PBS_ConfigChangedReturn;
+    public $PBS_SendEmail2All;
+    public $PBS_SendEmail2AllReturn;
     public function __construct(){
         $this->ObjFun = new \Common\Lib\func();
         $this->ObjFun->ProtobufObj(
@@ -43,6 +51,10 @@ class ProtoFunModel extends Model{
                 'PB_ErrorCode.php',
                 'PB_BuyGoods.php',
                 'EmailType.php',
+                'Protos/PBS_ConfigChanged.php',
+                'Protos/PBS_ConfigChangedReturn.php',
+                'Protos/PBS_SendEmail2All.php',
+                'Protos/PBS_SendEmail2AllReturn.php'
             )
         );
         $this->UsrDataOprater           =   new PBS_UsrDataOprater();
@@ -58,6 +70,11 @@ class ProtoFunModel extends Model{
         $this->OptReason                =   new \OptReason();
         $this->PB_HallNotify            =   new \PB_HallNotify();
         $this->PB_PlayerVip             =   new \PB_PlayerVip();
+        $this->PBS_ConfigChanged        =   new PBS_ConfigChanged();
+        $this->PBS_ConfigChangedReturn  =   new PBS_ConfigChangedReturn();
+        $this->PBS_SendEmail2All        =   new PBS_SendEmail2All();
+        $this->PBS_SendEmail2AllReturn  =   new PBS_SendEmail2AllReturn();
+
     }
     //添加物品
     public  function  UserGoodsAdd($Goods){
@@ -114,4 +131,36 @@ class ProtoFunModel extends Model{
         $Email->setData($param['Data']);
         $this->UsrDataOprater->setSendEmail($Email);
     }
+
+    /*后台推*/
+    public function   PushDown($Param,$Version,$Chanel,$Debug =false){
+        $PBS_ConfigChanged          = $this->PBS_ConfigChanged;
+        $PBS_ConfigChangedReturn    = $this->PBS_ConfigChangedReturn;
+        $PBS_ConfigChanged->setChannel($Chanel);
+        $PBS_ConfigChanged->setCfgType($Param);
+        if($Debug){
+            $PBS_ConfigChanged->dump();
+        }
+        $String = $PBS_ConfigChanged->serializeToString();
+        $Header = array(
+            'PBName:'.'protos.PBS_ConfigChanged',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $Respond  = $this->ObjFun->ProtobufSend($Header,$String);
+        if($Respond == 504){
+            return false;
+        }
+        $PBS_ConfigChangedReturn->parseFromString($Respond);
+        $ReplyCode = $PBS_ConfigChangedReturn->getCode();
+
+        if($ReplyCode != 1){
+            return false;
+        }
+        return true;
+    }
+
+
 }

@@ -176,3 +176,15 @@ message PBS_ThirdPartyLoginReturn
 {
 	required PB_ErrorCode code 		= 1;
 }
+
+// 配置更新
+message PBS_ConfigChanged
+{
+	optional string channel 		= 1;
+	optional string cfg_type 		= 2;
+}
+
+message PBS_ConfigChangedReturn
+{
+	required PB_ErrorCode code 		= 1;
+}

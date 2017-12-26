@@ -57,11 +57,6 @@ message PB_DrawDataUpdate
 	repeated PB_DrawData datas = 1;
 }
 
-message PB_ConfigUpdate
-{
-	optional string cfg_type = 1;
-}
-
 message PB_HallNotify 
 {
 	optional PB_Bankruptcy 		bk_notify 		= 2;	// 破产通知
@@ -78,5 +73,5 @@ message PB_HallNotify
 	optional PB_DrawDataUpdate 	draw_notify 	= 13;	// 抽奖通知
 	optional PB_ResourceChange  res_changed 	= 14;	// 资源改变	由客户端主动刷新本地数据
 	optional PB_AttributeChange attr_change 	= 15;	// 属性改变	由客户端主动刷新本地数据
-	optional PB_ConfigUpdate	cfg_update		= 16;	// 静态配置更改
+	optional string				cfg_changed		= 16;	// 配置更改
 };

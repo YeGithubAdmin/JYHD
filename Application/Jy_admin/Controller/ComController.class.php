@@ -31,6 +31,7 @@ class ComController extends Controller {
                'Loginsignout'
            );
 
+
             $response = in_array($addr,$Controller);
             $lowerAdmingroup = array();
             $lowerAdminUser = array();
@@ -38,7 +39,6 @@ class ComController extends Controller {
                header('Location:/jy_admin/login/index');
                die;
            }elseif(!$response){
-
                //解密cookie
                 $AesKey = C('AesKey');
                 $obj = new \Common\Lib\func();
@@ -55,9 +55,10 @@ class ComController extends Controller {
                 $num  = I('param.num','','trim');
                 $this->page  = !empty($page) ?  $page-1 : C('ADMIN_PAGE');
                 $this->num   = !empty($num)  ?  $num  : C('ADMIN_NUM');
-                $adminGroup = M('jyhd.jy_admin_group')
+                $adminGroup = M('jy_admin_group')
                    ->field('id,upid,addId')
                    ->select();
+
                 $lowerAdmingroup = array();
                 $lowerAdminUser  = array();
                if($userInfo['default'] == 1){
@@ -69,6 +70,9 @@ class ComController extends Controller {
                    $adminUser = M('jy_admin_users')
                                 ->field('id,admingroup')
                                 ->select();
+
+
+
                    foreach ($adminUser as $k=>$v){
                        if(in_array($v['admingroup'],$lowerAdmingroup)){
                            $lowerAdminUser[] = $v['id'];
@@ -80,7 +84,6 @@ class ComController extends Controller {
                    $userInfo['del']   = 2;
                    $userInfo['edit']  = 2;
                }
-
 
                $this->userInfo        = $userInfo;
                $this->lowerAdmingroup = $lowerAdmingroup;

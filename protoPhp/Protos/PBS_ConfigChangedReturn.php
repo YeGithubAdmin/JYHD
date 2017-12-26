@@ -7,9 +7,9 @@
 
 namespace Protos {
 /**
- * PBS_SysBroadcastReturn message
+ * PBS_ConfigChangedReturn message
  */
-class PBS_SysBroadcastReturn extends \ProtobufMessage
+class PBS_ConfigChangedReturn extends \ProtobufMessage
 {
     /* Field index constants */
     const CODE = 1;

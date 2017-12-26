@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_notify.proto at 2017-12-26 10:10:52
+ * Auto generated from PB_notify.proto at 2017-12-26 10:53:15
  */
 
 namespace {
@@ -24,7 +24,7 @@ class PB_HallNotify extends \ProtobufMessage
     const DRAW_NOTIFY = 13;
     const RES_CHANGED = 14;
     const ATTR_CHANGE = 15;
-    const CFG_UPDATE = 16;
+    const CFG_CHANGED = 16;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -98,10 +98,10 @@ class PB_HallNotify extends \ProtobufMessage
             'required' => false,
             'type' => '\PB_AttributeChange'
         ),
-        self::CFG_UPDATE => array(
-            'name' => 'cfg_update',
+        self::CFG_CHANGED => array(
+            'name' => 'cfg_changed',
             'required' => false,
-            'type' => '\PB_ConfigUpdate'
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
     );
 
@@ -134,7 +134,7 @@ class PB_HallNotify extends \ProtobufMessage
         $this->values[self::DRAW_NOTIFY] = null;
         $this->values[self::RES_CHANGED] = null;
         $this->values[self::ATTR_CHANGE] = null;
-        $this->values[self::CFG_UPDATE] = null;
+        $this->values[self::CFG_CHANGED] = null;
     }
 
     /**
@@ -456,25 +456,26 @@ class PB_HallNotify extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'cfg_update' property
+     * Sets value of 'cfg_changed' property
      *
-     * @param \PB_ConfigUpdate $value Property value
+     * @param string $value Property value
      *
      * @return null
      */
-    public function setCfgUpdate(\PB_ConfigUpdate $value=null)
+    public function setCfgChanged($value)
     {
-        return $this->set(self::CFG_UPDATE, $value);
+        return $this->set(self::CFG_CHANGED, $value);
     }
 
     /**
-     * Returns value of 'cfg_update' property
+     * Returns value of 'cfg_changed' property
      *
-     * @return \PB_ConfigUpdate
+     * @return string
      */
-    public function getCfgUpdate()
+    public function getCfgChanged()
     {
-        return $this->get(self::CFG_UPDATE);
+        $value = $this->get(self::CFG_CHANGED);
+        return $value === null ? (string)$value : $value;
     }
 }
 }

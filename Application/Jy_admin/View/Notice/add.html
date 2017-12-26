@@ -53,6 +53,7 @@
 				</div>
 				<div class="col-1"> </div>
 			</div>
+
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>短标题：</label>
 				<div class="formControls col-6 skin-minimal">
@@ -61,6 +62,22 @@
 				<div class="col-1"> </div>
 			</div>
 
+			<div class="row cl" >
+				<label class="form-label col-3"><span class="c-red">*</span>游戏版本：</label>
+				<div class="formControls col-2">
+					<div style="width:45%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select"  datatype="*" name ="Version" >
+								<option value="1">请选择游戏版本</option>
+								<volist name = "Versionlist" id="val">
+									<option value="{$val}">{$val}</option>
+								</volist>
+							</select>
+						</span>
+					</div>
+				</div>
+				<div class="col-4"></div>
+			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
 				<div class="formControls col-6">

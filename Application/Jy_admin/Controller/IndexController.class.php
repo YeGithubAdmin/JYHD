@@ -20,11 +20,11 @@ class IndexController extends ComController {
             ->order('sort asc')
             ->field('id,name,icon,upid,url,icon')
             ->select();
-
         //过滤权限  type   1-普通用户  2-默认账号
         $admingroupMenu = array();
         if($userInfo['default'] == 2){
             $admingroupMenu = $menuAll;
+
         }else{
             $admingroup =  M('jy_admin_group')
                 ->where('id = '.$userInfo['admingroup'])
