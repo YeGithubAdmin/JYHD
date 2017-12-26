@@ -1,25 +1,25 @@
 <?php
 /**
- * Auto generated from PB_server_common.proto at 2017-09-07 01:22:53
+ * Auto generated from PB_usr_rpc.proto at 2017-12-26 10:10:52
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * PBS_ClientHangUpNotify message
+ * PBS_FishCardBaseRateReturn message
  */
-class PBS_ClientHangUpNotify extends \ProtobufMessage
+class PBS_FishCardBaseRateReturn extends \ProtobufMessage
 {
     /* Field index constants */
-    const COMMUNIID = 1;
+    const RATE = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::COMMUNIID => array(
-            'name' => 'communiid',
+        self::RATE => array(
+            'name' => 'rate',
             'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
+            'type' => \ProtobufMessage::PB_TYPE_DOUBLE,
         ),
     );
 
@@ -38,7 +38,7 @@ class PBS_ClientHangUpNotify extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::COMMUNIID] = null;
+        $this->values[self::RATE] = null;
     }
 
     /**
@@ -52,26 +52,26 @@ class PBS_ClientHangUpNotify extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'communiid' property
+     * Sets value of 'rate' property
      *
-     * @param integer $value Property value
+     * @param double $value Property value
      *
      * @return null
      */
-    public function setCommuniid($value)
+    public function setRate($value)
     {
-        return $this->set(self::COMMUNIID, $value);
+        return $this->set(self::RATE, $value);
     }
 
     /**
-     * Returns value of 'communiid' property
+     * Returns value of 'rate' property
      *
-     * @return integer
+     * @return double
      */
-    public function getCommuniid()
+    public function getRate()
     {
-        $value = $this->get(self::COMMUNIID);
-        return $value === null ? (integer)$value : $value;
+        $value = $this->get(self::RATE);
+        return $value === null ? (double)$value : $value;
     }
 }
 }

@@ -47,14 +47,16 @@ enum OptReason
 	present_as_gift = 18;	// 赠送礼物
 	score_draw 		= 19;	// 抽奖
 	new_player_gift = 20;	// 新手礼包
+	online_reward   = 21;	// 在线奖励
+	broke_reward 	= 22;	// 破产奖励
 }
 
 message PB_Attr
 {
 	enum Attr_Type {
-		player_level 		= 1;	
+		player_level 		= 1;	// 玩家等级	
 		exp 		 		= 2;	// 游戏经验
-		vip_exp 			= 3;
+		vip_exp 			= 3;	// vip经验
 	}
 
 	optional Attr_Type attr_type = 1;

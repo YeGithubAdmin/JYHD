@@ -1,21 +1,21 @@
 <?php
 /**
- * Auto generated from PB_event.proto at 2017-10-30 16:45:17
+ * Auto generated from PB_notify.proto at 2017-12-26 10:10:52
  */
 
 namespace {
 /**
- * LoginEvent message
+ * PB_ConfigUpdate message
  */
-class LoginEvent extends \ProtobufMessage
+class PB_ConfigUpdate extends \ProtobufMessage
 {
     /* Field index constants */
-    const NAME = 1;
+    const CFG_TYPE = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::NAME => array(
-            'name' => 'name',
+        self::CFG_TYPE => array(
+            'name' => 'cfg_type',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
@@ -36,7 +36,7 @@ class LoginEvent extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::NAME] = null;
+        $this->values[self::CFG_TYPE] = null;
     }
 
     /**
@@ -50,25 +50,25 @@ class LoginEvent extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'name' property
+     * Sets value of 'cfg_type' property
      *
      * @param string $value Property value
      *
      * @return null
      */
-    public function setName($value)
+    public function setCfgType($value)
     {
-        return $this->set(self::NAME, $value);
+        return $this->set(self::CFG_TYPE, $value);
     }
 
     /**
-     * Returns value of 'name' property
+     * Returns value of 'cfg_type' property
      *
      * @return string
      */
-    public function getName()
+    public function getCfgType()
     {
-        $value = $this->get(self::NAME);
+        $value = $this->get(self::CFG_TYPE);
         return $value === null ? (string)$value : $value;
     }
 }

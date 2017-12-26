@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_notify.proto at 2017-12-06 14:11:24
+ * Auto generated from PB_notify.proto at 2017-12-26 10:10:52
  */
 
 namespace {
@@ -10,7 +10,6 @@ namespace {
 class PB_HallNotify extends \ProtobufMessage
 {
     /* Field index constants */
-    const BAG_CHANGE = 1;
     const BK_NOTIFY = 2;
     const NEW_EMAIL = 3;
     const RES_MODIFY = 4;
@@ -25,14 +24,10 @@ class PB_HallNotify extends \ProtobufMessage
     const DRAW_NOTIFY = 13;
     const RES_CHANGED = 14;
     const ATTR_CHANGE = 15;
+    const CFG_UPDATE = 16;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::BAG_CHANGE => array(
-            'name' => 'bag_change',
-            'required' => false,
-            'type' => '\PB_BagChange'
-        ),
         self::BK_NOTIFY => array(
             'name' => 'bk_notify',
             'required' => false,
@@ -103,6 +98,11 @@ class PB_HallNotify extends \ProtobufMessage
             'required' => false,
             'type' => '\PB_AttributeChange'
         ),
+        self::CFG_UPDATE => array(
+            'name' => 'cfg_update',
+            'required' => false,
+            'type' => '\PB_ConfigUpdate'
+        ),
     );
 
     /**
@@ -120,7 +120,6 @@ class PB_HallNotify extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::BAG_CHANGE] = null;
         $this->values[self::BK_NOTIFY] = null;
         $this->values[self::NEW_EMAIL] = null;
         $this->values[self::RES_MODIFY] = null;
@@ -135,6 +134,7 @@ class PB_HallNotify extends \ProtobufMessage
         $this->values[self::DRAW_NOTIFY] = null;
         $this->values[self::RES_CHANGED] = null;
         $this->values[self::ATTR_CHANGE] = null;
+        $this->values[self::CFG_UPDATE] = null;
     }
 
     /**
@@ -145,28 +145,6 @@ class PB_HallNotify extends \ProtobufMessage
     public function fields()
     {
         return self::$fields;
-    }
-
-    /**
-     * Sets value of 'bag_change' property
-     *
-     * @param \PB_BagChange $value Property value
-     *
-     * @return null
-     */
-    public function setBagChange(\PB_BagChange $value=null)
-    {
-        return $this->set(self::BAG_CHANGE, $value);
-    }
-
-    /**
-     * Returns value of 'bag_change' property
-     *
-     * @return \PB_BagChange
-     */
-    public function getBagChange()
-    {
-        return $this->get(self::BAG_CHANGE);
     }
 
     /**
@@ -475,6 +453,28 @@ class PB_HallNotify extends \ProtobufMessage
     public function getAttrChange()
     {
         return $this->get(self::ATTR_CHANGE);
+    }
+
+    /**
+     * Sets value of 'cfg_update' property
+     *
+     * @param \PB_ConfigUpdate $value Property value
+     *
+     * @return null
+     */
+    public function setCfgUpdate(\PB_ConfigUpdate $value=null)
+    {
+        return $this->set(self::CFG_UPDATE, $value);
+    }
+
+    /**
+     * Returns value of 'cfg_update' property
+     *
+     * @return \PB_ConfigUpdate
+     */
+    public function getCfgUpdate()
+    {
+        return $this->get(self::CFG_UPDATE);
     }
 }
 }

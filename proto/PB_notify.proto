@@ -1,11 +1,6 @@
 
 import "PB_base_data.proto";
 
-message PB_BagChange 
-{
-	optional PB_Item item = 1;
-}
-
 message PB_Bankruptcy
 {
  	required int64 playerid = 1;	
@@ -62,13 +57,17 @@ message PB_DrawDataUpdate
 	repeated PB_DrawData datas = 1;
 }
 
+message PB_ConfigUpdate
+{
+	optional string cfg_type = 1;
+}
+
 message PB_HallNotify 
 {
-	optional PB_BagChange 		bag_change 		= 1;	// 背包物品更新
 	optional PB_Bankruptcy 		bk_notify 		= 2;	// 破产通知
 	optional PB_NewEmail 		new_email 		= 3;	// 新邮件通知
 	optional PB_ResChange 		res_modify 		= 4;	// 玩家资源属性下推
-	optional PB_BuyGoods 		buy_notify  	= 5;	// 购买通知, 仅作客户端展示用
+	optional PB_BuyGoods 		buy_notify  	= 5;	// 购买成功通知
 	optional PB_PlayerVip		player_vip 		= 6;	// 玩家vip信息改变
 	optional PB_Shutdown		shutdown 		= 7;	// 客户端收到该通知后, 主动断开链接
 	optional PB_VipBroadcast	vip_bc   		= 8;	// 系统广播
@@ -79,4 +78,5 @@ message PB_HallNotify
 	optional PB_DrawDataUpdate 	draw_notify 	= 13;	// 抽奖通知
 	optional PB_ResourceChange  res_changed 	= 14;	// 资源改变	由客户端主动刷新本地数据
 	optional PB_AttributeChange attr_change 	= 15;	// 属性改变	由客户端主动刷新本地数据
+	optional PB_ConfigUpdate	cfg_update		= 16;	// 静态配置更改
 };

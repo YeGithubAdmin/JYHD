@@ -53,4 +53,15 @@ message PBS_UsrDataOpraterReturn
 	repeated PB_Item items = 6;
 }
 
+message PBS_FishCardBaseRate
+{
+	optional int32 fish_card 		= 1;
+	optional int32 pay30 			= 2;
+	optional int32 exchange_rmb30 	= 3;
+	required int64 playerid 		= 4;
+}
 
+message PBS_FishCardBaseRateReturn
+{
+	optional double rate  = 1;
+}

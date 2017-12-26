@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-12-06 14:11:24
+ * Auto generated from PB_base_data.proto at 2017-12-26 10:10:52
  */
 
 namespace {
@@ -29,6 +29,8 @@ final class OptReason
     const present_as_gift = 18;
     const score_draw = 19;
     const new_player_gift = 20;
+    const online_reward = 21;
+    const broke_reward = 22;
 
     /**
      * Returns defined enum values
@@ -58,6 +60,8 @@ final class OptReason
             'present_as_gift' => self::present_as_gift,
             'score_draw' => self::score_draw,
             'new_player_gift' => self::new_player_gift,
+            'online_reward' => self::online_reward,
+            'broke_reward' => self::broke_reward,
         );
     }
 }
