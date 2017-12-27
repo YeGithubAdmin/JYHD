@@ -9,11 +9,7 @@ class IndexController extends ComController {
         $userInfo  = $this->userInfo;
         //已入方法类
         $obj = new \Common\Lib\func();
-
-
-
         //管理组
-
         //所有菜单
         $menuAll   = M('jy_system_menu')
             ->where('islock = 1')

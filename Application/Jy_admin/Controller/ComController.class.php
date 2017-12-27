@@ -50,7 +50,11 @@ class ComController extends Controller {
                     die;
                 }
                 $userInfo = json_decode(base64_decode($Decrypt),true);
-
+                if(empty($userInfo['id'])){
+                    cookie('userInfo',null);
+                    header('Location:/jy_admin/login/index');
+                    die;
+                }
                 $page = I('param.page','','trim');
                 $num  = I('param.num','','trim');
                 $this->page  = !empty($page) ?  $page-1 : C('ADMIN_PAGE');
