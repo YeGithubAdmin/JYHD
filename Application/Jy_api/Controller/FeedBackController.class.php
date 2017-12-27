@@ -109,7 +109,7 @@ class FeedBackController extends ComController {
             goto  response;
         }
         //判断字符
-        $Lenth = mb_strlen($Fcontent);
+        $Lenth = strlen($Fcontent);
         if($Lenth >200){
             $result = 7001;
             goto response;

@@ -72,12 +72,13 @@ class ThirdPartyLoginController extends ComController {
         $PBS_ThirdPartyLogin->setUid($uid);
         $prcoto = $PBS_ThirdPartyLogin->serializeToString();
         $Header = array(
-            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBName:'.'protos.PBS_ThirdPartyLogin',
             'PBSize:'.strlen($prcoto),
             'UID:1',
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
             'Version:'.$DataInfo['version'],
         );
+
         $Respond =  $obj->ProtobufSend($Header,$prcoto);
         if($Respond  == 504){
             $result = 3003;

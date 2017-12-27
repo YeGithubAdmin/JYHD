@@ -110,6 +110,8 @@ class GameConfigController extends ComController {
             ->where('Id = '.$Id)
             ->field($catGameCofingField)
             ->find();
+        dump($catGameCofing);
+
         $catChannelField = array(
             'name',
             'account',
@@ -136,7 +138,14 @@ class GameConfigController extends ComController {
                 'Channel'         =>      $Channel,
                 'Version'         =>      $Version,
             );
+
+            if($Type == 1){
+                $Channel = "";
+            }
             if($Status == 2){
+
+
+
                 $StopServiceFun = $this->StopService($StopService,$Channel,$Second,$Version);
                 if(!$StopServiceFun){
                     $obj->showmessage('系统错误');
@@ -190,6 +199,8 @@ class GameConfigController extends ComController {
             $PBS_SetServerState->setChannel('global');
         }
         $PBS_SetServerState->setAfterSecond($after_second);
+
+        $PBS_SetServerState->dump();
         $String = $PBS_SetServerState->serializeToString();
 
         $Header = array(

@@ -66,7 +66,7 @@ class LogFeedBackModel extends Model{
         $SensitiveWords = explode("\n",$SensitiveWords);
         $Replace = $Content;
         foreach ($SensitiveWords as $k=>$v){
-            $Lenth = mb_strlen($v);
+            $Lenth = strlen($v);
             $str = "";
             for($i = 0;$i<$Lenth;$i++){
                 $str .= "*";

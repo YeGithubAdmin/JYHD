@@ -126,15 +126,14 @@ class NoticeController extends ComController {
                     $ObjFun->showmessage('发送邮件异常');
                 }
             }
-            $Model->startTrans();
             $addGameNotice =$Model->table('jy_game_notice')
                 ->add($dataGameNotice);
 
             if($addGameNotice){
-                $Model->commit();
+
                 $ObjFun->showmessage('添加成功',"/jy_admin/notice/index");
             }else{
-                $Model->rollback();
+
                 $ObjFun->showmessage('添加失败');
             }
         }
@@ -212,15 +211,12 @@ class NoticeController extends ComController {
                 'Sort'      =>    $Sort,
                 'Version'   =>    $Version,
             );
-
             $ChannelString = M('jy_admin_users')->where('id = '.$Channel)->field('account')->find();
             if(!empty($ChannelString)){
                 $ChannelString = $ChannelString['account'];
             }else{
                 $ChannelString = 'global';
             }
-
-
             //发送邮件
             if($SendEmail == 2){
                 $sendMail  =  $this->sendMail($EmailContent,$ChannelString,$TitleContent,$ProtoFun,$Version);
@@ -228,15 +224,14 @@ class NoticeController extends ComController {
                     $ObjFun->showmessage('发送邮件异常');
                 }
             }
-            $Model->startTrans();
             $UpGameNotice = $Model->table('jy_game_notice')
                 ->where('Id = '.$Id)
                 ->save($dataGameNotice);
             if($UpGameNotice !== false){
-                $Model->commit();
+
                 $ObjFun->showmessage('修改成功',"/jy_admin/notice/index");
             }else{
-                $Model->rollback();
+
                 $ObjFun->showmessage('修改失败');
             }
         }
