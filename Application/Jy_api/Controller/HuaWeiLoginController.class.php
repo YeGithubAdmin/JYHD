@@ -20,7 +20,7 @@ class HuaWeiLoginController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
         include     HUAWEISDK.'HuaWeiFun.php';
-        $HuaWeiFun  = new \HuaWeiFun();
+
         $obj        = new \Common\Lib\func();
         $msgArr[2000] = "验证成功！";
         $msgArr[3002] = "网络超时，请稍后再试！";
@@ -35,7 +35,8 @@ class HuaWeiLoginController extends ComController {
         $GameAuthSign      =  $DataInfo['GameAuthSign'];
         $LoginPlayerId     =  $DataInfo['LoginPlayerId'];
         $IsAuth            =  $DataInfo['IsAuth'];
-        $SignTime          =  time();
+        $PlayerLevel          =$DataInfo['PlayerLevel'];
+        $SignTime          =$DataInfo['SignTime'];
         $LoginCode = $obj->RandomNumber(); ;
         if(empty($LoginPlayerId)){
             $result = 4006;
@@ -48,12 +49,19 @@ class HuaWeiLoginController extends ComController {
         $Channel = $DataInfo['channel'];
         if($IsAuth == 1){
             $Content = array(
-                'playerId'  =>  $LoginPlayerId,
-                'appId'     =>  100106371,
-                'ts'        =>  $SignTime,
+                'method'            =>  'external.hms.gs.checkPlayerSign',
+                'appId'             =>  "100106371",
+                'cpId'              =>  "900086000020554310",
+                'ts'                =>  $SignTime,
+                'playerId'          =>  $LoginPlayerId,
+                'playerLevel'       =>  $PlayerLevel,
+                'playerSSign'       =>  $GameAuthSign,
             );
-            $LoginVerification = $HuaWeiFun->LoginVerification($Content,$GameAuthSign);
-            if(!$LoginVerification){
+            $LoginVerification = $this->Verification($Content);
+            $LoginVerification = json_decode($LoginVerification,true);
+
+
+            if($LoginVerification['rtnCode'] != 0){
                 $result = 7001;
                 goto response;
             }
@@ -71,7 +79,7 @@ class HuaWeiLoginController extends ComController {
         $PBS_ThirdPartyLogin->setUid($LoginPlayerId);
         $prcoto = $PBS_ThirdPartyLogin->serializeToString();
         $Header = array(
-            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBName:'.'protos.PBS_ThirdPartyLogin',
             'PBSize:'.strlen($prcoto),
             'UID:1',
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
@@ -104,6 +112,24 @@ class HuaWeiLoginController extends ComController {
                 'data' => $info,
             );
             $this->response($response,'json');
+    }
+
+
+    public function Verification($param){
+        $obj        = new \Common\Lib\func();
+        $HuaWeiFun  = new \HuaWeiFun();
+        $url        = "https://gss-cn.game.hicloud.com/gameservice/api/gbClientApi";
+         $cpSign =  $HuaWeiFun->SHA256WithRSA($param);
+        ksort($param);
+        $arg = "";
+        while (list ($key, $val) = each ($param)) {
+            $arg.=$key."=".urlencode($val)."&";
+        }
+        //去掉最后一个&字符
+        $arg = substr($arg,0,count($arg)-2);
+        $arg = $arg.'&cpSign='.urlencode($cpSign);
+        $res = $obj->curl($url,$arg);
+        return $res;
     }
 
 }
