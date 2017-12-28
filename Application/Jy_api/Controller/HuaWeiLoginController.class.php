@@ -35,7 +35,7 @@ class HuaWeiLoginController extends ComController {
         $GameAuthSign      =  $DataInfo['GameAuthSign'];
         $LoginPlayerId     =  $DataInfo['LoginPlayerId'];
         $IsAuth            =  $DataInfo['IsAuth'];
-        $SignTime          =  $DataInfo['SignTime'];
+        $SignTime          =  time();
         $LoginCode = $obj->RandomNumber(); ;
         if(empty($LoginPlayerId)){
             $result = 4006;
