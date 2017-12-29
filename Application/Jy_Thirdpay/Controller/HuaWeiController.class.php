@@ -46,7 +46,8 @@ class HuaWeiController extends Controller {
             goto  failed;
         }
         $valueMap = $HuaWeiFun->Elements($dataThirdpay);
-        $Sign = $valueMap["sign"];
+        $Sign = urldecode($valueMap["sign"]);
+
         if(empty($Sign)){
             $result = 7003 ;
             goto  failed;
