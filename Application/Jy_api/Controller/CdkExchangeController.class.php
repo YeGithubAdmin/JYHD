@@ -30,15 +30,15 @@ class CdkExchangeController extends ComController {
         $result = 2001;
         $info   =  array();
         $msgArr[2001] = '兑换成功，已发放到邮件';
-        $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
-        $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
-        $msgArr[3004] = "网络错误，请稍后再试！";
-        $msgArr[4006] = "用户信息，缺失！";
-        $msgArr[4007] = "CDK缺失！";
-        $msgArr[5002] = "CDKEY不合法！";
-        $msgArr[5003] = "CDKEY不在活动时间范围！";
-        $msgArr[5004] = "CDKEY已被使用！";
-        $msgArr[5005] = "奖励不存在！";
+        $msgArr[3002] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
+        $msgArr[3003] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
+        $msgArr[3004] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
+        $msgArr[4006] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
+        $msgArr[4007] = "抱歉，礼包兑换失败，CDK为空！";
+        $msgArr[5002] = "抱歉，礼包兑换失败，CDKEY不合法！";
+        $msgArr[5003] = "抱歉，礼包兑换失败，CDKEY不在活动时间范围！";
+        $msgArr[5004] = "抱歉，礼包兑换失败，CDKEY已被使用！";
+        $msgArr[5005] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
