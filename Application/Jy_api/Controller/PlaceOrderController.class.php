@@ -411,14 +411,16 @@ class PlaceOrderController extends ComController {
                 include     HUAWEISDK.'HuaWeiFun.php';
                 $HuaWeiFun  = new \HuaWeiFun();
                 $CurrencyNum = sprintf("%01.2f",$catGoodsAll['CurrencyNum']);
-                $info['userID']        =        "900086000020554310";
-                $info['applicationID'] =        100106371;
+                $info['merchantId']        =        "900086000020554310";
+                $info['applicationID'] =        "100106371";
                 $info['amount']        =       "$CurrencyNum" ;
                 $info['productName']   =        $catGoodsAll['Name'];
                 $info['requestId']     =        $PlatformOrder;
                 $info['productDesc']   =        $catGoodsAll['Name'];
+                $info['sdkChannel']    =        1;
                 $info['sign']          =        $HuaWeiFun->redSignkey($info);
-                $info['userName']      =       '深圳市巨翼互动科技有限公司';
+                $info['merchantName']      =       '深圳市巨翼互动科技有限公司';
+                $info['serviceCatalog']   =       "X6";
               break;
               //联想
             case 8:
