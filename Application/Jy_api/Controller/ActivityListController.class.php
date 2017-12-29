@@ -30,7 +30,7 @@ class ActivityListController extends ComController {
         $activityFatherListField = array(
             'a.Type',
             'a.Title',
-            'a.Code',
+
             'unix_timestamp(a.AddUpStartTime) as AddUpStartTime',
             'unix_timestamp(a.AddUpEndTime) as AddUpEndTime',
             'a.Describe',
@@ -41,7 +41,6 @@ class ActivityListController extends ComController {
             'c.Name as GoodsName',
             'c.Type as GoodsType',
             'b.ImgUrl',
-            'b.Code as CodeSon',
             'b.Id as activityID',
         );
         $playerid = $DataInfo['playerid'];

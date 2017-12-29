@@ -22,7 +22,7 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>所有订单</title>
+<title>活动列表</title>
 </head>
 <body>
 	<nav class="breadcrumb">
@@ -33,21 +33,31 @@
 			href="javascript:location.replace(location.href);" title="刷新"><i
 			class="Hui-iconfont">&#xe68f;</i></a>
 	</nav>
-
 	<div class="pd-20">
 		<!--搜索 -->
 		<form action="" method="get">
-			<input type="hidden" name="m" value="jy_admin" />
-			<input type="hidden" name="c" value="Notice" />
-			<input type="hidden" name="a" value="index" />
 			<div class="text-c">
 				<span style="width: 150px" class="select-box">
-					<select size="1" name="channel" class="select">
+					<select size="1" name="Type" class="select">
+						<option value="">活动类型</option>
+						<option <eq name ="search['Type']" value = "1">selected="true"</eq> value="1">累计充值</option>
+						<option <eq name ="search['Type']" value = "2">selected="true"</eq> value="2">单笔充值</option>
+					</select>
+				</span>
+				<span style="width: 150px" class="select-box">
+					<select size="1" name="Status" class="select">
+						<option value="">发布状态</option>
+						<option <eq name ="search['Status']" value = "1">selected="true"</eq> value="1">未发布</option>
+						<option <eq name ="search['Status']" value = "2">selected="true"</eq> value="2">已发布</option>
+					</select>
+				</span>
+				<span style="width: 150px" class="select-box">
+					<select size="1" name="Channel" class="select">
 						<option value="">渠道</option>
 						<volist name = "catChannel" id = "val">
-							    <option value="{$val['id']}"  <if condition="$channel eq $val['id']" >selected</if>>{$val['name']}</option>
+							    <option value="{$val['id']}"  <if condition="$search['Channel'] eq $val['id']" >selected</if>>{$val['name']}</option>
 						</volist>
-				</select>
+					</select>
 				</span>
 				<button type="submit" class="btn btn-success" id="" name="">
 					<i class="Hui-iconfont">&#xe665;</i> 搜索
@@ -67,12 +77,14 @@
 					<th width="30">渠道</th>
 					<th width="30">活动类型</th>
 					<th width="30">子活动</th>
-					<th width="60">计费起始时间</th>
-					<th width="60">计费结束时间</th>
-					<th width="60">显示起始时间</th>
-					<th width="60">显示结束时间</th>
+					<th width="30">发布状态</th>
+					<th width="30">计费起始时间</th>
+					<th width="30">计费结束时间</th>
+					<th width="30">显示起始时间</th>
+					<th width="30">显示结束时间</th>
 					<th width="60">活动标题</th>
-					<th width="60">操作</th>
+					<th width="10">修改</th>
+					<th width="10">删除</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -101,15 +113,27 @@
 							<td>
 								<a  style="color:red" onclick="activity_Son('子活动','/jy_admin/ActivityListSon/index/Id/{$val['Id']}/Type/{$val['Type']}')">查看</a>
 							</td>
+
+							<td class="td-status">
+								<span class="<if condition ="$val['Status'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>">
+										<if condition ="$val['Status'] eq 2">已发布<else/>未发布</if>
+								</span>
+							</td>
+
 							<td>{$val['AddUpStartTime']}</td>
 							<td>{$val['AddUpEndTime']}</td>
 							<td>{$val['ShowStartTime']}</td>
 							<td>{$val['ShowEndTime']}</td>
 							<td>{$val['Title']}</td>
-
 							<td>
-								<a title="编辑" href="javascript:;" onclick="activity_edit('编辑','/jy_admin/ActivityList/edit/Id/{$val['Id']}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-								<a title="删除" href="javascript:;" onclick="activity_del(this,'{$val['Id']}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+								<a title="编辑" href="javascript:;" onclick="activity_edit('编辑','/jy_admin/ActivityList/edit/Id/{$val['Id']}')" class="ml-5" style="text-decoration:none">
+									<i class="Hui-iconfont">&#xe6df;</i>
+								</a>
+							</td>
+							<td>
+								<a title="删除" href="javascript:;" onclick="activity_del(this,'{$val['Id']}')" class="ml-5" style="text-decoration:none">
+									<i class="Hui-iconfont">&#xe6e2;</i>
+								</a>
 							</td>
 						</tr>
 					</volist>

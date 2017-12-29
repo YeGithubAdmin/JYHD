@@ -58,13 +58,8 @@
 	<form action="" method="post" class="form form-horizontal" id="form-menu-add">
 
 		<div class="row cl">
-			<label class="form-label col-3"><span class="c-red">*</span>活动标识：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" value="{$info['Code']}" placeholder=""
-					   name="Code" datatype = "*2-16" nullmsg="活动标识名不能为空">
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-1"><span class="c-red">*</span>标题：</label>
+
+			<label class="form-label col-3"><span class="c-red">*</span>标题：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" value="{$info['Title']}" placeholder=""
 					   name="Title" datatype = "*2-16" nullmsg="标题不能为空">
@@ -118,56 +113,7 @@
 					   name="Number"  nullmsg="">
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-3"><span class="c-red">*</span>活动图标：</label>
-			<span style=" font-size: 12px; color:red">图片大小最佳为xxx * xxx px</span>
-			<div class="formControls col-6">
-				<div class="uploader-list-container">
-					<div class="queueList">
-						<notempty name="info['ImgUrl']">
-							<div class="placeholder element-invisible" id="dndArea">
-								<div id="filePicker-2" class="webuploader-container">
-									<div class="webuploader-pick">点击选择图片</div>
-									<div id="rt_rt_1an2615i9k4pp911f71c1318af1" style="position: absolute; top: 20px; left: 0px; width: 168px; height: 44px; overflow: hidden; bottom: auto; right: auto;">
-										<input type="file" name="file" class="webuploader-element-invisible" multiple="multiple">
-										<label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255) none repeat scroll 0% 0%;"></label>
-									</div>
-								</div>
-								<p>或将照片拖到这里</p>
-							</div>
 
-							<div	 id = "content" style="display: none;">
-								<li style="position: relative;" class="state-complete" id="WU_FILE_0">
-									<a class="Hui-iconfont" style="position: absolute;right: 0;top: 0;z-index:9999;text-decoration:none;" onclick="_delPic(this)"></a>
-									<p class="title">u=3427736717,3540540540&amp;fm=214&amp;gp=0.jpg</p><p class="imgWrap"><img src="/{$info['ImgUrl']}"></p><p class="progress"><span style="display: none; width: 0px;"></span></p><span class="success"></span></li>
-							</div>
-							<else/>
-							<div	 id = "content">
-							</div>
-							<div id="dndArea" class="placeholder" style="display: none;">
-								<div id="filePicker-2"></div>
-								<p>或将照片拖到这里</p>
-							</div>
-						</notempty>
-
-					</div>
-					<div class="statusBar" >
-						<div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>
-						<div class="info"></div>
-						<div class="btns">
-							<div id="filePicker2"></div>
-							<div class="uploadBtn">开始上传</div>
-						</div>
-					</div>
-				</div>
-				</div>
-			</div>
-			<div id="pic">
-				<notempty name = "info['ImgUrl']">
-				<input type="hidden" name="pic[]" value={$info['ImgUrl']} />
-				</notempty>
-			</div>
-		</div>
 
 		<div class="row cl">
 			<div class="col-9 col-offset-3">
