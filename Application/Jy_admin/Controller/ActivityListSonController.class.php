@@ -27,12 +27,11 @@ class ActivityListSonController extends ComController {
         $activityFatherlistFile = array(
             'a.Id',
             'a.FatherID',
-            'a.Code',
             'b.Name',
             'a.Number',
             'a.Schedule',
             'a.ImgUrl',
-            'a.Code',
+
             'a.DateTime'
         );
         $info = M('jy_activity_son_list as a')
@@ -78,9 +77,8 @@ class ActivityListSonController extends ComController {
             $GoodsID                    =       I('param.GoodsID','','trim');                   //物品ID
             $Number                     =       I('param.Number','','trim');                    //物品数量
             $Schedule                   =       I('param.Schedule',0,'intval');                  //条件数值
-            $ImgUrl                     =       I('param.pic','','trim');                    //图片
-            $ImgUrl                     =       $ImgUrl[0];
-            $Code                       =       I('param.Code','','trim');                      //标识
+//            $ImgUrl                     =       I('param.pic','','trim');                    //图片
+//            $ImgUrl                     =       $ImgUrl[0];
             $Title                      =       I('param.Title','','trim');                      //标题
             $ImgCode                    =       I('param.ImgCode','','trim');
             $dataActivitySonList = array(
@@ -88,8 +86,7 @@ class ActivityListSonController extends ComController {
                 'GoodsID'=>$GoodsID,
                 'Number'=>$Number,
                 'Schedule'=>$Schedule,
-                'ImgUrl'=>$ImgUrl,
-                'Code'=>$Code,
+                'ImgUrl'=>'',
                 'Title'=>$Title,
                 'ImgCode'=>$ImgCode,
             );
@@ -135,9 +132,9 @@ class ActivityListSonController extends ComController {
             'a.Schedule',
             'a.Id',
             'a.Title',
-            'a.ImgUrl',
+//            'a.ImgUrl',
             'a.ImgCode',
-            'a.Code',
+//            'a.Code',
             'b.Type',
 
         );
@@ -151,9 +148,9 @@ class ActivityListSonController extends ComController {
             $GoodsID                    =       I('param.GoodsID','','trim');                   //物品ID
             $Number                     =       I('param.Number','','trim');                    //物品数量
             $Schedule                   =       I('param.Schedule',0,'intval');                  //条件数值
-            $ImgUrl                     =       I('param.pic','','trim');                    //图片
-            $ImgUrl                     =       $ImgUrl[0];
-            $Code                       =       I('param.Code','','trim');                      //标识
+//            $ImgUrl                     =       I('param.pic','','trim');                    //图片
+//            $ImgUrl                     =       $ImgUrl[0];
+//            $Code                       =       I('param.Code','','trim');                      //标识
             $Title                      =       I('param.Title','','trim');                      //标题
             $ImgCode                    =       I('param.ImgCode','','trim');
             $dataActivitySonList = array(
@@ -161,8 +158,8 @@ class ActivityListSonController extends ComController {
                 'GoodsID'=>$GoodsID,
                 'Number'=>$Number,
                 'Schedule'=>$Schedule,
-                'ImgUrl'=>$ImgUrl,
-                'Code'=>$Code,
+                'ImgUrl'=>'',
+
                 'Title'=>$Title,
                 'ImgCode'=>$ImgCode,
             );
