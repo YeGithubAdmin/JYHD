@@ -84,7 +84,7 @@ class CdkExchangeController extends ComController {
                               'GiveInfo',
                           ))
                           ->find();
-        if(empty($CatGoods) || $CatGoods['GiveInfo']){
+        if(empty($CatGoods) || empty($CatGoods['GiveInfo'])){
               $result = 5005;
               goto  response;
         }
@@ -105,32 +105,41 @@ class CdkExchangeController extends ComController {
                          array(
                              'Id',
                              'GetNum',
+                             'Code',
                              'Type',
                          )
                      )
                      ->select();
+
         if(empty($GoodsInfo)){
             $result = 5007;
             goto  response;
         }
         $GoodsInfoSort = array();
         foreach ($GoodsInfo as $k=>$v) $GoodsInfoSort[$v['Id']] =  $v;
-        foreach ($CatGoods as $k=>$v){
+
+        foreach ($GiveInfo as $k=>$v){
               if($GoodsInfoSort[$v['Id']]){
-                  $CatGoods[$k]['Number'] = $v['GetNum']*$GoodsInfoSort[$v['Id']]['GetNum'];
-                  $CatGoods[$k]['Code']   = $v['GetNum']*$GoodsInfoSort[$v['Id']]['Code'];
+                  $GiveInfo[$k]['Number'] = $v['GetNum']*$GoodsInfoSort[$v['Id']]['GetNum'];
+                  $GiveInfo[$k]['Code']   = $GoodsInfoSort[$v['Id']]['Code'];
               }else{
-                  $CatGoods[$k]['Number'] = 0;
-                  $CatGoods[$k]['Code'] = 0;
+                  unset($GiveInfo[$k]);
               }
         }
+
         $Param = array(
+            'Title'=>'CDK兑换',
+            'Sender'=>'系统',
+            'Data'=>'',
         );
         $OptSrc    = $ProtoFun->OptSrc;
         $OptReason = $ProtoFun->OptReason;
-        $ProtoFun->SendMail($Param,1,$CatGoods);
+
+        $UsrDataOpt = $ProtoFun->UsrDataOpt;
+        $ProtoFun->SendMail($Param,1,$GiveInfo);
         $ProtoFun->UsrDataOprater->setPlayerid($playerid);
         $ProtoFun->UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $ProtoFun->UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
         $ProtoFun->UsrDataOprater->setReason($OptReason::exchange);
         $String = $ProtoFun->UsrDataOprater->serializeToString();
 
@@ -142,8 +151,10 @@ class CdkExchangeController extends ComController {
             'Version:'.$DataInfo['version'],
         );
 
+
+
         $Respond        = $ObjFun->ProtobufSend($Header,$String);
-        $OpraterReturn  = $ObjFun->parseFromString($Respond);
+        $ProtoFun->UsrDataOpraterReturn->parseFromString($Respond);
         if($Respond  == 504){
             $result = 3002;
             goto response;
@@ -152,7 +163,7 @@ class CdkExchangeController extends ComController {
             $result = 3003;
             goto response;
         }
-        $ReplyCode      = $OpraterReturn->getCode();
+        $ReplyCode      = $ProtoFun->UsrDataOpraterReturn->getCode();
         if($ReplyCode != 1){
             $result = $ReplyCode;
             goto response;
