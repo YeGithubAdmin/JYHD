@@ -44,6 +44,10 @@ class  HuaWeiFun{
       {
           $valueMap["extReserved"]= urldecode($valueMap["extReserved"]);
       }
+      if(null !== $valueMap["sign"])
+      {
+          $valueMap["sign"]= urldecode($valueMap["sign"]);
+      }
       if(null !== $valueMap["sysReserved"])
       {
           $valueMap["sysReserved"] = urldecode($valueMap["sysReserved"]);
