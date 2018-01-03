@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_notify.proto at 2017-12-26 10:53:15
+ * Auto generated from PB_notify.proto at 2018-01-02 15:38:42
  */
 
 namespace {
@@ -25,6 +25,7 @@ class PB_HallNotify extends \ProtobufMessage
     const RES_CHANGED = 14;
     const ATTR_CHANGE = 15;
     const CFG_CHANGED = 16;
+    const CS_NEW_MSG = 17;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -103,6 +104,11 @@ class PB_HallNotify extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
         ),
+        self::CS_NEW_MSG => array(
+            'name' => 'cs_new_msg',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_BOOL,
+        ),
     );
 
     /**
@@ -135,6 +141,7 @@ class PB_HallNotify extends \ProtobufMessage
         $this->values[self::RES_CHANGED] = null;
         $this->values[self::ATTR_CHANGE] = null;
         $this->values[self::CFG_CHANGED] = null;
+        $this->values[self::CS_NEW_MSG] = null;
     }
 
     /**
@@ -476,6 +483,29 @@ class PB_HallNotify extends \ProtobufMessage
     {
         $value = $this->get(self::CFG_CHANGED);
         return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'cs_new_msg' property
+     *
+     * @param boolean $value Property value
+     *
+     * @return null
+     */
+    public function setCsNewMsg($value)
+    {
+        return $this->set(self::CS_NEW_MSG, $value);
+    }
+
+    /**
+     * Returns value of 'cs_new_msg' property
+     *
+     * @return boolean
+     */
+    public function getCsNewMsg()
+    {
+        $value = $this->get(self::CS_NEW_MSG);
+        return $value === null ? (boolean)$value : $value;
     }
 }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2017-12-26 10:53:15
+ * Auto generated from PB_base_data.proto at 2018-01-02 15:38:42
  */
 
 namespace {
@@ -31,6 +31,7 @@ final class OptReason
     const new_player_gift = 20;
     const online_reward = 21;
     const broke_reward = 22;
+    const exchange_cdk = 23;
 
     /**
      * Returns defined enum values
@@ -62,6 +63,7 @@ final class OptReason
             'new_player_gift' => self::new_player_gift,
             'online_reward' => self::online_reward,
             'broke_reward' => self::broke_reward,
+            'exchange_cdk' => self::exchange_cdk,
         );
     }
 }

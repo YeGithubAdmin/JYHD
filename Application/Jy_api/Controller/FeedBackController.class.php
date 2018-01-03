@@ -47,6 +47,7 @@ class FeedBackController extends ComController {
             'Fcontent',
             'Rcontent',
             'Type',
+            'Read',
             'Status',
             'DateTime',
         );
@@ -145,6 +146,50 @@ class FeedBackController extends ComController {
         $AddDate =$LogFeedBack->AddDate($DateAdd);
 
         if(!$AddDate){
+            $result = 3001;
+            goto  response;
+        }
+
+        response:
+        $response = array(
+            'result' => $result,
+            'msg' => $msgArr[$result],
+            'sessionid'=>$DataInfo['sessionid'],
+            'data' => $info,
+        );
+        $this->response($response,'json');
+    }
+
+    //阅读
+    public function Read(){
+        $DataInfo       =       $this->DataInfo;
+        $msgArr         =       $this->msgArr;
+        $msgArr[2001]   = "请求成功";
+        $msgArr[3001]   = "网络错误,请稍后在试！";
+        $msgArr[4006]   = "用户信息缺失！";
+        $msgArr[4007]   = "Id缺失！";
+        $result = 2001;
+        $info = array();
+        //用户ID
+        $playerid = $DataInfo['playerid'];
+        if(empty($playerid)){
+            $result = 4006;
+            goto  response;
+        }
+
+        $Id = $DataInfo['Id'];
+        if(empty($Id)){
+            $result = 4006;
+            goto  response;
+        }
+        $dataUp = array(
+            'Read'       =>    2,
+        );
+        $UpDate =M('log_feed_back')
+                 ->where('Id ='.$Id)
+                 ->save($dataUp);
+
+        if($UpDate === false){
             $result = 3001;
             goto  response;
         }

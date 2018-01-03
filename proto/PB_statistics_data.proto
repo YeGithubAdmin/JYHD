@@ -27,40 +27,28 @@ message RPB_GameNumerical
 {
 
 	// new numerical. flag[add] can save other place and set 0 every day when you need.  flag[set] calculate by room server, can not modify
-	optional int64 produce_gold_1  				= 50; 	// 产出 							[add]
-	optional int64 consume_gold_1				= 51;	// 消耗 							[add]
-	optional int64 fish_card_1					= 52;	// 产出鱼券 						[add]
-	optional int64 bomb_1						= 53;	// 产出核弹							[add]
-	optional int64 score_1						= 54;	// 产出积分 						[add]
-	optional int64 gold_pool_1 					= 55;	// 金币奖池 						[set]
-	optional int64 gold_pump_1 					= 56; 	// 抽水								[add]
+	optional int64 gold_pool 				= 1;   				// [set]
+	optional int64 gold_pump 				= 2;				// [add]
+	optional int64 produce_gold 			= 3;				// [add]
+	optional int64 consume_gold 			= 4;				// [add]
+	optional int64 produce_fish_card 		= 5;				// [add]
+	optional int64 produce_score 			= 6;				// [add]
+	optional int64 produce_bomb_cu 			= 7;				// [add]
+	optional int64 produce_bomb_ag 			= 8;				// [add]
+	optional int64 produce_bomb_au 			= 9;				// [add]
+	optional string mdate 					= 20;
+	optional string update_time 			= 21;
+	optional int32 room_level				= 22;
+}
 
-	optional int64 produce_gold_2  				= 60;
-	optional int64 consume_gold_2				= 61;
-	optional int64 fish_card_2					= 62;
-	optional int64 bomb_2						= 63;
-	optional int64 score_2						= 64;
-	optional int64 gold_pool_2 					= 65;
-	optional int64 gold_pump_2 					= 66;
-
-	optional int64 produce_gold_3  				= 70;
-	optional int64 consume_gold_3				= 71;
-	optional int64 fish_card_3					= 72;
-	optional int64 bomb_3						= 73;
-	optional int64 score_3						= 74;
-	optional int64 gold_pool_3 					= 75;
-	optional int64 gold_pump_3 					= 76;
-
-	optional int64 produce_gold_4  				= 80;
-	optional int64 consume_gold_4				= 81;
-	optional int64 fish_card_4					= 82;
-	optional int64 bomb_4						= 83;
-	optional int64 score_4						= 84;
-	optional int64 gold_pool_4 					= 85;
-	optional int64 gold_pump_4 					= 86;
-	
-	optional int64 boss_award_pool 				= 90;
-	optional string mdate 						= 100;
+message RPB_BossNumerical
+{
+	optional int64 boss_award_pool 	  		= 1;
+	optional int64 boss_consume 	  	  	= 2;
+	optional int64 boss_produce_gold  	 	= 3;
+	optional int64 boss_produce_bomb_gold 	= 4;
+	optional string mdate 					= 20;
+	optional string update_time 			= 21;
 }
 
 message PBS_GameNumericalOpt
@@ -69,11 +57,15 @@ message PBS_GameNumericalOpt
 		optional int32				  game_numerical_get  = 1;	// get  opt
 		optional RPB_GameNumerical    game_numerical_set  = 2;	// set  opt
 		optional RPB_GameNumerical    game_numerical_incr = 3;	// incr opt
+		optional RPB_BossNumerical    boss_numerical_set  = 4;	// set  opt
+		optional RPB_BossNumerical    boss_numerical_incr = 5;	// incr opt
+		optional int32 				  room_level 		  = 10;
 	}
 
 	message Response {
 		required PB_ErrorCode 		  code 				= 1;
 		optional RPB_GameNumerical    game_numerical	= 2;
+		optional RPB_BossNumerical    boss_numerical 	= 3;
 	}
 
 	optional Request 	request 	= 1;

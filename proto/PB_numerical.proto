@@ -55,29 +55,20 @@ message PB_m2g_dump
 // new version numerical
 //////////////////////////////////////////////////////////////////////////////////
 message PB_g2m_sync {
-	required int64 boss_consume = 1;
-	required int64 boss_produce_gold = 2;
-	required int64 boss_produce_bomb_gold = 3;
-	required int64 gold_pool_1 = 10;
-	required int64 gold_pump_1 = 11;
-	required int64 gold_pool_2 = 12;
-	required int64 gold_pump_2 = 13;
-	required int64 gold_pool_3 = 14;
-	required int64 gold_pump_3 = 15;
-	required int64 gold_pool_4 = 16;
-	required int64 gold_pump_4 = 17;
+	required int32 room_level = 1;
+	required int64 gold_pool = 2;
+	required int64 boss_consume = 3;
+	required int64 boss_produce_gold = 4;
+	required int64 boss_produce_bomb_gold = 5;
 }
 
 message PB_m2g_refresh {
-	required int64 boss_award_pool = 1;
-	required int64 gold_pool_1 = 10;
-	required int64 gold_pump_1 = 11;
-	required int64 gold_pool_2 = 12;
-	required int64 gold_pump_2 = 13;
-	required int64 gold_pool_3 = 14;
-	required int64 gold_pump_3 = 15;
-	required int64 gold_pool_4 = 16;
-	required int64 gold_pump_4 = 17;	
+	message room_data {
+		required int32 room_level = 1;
+		required int64 gold_pool = 2;
+	}
+	required int64 boss_award_pool = 1;	
+	repeated room_data room_datas = 2;
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_numerical.proto at 2017-12-26 10:53:15
+ * Auto generated from PB_numerical.proto at 2018-01-02 15:38:42
  */
 
 namespace {
@@ -11,14 +11,7 @@ class PB_m2g_refresh extends \ProtobufMessage
 {
     /* Field index constants */
     const BOSS_AWARD_POOL = 1;
-    const GOLD_POOL_1 = 10;
-    const GOLD_PUMP_1 = 11;
-    const GOLD_POOL_2 = 12;
-    const GOLD_PUMP_2 = 13;
-    const GOLD_POOL_3 = 14;
-    const GOLD_PUMP_3 = 15;
-    const GOLD_POOL_4 = 16;
-    const GOLD_PUMP_4 = 17;
+    const ROOM_DATAS = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -27,45 +20,10 @@ class PB_m2g_refresh extends \ProtobufMessage
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::GOLD_POOL_1 => array(
-            'name' => 'gold_pool_1',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_1 => array(
-            'name' => 'gold_pump_1',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_POOL_2 => array(
-            'name' => 'gold_pool_2',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_2 => array(
-            'name' => 'gold_pump_2',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_POOL_3 => array(
-            'name' => 'gold_pool_3',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_3 => array(
-            'name' => 'gold_pump_3',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_POOL_4 => array(
-            'name' => 'gold_pool_4',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_4 => array(
-            'name' => 'gold_pump_4',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
+        self::ROOM_DATAS => array(
+            'name' => 'room_datas',
+            'repeated' => true,
+            'type' => '\PB_m2g_refresh_room_data'
         ),
     );
 
@@ -85,14 +43,7 @@ class PB_m2g_refresh extends \ProtobufMessage
     public function reset()
     {
         $this->values[self::BOSS_AWARD_POOL] = null;
-        $this->values[self::GOLD_POOL_1] = null;
-        $this->values[self::GOLD_PUMP_1] = null;
-        $this->values[self::GOLD_POOL_2] = null;
-        $this->values[self::GOLD_PUMP_2] = null;
-        $this->values[self::GOLD_POOL_3] = null;
-        $this->values[self::GOLD_PUMP_3] = null;
-        $this->values[self::GOLD_POOL_4] = null;
-        $this->values[self::GOLD_PUMP_4] = null;
+        $this->values[self::ROOM_DATAS] = array();
     }
 
     /**
@@ -129,187 +80,67 @@ class PB_m2g_refresh extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'gold_pool_1' property
+     * Appends value to 'room_datas' list
      *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPool1($value)
-    {
-        return $this->set(self::GOLD_POOL_1, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pool_1' property
-     *
-     * @return integer
-     */
-    public function getGoldPool1()
-    {
-        $value = $this->get(self::GOLD_POOL_1);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pump_1' property
-     *
-     * @param integer $value Property value
+     * @param \PB_m2g_refresh_room_data $value Value to append
      *
      * @return null
      */
-    public function setGoldPump1($value)
+    public function appendRoomDatas(\PB_m2g_refresh_room_data $value)
     {
-        return $this->set(self::GOLD_PUMP_1, $value);
+        return $this->append(self::ROOM_DATAS, $value);
     }
 
     /**
-     * Returns value of 'gold_pump_1' property
-     *
-     * @return integer
-     */
-    public function getGoldPump1()
-    {
-        $value = $this->get(self::GOLD_PUMP_1);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pool_2' property
-     *
-     * @param integer $value Property value
+     * Clears 'room_datas' list
      *
      * @return null
      */
-    public function setGoldPool2($value)
+    public function clearRoomDatas()
     {
-        return $this->set(self::GOLD_POOL_2, $value);
+        return $this->clear(self::ROOM_DATAS);
     }
 
     /**
-     * Returns value of 'gold_pool_2' property
+     * Returns 'room_datas' list
      *
-     * @return integer
+     * @return \PB_m2g_refresh_room_data[]
      */
-    public function getGoldPool2()
+    public function getRoomDatas()
     {
-        $value = $this->get(self::GOLD_POOL_2);
-        return $value === null ? (integer)$value : $value;
+        return $this->get(self::ROOM_DATAS);
     }
 
     /**
-     * Sets value of 'gold_pump_2' property
+     * Returns 'room_datas' iterator
      *
-     * @param integer $value Property value
-     *
-     * @return null
+     * @return \ArrayIterator
      */
-    public function setGoldPump2($value)
+    public function getRoomDatasIterator()
     {
-        return $this->set(self::GOLD_PUMP_2, $value);
+        return new \ArrayIterator($this->get(self::ROOM_DATAS));
     }
 
     /**
-     * Returns value of 'gold_pump_2' property
+     * Returns element from 'room_datas' list at given offset
      *
-     * @return integer
+     * @param int $offset Position in list
+     *
+     * @return \PB_m2g_refresh_room_data
      */
-    public function getGoldPump2()
+    public function getRoomDatasAt($offset)
     {
-        $value = $this->get(self::GOLD_PUMP_2);
-        return $value === null ? (integer)$value : $value;
+        return $this->get(self::ROOM_DATAS, $offset);
     }
 
     /**
-     * Sets value of 'gold_pool_3' property
+     * Returns count of 'room_datas' list
      *
-     * @param integer $value Property value
-     *
-     * @return null
+     * @return int
      */
-    public function setGoldPool3($value)
+    public function getRoomDatasCount()
     {
-        return $this->set(self::GOLD_POOL_3, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pool_3' property
-     *
-     * @return integer
-     */
-    public function getGoldPool3()
-    {
-        $value = $this->get(self::GOLD_POOL_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pump_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPump3($value)
-    {
-        return $this->set(self::GOLD_PUMP_3, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pump_3' property
-     *
-     * @return integer
-     */
-    public function getGoldPump3()
-    {
-        $value = $this->get(self::GOLD_PUMP_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pool_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPool4($value)
-    {
-        return $this->set(self::GOLD_POOL_4, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pool_4' property
-     *
-     * @return integer
-     */
-    public function getGoldPool4()
-    {
-        $value = $this->get(self::GOLD_POOL_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pump_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPump4($value)
-    {
-        return $this->set(self::GOLD_PUMP_4, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pump_4' property
-     *
-     * @return integer
-     */
-    public function getGoldPump4()
-    {
-        $value = $this->get(self::GOLD_PUMP_4);
-        return $value === null ? (integer)$value : $value;
+        return $this->count(self::ROOM_DATAS);
     }
 }
 }

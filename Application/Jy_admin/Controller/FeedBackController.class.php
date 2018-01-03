@@ -82,7 +82,8 @@ class FeedBackController extends ComController {
     //
     public  function authority(){
         $Id = I('param.Id',0,'intval');
-        $obj = new \Common\Lib\func();
+        $ProtoFun = D('ProtoFun');
+        $obj = $ProtoFun->ObjFun;
         $UserInfo = $this->userInfo;
         if($Id<=0){
             $obj->showmessage('非法操作');
@@ -96,14 +97,21 @@ class FeedBackController extends ComController {
                        'Type',
                        'Fcontent',
                        'Rcontent',
+                       'VerSion',
                        'TxQq',
                        'Phone',
                        'DateTime',
                    ))
                    ->find();
+
         if(IS_POST){
             $Rcontent = I('param.Rcontent','','trim');
+            $playerid = I('param.playerid',0,'intval');
+            $Version = I('param.VerSion','','trim');
             $db = M('log_feed_back');
+            $FeedBack = $ProtoFun
+                        ->FeedBack($playerid,$Version);
+            $db->startTrans();
             $UpData = $db
                       ->where('Id = '.$Id)
                       ->save(array(
@@ -112,9 +120,11 @@ class FeedBackController extends ComController {
                           'UpDateTime'=>date('Y-m-d H:i:s'),
                           'UpName'=>$UserInfo['name'],
                       ));
-            if($UpData){
+            if($UpData && $FeedBack){
+                $db->commit();
                 $obj->showmessage('回复成功','/jy_admin/FeedBack/index');
             }else{
+                $db->rollback();
                 $obj->showmessage('回复失败');
             }
         }

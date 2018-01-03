@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2017-12-26 10:53:15
+ * Auto generated from PB_statistics_data.proto at 2018-01-02 15:38:42
  */
 
 namespace {
@@ -12,6 +12,7 @@ class PBS_GameNumericalOpt_Response extends \ProtobufMessage
     /* Field index constants */
     const CODE = 1;
     const GAME_NUMERICAL = 2;
+    const BOSS_NUMERICAL = 3;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -24,6 +25,11 @@ class PBS_GameNumericalOpt_Response extends \ProtobufMessage
             'name' => 'game_numerical',
             'required' => false,
             'type' => '\RPB_GameNumerical'
+        ),
+        self::BOSS_NUMERICAL => array(
+            'name' => 'boss_numerical',
+            'required' => false,
+            'type' => '\RPB_BossNumerical'
         ),
     );
 
@@ -44,6 +50,7 @@ class PBS_GameNumericalOpt_Response extends \ProtobufMessage
     {
         $this->values[self::CODE] = null;
         $this->values[self::GAME_NUMERICAL] = null;
+        $this->values[self::BOSS_NUMERICAL] = null;
     }
 
     /**
@@ -99,6 +106,28 @@ class PBS_GameNumericalOpt_Response extends \ProtobufMessage
     public function getGameNumerical()
     {
         return $this->get(self::GAME_NUMERICAL);
+    }
+
+    /**
+     * Sets value of 'boss_numerical' property
+     *
+     * @param \RPB_BossNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setBossNumerical(\RPB_BossNumerical $value=null)
+    {
+        return $this->set(self::BOSS_NUMERICAL, $value);
+    }
+
+    /**
+     * Returns value of 'boss_numerical' property
+     *
+     * @return \RPB_BossNumerical
+     */
+    public function getBossNumerical()
+    {
+        return $this->get(self::BOSS_NUMERICAL);
     }
 }
 }

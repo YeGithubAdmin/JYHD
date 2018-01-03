@@ -54,6 +54,8 @@ message PBS_SetServerStateReturn
 	required PB_ErrorCode code = 1;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// 捕鱼数值
 // 获取游戏数值统计
 message PBS_GetGameNumerical
 {
@@ -151,6 +153,59 @@ message PBS_gm_numerical_require_return {
    	required PB_ErrorCode code = 2;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// 水浒传
+message cfg_shuihu_fluctuate {
+	required int32 index = 1;
+	required int32 value = 2;
+}
+
+message cfg_shuihu_fluctuate_range {
+	required int32 min = 1;
+	required int32 max = 2;
+}
+
+message cfg_shuiguoji_rand_1 {
+	required int32 min = 1;
+	required int32 max = 2;
+}
+
+message cfg_shuiguoji_rand_2 {
+	required int32 min = 1;
+	required int32 max = 2;
+}
+
+message cfg_shuihu_numerical {
+	repeated cfg_shuihu_fluctuate cfg_shuihu_fluctuate = 1;							// 影响玩家抽奖波动走势
+	optional cfg_shuihu_fluctuate_range cfg_shuihu_fluctuate_range = 2;				// 影响玩家抽奖波动幅度
+	optional float cfg_shuihu_return_multiple = 3;									// 影响返奖率和最高返奖倍数
+	optional cfg_shuiguoji_rand_1 cfg_shuiguoji_rand_1 = 4;							// (-200,700)影响小玛丽最高奖励倍数上限和首次奖励即退出的概率
+	optional cfg_shuiguoji_rand_2 cfg_shuiguoji_rand_2 = 5;							// (1，100)/100  根据奖励种类设置，奖励种类调整则需要跟着调整
+	optional int32 cfg_shuiguoji_denominator_1 = 6;									// 水果机公式分母1
+	optional int32 cfg_shuiguoji_denominator_2 = 7;									// 水果机公式分母2
+}
+
+// 查询水浒传数值参数
+message PBS_gm_get_shuihu_numerical {
+	required int32 serverid = 1;
+}
+
+message PBS_gm_get_shuihu_numerical_return {
+	required cfg_shuihu_numerical data = 1;
+   	required PB_ErrorCode code = 2;
+}
+
+// 设置水浒传数值参数
+message PBS_gm_set_shuihu_numerical {
+	required cfg_shuihu_numerical data = 1;
+	optional int32 serverid = 2;
+}
+
+message PBS_gm_set_shuihu_numerical_return {
+	required PB_ErrorCode code = 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // 捕鱼逻辑控制操作
 message PBS_gm_fish_op
 {

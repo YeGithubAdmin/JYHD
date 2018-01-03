@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2017-12-26 10:53:15
+ * Auto generated from PB_statistics_data.proto at 2018-01-02 15:38:42
  */
 
 namespace {
@@ -13,6 +13,9 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
     const GAME_NUMERICAL_GET = 1;
     const GAME_NUMERICAL_SET = 2;
     const GAME_NUMERICAL_INCR = 3;
+    const BOSS_NUMERICAL_SET = 4;
+    const BOSS_NUMERICAL_INCR = 5;
+    const ROOM_LEVEL = 10;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -30,6 +33,21 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
             'name' => 'game_numerical_incr',
             'required' => false,
             'type' => '\RPB_GameNumerical'
+        ),
+        self::BOSS_NUMERICAL_SET => array(
+            'name' => 'boss_numerical_set',
+            'required' => false,
+            'type' => '\RPB_BossNumerical'
+        ),
+        self::BOSS_NUMERICAL_INCR => array(
+            'name' => 'boss_numerical_incr',
+            'required' => false,
+            'type' => '\RPB_BossNumerical'
+        ),
+        self::ROOM_LEVEL => array(
+            'name' => 'room_level',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
 
@@ -51,6 +69,9 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
         $this->values[self::GAME_NUMERICAL_GET] = null;
         $this->values[self::GAME_NUMERICAL_SET] = null;
         $this->values[self::GAME_NUMERICAL_INCR] = null;
+        $this->values[self::BOSS_NUMERICAL_SET] = null;
+        $this->values[self::BOSS_NUMERICAL_INCR] = null;
+        $this->values[self::ROOM_LEVEL] = null;
     }
 
     /**
@@ -128,6 +149,73 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
     public function getGameNumericalIncr()
     {
         return $this->get(self::GAME_NUMERICAL_INCR);
+    }
+
+    /**
+     * Sets value of 'boss_numerical_set' property
+     *
+     * @param \RPB_BossNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setBossNumericalSet(\RPB_BossNumerical $value=null)
+    {
+        return $this->set(self::BOSS_NUMERICAL_SET, $value);
+    }
+
+    /**
+     * Returns value of 'boss_numerical_set' property
+     *
+     * @return \RPB_BossNumerical
+     */
+    public function getBossNumericalSet()
+    {
+        return $this->get(self::BOSS_NUMERICAL_SET);
+    }
+
+    /**
+     * Sets value of 'boss_numerical_incr' property
+     *
+     * @param \RPB_BossNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setBossNumericalIncr(\RPB_BossNumerical $value=null)
+    {
+        return $this->set(self::BOSS_NUMERICAL_INCR, $value);
+    }
+
+    /**
+     * Returns value of 'boss_numerical_incr' property
+     *
+     * @return \RPB_BossNumerical
+     */
+    public function getBossNumericalIncr()
+    {
+        return $this->get(self::BOSS_NUMERICAL_INCR);
+    }
+
+    /**
+     * Sets value of 'room_level' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setRoomLevel($value)
+    {
+        return $this->set(self::ROOM_LEVEL, $value);
+    }
+
+    /**
+     * Returns value of 'room_level' property
+     *
+     * @return integer
+     */
+    public function getRoomLevel()
+    {
+        $value = $this->get(self::ROOM_LEVEL);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

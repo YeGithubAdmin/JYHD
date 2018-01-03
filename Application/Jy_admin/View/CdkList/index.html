@@ -84,17 +84,20 @@
 			</div>
 		</form>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l"> <a href="javascript:;"
-				onclick="Add('添加等级','/jy_admin/CdkConfigure/add','','600')"
-				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
-					导出</a>
-			</span>
+			<form action="/Jy_admin/CdkList/excelData" method="get">
+				<input type="hidden" name = "data" value="{$search|json_encode}"/>
+				<button type="submit" class="btn btn-primary radius" id="" name="">
+					<i class="Hui-iconfont">&#xe600;</i>
+					导出
+				</button>
+			</form>
 		</div>
 		<table
 			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="30">CDK</th>
+					<th width="30">礼包编码</th>
 					<th width="30">是否已使用</th>
 					<th width="30">是否已发放</th>
 					<th width="30">用户ID</th>
@@ -107,6 +110,7 @@
 				<volist name = "info" id = "val">
 					<tr class="text-c">
 						<td>{$val['CDK']}</td>
+						<td>{$val['Code']}</td>
 						<td class="td-status" ><span
 							class="<if condition ="$val['Status'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>"><if
 							condition="$val['Status'] eq 2">是<else/>否</if>
@@ -118,7 +122,6 @@
 							</span>
 						</td>
 						<td><if condition ="$val['playerid']">{$val['playerid']}<else/>...</if></td>
-
 						<td>{$val['StartTime']}~{$val['EndTime']}</td>
 						<td><if condition ="$val['UseTime']">{$val['UseTime']}<else/>...</if></td>
 						<td>{$val['UpName']}</td>

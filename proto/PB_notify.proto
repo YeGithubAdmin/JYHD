@@ -74,4 +74,5 @@ message PB_HallNotify
 	optional PB_ResourceChange  res_changed 	= 14;	// 资源改变	由客户端主动刷新本地数据
 	optional PB_AttributeChange attr_change 	= 15;	// 属性改变	由客户端主动刷新本地数据
 	optional string				cfg_changed		= 16;	// 配置更改
+	optional bool 				cs_new_msg 		= 17;	// 有客服新消息 
 };

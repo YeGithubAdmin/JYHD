@@ -155,11 +155,48 @@ class ProtoFunModel extends Model{
         }
         $PBS_ConfigChangedReturn->parseFromString($Respond);
         $ReplyCode = $PBS_ConfigChangedReturn->getCode();
-
         if($ReplyCode != 1){
             return false;
         }
         return true;
+    }
+    //客服下推
+    public function FeedBack($playerid,$Version){
+        $UsrDataOprater         = $this->UsrDataOprater;
+        $UsrDataOpraterReturn   = $this->UsrDataOpraterReturn;
+        $PB_HallNotify          = $this->PB_HallNotify;
+        $OptSrc                 = $this->OptSrc;
+        $UsrDataOpt             = $this->UsrDataOpt;
+        $PB_HallNotify->setCsNewMsg(true);
+        $UsrDataOprater->setPlayerid($playerid);
+        $UsrDataOprater->setSrc($OptSrc::Src_PHP);
+        $UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
+        $UsrDataOprater->setNotify($PB_HallNotify);
+        $String = $UsrDataOprater->serializeToString();
+        $Header = array(
+            'PBName:'.'protos.PBS_UsrDataOprater',
+            'PBSize:'.strlen($String),
+            'UID:1',
+            'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
+            'Version:'.$Version,
+        );
+        $Respond = $this->ObjFun->ProtobufSend($Header,$String);
+
+        if($Respond == 504){
+            return false;
+        }
+
+        if(strlen($Respond) == 0){
+            return false;
+        }
+
+        $UsrDataOpraterReturn->parseFromString($Respond);
+        $ReplyCode = $UsrDataOpraterReturn->getCode();
+        if($ReplyCode != 1){
+            return false;
+        }
+        return true;
+
     }
 
 

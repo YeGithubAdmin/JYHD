@@ -53,6 +53,8 @@ class UsersExchangeApplicationController extends ComController {
             'Status',
             'Order',
             'StockNum',
+            'CaMi',
+            'CaNum',
             'GoodsID',
             'UpTime',
             'UpName',
@@ -140,7 +142,7 @@ class UsersExchangeApplicationController extends ComController {
             $ExpressName     =      I('param.ExpressName','','trim');   //快递名称
             $ExpressOrder    =      I('param.ExpressOrder','','trim');  //快递名称
             $MessAge         =      I('param.MessAge','','trim');       //失败通知
-            $Remark        =      I('param.Remark','','trim');       //失败通知
+            $Remark          =      I('param.Remark','','trim');       //失败通知
 
             if($Status<=1){
                 $result = 4001;
@@ -278,6 +280,8 @@ class UsersExchangeApplicationController extends ComController {
                     'MessAge'=>$MessAge,
                     'Status'=>$Status,
                     'UpName'=>$UserInfo['name'],
+                    'CaMi'=>$cardPwd,
+                    'CaNum'=>$cardNum,
                     'Remark'=>$Remark,
                     'UpTime'=>date('Y-m-d H:i:s',time())
                 );

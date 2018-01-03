@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2017-12-26 10:53:15
+ * Auto generated from PB_statistics_data.proto at 2018-01-02 15:38:42
  */
 
 namespace {
@@ -10,181 +10,63 @@ namespace {
 class RPB_GameNumerical extends \ProtobufMessage
 {
     /* Field index constants */
-    const PRODUCE_GOLD_1 = 50;
-    const CONSUME_GOLD_1 = 51;
-    const FISH_CARD_1 = 52;
-    const BOMB_1 = 53;
-    const SCORE_1 = 54;
-    const GOLD_POOL_1 = 55;
-    const GOLD_PUMP_1 = 56;
-    const PRODUCE_GOLD_2 = 60;
-    const CONSUME_GOLD_2 = 61;
-    const FISH_CARD_2 = 62;
-    const BOMB_2 = 63;
-    const SCORE_2 = 64;
-    const GOLD_POOL_2 = 65;
-    const GOLD_PUMP_2 = 66;
-    const PRODUCE_GOLD_3 = 70;
-    const CONSUME_GOLD_3 = 71;
-    const FISH_CARD_3 = 72;
-    const BOMB_3 = 73;
-    const SCORE_3 = 74;
-    const GOLD_POOL_3 = 75;
-    const GOLD_PUMP_3 = 76;
-    const PRODUCE_GOLD_4 = 80;
-    const CONSUME_GOLD_4 = 81;
-    const FISH_CARD_4 = 82;
-    const BOMB_4 = 83;
-    const SCORE_4 = 84;
-    const GOLD_POOL_4 = 85;
-    const GOLD_PUMP_4 = 86;
-    const BOSS_AWARD_POOL = 90;
-    const MDATE = 100;
+    const GOLD_POOL = 1;
+    const GOLD_PUMP = 2;
+    const PRODUCE_GOLD = 3;
+    const CONSUME_GOLD = 4;
+    const PRODUCE_FISH_CARD = 5;
+    const PRODUCE_SCORE = 6;
+    const PRODUCE_BOMB_CU = 7;
+    const PRODUCE_BOMB_AG = 8;
+    const PRODUCE_BOMB_AU = 9;
+    const MDATE = 20;
+    const UPDATE_TIME = 21;
+    const ROOM_LEVEL = 22;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::PRODUCE_GOLD_1 => array(
-            'name' => 'produce_gold_1',
+        self::GOLD_POOL => array(
+            'name' => 'gold_pool',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::CONSUME_GOLD_1 => array(
-            'name' => 'consume_gold_1',
+        self::GOLD_PUMP => array(
+            'name' => 'gold_pump',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::FISH_CARD_1 => array(
-            'name' => 'fish_card_1',
+        self::PRODUCE_GOLD => array(
+            'name' => 'produce_gold',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::BOMB_1 => array(
-            'name' => 'bomb_1',
+        self::CONSUME_GOLD => array(
+            'name' => 'consume_gold',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::SCORE_1 => array(
-            'name' => 'score_1',
+        self::PRODUCE_FISH_CARD => array(
+            'name' => 'produce_fish_card',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::GOLD_POOL_1 => array(
-            'name' => 'gold_pool_1',
+        self::PRODUCE_SCORE => array(
+            'name' => 'produce_score',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::GOLD_PUMP_1 => array(
-            'name' => 'gold_pump_1',
+        self::PRODUCE_BOMB_CU => array(
+            'name' => 'produce_bomb_cu',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::PRODUCE_GOLD_2 => array(
-            'name' => 'produce_gold_2',
+        self::PRODUCE_BOMB_AG => array(
+            'name' => 'produce_bomb_ag',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::CONSUME_GOLD_2 => array(
-            'name' => 'consume_gold_2',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::FISH_CARD_2 => array(
-            'name' => 'fish_card_2',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::BOMB_2 => array(
-            'name' => 'bomb_2',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::SCORE_2 => array(
-            'name' => 'score_2',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_POOL_2 => array(
-            'name' => 'gold_pool_2',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_2 => array(
-            'name' => 'gold_pump_2',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::PRODUCE_GOLD_3 => array(
-            'name' => 'produce_gold_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::CONSUME_GOLD_3 => array(
-            'name' => 'consume_gold_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::FISH_CARD_3 => array(
-            'name' => 'fish_card_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::BOMB_3 => array(
-            'name' => 'bomb_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::SCORE_3 => array(
-            'name' => 'score_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_POOL_3 => array(
-            'name' => 'gold_pool_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_3 => array(
-            'name' => 'gold_pump_3',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::PRODUCE_GOLD_4 => array(
-            'name' => 'produce_gold_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::CONSUME_GOLD_4 => array(
-            'name' => 'consume_gold_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::FISH_CARD_4 => array(
-            'name' => 'fish_card_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::BOMB_4 => array(
-            'name' => 'bomb_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::SCORE_4 => array(
-            'name' => 'score_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_POOL_4 => array(
-            'name' => 'gold_pool_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::GOLD_PUMP_4 => array(
-            'name' => 'gold_pump_4',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
-        self::BOSS_AWARD_POOL => array(
-            'name' => 'boss_award_pool',
+        self::PRODUCE_BOMB_AU => array(
+            'name' => 'produce_bomb_au',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -192,6 +74,16 @@ class RPB_GameNumerical extends \ProtobufMessage
             'name' => 'mdate',
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::UPDATE_TIME => array(
+            'name' => 'update_time',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
+        self::ROOM_LEVEL => array(
+            'name' => 'room_level',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
 
@@ -210,36 +102,18 @@ class RPB_GameNumerical extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::PRODUCE_GOLD_1] = null;
-        $this->values[self::CONSUME_GOLD_1] = null;
-        $this->values[self::FISH_CARD_1] = null;
-        $this->values[self::BOMB_1] = null;
-        $this->values[self::SCORE_1] = null;
-        $this->values[self::GOLD_POOL_1] = null;
-        $this->values[self::GOLD_PUMP_1] = null;
-        $this->values[self::PRODUCE_GOLD_2] = null;
-        $this->values[self::CONSUME_GOLD_2] = null;
-        $this->values[self::FISH_CARD_2] = null;
-        $this->values[self::BOMB_2] = null;
-        $this->values[self::SCORE_2] = null;
-        $this->values[self::GOLD_POOL_2] = null;
-        $this->values[self::GOLD_PUMP_2] = null;
-        $this->values[self::PRODUCE_GOLD_3] = null;
-        $this->values[self::CONSUME_GOLD_3] = null;
-        $this->values[self::FISH_CARD_3] = null;
-        $this->values[self::BOMB_3] = null;
-        $this->values[self::SCORE_3] = null;
-        $this->values[self::GOLD_POOL_3] = null;
-        $this->values[self::GOLD_PUMP_3] = null;
-        $this->values[self::PRODUCE_GOLD_4] = null;
-        $this->values[self::CONSUME_GOLD_4] = null;
-        $this->values[self::FISH_CARD_4] = null;
-        $this->values[self::BOMB_4] = null;
-        $this->values[self::SCORE_4] = null;
-        $this->values[self::GOLD_POOL_4] = null;
-        $this->values[self::GOLD_PUMP_4] = null;
-        $this->values[self::BOSS_AWARD_POOL] = null;
+        $this->values[self::GOLD_POOL] = null;
+        $this->values[self::GOLD_PUMP] = null;
+        $this->values[self::PRODUCE_GOLD] = null;
+        $this->values[self::CONSUME_GOLD] = null;
+        $this->values[self::PRODUCE_FISH_CARD] = null;
+        $this->values[self::PRODUCE_SCORE] = null;
+        $this->values[self::PRODUCE_BOMB_CU] = null;
+        $this->values[self::PRODUCE_BOMB_AG] = null;
+        $this->values[self::PRODUCE_BOMB_AU] = null;
         $this->values[self::MDATE] = null;
+        $this->values[self::UPDATE_TIME] = null;
+        $this->values[self::ROOM_LEVEL] = null;
     }
 
     /**
@@ -253,669 +127,209 @@ class RPB_GameNumerical extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'produce_gold_1' property
+     * Sets value of 'gold_pool' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setProduceGold1($value)
+    public function setGoldPool($value)
     {
-        return $this->set(self::PRODUCE_GOLD_1, $value);
+        return $this->set(self::GOLD_POOL, $value);
     }
 
     /**
-     * Returns value of 'produce_gold_1' property
+     * Returns value of 'gold_pool' property
      *
      * @return integer
      */
-    public function getProduceGold1()
+    public function getGoldPool()
     {
-        $value = $this->get(self::PRODUCE_GOLD_1);
+        $value = $this->get(self::GOLD_POOL);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'consume_gold_1' property
+     * Sets value of 'gold_pump' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setConsumeGold1($value)
+    public function setGoldPump($value)
     {
-        return $this->set(self::CONSUME_GOLD_1, $value);
+        return $this->set(self::GOLD_PUMP, $value);
     }
 
     /**
-     * Returns value of 'consume_gold_1' property
+     * Returns value of 'gold_pump' property
      *
      * @return integer
      */
-    public function getConsumeGold1()
+    public function getGoldPump()
     {
-        $value = $this->get(self::CONSUME_GOLD_1);
+        $value = $this->get(self::GOLD_PUMP);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'fish_card_1' property
+     * Sets value of 'produce_gold' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setFishCard1($value)
+    public function setProduceGold($value)
     {
-        return $this->set(self::FISH_CARD_1, $value);
+        return $this->set(self::PRODUCE_GOLD, $value);
     }
 
     /**
-     * Returns value of 'fish_card_1' property
+     * Returns value of 'produce_gold' property
      *
      * @return integer
      */
-    public function getFishCard1()
+    public function getProduceGold()
     {
-        $value = $this->get(self::FISH_CARD_1);
+        $value = $this->get(self::PRODUCE_GOLD);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'bomb_1' property
+     * Sets value of 'consume_gold' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setBomb1($value)
+    public function setConsumeGold($value)
     {
-        return $this->set(self::BOMB_1, $value);
+        return $this->set(self::CONSUME_GOLD, $value);
     }
 
     /**
-     * Returns value of 'bomb_1' property
+     * Returns value of 'consume_gold' property
      *
      * @return integer
      */
-    public function getBomb1()
+    public function getConsumeGold()
     {
-        $value = $this->get(self::BOMB_1);
+        $value = $this->get(self::CONSUME_GOLD);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'score_1' property
+     * Sets value of 'produce_fish_card' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setScore1($value)
+    public function setProduceFishCard($value)
     {
-        return $this->set(self::SCORE_1, $value);
+        return $this->set(self::PRODUCE_FISH_CARD, $value);
     }
 
     /**
-     * Returns value of 'score_1' property
+     * Returns value of 'produce_fish_card' property
      *
      * @return integer
      */
-    public function getScore1()
+    public function getProduceFishCard()
     {
-        $value = $this->get(self::SCORE_1);
+        $value = $this->get(self::PRODUCE_FISH_CARD);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'gold_pool_1' property
+     * Sets value of 'produce_score' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setGoldPool1($value)
+    public function setProduceScore($value)
     {
-        return $this->set(self::GOLD_POOL_1, $value);
+        return $this->set(self::PRODUCE_SCORE, $value);
     }
 
     /**
-     * Returns value of 'gold_pool_1' property
+     * Returns value of 'produce_score' property
      *
      * @return integer
      */
-    public function getGoldPool1()
+    public function getProduceScore()
     {
-        $value = $this->get(self::GOLD_POOL_1);
+        $value = $this->get(self::PRODUCE_SCORE);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'gold_pump_1' property
+     * Sets value of 'produce_bomb_cu' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setGoldPump1($value)
+    public function setProduceBombCu($value)
     {
-        return $this->set(self::GOLD_PUMP_1, $value);
+        return $this->set(self::PRODUCE_BOMB_CU, $value);
     }
 
     /**
-     * Returns value of 'gold_pump_1' property
+     * Returns value of 'produce_bomb_cu' property
      *
      * @return integer
      */
-    public function getGoldPump1()
+    public function getProduceBombCu()
     {
-        $value = $this->get(self::GOLD_PUMP_1);
+        $value = $this->get(self::PRODUCE_BOMB_CU);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'produce_gold_2' property
+     * Sets value of 'produce_bomb_ag' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setProduceGold2($value)
+    public function setProduceBombAg($value)
     {
-        return $this->set(self::PRODUCE_GOLD_2, $value);
+        return $this->set(self::PRODUCE_BOMB_AG, $value);
     }
 
     /**
-     * Returns value of 'produce_gold_2' property
+     * Returns value of 'produce_bomb_ag' property
      *
      * @return integer
      */
-    public function getProduceGold2()
+    public function getProduceBombAg()
     {
-        $value = $this->get(self::PRODUCE_GOLD_2);
+        $value = $this->get(self::PRODUCE_BOMB_AG);
         return $value === null ? (integer)$value : $value;
     }
 
     /**
-     * Sets value of 'consume_gold_2' property
+     * Sets value of 'produce_bomb_au' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setConsumeGold2($value)
+    public function setProduceBombAu($value)
     {
-        return $this->set(self::CONSUME_GOLD_2, $value);
+        return $this->set(self::PRODUCE_BOMB_AU, $value);
     }
 
     /**
-     * Returns value of 'consume_gold_2' property
+     * Returns value of 'produce_bomb_au' property
      *
      * @return integer
      */
-    public function getConsumeGold2()
+    public function getProduceBombAu()
     {
-        $value = $this->get(self::CONSUME_GOLD_2);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'fish_card_2' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setFishCard2($value)
-    {
-        return $this->set(self::FISH_CARD_2, $value);
-    }
-
-    /**
-     * Returns value of 'fish_card_2' property
-     *
-     * @return integer
-     */
-    public function getFishCard2()
-    {
-        $value = $this->get(self::FISH_CARD_2);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'bomb_2' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setBomb2($value)
-    {
-        return $this->set(self::BOMB_2, $value);
-    }
-
-    /**
-     * Returns value of 'bomb_2' property
-     *
-     * @return integer
-     */
-    public function getBomb2()
-    {
-        $value = $this->get(self::BOMB_2);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'score_2' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setScore2($value)
-    {
-        return $this->set(self::SCORE_2, $value);
-    }
-
-    /**
-     * Returns value of 'score_2' property
-     *
-     * @return integer
-     */
-    public function getScore2()
-    {
-        $value = $this->get(self::SCORE_2);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pool_2' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPool2($value)
-    {
-        return $this->set(self::GOLD_POOL_2, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pool_2' property
-     *
-     * @return integer
-     */
-    public function getGoldPool2()
-    {
-        $value = $this->get(self::GOLD_POOL_2);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pump_2' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPump2($value)
-    {
-        return $this->set(self::GOLD_PUMP_2, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pump_2' property
-     *
-     * @return integer
-     */
-    public function getGoldPump2()
-    {
-        $value = $this->get(self::GOLD_PUMP_2);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'produce_gold_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setProduceGold3($value)
-    {
-        return $this->set(self::PRODUCE_GOLD_3, $value);
-    }
-
-    /**
-     * Returns value of 'produce_gold_3' property
-     *
-     * @return integer
-     */
-    public function getProduceGold3()
-    {
-        $value = $this->get(self::PRODUCE_GOLD_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'consume_gold_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setConsumeGold3($value)
-    {
-        return $this->set(self::CONSUME_GOLD_3, $value);
-    }
-
-    /**
-     * Returns value of 'consume_gold_3' property
-     *
-     * @return integer
-     */
-    public function getConsumeGold3()
-    {
-        $value = $this->get(self::CONSUME_GOLD_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'fish_card_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setFishCard3($value)
-    {
-        return $this->set(self::FISH_CARD_3, $value);
-    }
-
-    /**
-     * Returns value of 'fish_card_3' property
-     *
-     * @return integer
-     */
-    public function getFishCard3()
-    {
-        $value = $this->get(self::FISH_CARD_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'bomb_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setBomb3($value)
-    {
-        return $this->set(self::BOMB_3, $value);
-    }
-
-    /**
-     * Returns value of 'bomb_3' property
-     *
-     * @return integer
-     */
-    public function getBomb3()
-    {
-        $value = $this->get(self::BOMB_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'score_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setScore3($value)
-    {
-        return $this->set(self::SCORE_3, $value);
-    }
-
-    /**
-     * Returns value of 'score_3' property
-     *
-     * @return integer
-     */
-    public function getScore3()
-    {
-        $value = $this->get(self::SCORE_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pool_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPool3($value)
-    {
-        return $this->set(self::GOLD_POOL_3, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pool_3' property
-     *
-     * @return integer
-     */
-    public function getGoldPool3()
-    {
-        $value = $this->get(self::GOLD_POOL_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pump_3' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPump3($value)
-    {
-        return $this->set(self::GOLD_PUMP_3, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pump_3' property
-     *
-     * @return integer
-     */
-    public function getGoldPump3()
-    {
-        $value = $this->get(self::GOLD_PUMP_3);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'produce_gold_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setProduceGold4($value)
-    {
-        return $this->set(self::PRODUCE_GOLD_4, $value);
-    }
-
-    /**
-     * Returns value of 'produce_gold_4' property
-     *
-     * @return integer
-     */
-    public function getProduceGold4()
-    {
-        $value = $this->get(self::PRODUCE_GOLD_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'consume_gold_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setConsumeGold4($value)
-    {
-        return $this->set(self::CONSUME_GOLD_4, $value);
-    }
-
-    /**
-     * Returns value of 'consume_gold_4' property
-     *
-     * @return integer
-     */
-    public function getConsumeGold4()
-    {
-        $value = $this->get(self::CONSUME_GOLD_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'fish_card_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setFishCard4($value)
-    {
-        return $this->set(self::FISH_CARD_4, $value);
-    }
-
-    /**
-     * Returns value of 'fish_card_4' property
-     *
-     * @return integer
-     */
-    public function getFishCard4()
-    {
-        $value = $this->get(self::FISH_CARD_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'bomb_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setBomb4($value)
-    {
-        return $this->set(self::BOMB_4, $value);
-    }
-
-    /**
-     * Returns value of 'bomb_4' property
-     *
-     * @return integer
-     */
-    public function getBomb4()
-    {
-        $value = $this->get(self::BOMB_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'score_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setScore4($value)
-    {
-        return $this->set(self::SCORE_4, $value);
-    }
-
-    /**
-     * Returns value of 'score_4' property
-     *
-     * @return integer
-     */
-    public function getScore4()
-    {
-        $value = $this->get(self::SCORE_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pool_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPool4($value)
-    {
-        return $this->set(self::GOLD_POOL_4, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pool_4' property
-     *
-     * @return integer
-     */
-    public function getGoldPool4()
-    {
-        $value = $this->get(self::GOLD_POOL_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'gold_pump_4' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setGoldPump4($value)
-    {
-        return $this->set(self::GOLD_PUMP_4, $value);
-    }
-
-    /**
-     * Returns value of 'gold_pump_4' property
-     *
-     * @return integer
-     */
-    public function getGoldPump4()
-    {
-        $value = $this->get(self::GOLD_PUMP_4);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'boss_award_pool' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setBossAwardPool($value)
-    {
-        return $this->set(self::BOSS_AWARD_POOL, $value);
-    }
-
-    /**
-     * Returns value of 'boss_award_pool' property
-     *
-     * @return integer
-     */
-    public function getBossAwardPool()
-    {
-        $value = $this->get(self::BOSS_AWARD_POOL);
+        $value = $this->get(self::PRODUCE_BOMB_AU);
         return $value === null ? (integer)$value : $value;
     }
 
@@ -940,6 +354,52 @@ class RPB_GameNumerical extends \ProtobufMessage
     {
         $value = $this->get(self::MDATE);
         return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'update_time' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setUpdateTime($value)
+    {
+        return $this->set(self::UPDATE_TIME, $value);
+    }
+
+    /**
+     * Returns value of 'update_time' property
+     *
+     * @return string
+     */
+    public function getUpdateTime()
+    {
+        $value = $this->get(self::UPDATE_TIME);
+        return $value === null ? (string)$value : $value;
+    }
+
+    /**
+     * Sets value of 'room_level' property
+     *
+     * @param integer $value Property value
+     *
+     * @return null
+     */
+    public function setRoomLevel($value)
+    {
+        return $this->set(self::ROOM_LEVEL, $value);
+    }
+
+    /**
+     * Returns value of 'room_level' property
+     *
+     * @return integer
+     */
+    public function getRoomLevel()
+    {
+        $value = $this->get(self::ROOM_LEVEL);
+        return $value === null ? (integer)$value : $value;
     }
 }
 }

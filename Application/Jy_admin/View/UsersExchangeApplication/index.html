@@ -84,6 +84,8 @@
 					<th width="60">物品</th>
 					<th width="30">渔劵</th>
 					<th width="60">状态</th>
+					<th width="60">卡号</th>
+					<th width="60">卡密</th>
 					<th width="30">申请时间</th>
 					<th width="30">操作时间</th>
 					<th width="30">操作人</th>
@@ -109,6 +111,9 @@
 						</a>
 					<elseif condition  = "$val['Status'] eq 2"/>兑换成功</td>
 					<elseif condition  = "$val['Status'] eq 3"/>兑换失败</if></span></td>
+
+					<td>{$val['CaNum']}</td>
+					<td>{$val['CaMi']}</td>
 					<td>{$val['DateTime']}</td>
 					<td>{$val['UpTime']}</td>
 					<td >{$val['UpName']}</td>

@@ -140,7 +140,7 @@ class CdkExchangeController extends ComController {
         $ProtoFun->UsrDataOprater->setPlayerid($playerid);
         $ProtoFun->UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $ProtoFun->UsrDataOprater->setOpt($UsrDataOpt::Modify_Player);
-        $ProtoFun->UsrDataOprater->setReason($OptReason::exchange);
+        $ProtoFun->UsrDataOprater->setReason($OptReason::exchange_cdk);
         $String = $ProtoFun->UsrDataOprater->serializeToString();
 
         $Header = array(
@@ -172,6 +172,7 @@ class CdkExchangeController extends ComController {
         $DataCdk = array(
             'Status'=>2,
             'playerid'=>$playerid,
+            'UseTime'=>date('Y-m-d H:i:s',time()),
         );
         $DataCdk = $Model
                    ->table('conf_cdk_list')

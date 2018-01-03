@@ -49,6 +49,7 @@ enum OptReason
 	new_player_gift = 20;	// 新手礼包
 	online_reward   = 21;	// 在线奖励
 	broke_reward 	= 22;	// 破产奖励
+	exchange_cdk 	= 23;	// 兑换cdk
 }
 
 message PB_Attr
@@ -78,7 +79,7 @@ message PB_Email
 	optional string 		title 	 = 2;	// 标题
 	optional string 		data 	 = 3;	// 正文
 	optional string 		time 	 = 4;	// 时间
-	optional bool 			state 	 = 5; 	// 1 未读 2 已读
+	optional bool 			state 	 = 5; 	// true 未读 false 已读
 	repeated PB_Item 		items 	 = 6;	// 物品
 	optional string			card_num = 7;	// 卡号
 	optional string			card_pwd = 8;	// 密码
@@ -139,3 +140,4 @@ message PB_PhpBroadcast
 {
 	optional string			data			= 1;	
 }
+
