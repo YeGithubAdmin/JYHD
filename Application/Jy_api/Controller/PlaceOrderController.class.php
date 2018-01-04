@@ -31,6 +31,8 @@ class PlaceOrderController extends ComController {
         $msgArr[4008] = "物品信息缺失！";
         $msgArr[4009] = "支付类型缺失！";
         $msgArr[4010] = "支付信息错误！";
+        $msgArr[4011] = "支付异常！";
+        $msgArr[4012] = "下单超时！";
         $msgArr[5002] = "物品不存在！";
         $msgArr[5003] = "支付信息不存在！";
         $msgArr[5004] = "支付类型暂时未接通！";
@@ -67,6 +69,8 @@ class PlaceOrderController extends ComController {
                         ->where('Type = 1  and Status = 1 or Channel = "'.$DataInfo['channel'].'"  and Status = 1')
                         ->order('Type asc')
                         ->select();
+
+
         foreach ($catGameConfig as $k=>$v){
             if($v['StopPay'] == 2){
                 $result = 7004;
@@ -227,7 +231,7 @@ class PlaceOrderController extends ComController {
             6,
             7,
             8,
-
+            9,
         );
         if(!in_array($PlatformType,$dataType)){
             //查询支付信息
@@ -449,6 +453,43 @@ class PlaceOrderController extends ComController {
                 $PayInfo['paytype'] = 1;
                 $PayInfo['result'] = 0;
                 $PayInfo['money'] = (float)$catGoodsAll['CurrencyNum'];
+                break;
+                //vivo
+            case 9:
+                $Payment = true;
+                $PayCom = D('PayCom');
+                $AppKey = '55a40a6528176fff6c31fc7da3bf73c7';
+                $orderTime = date('YmdHms',time());
+                $param = array(
+                    'version'       =>'1.0.0',
+                    'signMethod'    =>'MD5',
+                    'cpId'          => "20160512185048379012",
+                    'appId'         =>'bec5a96a4a01199e21a7173c4837203b',
+                    'cpOrderNumber'    =>$PlatformOrder,
+                    'notifyUrl'     =>'http://adminjy.juyihd.com/Jy_Thirdpay/VivoBack/index',
+                    'orderTime'     =>"$orderTime",
+                    'orderAmount'   =>$catGoodsAll['CurrencyNum']*100,
+                    'orderTitle'    =>$catGoodsAll['Name'],
+                    'orderDesc'     =>$catGoodsAll['Name'],
+
+                );
+                $ResData = $PayCom->VivoPayOrder($param,$AppKey);
+                if(!$PayCom){
+                    $result = 40012;
+                    goto  response;
+                }
+                if($ResData['respCode'] != 200){
+                    $result = 40011;
+                    goto  response;
+                }
+                $info = array(
+                    'productName'=>$catGoodsAll['Name'],
+                    'productDes'=>$catGoodsAll['Name'],
+                    'productPrice'=>$catGoodsAll['CurrencyNum']*100,
+                    'vivoSignature'=>$ResData['signature'],
+                    'appId'=>'bec5a96a4a01199e21a7173c4837203b',
+                    'transNo'=>$ResData['orderNumber'],
+                );
                 break;
             default:
                 break;
