@@ -465,16 +465,13 @@ class PlaceOrderController extends ComController {
                     'signMethod'    => 'MD5',
                     'cpId'          => "20160512185048379012",
 
-                    'appId'         =>'bec5a96a4a01199e21a7173c4837203b',
-
-                    'cpOrderNumber' => $PlatformOrder,
-                    'notifyUrl'     => SERVER_DOMAIN_NAME.'/Jy_Thirdpay/VivoBack/index',
-                    'orderTime'     => "$orderTime",
-                    'orderAmount'   => $catGoodsAll['CurrencyNum']*100,
-                    'orderTitle'    => $catGoodsAll['Name'],
-                    'orderDesc'     => $catGoodsAll['Name'],
-
-
+                    'appId'         => 'bec5a96a4a01199e21a7173c4837203b',
+                    'cpOrderNumber' =>  $PlatformOrder,
+                    'notifyUrl'     =>  SERVER_DOMAIN_NAME.'/Jy_Thirdpay/VivoBack/index',
+                    'orderTime'     =>  "$orderTime",
+                    'orderAmount'   =>  $catGoodsAll['CurrencyNum']*100,
+                    'orderTitle'    =>  $catGoodsAll['Name'],
+                    'orderDesc'     =>  $catGoodsAll['Name'],
 
 
                 );
