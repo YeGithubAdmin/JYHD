@@ -465,21 +465,13 @@ class PlaceOrderController extends ComController {
                     'signMethod'    => 'MD5',
                     'cpId'          => "20160512185048379012",
                     'appId'         =>'bec5a96a4a01199e21a7173c4837203b',
-<<<<<<< HEAD
-                    'cpOrderNumber'    =>$PlatformOrder,
+                    'cpOrderNumber' =>$PlatformOrder,
                     'notifyUrl'     => SERVER_DOMAIN_NAME.'Jy_Thirdpay/VivoBack/index',
                     'orderTime'     =>"$orderTime",
                     'orderAmount'   =>$catGoodsAll['CurrencyNum']*100,
                     'orderTitle'    =>$catGoodsAll['Name'],
                     'orderDesc'     =>$catGoodsAll['Name'],
-=======
-                    'cpOrderNumber' => $PlatformOrder,
-                    'notifyUrl'     => SERVER_DOMAIN_NAME.'/Jy_Thirdpay/VivoBack/index',
-                    'orderTime'     => "$orderTime",
-                    'orderAmount'   => $catGoodsAll['CurrencyNum']*100,
-                    'orderTitle'    => $catGoodsAll['Name'],
-                    'orderDesc'     => $catGoodsAll['Name'],
->>>>>>> OPPO
+
 
                 );
                 $ResData = $PayCom->VivoPayOrder($param,$AppKey);
