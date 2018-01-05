@@ -52,6 +52,7 @@ class OppoLoginController extends ComController {
             $result = 3002;
             goto response;
         }
+
         if($Response['resultCode'] != 200){
             $result = 7001;
             goto response;
