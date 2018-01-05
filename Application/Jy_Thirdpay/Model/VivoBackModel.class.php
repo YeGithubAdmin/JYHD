@@ -28,7 +28,7 @@ class VivoBackModel extends Model{
         ksort($param);
         $str = '';
         foreach ($param as $k=>$v){
-            if($k != "signMethod"){
+            if($k != "signMethod" && $k != 'signature'){
                 $str .= $k.'='.$v.'&';
             }
         }

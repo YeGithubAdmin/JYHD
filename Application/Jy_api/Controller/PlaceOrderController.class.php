@@ -466,7 +466,7 @@ class PlaceOrderController extends ComController {
                     'cpId'          => "20160512185048379012",
                     'appId'         =>'bec5a96a4a01199e21a7173c4837203b',
                     'cpOrderNumber'    =>$PlatformOrder,
-                    'notifyUrl'     =>SERVER_DOMAIN_NAME.'/Jy_Thirdpay/VivoBack/index',
+                    'notifyUrl'     => SERVER_DOMAIN_NAME.'Jy_Thirdpay/VivoBack/index',
                     'orderTime'     =>"$orderTime",
                     'orderAmount'   =>$catGoodsAll['CurrencyNum']*100,
                     'orderTitle'    =>$catGoodsAll['Name'],
@@ -486,7 +486,7 @@ class PlaceOrderController extends ComController {
                     'productName'=>$catGoodsAll['Name'],
                     'productDes'=>$catGoodsAll['Name'],
                     'productPrice'=>$catGoodsAll['CurrencyNum']*100,
-                    'vivoSignature'=>$ResData['signature'],
+                    'vivoSignature'=>$ResData['accessKey'],
                     'appId'=>'bec5a96a4a01199e21a7173c4837203b',
                     'transNo'=>$ResData['orderNumber'],
                 );

@@ -17,7 +17,8 @@ class VivoBackController extends Controller {
         $PayCom     = D('PayCom');
         $VivoBack   = D('VivoBack');
         $ObjFun   =$PayCom->ObjFun;
-        $dataThirdpay = $VivoBack->Elements($_POST) ;
+
+        $dataThirdpay = $_POST ;
         if(!is_array($dataThirdpay)){
             $dataThirdpay = json_decode($dataThirdpay,'true');
         }
