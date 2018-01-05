@@ -53,8 +53,6 @@ class  HuaWeiFun{
           $valueMap["sysReserved"] = urldecode($valueMap["sysReserved"]);
       }
         ksort($valueMap);
-
-      print_r($valueMap);
       return $valueMap;
   }
   //签名私钥

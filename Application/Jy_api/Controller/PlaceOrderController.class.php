@@ -461,16 +461,25 @@ class PlaceOrderController extends ComController {
                 $AppKey = '55a40a6528176fff6c31fc7da3bf73c7';
                 $orderTime = date('YmdHms',time());
                 $param = array(
-                    'version'       =>'1.0.0',
-                    'signMethod'    =>'MD5',
+                    'version'       => '1.0.0',
+                    'signMethod'    => 'MD5',
                     'cpId'          => "20160512185048379012",
                     'appId'         =>'bec5a96a4a01199e21a7173c4837203b',
+<<<<<<< HEAD
                     'cpOrderNumber'    =>$PlatformOrder,
                     'notifyUrl'     => SERVER_DOMAIN_NAME.'Jy_Thirdpay/VivoBack/index',
                     'orderTime'     =>"$orderTime",
                     'orderAmount'   =>$catGoodsAll['CurrencyNum']*100,
                     'orderTitle'    =>$catGoodsAll['Name'],
                     'orderDesc'     =>$catGoodsAll['Name'],
+=======
+                    'cpOrderNumber' => $PlatformOrder,
+                    'notifyUrl'     => SERVER_DOMAIN_NAME.'/Jy_Thirdpay/VivoBack/index',
+                    'orderTime'     => "$orderTime",
+                    'orderAmount'   => $catGoodsAll['CurrencyNum']*100,
+                    'orderTitle'    => $catGoodsAll['Name'],
+                    'orderDesc'     => $catGoodsAll['Name'],
+>>>>>>> OPPO
 
                 );
                 $ResData = $PayCom->VivoPayOrder($param,$AppKey);
@@ -490,6 +499,18 @@ class PlaceOrderController extends ComController {
                     'appId'=>'bec5a96a4a01199e21a7173c4837203b',
                     'transNo'=>$ResData['orderNumber'],
                 );
+                break;
+                //OPPO
+            case 10:
+                $Payment = true;
+                //订单号
+                $info['order']          =    $PlatformOrder;
+                //消费总金额，单位为分
+                $info['amount']         =   $catGoodsAll['CurrencyNum']*100;
+                //商品名
+                $info['productName']    =    $catGoodsAll['Name'];
+                //商品描述
+                $info['callbackUrl']    =    SERVER_DOMAIN_NAME.'Jy_Thirdpay/VivoBack/index';
                 break;
             default:
                 break;
