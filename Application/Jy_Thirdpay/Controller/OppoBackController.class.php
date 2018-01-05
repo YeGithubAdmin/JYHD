@@ -33,23 +33,35 @@ class OppoBackController extends Controller {
     public function __construct(){
         $dataThirdpay = $_POST;
 
+
+
+
         $PayCom =  D('PayCom');
         $ComFun =  D('ComFun');
+
+
+
 
         if(!is_array($dataThirdpay)){
             $dataThirdpay = json_decode($dataThirdpay,true);
         }
         $this->tradeStatus =  true;
         $this->OrderID     =  $dataThirdpay['partnerOrder'];
-        $this->money       =  $dataThirdpay['price']*100;
+        $this->money       =  $dataThirdpay['price']/100;
         $this->paytype     =  0;
         $this->PayCom      =  $PayCom;
         $this->ComFun      = $ComFun;
+        $this->dataThirdpay = $dataThirdpay;
         //验签
         $publickey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCmreYIkPwVovKR8rLHWlFVw7YDfm9uQOJKL89Smt6ypXGVdrAKKl0wNYc3/jecAoPi2ylChfa2iRu5gunJyNmpWZzlCNRIau55fxGW0XEu553IiprOZcaw5OuYGlf60ga8QT6qToP0/dpiL/ZbmNUO9kUhosIjEu22uFgR+5cYyQIDAQAB';
         $Pem = chunk_split($publickey,64,"\n");
         $Pem = "-----BEGIN PUBLIC KEY-----\n".$Pem."-----END PUBLIC KEY-----\n";
-        $valueMap = $ComFun->UrlToArry($dataThirdpay);
+
+
+
+        $valueMap =  'notifyId='.$dataThirdpay['notifyId'].'&partnerOrder='.$dataThirdpay['partnerOrder'].'&productName='.$dataThirdpay['productName'].'&productDesc='.$dataThirdpay['productDesc'].'&price='.$dataThirdpay['price'].'&count='.$dataThirdpay['count'].'&attach='.$dataThirdpay['attach'];
+
+
         $this->parseResp =  $ComFun->PayVerification($valueMap,$dataThirdpay['sign'],$Pem);
 
 
@@ -98,7 +110,7 @@ class OppoBackController extends Controller {
             goto failed;
         }
         //支付状态  0 成功  1  失败
-        if($this->tradeStatus){
+        if(!$this->tradeStatus){
             $result = 7003;
             goto failed;
         }

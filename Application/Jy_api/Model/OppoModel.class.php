@@ -13,35 +13,31 @@ class OppoModel extends \Common\Model\ComFunModel {
         $Url = 'http://i.open.game.oppomobile.com/gameopen/user/fileIdInfo?fileId='.urlencode($Ssoid).'&token='.urlencode($Token);
         $baseStr = array(
             'oauthConsumerKey'      =>    'av4Vtq0LkYGc00Kwo04O400sK',
-            'oauthToken'            =>    $Token,
+            'oauthToken'            =>    urlencode($Token),
             'oauthSignatureMethod'  =>    'HMAC-SHA1',
             'oauthTimestamp'        =>    time(),
-            'oauthNonce'            =>    rand(10,10000000),
+            'oauthNonce'            =>    rand(10,1000),
             'oauthVersion'          =>    '1.0',
         ) ;
-        $Param = $this->MosaicUrl($baseStr);
+         $Param ='';
+         foreach ($baseStr as $k=>$v){
+             $Param.=$k."=".$v."&";
+
+         }
         $AppSecret = "7d560F0F49D2EdeD648818a005346107&";
-        $Sign = $this->Sign($Param,$AppSecret);
-        $Content = array(
-                    'param'=>$Param,
-                    'oauthSignature'=>$Sign,
-        );
+        $Sign = base64_encode(hash_hmac("sha1", $Param, $AppSecret, true));
+
+         $Content = array(
+             'param:'.$Param,
+             'oauthSignature:'.urlencode($Sign),
+         );
         $Response = $this->Tocurl($Url,'',$Content);
+
 
         if($Response == -2){
             return false;
         }
         return json_decode($Response,true);
      }
-     /***
-     * 加签
-     * @param  $param string  unkonw
-     * @param  $key   string  key
-     * return  string  签名
-     **/
-     public function Sign($param,$key){
-         openssl_sign($param, $Sign, $key);
-         openssl_free_key($key);
-         return base64_encode($Sign);
-     }
+
 }

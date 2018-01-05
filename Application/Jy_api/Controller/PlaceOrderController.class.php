@@ -232,6 +232,7 @@ class PlaceOrderController extends ComController {
             7,
             8,
             9,
+            10,
         );
         if(!in_array($PlatformType,$dataType)){
             //查询支付信息
@@ -467,7 +468,7 @@ class PlaceOrderController extends ComController {
 
                     'appId'         => 'bec5a96a4a01199e21a7173c4837203b',
                     'cpOrderNumber' =>  $PlatformOrder,
-                    'notifyUrl'     =>  SERVER_DOMAIN_NAME.'/Jy_Thirdpay/VivoBack/index',
+                    'notifyUrl'     =>  SERVER_DOMAIN_NAME.'Jy_Thirdpay/VivoBack/index',
                     'orderTime'     =>  "$orderTime",
                     'orderAmount'   =>  $catGoodsAll['CurrencyNum']*100,
                     'orderTitle'    =>  $catGoodsAll['Name'],
@@ -503,7 +504,7 @@ class PlaceOrderController extends ComController {
                 //商品名
                 $info['productName']    =    $catGoodsAll['Name'];
                 //商品描述
-                $info['callbackUrl']    =    SERVER_DOMAIN_NAME.'Jy_Thirdpay/VivoBack/index';
+                $info['callbackUrl']    =    SERVER_DOMAIN_NAME.'Jy_Thirdpay/OppoBack/index';
                 break;
             default:
                 break;
