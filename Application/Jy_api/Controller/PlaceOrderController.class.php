@@ -464,6 +464,7 @@ class PlaceOrderController extends ComController {
                     'version'       => '1.0.0',
                     'signMethod'    => 'MD5',
                     'cpId'          => "20160512185048379012",
+
                     'appId'         =>'bec5a96a4a01199e21a7173c4837203b',
 
                     'cpOrderNumber' => $PlatformOrder,
@@ -472,6 +473,7 @@ class PlaceOrderController extends ComController {
                     'orderAmount'   => $catGoodsAll['CurrencyNum']*100,
                     'orderTitle'    => $catGoodsAll['Name'],
                     'orderDesc'     => $catGoodsAll['Name'],
+
 
 
 
