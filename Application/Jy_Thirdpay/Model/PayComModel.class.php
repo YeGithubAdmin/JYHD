@@ -6,7 +6,7 @@ use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
 use RedisProto\RPB_PlayerData;
 use Think\Model;
-class PayComModel extends Model{
+class PayComModel extends Model {
     protected $autoCheckFields = false;
     public $UsrDataOprater;
     public $UsrDataOpraterReturn;
