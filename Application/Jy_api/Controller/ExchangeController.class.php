@@ -35,6 +35,8 @@ class ExchangeController extends ComController {
         $msgArr[3006] = "网络错误，请稍后再试！";
         $msgArr[4006] = "用户信息，缺失！";
         $msgArr[4007] = "物品信息，缺失！";
+        $msgArr[4008] = "姓名缺失！";
+        $msgArr[4009] = "收货地址缺失！";
         $msgArr[5002] = "物品信息，缺失！";
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
@@ -63,6 +65,25 @@ class ExchangeController extends ComController {
                        ->where('Id ='.$GoodsID.' and IsDel = 1')
                        ->field($catGoodsAllFile)
                        ->find();
+        if(empty($catGoodsAll)){
+            $result = 5002;
+            goto response;
+        }
+
+        if($catGoodsAll['Type'] > 3){
+
+            if(empty($DataInfo['UserName'])){
+                $result = 4008;
+                goto response;
+
+            }
+            if(empty($DataInfo['Address'])){
+                $result = 4009;
+                goto response;
+            }
+        }
+
+
         //已入protobuf 类
         $obj->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
@@ -244,6 +265,9 @@ class ExchangeController extends ComController {
             'GoodsID'       =>      $catGoodsAll['Id'],
             'Type'          =>      $catGoodsAll['Type'],
             'Channel'       =>      $DataInfo['channel'],
+            'Phone'         =>      $DataInfo['Phone'],
+            'UserName'      =>      $DataInfo['UserName'],
+            'Address'       =>      $DataInfo['Address'],
             'Status'        =>      $Status,
         );
         $addUsersExchangeLog = M('jy_users_exchange_log')
