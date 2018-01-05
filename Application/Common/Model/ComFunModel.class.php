@@ -135,11 +135,5 @@ class ComFunModel extends Model{
         return $response;
     }
 
-<<<<<<< Updated upstream
-=======
 
-
-
-
->>>>>>> Stashed changes
 }
