@@ -9,10 +9,14 @@ Runtime
 .idea
 
 #框架配置
+数据表.xlsx
+数据表新增.txt
+sql
+Log
 index.php
 Application/Common/Conf
 Application/jy_*/Conf
-a
+
 
 
 
