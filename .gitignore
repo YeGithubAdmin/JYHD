@@ -8,3 +8,12 @@ Runtime
 #.idea
 .idea
 
+#框架配置
+index.php
+Application/Common/Conf
+Application/jy_*/Conf
+a
+
+
+
+
