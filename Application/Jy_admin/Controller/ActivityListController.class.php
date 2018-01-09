@@ -159,6 +159,7 @@ class ActivityListController extends ComController {
             $Model->startTrans();
             $FatherId = $Model->table('jy_activity_father_list')
                 ->add($dataActivityFatherList);
+
             if(!$FatherId){
                 $Model->rollback();
                 $result = 0;
@@ -178,6 +179,7 @@ class ActivityListController extends ComController {
             if($AddSonlist && $FatherId){
                 $Model->commit();
                 $result = $FatherId;
+
 
             }else{
                 $Model->rollback();
