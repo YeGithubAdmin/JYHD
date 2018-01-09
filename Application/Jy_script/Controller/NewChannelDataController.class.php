@@ -23,6 +23,9 @@ class NewChannelDataController extends Controller {
         $GameAccountOldSort   = $ChannelData->GameAccountOld($ChannelIn,$StartTime,$EndTime);
         $EquipmentAndroidSort = $ChannelData->EquipmentAndroid($ChannelIn,$StartTime,$EndTime);
         $EquipmentIosSort     = $ChannelData->EquipmentIos($ChannelIn,$StartTime,$EndTime);
+        $EquipmentActSort     = $ChannelData->EquipmentAct($ChannelIn,$StartTime,$EndTime);
+
+
         $info = array();
         foreach ($ChannelList['ChannelList'] as $k=>$v){
             $info[$k]['Channel']       = $v['GroupChannel'];
@@ -44,10 +47,31 @@ class NewChannelDataController extends Controller {
                 $EquipmentRegNum =  $EquipmentAndroidSort[$v['GroupChannel']]['android']+$EquipmentRegNum;
                 $RegNum =  $EquipmentAndroidSort[$v['GroupChannel']]['RegNum']+$RegNum;
             }
+
+            $GroupChannel = array(
+                'JYHD_HUAWEI',
+                'JYHD_MI',
+                'JYHD_OPPO',
+                'JYHD_VIVO',
+            );
+
+            //活跃设备
+            if(in_array($v['GroupChannel'],$GroupChannel)){
+                $info[$k]['EquipmentAct'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
+            }else{
+                $info[$k]['EquipmentAct'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
+            }
+            //注册设备
+            if(in_array($v['GroupChannel'],$GroupChannel)){
+                $info[$k]['EquipmentRegNum'] = $RegNum;
+            }else{
+                $info[$k]['EquipmentRegNum'] = $EquipmentRegNum;
+            }
+
+
+
             $info[$k]['RegNum'] = $RegNum;
             $info[$k]['EquipmentRegNum'] = $EquipmentRegNum;
-
-
             $DateTime = date('Y-m-d H:i:s',strtotime($StartTime)+24*60*60-1);
 
             //支付
@@ -91,6 +115,7 @@ class NewChannelDataController extends Controller {
             $info[$k]['UsersThirtyNum'] = 0.00;
             $info[$k]['DateTime'] = $DateTime;
         }
+
         //添加数据
         $addStatisticsUsersPay = $model
             ->table('log_channel_data')

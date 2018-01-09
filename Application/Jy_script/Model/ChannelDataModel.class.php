@@ -92,6 +92,31 @@ class ChannelDataModel extends Model{
         }
         return  $UsersOrderSort;
     }
+    //活跃设备号
+    public function EquipmentAct($ChannelIn,$StartTime,$EndTime){
+        $EquipmentAndroidField = array(
+            'reg_channel as GroupChannel',
+            'count(distinct concat(mac,imei,imsi,uuid)) as EquipmentAct',
+        );
+        $EquipmentAndroid   = M('game_login_action')
+            ->where(' login_channel in('.$ChannelIn.')  
+                                and  login_time< str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and
+                                login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+            ->field($EquipmentAndroidField)
+            ->group('GroupChannel')
+            ->select();
+        $EquipmentAndroidSort    = array();
+        foreach ($EquipmentAndroid as $k=>$v){
+            $EquipmentAndroidSort[$v['GroupChannel']] = $v;
+        }
+        return $EquipmentAndroidSort ;
+
+    }
+
+
+
+
+
     //支付老用户统计
     public  function  GameAccountOld($ChannelIn,$StartTime,$EndTime){
         $GameAccountOldField = array(

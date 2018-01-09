@@ -10,6 +10,10 @@ class IpAddrLogController extends Controller {
         $DaySecond  = 24*60*60;
         $StartTime  =  date('Y-m-d H:i:s',$time-$DaySecond);
         $EndTime    =  date('Y-m-d H:i:s',$time);
+
+
+        $IpAddrLog  = D('IpAddrLog');
+
         $Field = array(
             'Type',
             'Channel',
@@ -23,6 +27,26 @@ class IpAddrLogController extends Controller {
                    ->group('Channel,Type')
                    ->select();
 
+        $EquipmentAct = $IpAddrLog->EquipmentAct($StartTime,$EndTime);
+
+        $GroupChannel = array(
+            'JYHD_HUAWEI',
+            'JYHD_MI',
+            'JYHD_OPPO',
+            'JYHD_VIVO',
+        );
+        foreach ($catData as $k=>$v){
+            if($EquipmentAct[$v['Channel']]){
+                if(in_array($v['Channel'],$GroupChannel)){
+                    $catData[$k]['LoginNumber'] =  $EquipmentAct[$v['Channel']]['ActiveNum'];
+                }else{
+                    $catData[$k]['LoginNumber'] =  $EquipmentAct[$v['Channel']]['EquipmentActNum'];
+                }
+
+            }
+
+        }
+        //登录数
         $AddData = M('log_add_ip_pool')
                    ->addAll($catData);
 

@@ -24,6 +24,13 @@ class ChannelDataController extends Controller {
         $GameAccountOldSort   = $ChannelData->GameAccountOld($ChannelIn,$StartTime,$EndTime);
         $EquipmentAndroidSort = $ChannelData->EquipmentAndroid($ChannelIn,$StartTime,$EndTime);
         $EquipmentIosSort     = $ChannelData->EquipmentIos($ChannelIn,$StartTime,$EndTime);
+        $EquipmentActSort     = $ChannelData->EquipmentAct($ChannelIn,$StartTime,$EndTime);
+
+
+
+
+        //活跃设备号
+
         $info = array();
         foreach ($ChannelList['ChannelList'] as $k=>$v){
             $info[$k]['Channel']       = $v['GroupChannel'];
@@ -46,7 +53,28 @@ class ChannelDataController extends Controller {
                 $RegNum =  $EquipmentAndroidSort[$v['GroupChannel']]['RegNum']+$RegNum;
             }
             $info[$k]['RegNum'] = $RegNum;
-            $info[$k]['EquipmentRegNum'] = $EquipmentRegNum;
+
+            $GroupChannel = array(
+                'JYHD_HUAWEI',
+                'JYHD_MI',
+                'JYHD_OPPO',
+                'JYHD_VIVO',
+            );
+
+            //活跃设备
+            if(in_array($v['GroupChannel'],$GroupChannel)){
+                $info[$k]['EquipmentAct'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
+            }else{
+                $info[$k]['EquipmentAct'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
+            }
+            //注册设备
+            if(in_array($v['GroupChannel'],$GroupChannel)){
+                $info[$k]['EquipmentRegNum'] = $RegNum;
+            }else{
+                $info[$k]['EquipmentRegNum'] = $EquipmentRegNum;
+            }
+
+
             //支付
             if($UsersOrderSort[$v['GroupChannel']]){
                 $info[$k]['Success']         =    $UsersOrderSort[$v['GroupChannel']]['Success'] ;
@@ -88,6 +116,9 @@ class ChannelDataController extends Controller {
             $info[$k]['UsersThirtyNum'] = 0.00;
         }
 
+        print_r($info);
+
+        die;
         //添加数据
         $addStatisticsUsersPay = $model
             ->table('jy_statistics_users_pay')
