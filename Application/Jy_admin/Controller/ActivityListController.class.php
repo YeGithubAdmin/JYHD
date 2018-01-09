@@ -110,7 +110,6 @@ class ActivityListController extends ComController {
             );
             $addActivityFatherList = $Model->table('jy_activity_father_list')
                 ->add($dataActivityFatherList);
-
             if(!$addActivityFatherList){
                 $result = 0;
                 goto  response;
@@ -179,6 +178,7 @@ class ActivityListController extends ComController {
             if($AddSonlist && $FatherId){
                 $Model->commit();
                 $result = $FatherId;
+
 
 
             }else{
