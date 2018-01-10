@@ -113,10 +113,6 @@ class ChannelDataModel extends Model{
 
     }
 
-
-
-
-
     //支付老用户统计
     public  function  GameAccountOld($ChannelIn,$StartTime,$EndTime){
         $GameAccountOldField = array(

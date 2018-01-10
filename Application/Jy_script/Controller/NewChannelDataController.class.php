@@ -57,9 +57,9 @@ class NewChannelDataController extends Controller {
 
             //活跃设备
             if(in_array($v['GroupChannel'],$GroupChannel)){
-                $info[$k]['EquipmentAct'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
+                $info[$k]['EquipmentActNum'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
             }else{
-                $info[$k]['EquipmentAct'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
+                $info[$k]['EquipmentActNum'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
             }
             //注册设备
             if(in_array($v['GroupChannel'],$GroupChannel)){

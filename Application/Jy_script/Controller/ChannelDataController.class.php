@@ -63,9 +63,9 @@ class ChannelDataController extends Controller {
 
             //活跃设备
             if(in_array($v['GroupChannel'],$GroupChannel)){
-                $info[$k]['EquipmentAct'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
+                $info[$k]['EquipmentActNum'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
             }else{
-                $info[$k]['EquipmentAct'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
+                $info[$k]['EquipmentActNum'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
             }
             //注册设备
             if(in_array($v['GroupChannel'],$GroupChannel)){
@@ -115,10 +115,6 @@ class ChannelDataController extends Controller {
             $info[$k]['UsersFifteenNum'] = 0.00;
             $info[$k]['UsersThirtyNum'] = 0.00;
         }
-
-        print_r($info);
-
-        die;
         //添加数据
         $addStatisticsUsersPay = $model
             ->table('jy_statistics_users_pay')
