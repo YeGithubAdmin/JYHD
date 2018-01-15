@@ -12,7 +12,7 @@ return array(
   // 'DB_PWD'                =>  '123456',                  // 密码
     'DB_PORT'               =>  '3306',                          // 端口
     'DB_PREFIX'             =>  '',                           // 数据库表前缀
-    'DB_DEBUG'  			=>  false,                           // 数据库调试模式 开启后可以记录SQL日志
+    'DB_DEBUG'  			=>  true,                           // 数据库调试模式 开启后可以记录SQL日志
     'DB_FIELDS_CACHE'       =>  false,                            // 启用字段缓存
     'DB_CHARSET'            =>  'utf8',                          // 数据库编码默认采用utf8
     'URL_MODEL'             =>  2,       // URL访问模式:0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  默认为PATHINFO 模式
@@ -20,22 +20,5 @@ return array(
     'DB_RW_SEPARATE'        =>  false,                                          // 数据库读写是否分离 主从式有效
     'DB_PARAMS'             => array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),  //数据字段名区分大小写
     'ACCESS_lOGS'           => true,
-
-    'DB_CONFIG1' => array(
-        'db_type'  => 'mysql',
-        'db_user'  => 'root',
-        'db_pwd'   => '123456',
-        'db_host'  => '119.23.26.16',
-        'db_port'  => '3306',
-        'db_name'  => 'jyhd'
-    ),
-    'DB_CONFIG2' => array(
-        'db_type'  => 'mysql',
-        'db_user'  => 'root',
-        'db_pwd'   => 'jyhd.mysql.1112',
-        'db_host'  => '120.78.55.73',
-        'db_port'  => '3306',
-        'db_name'  => 'jyhd'
-    ),
 
 );
