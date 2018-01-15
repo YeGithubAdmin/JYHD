@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+    <script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+    <script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+          type="text/css" />
+    <link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+          rel="stylesheet" type="text/css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>流失回流</title>
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 运营查询 <span class="c-gray en">&gt;</span>
+    流失用户 <span class="c-gray en">&gt;</span>付费金额 <a
+        class="btn btn-success radius r mr-20"
+        style="line-height: 1.6em; margin-top: 3px"
+        href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="pd-20">
+    <!--搜索 -->
+    <form action="" method="get">
+
+        <div class="text-c">
+            创建时间：<input type="text"
+                         onfocus="<literal>WdatePicker({maxDate:'\'%y-%M-{%d}\'}'})</literal>"
+                         id="datemin" value="{$search['datemin']}" name="datemin"
+                         class="input-text Wdate" style="width: 120px;">
+            <span style="width: 150px" class="select-box">
+                <select size="1" name="Channel" class="select">
+                        <option value="">渠道</option>
+                        <volist name = "Channel" id = "val">
+                              <option  value="{$val['account']}"   <if condition  = "$search['Channel'] eq $val['account']"> selected = "true"</if>   >{$val['name']}</option>
+                        </volist>
+				</select>
+			</span>
+
+            <button type="submit" class="btn btn-success" id="" name="">
+                <i class="Hui-iconfont">&#xe665;</i> 搜索
+            </button>
+        </div>
+    </form>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20" >
+        <form action="/Jy_statistics/LossPay/excelData" id="excel" method="post">
+            <textarea  style="display: none;" name = "data">{$info|json_encode}</textarea>
+			<span class="l"> <a href="javascript:;"
+                                onclick="excelData()"
+                                class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
+					导出excel</a>
+			</span>
+        </form>
+    </div>
+    <table
+            class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="30">付费金额</th>
+            <th width="30">账号数</th>
+            <th width="30">百分比</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name = "info" id ="val">
+            <tr class="text-c">
+                <td>{$val['Name']}</td>
+                <td>{$val['Num']}</td>
+                <td>{$val['Rate']}%</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class = "cl">
+    <div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+         class="dataTables_paginate paging_simple_numbers">{$page}</div>
+</div>
+<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+
+</body>
+</html>
+<!--导出excel-->
+<script type="text/javascript">
+//导出excel
+    var excel = document.getElementById('excel');
+    function excelData() {
+        excel.submit();
+    }
+
+</script>
+
+

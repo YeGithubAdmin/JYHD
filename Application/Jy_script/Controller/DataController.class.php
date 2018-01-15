@@ -2,67 +2,81 @@
 namespace Jy_script\Controller;
 use Think\Controller;
 use Think\Model;
-class TestController extends Controller {
+class DataController extends Controller {
     public function index(){
         $time = strtotime('2018-01-13');
         $StartTime = date('Y-m-d H:i:s',$time);
         $EndTime   =  date('Y-m-d H:i:s',$time+24*60*60);
-        $where = 'a.`Status` = 2 and a.`PayChannel` =  "JYHD_HUAWEI" and  a.CallbackTime < str_to_date("'.$EndTime.'","%Y-%m-%d  %H:%i:%s") 
-        and  a.CallbackTime >= str_to_date("'.$StartTime.'","%Y-%m-%d  %H:%i:%s")';
-        $catData = $this->CatGoods($where);
+        $where = 'login_channel = "JYHD_HUAWEI"  and reason in (8,21,22,19) and  opt_time < str_to_date("'.$EndTime.'","%Y-%m-%d  %H:%i:%s") 
+        and  opt_time >= str_to_date("'.$StartTime.'","%Y-%m-%d  %H:%i:%s")';
+        $catData = $this->CatData($where);
 
-
-        $expTitle = "商城购买-2018-01-13";
-
-        $expCellName = array(
-            'Id',
-            '商品',
-            '购买人数',
-            '购买次数',
-            '总价',
+        $Data = array(
+            array(
+                'reason'=>8,
+                'name'=>'签到',
+            ),
+            array(
+                'reason'=>19,
+                'name'=>'抽奖',
+            ),
+            array(
+                'reason'=>21,
+                'name'=>'在线奖励',
+            )
+            ,
+            array(
+                'reason'=>22,
+                'name'=>'破产奖励',
+            ),
         );
-        $this->exportExcel($expTitle,$expCellName,$catData,25);
-        print_r($catData);
-    }
 
-    public function CatGoods($where){
-        $goods = M('jy_goods_all')->where('IsDel = 1 and ShowType = 1 or Code in (7,11,12,13)')->field(array(
-            'Id',
-            'Name',
-        ))->select();
-        $mall  = M('jy_users_order_info as a')
-            ->join('jy_users_order_goods as b on  a.`playerid` =  b.`playerid` 
-                        and a.`PlatformOrder` = b.`PlatformOrder` 
-                        and b.`IsGive` = 1')
-            ->where($where)
-            ->field(array(
-                'b.`GoodsID` as GoodsID',
-                'a.`OrderName`',
-                'count(distinct a.`playerid`) UserPay',
-                'count(b.`GoodsID`) as ShopNum',
-                'sum(a.`Price`) as Price',
-            ))
-            ->group('GoodsID')
-            ->select();
-        foreach ($mall as $k=>$v) $mallSort[$v['GoodsID']] = $v;
-        foreach ($goods as $k=>$v){
-            if($mallSort[$v['Id']]){
-                $goods[$k]['ShopNum'] = $mallSort[$v['Id']]['ShopNum'];
-                $goods[$k]['UserPay'] = $mallSort[$v['Id']]['UserPay'];
-                $goods[$k]['Price'] = $mallSort[$v['Id']]['Price'];
+        foreach ($Data as $k=>$v){
+            if($catData[$v['reason']]){
+                $Data[$k]['UserNum'] = $catData[$v['reason']]['UserNum'];
+                if($v['reason'] == 8){
+                    $Data[$k]['Num'] = $catData[$v['reason']]['UserNum'];
+                }else{
+                    $Data[$k]['Num'] = $catData[$v['reason']]['Num'];
+                }
             }else{
-                $goods[$k]['ShopNum'] = 0;
-                $goods[$k]['UserPay'] = 0;
-                $goods[$k]['Price'] = 0;
+                $Data[$k]['UserNum'] = 0;
+                $Data[$k]['Num']     = 0;
             }
         }
-        return $goods;
+
+        $expTitle = "游戏币方法-2018-01-13";
+        $expCellName = array(
+            '类型值',
+            '名称',
+            '人数',
+            '次数',
+
+        );
+
+        $this->exportExcel($expTitle,$expCellName,$Data);
+    }
+
+    public function CatData($where){
+        $catData = M('game_reschange_action')
+                   ->where($where)
+                   ->field(
+                       array(
+                           'count(distinct playerid) as UserNum',
+                           'count(playerid) as Num',
+                           'reason',
+                       )
+                   )
+                    ->group('reason')
+                   ->select();
+        foreach ($catData as $k=>$v) $catDataSort[$v['reason']] = $v;
+        return $catDataSort;
     }
 
 
 
 
-
+    
 
     public function exportExcel($expTitle,$expCellName,$expTableData,$setWidth = 20){
         include JY_ROOT."PHPExcel/PHPExcel.php";

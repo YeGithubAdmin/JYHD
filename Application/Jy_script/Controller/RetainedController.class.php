@@ -32,7 +32,10 @@ class RetainedController extends Controller {
         $OneNumEndTime          =   date('Y-m-d H:i:s',$time) ;
 
         $UsersOneNumSql         =   $this->UpdateDb($EndTime,$StartTime,$OneNumEndTime,$OneNumStartTime,'UsersOneNum');
+
         $SelectUpdate           =   $model->query($UsersOneNumSql);
+        $SelectUpdate = $this->UpChannelData($SelectUpdate,$OneNumEndTime,$OneNumStartTime,'UsersOneNum');
+
 
         if(!$SelectUpdate){
             $result = 1;
@@ -41,7 +44,11 @@ class RetainedController extends Controller {
         $TowNumStartTime        =   date("Y-m-d H:i:s",$time-2*24*60*60);
         $TowNumEndTime          =   date('Y-m-d H:i:s',$time-24*60*60) ;
         $UsersOneNumSql         =   $this->UpdateDb($EndTime,$StartTime,$TowNumEndTime,$TowNumStartTime,'UsersTowNum');
+
         $SelectUpdate           =   $model->query($UsersOneNumSql);
+        $SelectUpdate           =   $this->UpChannelData($SelectUpdate,$TowNumEndTime,$TowNumStartTime,'UsersTowNum');
+
+
         if(!$SelectUpdate){
             $result = 2;
         }
@@ -50,6 +57,7 @@ class RetainedController extends Controller {
         $ThreeNumEndTime        =  date('Y-m-d H:i:s',$time-2*60*60*24) ;
         $UsersOneNumSql         =  $this->UpdateDb($EndTime,$StartTime,$ThreeNumEndTime,$ThreeNumStartTime,'UsersThreeNum');
         $SelectUpdate           =  $model->query($UsersOneNumSql);
+        $SelectUpdate           =   $this->UpChannelData($SelectUpdate,$ThreeNumEndTime,$ThreeNumStartTime,'UsersThreeNum');
         if(!$SelectUpdate){
             $result = 3;
         }
@@ -58,6 +66,7 @@ class RetainedController extends Controller {
         $SevenNumEndTime        =  date('Y-m-d H:i:s',$time-6*60*60*24) ;
         $UsersOneNumSql         =  $this->UpdateDb($EndTime,$StartTime,$SevenNumEndTime,$SevenNumStartTime,'UsersSevenNum');
         $SelectUpdate           =  $model->query($UsersOneNumSql);
+        $SelectUpdate           =   $this->UpChannelData($SelectUpdate,$SevenNumEndTime,$SevenNumStartTime,'UsersSevenNum');
         if(!$SelectUpdate){
             $result = 4;
         }
@@ -66,6 +75,7 @@ class RetainedController extends Controller {
         $FifteenNumEndTime      =  date('Y-m-d H:i:s',$time-14*60*60*24) ;
         $UsersOneNumSql         =  $this->UpdateDb($EndTime,$StartTime,$FifteenNumEndTime,$FifteenNumStartTime,'UsersFifteenNum');
         $SelectUpdate           =  $model->query($UsersOneNumSql);
+        $SelectUpdate           =   $this->UpChannelData($SelectUpdate,$FifteenNumEndTime,$FifteenNumStartTime,'UsersFifteenNum');
         if(!$SelectUpdate){
             $result = 5;
         }
@@ -74,6 +84,9 @@ class RetainedController extends Controller {
         $ThirtyNumEndTime       =  date('Y-m-d H:i:s',$time-29*60*60*24) ;
         $UsersOneNumSql         =  $this->UpdateDb($EndTime,$StartTime,$ThirtyNumEndTime,$ThirtyNumStartTime,'UsersThirtyNum');
         $SelectUpdate           =  $model->query($UsersOneNumSql);
+        $SelectUpdate           =   $this->UpChannelData($SelectUpdate,$ThirtyNumEndTime,$ThirtyNumStartTime,'UsersThirtyNum');
+
+
         if(!$SelectUpdate){
             $result = 6;
         }
@@ -94,18 +107,12 @@ class RetainedController extends Controller {
     * @param  $RegEndTime    string  登录借宿时间
     * @param  $RegStartTime  string  登录开始时间
     */
-     private  function  UpdateDb($EndTime,$StartTime,$RegEndTime,$RegStartTime,$item){
+     private  function  UpdateDb($EndTime,$StartTime,$RegEndTime,$RegStartTime){
             $Sql = '
-                    UPDATE  
-                        log_channel_data as a,
-                        (
+                
                             SELECT 
                             a.reg_channel as  GroupChannel,
-                            count(distinct a.playerid) as UserNum,
-                            a.regtime,
-                            b.login_time,
-                            count(distinct b.playerid) as UsersOneNum,
-                            count(distinct b.playerid)/count(distinct a.playerid)  Retained 
+                            round(count(distinct b.playerid)/count(distinct a.playerid),2)  Retained 
                             FROM game_account as a left JOIN game_login_action as b on  a.reg_channel = b.login_channel 
                             and  a.playerid = b.playerid  
                             and  b.login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") 
@@ -113,13 +120,21 @@ class RetainedController extends Controller {
                             WHERE ( a.regtime < str_to_date("'.$RegEndTime.'","%Y-%m-%d %H:%i:%s")
                             and a.regtime >= str_to_date("'.$RegStartTime.'","%Y-%m-%d %H:%i:%s") ) 
                             GROUP BY GroupChannel
-                        ) AS  b SET a.'.$item.' = b.Retained 
-                    WHERE 
-                        a.Channel = b.GroupChannel
-                            AND    a.`DateTime` < str_to_date("'.$RegEndTime.'","%Y-%m-%d %H:%i:%s") 
-                            AND    a.`DateTime` >= str_to_date("'.$RegStartTime.'","%Y-%m-%d %H:%i:%s")
+                      
                         ';
             return    $Sql;
      }
+
+     public function  UpChannelData($data,$RegEndTime,$RegStartTime,$item){
+         $db = M('log_channel_data');
+            foreach ($data as $k=>$v){
+                $db->where('`Channel` = "'.$v['GroupChannel'].'"    AND   `DateTime` < str_to_date("'.$RegEndTime.'","%Y-%m-%d %H:%i:%s") 
+                            AND    `DateTime` >= str_to_date("'.$RegStartTime.'","%Y-%m-%d %H:%i:%s")  ')->save(array(
+                    $item =>$v['Retained']
+                ));
+            }
+     }
+
+
 
 }
