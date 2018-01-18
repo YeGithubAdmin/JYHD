@@ -132,8 +132,8 @@ class ChannelDataModel extends Model{
             }
             return $catDataSort ;
 
-<<<<<<< HEAD
-=======
+
+
     }
     //月活跃
     public function MauAct($ChannelIn,$Time){
@@ -156,7 +156,7 @@ class ChannelDataModel extends Model{
         }
         return $catDataSort ;
     }
->>>>>>> Admin1.0.2
+
     //支付老用户统计
     public  function  GameAccountOld($ChannelIn,$StartTime,$EndTime){
         $GameAccountOldField = array(
