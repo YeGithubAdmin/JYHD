@@ -111,7 +111,7 @@ class GoodsAllController extends ComController {
             $Rmark                       =           I('param.Rmark','','trim');                        //备注
             $LimitLevel                  =           I('param.LimitLevel',0,'intval');                  //等级限制 0-不限制
             $LimitVip                    =           I('param.LimitVip',0,'intval');                    //会员等级限制 0-不限制
-            $Sort                        =           time();                                            //排序
+            $Sort                        =           I('param.Sort',0,'intval');                                            //排序
             $IsGive                      =           I('param.IsGive',1,'intval');                      //是否赠送 1-否 2-是
             $Proportion                  =           I('param.Proportion',0,'intval');                  //首冲比例
             $ImgCode                     =           I('param.ImgCode','','trim');                      //图片标识
@@ -201,7 +201,7 @@ class GoodsAllController extends ComController {
         $catGoodsAllInfo = M('jy_goods_all')
                             ->where('Id = '.$Id.' and IsDel = 1')
                             ->field('Id,Code,Name,IosCode,OriginalPrice,CurrencyType,CurrencyNum,IssueNum,IssueType,Type,CateGory,GiveInfo,IsGroom,Status,TheShelvesTime,Platform
-                            ,LimitShop,LimitShopNum,ExchangeType,FaceValue,ShowType,ExchangeNum,ImgCode,Describe,Proportion,Push,Broadcast,Rmark,GetNum,LimitLevel,LimitVip')
+                            ,LimitShop,LimitShopNum,Sort,ExchangeType,FaceValue,ShowType,ExchangeNum,ImgCode,Describe,Proportion,Push,Broadcast,Rmark,GetNum,LimitLevel,LimitVip')
                             ->find();
         if(empty($catGoodsAllInfo['GiveInfo'])){
             $catGoodsAllInfo['GiveInfo'] = array();
@@ -243,12 +243,7 @@ class GoodsAllController extends ComController {
             $ImgCode                     =           I('param.ImgCode','','trim');                      //图片标识
             $FaceValue                   =           I('param.FaceValue','','trim');                     //话费卡面值
             $OriginalPrice               =           I('param.OriginalPrice','','trim');                 //原价
-
-
-
-
-
-
+            $Sort                        =           I('param.Sort',0,'intval');                                            //排序
             //发行量
             if($IssueType == 1){
                 $IssueNum = 0;
@@ -300,6 +295,7 @@ class GoodsAllController extends ComController {
                 'ImgCode'           =>       $ImgCode,
                 'FaceValue'         =>       $FaceValue,
                 'OriginalPrice'     =>       $OriginalPrice,
+                'Sort'              =>       $Sort,
             );
 
             //添加

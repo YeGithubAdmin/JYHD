@@ -35,12 +35,13 @@
 	</nav>
 
 	<div class="pd-20">
-
-		<div class="cl pd-5 bg-1 bk-gray mt-20">
-        <span class="l">
-	        <a href="javascript:;" onclick="activity_add('添加活动','/jy_admin/ActivityListSon/add/Id/{$Id}/Type/{$Type}')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加子活动</a>
-        </span>
-		</div>
+		<if condition = "$Type neq 4">
+			<div class="cl pd-5 bg-1 bk-gray mt-20">
+        		<span class="l">
+	        		<a href="javascript:;" onclick="activity_add('添加活动','/jy_admin/ActivityListSon/add/Id/{$Id}/Type/{$Type}')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加子活动</a>
+        		</span>
+			</div>
+		</if>
 		<table
 			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>

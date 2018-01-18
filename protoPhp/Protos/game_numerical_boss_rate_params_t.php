@@ -1,15 +1,15 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2018-01-02 15:38:42
+ * Auto generated from PB_gm_tool.proto at 2018-01-18 17:53:25
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * const_boss_rate_params message embedded in game_numerical message
+ * boss_rate_params_t message embedded in game_numerical message
  */
-class game_numerical_const_boss_rate_params extends \ProtobufMessage
+class game_numerical_boss_rate_params_t extends \ProtobufMessage
 {
     /* Field index constants */
     const BOSS_ID = 1;

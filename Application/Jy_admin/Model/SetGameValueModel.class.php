@@ -1,16 +1,15 @@
 <?php
 namespace jy_admin\Model;
-use Protos\game_numerical_const_gold_pool_level;
-use Protos\game_numerical_const_gold_pool_ratio;
+
+use Protos\game_numerical_boss_rate_params_t;
+use Protos\game_numerical_down_grade_t;
+use Protos\game_numerical_fish_card_rate_t;
+use Protos\game_numerical_gold_pool_ratio_t;
+use Protos\game_numerical_key_recharge_effect_t;
+use Protos\game_numerical_recharge_effect_t;
 use Think\Model;
 use Protos\game_numerical;
-use Protos\game_numerical_const_boss_rate_params;
-use Protos\game_numerical_const_down_grade;
-use Protos\game_numerical_const_fish_card_rate;
-use Protos\game_numerical_const_key_recharge_effect;
-use Protos\game_numerical_const_recharge_effect;
-use Protos\game_numerical_const_return_gold_rate;
-use Protos\game_numerical_dynamic_gold_pool;
+
 use Protos\PBS_gm_numerical_op;
 use Protos\PBS_gm_numerical_op_return;
 use Protos\PBS_gm_numerical_require;
@@ -23,19 +22,18 @@ class SetGameValueModel extends Model{
     public function __construct(){
         $obj = new \Common\Lib\func();
         $obj->ProtobufObj(array(
+            'Protos/PBS_gm_numerical_require.php',
+            'Protos/PBS_gm_numerical_op.php',
+            'Protos/PBS_gm_numerical_op_return.php',
             'Protos/game_numerical.php',
             'Protos/PBS_gm_numerical_require_return.php',
-            'Protos/PBS_gm_numerical_require.php',
-            'Protos/PBS_gm_numerical_op_return.php',
-            'Protos/PBS_gm_numerical_op.php',
-            'Protos/game_numerical_const_boss_rate_params.php',
-            'Protos/game_numerical_const_down_grade.php',
-            'Protos/game_numerical_const_fish_card_rate.php',
-            'Protos/game_numerical_const_key_recharge_effect.php',
-            'Protos/game_numerical_const_recharge_effect.php',
-            'Protos/game_numerical_const_return_gold_rate.php',
-            'Protos/game_numerical_const_gold_pool_ratio.php',
-            'Protos/game_numerical_dynamic_gold_pool.php',
+            'Protos/game_numerical_gold_pool_ratio_t.php',
+            'Protos/game_numerical_recharge_effect_t.php',
+            'Protos/game_numerical_key_recharge_effect_t.php',
+            'Protos/game_numerical_down_grade_t.php',
+            'Protos/game_numerical_fish_card_rate_t.php',
+            'Protos/game_numerical_boss_rate_params_t.php',
+
         ));
     }
     public function GetVal($Serverid,$obj,$Version){
@@ -43,9 +41,6 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical_require_return    =   new PBS_gm_numerical_require_return();
         $PBS_gm_numerical_require->setServerid($Serverid);
         $PBS_gm_numerical_require_string    =  $PBS_gm_numerical_require->serializeToString();
-
-
-
         $Header = array(
             'PBName:'.'protos.PBS_gm_numerical_require',
             'PBSize:'.strlen($PBS_gm_numerical_require_string),
@@ -53,103 +48,84 @@ class SetGameValueModel extends Model{
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
             'Version:'.$Version,
         );
-
         $PBS_gm_numerical_require_respond   =  $obj->ProtobufSend($Header,$PBS_gm_numerical_require_string);
-
         if($PBS_gm_numerical_require_respond == 504){
                 return $PBS_gm_numerical_require_respond;
         }
         $PBS_gm_numerical_require_return->parseFromString($PBS_gm_numerical_require_respond);
+
         $Code = $PBS_gm_numerical_require_return->getCode();
         if($Code != 1){
             return $Code;
         }
         $Data = $PBS_gm_numerical_require_return->getData();
-        $getReturnGoldRate    = $Data->getReturnGoldRate();
-        $getReturnGoldRateArray = array();
-        for($i=0;$i<$Data->getReturnGoldRateCount();$i++){
-            $getReturnGoldRateArray[$i]['GoldRate'] = $getReturnGoldRate[$i]->getRate();
-            $getReturnGoldRateArray[$i]['RoomLevel'] = $getReturnGoldRate[$i]->getRoomLevel();
+        // 奖池系数[a,b,c, A, B]
+        $game_numerical_gold_pool_ratio_   = $Data->getGoldPoolRatio();
+        $getGoldPoolRatio['getPoolLow']   = $game_numerical_gold_pool_ratio_->getPoolLow();
+        $getGoldPoolRatio['getPoolHigh']  = $game_numerical_gold_pool_ratio_->getPoolHigh();
+        $getGoldPoolRatio['getMid']       = $game_numerical_gold_pool_ratio_->getMid();
+        $getGoldPoolRatio['getHigh']      = $game_numerical_gold_pool_ratio_->getHigh();
+        $getGoldPoolRatio['getLow']       = $game_numerical_gold_pool_ratio_->getLow();
+        $game_numerical_gold_pool_ratio_->getPoolLow();
+        // 奖池系数[a,b,c, A, B]
+        $game_numerical_recharge_effect_php = $Data->getRechargeEffect();
+        $getRechargeEffect = array();
+        for ($i=0;$i<$Data->getRechargeEffectCount();$i++){
+            $getRechargeEffect[$i]['getAddRate'] = $game_numerical_recharge_effect_php[$i]->getAddRate();
+            $getRechargeEffect[$i]['getPlanRecharge'] = $game_numerical_recharge_effect_php[$i]->getPlanRecharge();
+            $getRechargeEffect[$i]['getPayType'] = $game_numerical_recharge_effect_php[$i]->getPayType();
         }
 
-        $getRechargeEffect          = $Data->getRechargeEffect();
-        $getRechargeEffectArray     = array();
-        for($i=0;$i<$Data->getRechargeEffectCount();$i++){
-            $getRechargeEffectArray[$i]['AddRate'] = $getRechargeEffect[$i]->getAddRate();
-            $getRechargeEffectArray[$i]['PayType'] = $getRechargeEffect[$i]->getPayType();
-            $getRechargeEffectArray[$i]['PlanRecharge'] = $getRechargeEffect[$i]->getPlanRecharge();
+        // KEY鱼捕中加成：影响付费玩家接近临界值时对KEY鱼的捕中率加成
+        $game_numerical_key_recharge_effect_ = $Data->getKeyRechargeEffect();
+        $getKeyRechargeEffect = array();
+        for ($i=0;$i<$Data->getKeyRechargeEffectCount();$i++){
+            $getKeyRechargeEffect[$i]['getAddRate'] = $game_numerical_key_recharge_effect_[$i]->getAddRate();
+            $getKeyRechargeEffect[$i]['getPlanRecharge'] = $game_numerical_key_recharge_effect_[$i]->getPlanRecharge();
+            $getKeyRechargeEffect[$i]['getPayType'] = $game_numerical_key_recharge_effect_[$i]->getPayType();
         }
-
-        $getKeyRechargeEffect          = $Data->getKeyRechargeEffect();
-        $getKeyRechargeEffectArray     = array();
-        for($i=0;$i<$Data->getRechargeEffectCount();$i++){
-            $getKeyRechargeEffectArray[$i]['KeyAddRate'] = $getKeyRechargeEffect[$i]->getAddRate();
-            $getKeyRechargeEffectArray[$i]['KeyPayType'] = $getKeyRechargeEffect[$i]->getPayType();
-            $getKeyRechargeEffectArray[$i]['KeyPlanRecharge'] = $getKeyRechargeEffect[$i]->getPlanRecharge();
+        // [downGrade]：控制临界值及到临界值时对玩家的补救倍数
+        $game_numerical_down_grade_ = $Data->getDownGrade();
+        $getDownGrade = array();
+        for ($i=0;$i<$Data->getDownGradeCount();$i++){
+            $getDownGrade[$i]['getNum']  = $game_numerical_down_grade_[$i]->getNum();
+            $getDownGrade[$i]['getType'] = $game_numerical_down_grade_[$i]->getType();
         }
-
-        $getDownGrade         = $Data->getDownGrade();
-        $getDownGradeArray     = array();
-        for($i=0;$i<$Data->getDownGradeCount();$i++){
-            $getDownGradeArray[$i]['Type'] = $getDownGrade[$i]->getType();
-            $getDownGradeArray[$i]['Num'] = $getDownGrade[$i]->getNum();
+        // 渔券相关配置
+        $game_numerical_fish_card_rate_  = $Data->getFishCardRate();
+        $getFishCardRate = array();
+        for ($i=0;$i<$Data->getFishCardRateCount();$i++){
+            $getFishCardRate[$i]['getFcMax'] = $game_numerical_fish_card_rate_[$i]->getFcMax();
+            $getFishCardRate[$i]['getRate']  = $game_numerical_fish_card_rate_[$i]->getRate();
         }
-
-        $getFishCardRate      = $Data->getFishCardRate();
-
-        $getFishCardRateArray     = array();
-        for($i=0;$i<$Data->getFishCardRateCount();$i++){
-            $getFishCardRateArray[$i]['FishRate'] = $getFishCardRate[$i]->getRate();
-            $getFishCardRateArray[$i]['FishFcMax'] = $getFishCardRate[$i]->getFcMax();
+        // BOSS捕中率配置 核弹掉落率配置
+        $game_numerical_boss_rate_params_ = $Data->getBossRateParams();
+        $getBossRateParams = array();
+        for ($i=0;$i<$Data->getFishCardRateCount();$i++){
+            $getBossRateParams[$i]['getAuRate']    = $game_numerical_boss_rate_params_[$i]->getAuRate();
+            $getBossRateParams[$i]['getAgRate']    = $game_numerical_boss_rate_params_[$i]->getAgRate();
+            $getBossRateParams[$i]['getCuRate']    = $game_numerical_boss_rate_params_[$i]->getCuRate();
+            $getBossRateParams[$i]['getCrrtParam'] = $game_numerical_boss_rate_params_[$i]->getCrrtParam();
+            $getBossRateParams[$i]['getStage']     = $game_numerical_boss_rate_params_[$i]->getStage();
+            $getBossRateParams[$i]['getBossId']    = $game_numerical_boss_rate_params_[$i]->getBossId();
         }
-
-        $getBossRateParams    = $Data->getBossRateParams();
-        $getBossRateParamsArray = array();
-        for($i=0;$i<$Data->getBossRateParamsCount();$i++){
-            $getBossRateParamsArray[$i]['BossId']    = $getBossRateParams[$i]->getBossId();
-            $getBossRateParamsArray[$i]['Stage']     = $getBossRateParams[$i]->getStage();
-            $getBossRateParamsArray[$i]['CrrtParam'] = $getBossRateParams[$i]->getCrrtParam();
-            $getBossRateParamsArray[$i]['CuRate']    = $getBossRateParams[$i]->getCuRate();
-            $getBossRateParamsArray[$i]['AgRate']    = $getBossRateParams[$i]->getAgRate();
-            $getBossRateParamsArray[$i]['AuRate']    = $getBossRateParams[$i]->getAuRate();
-        }
-
-        $getGoldPoolRatio       = $Data->getGoldPoolRatio();
-        $getGoldPoolRatioArray = array();
-        for($i=0;$i<$Data->getGoldPoolRatioCount();$i++){
-            $getGoldPoolRatioArray[$i]['Ratiolow']          =   $getGoldPoolRatio[$i]->getLow();
-            $getGoldPoolRatioArray[$i]['RatioHigh']         =   $getGoldPoolRatio[$i]->getHigh();
-            $getGoldPoolRatioArray[$i]['RatioMid']          =   $getGoldPoolRatio[$i]->getMid();
-            $getGoldPoolRatioArray[$i]['RatioRoomLevel']    =   $getGoldPoolRatio[$i]->getRoomLevel();
-            $getGoldPoolRatioArray[$i]['RatioPoolHigh']     =   $getGoldPoolRatio[$i]->getPoolHigh();
-            $getGoldPoolRatioArray[$i]['RatioPoolLow']      =   $getGoldPoolRatio[$i]->getPoolLow();
-        }
-        $getDynamicGoldPool       = $Data->getGoldPool();
-        $getDynamicGoldPoolArray = array();
-        for($i=0;$i<$Data->getGoldPoolCount();$i++){
-            $getDynamicGoldPoolArray[$i]['RoomLevel']   = $getDynamicGoldPool[$i]->getRoomLevel();
-            $getDynamicGoldPoolArray[$i]['PoolRatio']   = $getDynamicGoldPool[$i]->getPoolRatio();
-            $getDynamicGoldPoolArray[$i]['Pool']        = $getDynamicGoldPool[$i]->getPool();
-            $getDynamicGoldPoolArray[$i]['Pump']        = $getDynamicGoldPool[$i]->getPump();
-        }
-        $info    = array(
-            'getReturnGoldRate'   =>    $getReturnGoldRateArray,
-            'getRechargeEffect'   =>    $getRechargeEffectArray,
-            'getKeyRechargeEffect'=>    $getKeyRechargeEffectArray,
-            'getDownGrade'        =>    $getDownGradeArray,
-            'getFishCardRate'     =>    $getFishCardRateArray,
-            'getBossRateParams'   =>    $getBossRateParamsArray,
-            'getGoldPoolRatio'    =>    $getGoldPoolRatioArray,
-            'getDynamicGoldPool'  =>    $getDynamicGoldPoolArray,
-            'base'=>array(
-                'PoolRatio'=>$Data->getPoolRatio(),
-                'LimitRatio'=>$Data->getLimitRatio(),
-                'ChangePoint'=>$Data->getChangePoint(),
-                'BossAwardPool'=>$Data->getBossAwardPool(),
-                'FishCardP1'=>$Data->getFishCardP1(),
-                'FishCardP2'=>$Data->getFishCardP2(),
-                'GoldPoolPumpRate'=>$Data->getGoldPoolPumpRate(),
-            ),
+        $info = array(
+            'getPoolRatio'              =>    $Data->getPoolRatio(),                 //dynamic
+            'getLimitRatio'             =>    $Data->getLimitRatio(),
+            'getChangePoint'            =>    $Data->getChangePoint(),
+            'getFishCardP1'             =>    $Data->getFishCardP1(),
+            'getFishCardP2'             =>    $Data->getFishCardP2(),
+            'getBossAwardPoolLine'      =>    $Data->getBossAwardPoolLine(),
+            'getGoldPoolPumpRate'       =>    $Data->getGoldPoolPumpRate(),
+            'getReturnGoldRate'         =>    $Data->getReturnGoldRate(),
+            'getGoldPool'               =>    $Data->getGoldPool(),                  //dynamic
+            'getBossAwardPool'          =>    $Data->getBossAwardPool(),             //dynamic
+            'getGoldPoolRatio'          =>    $getGoldPoolRatio,
+            'getRechargeEffect'         =>    $getRechargeEffect,
+            'getKeyRechargeEffect'      =>    $getKeyRechargeEffect,
+            'getDownGrade'              =>    $getDownGrade,
+            'getFishCardRate'           =>    $getFishCardRate,
+            'getBossRateParams'         =>    $getBossRateParams,
         );
         return  $info;
     }
@@ -159,95 +135,98 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical_op            =    new PBS_gm_numerical_op();
         $PBS_gm_numerical_op_return     =    new PBS_gm_numerical_op_return();
         $PBS_gm_numerical               =    new game_numerical();
-        $const_return_gold_rate         =    new game_numerical_const_return_gold_rate();
+
         $PBS_gm_numerical_op->setServerid($Serverid);
 
-        $RoomLevel                      =    I('param.RoomLevel',0,'trim');
-        $Rate                           =    I('param.GoldRate',0,'trim');
-        $const_return_gold_rate->setRate($Rate);
-        $const_return_gold_rate->setRoomLevel($RoomLevel);
-        $PBS_gm_numerical->appendReturnGoldRate($const_return_gold_rate);
-        $const_recharge_effect          =   new game_numerical_const_recharge_effect();
-        $PayType        = I('param.PayType','','trim');
-        $AddRate        = I('param.AddRate','','trim');
-        $PlanRecharge   = I('param.PlanRecharge',0,'intval');
-        $const_recharge_effect->setAddRate($AddRate);
-        $const_recharge_effect->setPayType($PayType);
-        $const_recharge_effect->setPlanRecharge($PlanRecharge);
-        $PBS_gm_numerical->appendRechargeEffect($const_recharge_effect);
 
-        $const_key_recharge_effect      =   new game_numerical_const_key_recharge_effect();
-
-        $KeyPayType        = I('param.KeyPayType','','trim');
-        $KeyAddRate        = I('param.KeyAddRate','','trim');
-        $KeyPlanRecharge   = I('param.KeyPlanRecharge',0,'trim');
-        $const_key_recharge_effect->setPayType($KeyPayType);
-        $const_key_recharge_effect->setAddRate($KeyAddRate);
-        $const_key_recharge_effect->setPlanRecharge($KeyPlanRecharge);
-        $PBS_gm_numerical->appendKeyRechargeEffect($const_key_recharge_effect);
-
-        $const_down_grade               =   new game_numerical_const_down_grade();
-        $Type                           =    I('param.Type','','trim');
-        $Num                            =    I('param.Num',0,'trim');
-        $const_down_grade->setType($Type);
-        $const_down_grade->setNum($Num);
-        $PBS_gm_numerical->appendDownGrade($const_down_grade);
-
-        $const_fish_card_rate           =   new game_numerical_const_fish_card_rate();
-        $FishFcMax                      =    I('param.FishFcMax',0,'trim');
-        $FishRate                       =    I('param.FishRate',0,'trim');
-        $const_fish_card_rate->setRate($FishRate);
-        $const_fish_card_rate->setFcMax($FishFcMax);
-        $PBS_gm_numerical->appendFishCardRate($const_fish_card_rate);
-
-        $const_boss_rate_params   =   new game_numerical_const_boss_rate_params();
-        $BossId                   =   I('param.BossId',0,'trim');
-        $Stage                    =   I('param.Stage',0,'trim');
-        $CrrtParam                =   I('param.CrrtParam',0,'trim');
-        $CuRate                   =   I('param.CuRate',0,'trim');
-        $AgRate                   =   I('param.AgRate',0,'trim');
-        $Aurate                   =   I('param.AuRate',0,'trim');
+        $getLimitRatio              =   I('param.getLimitRatio','','trim');
+        $getChangePoint             =   I('param.getChangePoint','','trim');
+        $getFishCardP1              =   I('param.getFishCardP1','','trim');
+        $getFishCardP2              =   I('param.getFishCardP2','','trim');
+        $getBossAwardPoolLine       =   I('param.getBossAwardPoolLine','','trim');
+        $getGoldPoolPumpRate        =   I('param.getGoldPoolPumpRate','','trim');
+        $getReturnGoldRate          =   I('param.getReturnGoldRate','','trim');
+        $getGoldPoolRatio           =   I('param.getGoldPoolRatio','','trim');
 
 
-        $const_boss_rate_params->setBossId($BossId);
-        $const_boss_rate_params->setStage($Stage);
-        $const_boss_rate_params->setCrrtParam($CrrtParam);
-        $const_boss_rate_params->setCuRate($CuRate);
-        $const_boss_rate_params->setAgRate($AgRate);
-        $const_boss_rate_params->setAuRate($Aurate);
 
-        $PBS_gm_numerical->appendBossRateParams($const_boss_rate_params);
+        $getRechargeEffect          =   I('param.getRechargeEffect','','trim');
+        $getKeyRechargeEffect       =   I('param.getKeyRechargeEffect','','trim');
+        $getDownGrade               =   I('param.getDownGrade','','trim');
+        $getFishCardRate            =   I('param.getFishCardRate','','trim');
+        $getBossRateParams          =   I('param.getBossRateParams','','trim');
 
-        $const_gold_pool_ratio  =   new game_numerical_const_gold_pool_ratio();
-        $RatioRoomLevel         =   I('param.RatioRoomLevel',0,'trim');
-        $Ratiolow               =   I('param.Ratiolow',0,'trim');
-        $RatioMid               =   I('param.RatioMid',0,'trim');
-        $RatioHigh              =   I('param.RatioHigh',0,'trim');
-        $RatioPoolHigh          =   I('param.RatioPoolHigh',0,'trim');
-        $RatioPoolLow           =   I('param.RatioPoolLow ',0,'trim');
-        $const_gold_pool_ratio->setHigh($RatioHigh);
-        $const_gold_pool_ratio->setRoomLevel($RatioRoomLevel);
-        $const_gold_pool_ratio->setLow($Ratiolow);
-        $const_gold_pool_ratio->setMid($RatioMid);
-        $const_gold_pool_ratio->setPoolHigh($RatioPoolHigh);
-        $const_gold_pool_ratio->setPoolLow($RatioPoolLow);
-        $PBS_gm_numerical->appendGoldPoolRatio($const_gold_pool_ratio);
 
+
+        $a = array(
+            '$getLimitRatio'=>$getLimitRatio,
+            '$getChangePoint'=>$getChangePoint,
+            '$getFishCardP1'=>$getFishCardP1,
+            '$getFishCardP2'=>$getFishCardP2,
+            '$getBossAwardPoolLine'=>$getBossAwardPoolLine,
+            '$getGoldPoolPumpRate'=>$getGoldPoolPumpRate,
+            '$getReturnGoldRate'=>$getReturnGoldRate,
+            '$getGoldPoolRatio'=>$getGoldPoolRatio,
+            '$getRechargeEffect'=>$getRechargeEffect,
+            '$getKeyRechargeEffect'=>$getKeyRechargeEffect,
+            '$getDownGrade'=>$getDownGrade,
+            '$getFishCardRate'=>$getFishCardRate,
+            '$getBossRateParams'=>$getBossRateParams,
+        );
+
+
+
+
+        $PBS_gm_numerical->setLimitRatio($getLimitRatio);
+        $PBS_gm_numerical->setChangePoint($getChangePoint);
+        $PBS_gm_numerical->setFishCardP1($getFishCardP1);
+        $PBS_gm_numerical->setFishCardP2($getFishCardP2);
+        $PBS_gm_numerical->setBossAwardPoolLine($getBossAwardPoolLine);
+        $PBS_gm_numerical->setGoldPoolPumpRate($getGoldPoolPumpRate);
+        $PBS_gm_numerical->setReturnGoldRate($getReturnGoldRate);
+
+
+        $GoldPoolRatio  = new   game_numerical_gold_pool_ratio_t();
+        $GoldPoolRatio->setPoolLow($getGoldPoolRatio['getPoolLow']);
+        $GoldPoolRatio->setPoolHigh($getGoldPoolRatio['getPoolHigh']);
+        $GoldPoolRatio->setMid($getGoldPoolRatio['getMid']);
+        $GoldPoolRatio->setLow($getGoldPoolRatio['getLow']);
+        $GoldPoolRatio->setHigh($getGoldPoolRatio['getHigh']);
+        $PBS_gm_numerical->setGoldPoolRatio($GoldPoolRatio);
+
+        $RechargeEffect  = new game_numerical_recharge_effect_t();
+        $RechargeEffect->setPlanRecharge($getRechargeEffect['getPlanRecharge']);
+        $RechargeEffect->setAddRate($getRechargeEffect['getAddRate']);
+        $RechargeEffect->setPayType($getRechargeEffect['getPayType']);
+        $PBS_gm_numerical->appendRechargeEffect($RechargeEffect);
+
+        $KeyRechargeEffect = new game_numerical_key_recharge_effect_t();
+        $KeyRechargeEffect->setPlanRecharge($getKeyRechargeEffect['getPlanRecharge']);
+        $KeyRechargeEffect->setAddRate($getKeyRechargeEffect['getAddRate']);
+        $KeyRechargeEffect->setPayType($getKeyRechargeEffect['getPayType']);
+        $PBS_gm_numerical->appendKeyRechargeEffect($KeyRechargeEffect);
+
+        $DownGrade =  new game_numerical_down_grade_t();
+        $DownGrade->setType($getDownGrade['getType']);
+        $DownGrade->setNum($getDownGrade['getNum']);
+        $PBS_gm_numerical->appendDownGrade($DownGrade);
+
+        $FishCardRate = new game_numerical_fish_card_rate_t();
+        $FishCardRate->setFcMax($getFishCardRate['getFcMax']);
+        $FishCardRate->setRate($getFishCardRate['getRate']);
+        $PBS_gm_numerical->appendFishCardRate($FishCardRate);
+
+        $BossRateParams = new game_numerical_boss_rate_params_t();
+        $BossRateParams->setStage($getBossRateParams['getStage']);
+        $BossRateParams->setAuRate($getBossRateParams['getAuRate']);
+        $BossRateParams->setAgRate($getBossRateParams['getAgRate']);
+        $BossRateParams->setCuRate($getBossRateParams['getCuRate']);
+        $BossRateParams->setCrrtParam($getBossRateParams['getCrrtParam']);
+        $BossRateParams->setBossId($getBossRateParams['getBossId']);
+        $PBS_gm_numerical->appendBossRateParams($BossRateParams);
 
         $PBS_gm_numerical_op->setData($PBS_gm_numerical);
 
-        $LimitRatio         = I('param.LimitRatio','','trim');
-        $ChangePoint        = I('param.ChangePoint','','trim');
-        $BossAwardPool      = I('param.BossAwardPool','','trim');
-        $FishCardP1         = I('param.FishCardP1','','trim');
-        $FishCardP2         = I('param.FishCardP2','','trim');
-        $GoldPoolPumpRate   = I('param.GoldPoolPumpRate','','trim');
-        $PBS_gm_numerical->setLimitRatio($LimitRatio);
-        $PBS_gm_numerical->setChangePoint($ChangePoint);
-        $PBS_gm_numerical->setBossAwardPool($BossAwardPool);
-        $PBS_gm_numerical->setFishCardP1($FishCardP1);
-        $PBS_gm_numerical->setFishCardP2($FishCardP2);
-        $PBS_gm_numerical->setGoldPoolPumpRate($GoldPoolPumpRate);
         $PBS_gm_numerical_op_string =  $PBS_gm_numerical_op->serializeToString();
         $Header = array(
             'PBName:'.'protos.PBS_gm_numerical_op',

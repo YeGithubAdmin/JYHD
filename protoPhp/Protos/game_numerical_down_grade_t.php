@@ -1,15 +1,15 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2018-01-02 15:38:42
+ * Auto generated from PB_gm_tool.proto at 2018-01-18 17:53:25
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * const_down_grade message embedded in game_numerical message
+ * down_grade_t message embedded in game_numerical message
  */
-class game_numerical_const_down_grade extends \ProtobufMessage
+class game_numerical_down_grade_t extends \ProtobufMessage
 {
     /* Field index constants */
     const TYPE = 1;

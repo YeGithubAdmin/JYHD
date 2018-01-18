@@ -1,31 +1,25 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2018-01-02 15:38:42
+ * Auto generated from PB_gm_tool.proto at 2018-01-18 17:53:25
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * const_gold_pool_ratio message embedded in game_numerical message
+ * gold_pool_ratio_t message embedded in game_numerical message
  */
-class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
+class game_numerical_gold_pool_ratio_t extends \ProtobufMessage
 {
     /* Field index constants */
-    const ROOM_LEVEL = 1;
-    const LOW = 2;
-    const MID = 3;
-    const HIGH = 4;
-    const POOL_LOW = 5;
-    const POOL_HIGH = 6;
+    const LOW = 1;
+    const MID = 2;
+    const HIGH = 3;
+    const POOL_LOW = 4;
+    const POOL_HIGH = 5;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::ROOM_LEVEL => array(
-            'name' => 'room_level',
-            'required' => true,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
         self::LOW => array(
             'name' => 'low',
             'required' => true,
@@ -68,7 +62,6 @@ class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::ROOM_LEVEL] = null;
         $this->values[self::LOW] = null;
         $this->values[self::MID] = null;
         $this->values[self::HIGH] = null;
@@ -84,29 +77,6 @@ class game_numerical_const_gold_pool_ratio extends \ProtobufMessage
     public function fields()
     {
         return self::$fields;
-    }
-
-    /**
-     * Sets value of 'room_level' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setRoomLevel($value)
-    {
-        return $this->set(self::ROOM_LEVEL, $value);
-    }
-
-    /**
-     * Returns value of 'room_level' property
-     *
-     * @return integer
-     */
-    public function getRoomLevel()
-    {
-        $value = $this->get(self::ROOM_LEVEL);
-        return $value === null ? (integer)$value : $value;
     }
 
     /**

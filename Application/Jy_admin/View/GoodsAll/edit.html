@@ -128,6 +128,7 @@
 								 <option value="3"  <eq name="info['ShowType']" value = "3">selected="selected"</eq> >月卡</option>
 								 <option value="5"  <eq name="info['ShowType']" value = "5">selected="selected"</eq> >启航礼包</option>
 								 <option value="4"  <eq name="info['ShowType']" value = "4">selected="selected"</eq> >兑换商城</option>
+								<option value="6"  <eq name="info['ShowType']" value = "6">selected="selected"</eq> >破产礼包</option>
 								 <option value="0"  <eq name="info['ShowType']" value = "0">selected="selected"</eq> >其他</option>
                             </select>
 						</span>
@@ -265,6 +266,12 @@
 			<div class="formControls col-1"  >
 				<input type="text" class="input-text"  value="{$info['OriginalPrice']}"   placeholder="请输入原价"
 					   name="OriginalPrice" nullmsg="">
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-1"><span class="c-red"></span>权重排序：</label>
+			<div class="formControls col-1"  >
+				<input type="text" class="input-text"  value="{$info['Sort']}"   placeholder=""
+					   name="Sort" nullmsg="">
 			</div>
 		</div>
 		<div class="row cl">

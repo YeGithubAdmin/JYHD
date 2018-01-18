@@ -24,7 +24,7 @@
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
-	<title>修改用户属性</title>
+	<title>游戏数值</title>
 </head>
 <body>
 
@@ -36,13 +36,18 @@
 		<input type="hidden" name="c" value="Notice" />
 		<input type="hidden" name="a" value="index" />
 		<div class="text-c">
-			<input  type="text" class="input-text" style="width: 250px"  placeholder="请输入服务器ID" id="" value="{$Serverid}"
-					name="Serverid">
+			<span style="width: 150px" class="select-box">
+					<select size="1" name="Serverid" class="select">
+						<option   <if condition = "$Serverid eq 1001 ">selected="true"</if>   value="1001">1001</option>
+						<option  <if condition = "$Serverid eq 1002 ">selected="true"</if>    value="1002">1002</option>
+						<option  <if condition = "$Serverid eq 1003 ">selected="true"</if>    value="1003">1003</option>
+						<option  <if condition = "$Serverid eq 1004 ">selected="true"</if>   value="1004">1004</option>
+				</select>
+		   </span>
 			<span style="width: 150px" class="select-box">
 					<select size="1" name="Version" class="select">
-						<option value="">游戏版本</option>
 						<volist name = "Versionlist" id = "val">
-							    <option value="{$val}"  <if condition="$channel eq $val['id']" >selected</if>>{$val}</option>
+							    <option value="{$val}"    <if condition="$Version eq $val" >selected</if>>{$val}</option>
 						</volist>
 				</select>
 		   </span>
@@ -60,22 +65,22 @@
 			<label class="form-label col-2"><span class="c-red">*</span>基础抽水率（pool_ratio）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text"  title = "[poolRatio]：通过奖池状态影响每个游戏场的基础抽水率，
-调整后会同时影响渔券和BOSS的捕中及积分抽奖时渔券的权重" value="{$info['base']['PoolRatio']|round=2}" placeholder=""
+调整后会同时影响渔券和BOSS的捕中及积分抽奖时渔券的权重" value="{$info['getPoolRatio']|round=2}" placeholder=""
 					  disabled = "true" nullmsg="">
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>极限系数（limit_ratio）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text"  title="【limit_ratio】
-极限系数：影响资产折算对玩家捕中率的影响上限。" value="{$info['base']['LimitRatio']|round=2}" placeholder=""
-					   name="LimitRatio" datatype="*"  nullmsg="">
+极限系数：影响资产折算对玩家捕中率的影响上限。" value="{$info['getLimitRatio']|round=2}" placeholder=""
+					   name="getLimitRatio" datatype="*"  nullmsg="">
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>折算值（change_point）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text"  title="【change_point】
-折算值：人民币兑换金币的比例。"   value="{$info['base']['ChangePoint']|round=2}"  datatype="*"  placeholder=""
-					   name="ChangePoint"  nullmsg="">
+折算值：人民币兑换金币的比例。"   value="{$info['getChangePoint']|round=2}"  datatype="*"  placeholder=""
+					   name="getChangePoint"  nullmsg="">
 			</div>
 			<div class="col-1"></div>
 
@@ -83,63 +88,92 @@
 
 		<div class="row cl">
 
-			<label class="form-label col-2"><span class="c-red">*</span>BOSS奖池配置(boss_award_pool)：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>BOSS奖池(boss_award_pool)：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  datatype="*" title="BOSS奖池配置：[0,2000000]"   value="{$info['base']['BossAwardPool']|round=2}" placeholder=""
-					   name="BossAwardPool" >
+				<input type="text" class="input-text"  datatype="*" title=""   disabled ="true" value="{$info['getBossAwardPool']|round=2}" placeholder=""
+					   name="" >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>充值返奖率(fish_card_p1)：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP1']|round=2}" datatype="*" placeholder="" name="FishCardP1"  >
+				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['getFishCardP1']|round=2}" datatype="*" placeholder="" name="getFishCardP1"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>充值返奖率P2（fish_card_p2）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['base']['FishCardP2']|round=2}" placeholder=""
-					   name="FishCardP2"  >
+				<input type="text" class="input-text" title="控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]" value="{$info['getFishCardP2']|round=2}" placeholder=""
+					   name="getFishCardP2"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>gold_pool_pump_rate：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  datatype="*" title=""   value="{$info['base']['GoldPoolPumpRate']|round=2}" placeholder=""
-					   name="GoldPoolPumpRate" >
+				<input type="text" class="input-text"  datatype="*" title=""   value="{$info['getGoldPoolPumpRate']|round=2}" placeholder=""
+					   name="getGoldPoolPumpRate" >
+			</div>
+			<div class="col-1"></div>
+
+			<label class="form-label col-2"><span class="c-red">*</span>场返奖率【return_gold_rate】：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*" title=""   value="{$info['getReturnGoldRate']|round=2}" placeholder=""
+					   name="getReturnGoldRate" >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>金币池【gold_pool】：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"   disabled ="true" datatype="*" title=""   value="{$info['getGoldPool']|round=2}" placeholder=""
+					   name="" >
 			</div>
 			<div class="col-1"></div>
 		</div>
+
+		<div class="row cl">
+			<label class="form-label col-2"><span class="c-red">*</span> BOSS奖池配置</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*" title="BOSS奖池配置【boss_award_pool_line】"    value="{$info['getBossAwardPoolLine']|round=2}" placeholder=""
+					   name="getBossAwardPoolLine" >
+			</div>
+			<div class="col-1"></div>
+
+		</div>
+
+
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【return_gold_rate】
-					[场返奖率]：影响每个游戏场的基础抽水率，当前为[1.2,1,0.9,0.8]
-					调整后会同时影响渔券和BOSS的捕中及积分抽奖时渔券的权重</td>
+				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool_ratio】奖池系数[a,b,c]</td>
 			</tr>
 			</thead>
 		</table>
 		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>房间等级（room_level）：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>PoolLow：</label>
 			<div class="formControls col-1">
-				<div style="width:100%;text-align:center;float:left">
-		        		<span class="select-box">
-							<select  class="select" name = "RoomLevel"  title="" onchange="getReturnGoldRate(this)"   nullmsg="" >
-								 <option value="">请选择等级</option>
-								<volist name = "info['getReturnGoldRate']" key = "k" id = "val">
-									<option   GoldRate = "{$val['GoldRate']|round = 2}"    <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RoomLevel']}" >{$val['RoomLevel']}</option>
-								</volist>
-                            </select>
-						</span>
-				</div>
+				<input type="text" class="input-text" title=""   value="{$info['getGoldPoolRatio']['getPoolLow']|round=2}" datatype="*" placeholder="" name="getGoldPoolRatio[getPoolLow]"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>概率（rate）：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>PoolHigh ：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text getReturnGoldRate" title=""  id = "GoldRate" datatype="*"  value="{$info['getReturnGoldRate'][0]['GoldRate']|round = 2}" placeholder=""
-					   name="GoldRate"  >
+				<input type="text" class="input-text" title=""   value="{$info['getGoldPoolRatio']['getPoolHigh']|round=2}" datatype="*" placeholder="" name="getGoldPoolRatio[getPoolHigh]"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>Mid：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""   value="{$info['getGoldPoolRatio']['getMid']|round=2}" datatype="*" placeholder="" name="getGoldPoolRatio[getMid]"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>High：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""  value="{$info['getGoldPoolRatio']['getHigh']|round=2}" datatype="*" placeholder="" name="getGoldPoolRatio[getHigh]"  >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span>Low：</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text" title=""   value="{$info['getGoldPoolRatio']['getLow']|round=2}" datatype="*" placeholder="" name="getGoldPoolRatio[getLow]"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
+
 		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c" >
@@ -153,23 +187,23 @@
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>概率（add_rate）：</label>
 			<div class="formControls col-1">
-				<input type="text"  id = "AddRate" class="input-text" title="" value="{$info['getRechargeEffect'][0]['AddRate']|round = 2}" datatype="*" placeholder="" name="AddRate"  >
+				<input type="text"  id = "AddRate" class="input-text" title="" value="{$info['getRechargeEffect'][0]['getAddRate']|round = 2}" datatype="*" placeholder="" name="getRechargeEffect[getAddRate]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>充值金额（plan_recharge）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" id ="PlanRecharge" title="" datatype="*"  value="{$info['getRechargeEffect'][0]['PlanRecharge']}" placeholder=""
-					   name="PlanRecharge"  >
+				<input type="text" class="input-text" id ="PlanRecharge" title="" datatype="*"  value="{$info['getRechargeEffect'][0][getPlanRecharge]}" placeholder=""
+					   name="getRechargeEffect[getPlanRecharge]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>类型（pay_type）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "PayType"  onchange="getRechargeEffect(this)"  nullmsg="" >
+							<select  class="select" name = "getRechargeEffect[getPayType]"  onchange="getRechargeEffect(this)"  nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getRechargeEffect']" key = "k" id = "val">
-									<option   AddRate = "{$val['AddRate']|round=2}"   PlanRecharge = "{$val['PlanRecharge']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['PayType']}" >{$val['PayType']}</option>
+									<option   AddRate = "{$val['getAddRate']|round=2}"   PlanRecharge = "{$val['getPlanRecharge']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['getPayType']}" >{$val['getPayType']}</option>
 								</volist>
                             </select>
 						</span>
@@ -189,23 +223,23 @@
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>概率（add_rate）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  id = "KeyAddRate" title="" value="{$info['getKeyRechargeEffect'][0]['KeyAddRate']|round=2}" datatype="*" placeholder="" name="KeyAddRate"  >
+				<input type="text" class="input-text"  id = "KeyAddRate" title="" value="{$info['getKeyRechargeEffect'][0]['getAddRate']|round=2}" datatype="*" placeholder="" name="getKeyRechargeEffect[getAddRate]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>充值金额（plan_recharge）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  id = "KeyPlanRecharge" title="" datatype="*"  value="{$info['getKeyRechargeEffect'][0]['KeyPlanRecharge']}" placeholder=""
-					   name="KeyPlanRecharge"  >
+				<input type="text" class="input-text"  id = "KeyPlanRecharge" title="" datatype="*"  value="{$info['getKeyRechargeEffect'][0]['getPlanRecharge']}" placeholder=""
+					   name="getKeyRechargeEffect[getPlanRecharge]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>类型（pay_type）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "KeyPayType"  onchange="getKeyRechargeEffect(this)"  nullmsg="" >
+							<select  class="select" name = "getKeyRechargeEffect[getPayType]"  onchange="getKeyRechargeEffect(this)"  nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getKeyRechargeEffect']" key = "k" id = "val">
-									<option   KeyAddRate = "{$val['KeyAddRate']|round=2}"   KeyPlanRecharge = "{$val['KeyPlanRecharge']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['KeyPayType']}" >{$val['KeyPayType']}</option>
+									<option   KeyAddRate = "{$val['getAddRate']|round=2}"   KeyPlanRecharge = "{$val['getPlanRecharge']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['getPayType']}" >{$val['getPayType']}</option>
 								</volist>
                             </select>
 						</span>
@@ -223,17 +257,17 @@
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>数量（num）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "Num" value="{$info['getDownGrade'][0]['Num']}" datatype="*" placeholder="" name="Num"  >
+				<input type="text" class="input-text" title=""  id = "Num" value="{$info['getDownGrade'][0]['getNum']}" datatype="*" placeholder="" name="getDownGrade[getNum]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>类型（type）：</label>
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "Type" onchange="getDownGrade(this)"   nullmsg="" >
+							<select  class="select" name = "getDownGrade[getType]" onchange="getDownGrade(this)"   nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getDownGrade']" key = "k" id = "val">
-									<option     Num = "{$val['Num']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['Type']}" >{$val['Type']}</option>
+									<option     Num = "{$val['getNum']|round=2}"  <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['getType']}" >{$val['getType']}</option>
 								</volist>
                             </select>
 						</span>
@@ -253,10 +287,10 @@
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "FishFcMax" onchange="getFishCardRate(this)"   nullmsg="" >
+							<select  class="select" name = "getFishCardRate[getFcMax]" onchange="getFishCardRate(this)"   nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getFishCardRate']" key = "k" id = "val">
-									<option   FishRate = "{$val['FishRate']|round = 2}"   <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['FishFcMax']}" >{$val['FishFcMax']}</option>
+									<option   FishRate = "{$val['getRate']|round = 2}"   <eq name ="k" value = "1">selected = "true"</eq>   value="{$val['getFcMax']}" >{$val['getFcMax']}</option>
 								</volist>
                             </select>
 						</span>
@@ -266,7 +300,7 @@
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>概率（rate）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title="" value="{$info['getFishCardRate'][0]['FishRate']}"  id = "FishRate" datatype="*" placeholder="" name="FishRate"  >
+				<input type="text" class="input-text" title="" value="{$info['getFishCardRate'][0]['getRate']}"  id = "FishRate" datatype="*" placeholder="" name="getFishCardRate[getRate]"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
@@ -284,12 +318,12 @@
 			<div class="formControls col-1">
 				<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select  class="select" name = "BossId" onchange="getBossRateParams(this)"   nullmsg="" >
+							<select  class="select" name = "getBossRateParams[getBossId]" onchange="getBossRateParams(this)"   nullmsg="" >
 								 <option value="">请选择类型</option>
 								<volist name = "info['getBossRateParams']" key = "k" id = "val">
-									<option   Stage = "{$val['Stage']|round=2}"    CrrtParam = "{$val['CrrtParam']|round=2}"   CuRate = "{$val['CuRate']|round=2}"
-											  AgRate = "{$val['AgRate']|round=2}"  AuRate = "{$val['AuRate']|round=2}"
-									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['BossId']}" >BooId:{$val['BossId']},Stage:{$val['Stage']}</option>
+									<option   Stage = "{$val['getStage']|round=2}"    CrrtParam = "{$val['getCrrtParam']|round=2}"   CuRate = "{$val['getCuRate']|round=2}"
+											  AgRate = "{$val['getAgRate']|round=2}"  AuRate = "{$val['getAuRate']|round=2}"
+									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['getBossId']}" >BooId:{$val['getBossId']},Stage:{$val['getStage']}</option>
 								</volist>
                             </select>
 						</span>
@@ -298,17 +332,17 @@
 			<div class="col-1"></div>
 
 			<div class="formControls col-1" style="display: none">
-				<input type="text" class="input-text" title=""  id = "Stage" value="{$info['getBossRateParams'][0]['Stage']|round=2}"  placeholder="" name="Stage"  >
+				<input type="text" class="input-text" title=""  id = "Stage" value="{$info['getBossRateParams'][0]['getStage']|round=2}"  placeholder="" name="getBossRateParams[getStage]"  >
 			</div>
 
 			<label class="form-label col-2"><span class="c-red">*</span>校正系数（crrt_param）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "CrrtParam" value="{$info['getBossRateParams'][0]['CrrtParam']|round=2}" datatype="*" placeholder="" name="CrrtParam"  >
+				<input type="text" class="input-text" title=""  id = "CrrtParam" value="{$info['getBossRateParams'][0]['getCrrtParam']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getCrrtParam]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>铜核弹概率（cu_rate）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "CuRate" value="{$info['getBossRateParams'][0]['CuRate']|round=2}" datatype="*" placeholder="" name="CuRate"  >
+				<input type="text" class="input-text" title=""  id = "CuRate" value="{$info['getBossRateParams'][0]['getCuRate']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getCuRate]"  >
 			</div>
 			<div class="col-1"></div>
 
@@ -317,116 +351,15 @@
 		<div class="row cl">
 			<label class="form-label col-2"><span class="c-red">*</span>银核弹概率（ag_rate）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "AgRate"  value="{$info['getBossRateParams'][0]['AgRate']|round=2}" datatype="*" placeholder="" name="AgRate"  >
+				<input type="text" class="input-text" title=""  id = "AgRate"  value="{$info['getBossRateParams'][0]['getAgRate']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getAgRate]"  >
 			</div>
 			<div class="col-1"></div>
 			<label class="form-label col-2"><span class="c-red">*</span>金核弹概率（au_rate）：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text" title="" id = "AuRate" value="{$info['getBossRateParams'][0]['AuRate']|round=2}" datatype="*" placeholder="" name="AuRate"  >
+				<input type="text" class="input-text" title="" id = "AuRate" value="{$info['getBossRateParams'][0]['getAuRate']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getAuRate]"  >
 			</div>
 			<div class="col-1"></div>
 		</div>
-
-
-		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
-			<thead>
-			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool_ratio】奖池系数[a,b,c]</td>
-			</tr>
-			</thead>
-		</table>
-		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>room_level：</label>
-			<div class="formControls col-1">
-				<div style="width:100%;text-align:center;float:left">
-		        		<span class="select-box">
-							<select  class="select" name = "RatioRoomLevel" onchange="getGoldPoolRatio(this)"   nullmsg="" >
-								 <option value="">请选择类型</option>
-								<volist name = "info['getGoldPoolRatio']" key = "k" id = "val">
-									<option   Ratiolow = "{$val['Ratiolow']|round=2}"    RatioHigh = "{$val['RatioHigh']|round=2}"   RatioMid = "{$val['RatioMid']|round=2}"
-											  RatioPoolHigh = "{$val['RatioPoolHigh']|round=2}"  RatioPoolLow = "{$val['RatioPoolLow']|round=2}"
-									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RatioRoomLevel']}" >{$val['RatioRoomLevel']}</option>
-								</volist>
-                            </select>
-						</span>
-				</div>
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>low ：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "Ratiolow" value="{$info['getGoldPoolRatio'][0]['Ratiolow']|round=2}" datatype="*" placeholder="" name="Ratiolow"  >
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>high：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "RatioHigh" value="{$info['getGoldPoolRatio'][0]['RatioHigh']|round=2}" datatype="*" placeholder="" name="RatioHigh"  >
-			</div>
-			<div class="col-1"></div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>mid：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  id = "RatioMid"  value="{$info['getGoldPoolRatio'][0]['RatioMid']|round=2}" datatype="*" placeholder="" name="RatioMid"  >
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>pool_high：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title="" id = "RatioPoolHigh" value="{$info['getGoldPoolRatio'][0]['RatioPoolHigh']|round=2}" datatype="*" placeholder="" name="RatioPoolHigh"  >
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>pool_low ：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title="" id = "RatioPoolLow" value="{$info['getGoldPoolRatio'][0]['RatioPoolLow']|round=2}" datatype="*" placeholder="" name="RatioPoolLow"  >
-			</div>
-			<div class="col-1"></div>
-		</div>
-
-
-		<table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
-			<thead>
-			<tr class="text-c" >
-				<td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>【gold_pool】奖池抽水pool_ratio </td>
-			</tr>
-			</thead>
-		</table>
-
-		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>room_level：</label>
-			<div class="formControls col-1">
-				<div style="width:100%;text-align:center;float:left">
-		        		<span class="select-box">
-							<select  class="select"  onchange="getDynamicGoldPool(this)"   nullmsg="" >
-								 <option value="">请选择类型</option>
-								<volist name = "info['getDynamicGoldPool']" key = "k" id = "val">
-									<option   DynamicPoolRatio = "{$val['PoolRatio']|round=2}"    DynamicPool = "{$val['Pool']|round=2}"   DynamicPump = "{$val['Pump']|round=2}"
-
-									<eq name ="k" value = "1">selected = "true"</eq>   value="{$val['RoomLevel']}" >{$val['RoomLevel']}</option>
-								</volist>
-                            </select>
-						</span>
-				</div>
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>pool：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  disabled="true" id = "DynamicPool" value="{$info['getDynamicGoldPool'][0]['Pool']|round=2}" datatype="*" placeholder=""  >
-			</div>
-			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>pump：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  disabled="true" id = "DynamicPump" value="{$info['getDynamicGoldPool'][0]['Pump']|round=2}" datatype="*" placeholder=""  >
-			</div>
-			<div class="col-1"></div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>pool_ratio：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text" title=""  disabled="true" id = "DynamicPoolRatio"  value="{$info['getDynamicGoldPool'][0]['PoolRatio']|round=2}" datatype="*" placeholder=""   >
-			</div>
-			<div class="col-1"></div>
-
-		</div>
-
 
 		<div class="row cl">
 			<div class="col-5 col-offset-6">

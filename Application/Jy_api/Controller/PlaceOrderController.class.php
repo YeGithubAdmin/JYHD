@@ -100,7 +100,7 @@ class PlaceOrderController extends ComController {
             $result = 5002;
             goto  response;
         }
-        if($catGoodsAll['LimitShop'] >= 1 && $Type == 1){
+        if($catGoodsAll['LimitShop'] > 1 && $Type == 1){
             $where = ' playerid = '.$playerid.' and GoodsID = '.$catGoodsAll['Id'];
             switch ($catGoodsAll['LimitShop']) {
                 //日限购

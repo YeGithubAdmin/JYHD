@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加等级</title>
+</head>
+<body>
+	<div class="pd-20">
+
+		<form action="" method="post" class="form form-horizontal" id="form-vipInfo-add">
+
+			<div class="row cl">
+				<label class="form-label col-1">商品描述：</label>
+				<div class="formControls col-10">
+					<textarea name="Describe" cols="" rows="" class="textarea"  placeholder="请输入商品描述" datatype="*0-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)">{$catGoodAll['Describe']}</textarea>
+					<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-1">广播信息：</label>
+				<div class="formControls col-10">
+					<textarea name="Broadcast" cols="" rows="" class="textarea"  placeholder="请输入广播信息" datatype="*0-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)">{$catGoodAll['Broadcast']}</textarea>
+					<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-1">推送信息：</label>
+				<div class="formControls col-10">
+					<textarea name="Push" cols="" rows="" class="textarea"  placeholder="请输入推送信息" datatype="*0-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)">{$catGoodAll['Push']}</textarea>
+					<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-1">备注：</label>
+				<div class="formControls col-10">
+					<textarea name="Rmark" cols="" rows="" class="textarea"  placeholder="请输入备注" datatype="*0-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)">{$catGoodAll['Rmark']}</textarea>
+					<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+
+			$("#form-vipInfo-add").Validform({
+				tiptype : 2,
+
+				callback : function(form) {
+					form[0].submit();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.$('.btn-refresh').click();
+					parent.layer.close(index);
+				}
+			});
+
+
+		});
+
+	</script>
+	<script type="text/javascript">
+        //是否限制发行量
+        function IssueTypeFun(my) {
+
+            var Index 		= my.selectedIndex;         				//索引
+            var Value 		= my.options[Index].value;   				//选择中值
+            var IssueNum	= document.getElementById('IssueNum');		//发行数量
+            if(Value == 1){
+                IssueNum.style.display = "none";
+            }else{
+                IssueNum.style.display = "block";
+            }
+
+        }
+		//限购
+
+        function LimitShopFun(my) {
+            var Index 			= my.selectedIndex;         				//索引
+            var Value 			= my.options[Index].value;   				//选择中值
+            var LimitShopNum	= document.getElementById('LimitShopNum');		//限购数
+            if(Value == 1){
+                LimitShopNum.style.display = "none";
+            }else{
+                LimitShopNum.style.display = "block";
+            }
+        }
+		//限兑
+        function ExchangeTypeFun(my) {
+            var Index 		= my.selectedIndex;         				//索引
+            var Value 		= my.options[Index].value;   				//选择中值
+            var ExchangeNum	= document.getElementById('ExchangeNum');		//限兑
+            if(Value == 1){
+                ExchangeNum.style.display = "none";
+            }else{
+                ExchangeNum.style.display = "block";
+            }
+        }
+        
+        //状态
+		function StatusFun(my) {
+            var Index 		= my.selectedIndex;         				//索引
+            var Value 		= my.options[Index].value;   				//选择中值
+            var TheShelvesTime	= document.getElementById('TheShelvesTime');		//限兑
+			if(Value == 1 || Value == 4){
+                TheShelvesTime.style.display = "none";
+			}else{
+                TheShelvesTime.style.display = "block";
+			}
+        }
+
+        //赠送
+		function GiveInfoFun(my) {
+            var Index 		= my.selectedIndex;         						//索引
+            var Value 		= my.options[Index].value;   						//选择中值
+            var operation	= document.getElementById('operation');				//操作
+            var GiveInfo	= document.getElementsByClassName('GiveInfo');		//赠送
+
+            if(Value == 1 ){
+                operation.style.display = "none";
+                for(i = 0 ;i<GiveInfo.length;i++){
+                    GiveInfo[i].style.display = "none";
+				}
+
+            }else{
+                operation.style.display = "block";
+                for(i = 0 ;i<GiveInfo.length;i++){
+                    GiveInfo[i].style.display = "block";
+                }
+            }
+        }
+        //赠送 增加
+		function GiveInfoAdd() {
+			var  parent = document.getElementById('parent');
+			var  child  = document.getElementById('child');
+			var  GiveInfo = document.getElementsByClassName('GiveInfo');
+			var  del      = document.getElementById('del');
+            child.innerHTML +=  parent.innerHTML;
+
+            if(GiveInfo.length == 2){
+                del.style.display = "block";
+			}
+			var Id 			= document.getElementsByClassName('Id');
+			var GetNum 			= document.getElementsByClassName('GetNum');
+			var GoodsType 			= document.getElementsByClassName('GoodsType');
+			var Length			=  Id.length;
+            GoodsType[Length-1].setAttribute('name','GiveInfo['+Length+'][Type]');
+            GetNum[Length-1].setAttribute('name','GiveInfo['+Length+'][GetNum]');
+            Id[Length-1].setAttribute('name','GiveInfo['+Length+'][Id]');
+            console.log(Length);
+
+
+        }
+        //赠送 减少
+        function GiveInfoDel() {
+            var  child  = document.getElementById('child');
+            var  GiveInfo = document.getElementsByClassName('GiveInfo');
+            var  del      = document.getElementById('del');
+            var length	  = GiveInfo.length;
+            if(length>1){
+                child.removeChild(GiveInfo[length-1])
+			}
+
+			if(length == 2){
+                del.style.display = "none";
+			}
+        }
+	 //选择商品
+		function  selectGoodsFun(my) {
+            var GoodsType 			= document.getElementsByClassName('GoodsType')
+            var Id 					= document.getElementsByClassName('Id');
+            for(i=0;i<GoodsType.length;i++){
+                GoodsType[i].index = i;
+			}
+			var MyIndex 			= my.index;
+			var IdSelect 			= Id[MyIndex];
+			var seleIndex           = my.selectedIndex;
+			var selectValue			= my.options[seleIndex].value;
+			var selectOptions       = my.options;
+
+
+			var IdSelectOptionType 		= IdSelect.getElementsByClassName('type'+selectValue);
+			var IdSelectOption 		= IdSelect.options;
+
+            console.log(MyIndex);
+			for(j = 0;j<IdSelectOption.length;j++){
+			    if(j>0){
+                    IdSelectOption[j].style.display = "none";
+				}
+			}
+			for(k=0;k<IdSelectOptionType.length;k++){
+                IdSelectOptionType[k].style.display = "inline-block";
+			}
+
+        }
+	</script>
+	</literal>
+
+</body>
+</html>

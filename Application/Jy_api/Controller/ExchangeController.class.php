@@ -38,6 +38,8 @@ class ExchangeController extends ComController {
         $msgArr[4008] = "姓名缺失！";
         $msgArr[4009] = "手机号码缺失！";
         $msgArr[4010] = "手机号码格式出错！";
+        $msgArr[4011] = "收货地址为空！";
+        $msgArr[4012] = "QQ为空！";
         $msgArr[5002] = "物品信息，缺失！";
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
@@ -72,7 +74,6 @@ class ExchangeController extends ComController {
         }
 
         if($catGoodsAll['Type'] > 3){
-
             if(empty($DataInfo['UserName'])){
                 $result = 4008;
                 goto response;
@@ -82,9 +83,17 @@ class ExchangeController extends ComController {
                 $result = 4009;
                 goto response;
             }
-
             if(!$obj->checkPhone($DataInfo['Phone'])){
                 $result = 4010;
+                goto response;
+            }
+
+            if(empty($DataInfo['Address'])){
+                $result = 4011;
+                goto response;
+            }
+            if(empty($DataInfo['Txqq'])){
+                $result = 4012;
                 goto response;
             }
         }

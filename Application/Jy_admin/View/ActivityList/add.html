@@ -39,7 +39,7 @@
 								<option   value="1">累计充值</option>
 								<option   value="2">单笔充值</option>
 								<!--<option   value="3">循环充值</option>-->
-								<!--<option   value="4">图片类型</option>-->
+								<option   value="4">图片类型</option>
 							</select>
 						</span>
 					</div>
@@ -190,6 +190,7 @@
                         var Type = document.getElementsByName('Type')[0];
                         var Channel = document.getElementsByName('Channel')[0];
                         var CpChannel = document.getElementsByName('CpChannel')[0];
+                        var Cp = document.getElementsByName('Cp')[0];
                         //检查活动是否已出在
                         var _Verification = true;
                         $.ajax(
@@ -197,7 +198,7 @@
                                 type:"POST",
                                 url:'/jy_admin/ActivityList/Verification',
                                 async:false,
-                                data:{'Type':Type.value,'Channel':Channel.value,'CpChannel':CpChannel.value},
+                                data:{'Type':Type.value,'Channel':Channel.value,'CpChannel':CpChannel.value,'Cp':Cp.value},
                                 success:function (msg) {
                                     if(msg == 0){
                                         _Verification =   false;
