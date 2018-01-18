@@ -2,67 +2,67 @@
 namespace Jy_script\Model;
 use Think\Model;
 class ChannelDataModel extends Model{
-     //停止表名检查
-      protected $autoCheckFields = false;
-      //活跃统计
-      public function gameLoginAction($ChannelIn,$StartTime,$EndTime){
-          $gameLoginActionField = array(
-              'login_channel as GroupChannel',
-              'count(distinct playerid) as ActiveNum'
-          );
-          $gameLoginAction = M('game_login_action')
-              ->where(' login_channel in ('.$ChannelIn.')  and  
+    //停止表名检查
+    protected $autoCheckFields = false;
+    //活跃统计
+    public function gameLoginAction($ChannelIn,$StartTime,$EndTime){
+        $gameLoginActionField = array(
+            'login_channel as GroupChannel',
+            'count(distinct playerid) as ActiveNum'
+        );
+        $gameLoginAction = M('game_login_action')
+            ->where(' login_channel in ('.$ChannelIn.')  and  
                         login_time < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
                         and login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-              ->field($gameLoginActionField)
-              ->group('GroupChannel')
-              ->select();
-          $gameLoginActionSort = array();
-          foreach ($gameLoginAction as $k=>$v) {
-              $gameLoginActionSort[$v['GroupChannel']] = $v;
-          }
-          return $gameLoginActionSort;
-      }
-      //注册 ios
-      public  function EquipmentIos($ChannelIn,$StartTime,$EndTime){
-          $EquipmentIosField = array(
-              'reg_channel as GroupChannel',
-              'count(playerid) as RegNum',
-              'count(distinct uuid) as ios',
-          );
-          $EquipmentIos   = M('game_account')
-                           ->where(' reg_channel in('.$ChannelIn.')  and  os_type = 1  
+            ->field($gameLoginActionField)
+            ->group('GroupChannel')
+            ->select();
+        $gameLoginActionSort = array();
+        foreach ($gameLoginAction as $k=>$v) {
+            $gameLoginActionSort[$v['GroupChannel']] = $v;
+        }
+        return $gameLoginActionSort;
+    }
+    //注册 ios
+    public  function EquipmentIos($ChannelIn,$StartTime,$EndTime){
+        $EquipmentIosField = array(
+            'reg_channel as GroupChannel',
+            'count(playerid) as RegNum',
+            'count(distinct uuid) as ios',
+        );
+        $EquipmentIos   = M('game_account')
+            ->where(' reg_channel in('.$ChannelIn.')  and  os_type = 1  
                                       and  regtime< str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and
                                       regtime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                           ->field($EquipmentIosField)
-                           ->group('GroupChannel')
-                           ->select();
-          $EquipmentIosSort = array();
-          foreach ($EquipmentIos as $k=>$v){
-              $EquipmentIosSort[$v['GroupChannel']] = $v;
-          }
-          return $EquipmentIosSort;
-      }
-      //注册 android
-      public function EquipmentAndroid($ChannelIn,$StartTime,$EndTime){
-          $EquipmentAndroidField = array(
-              'reg_channel as GroupChannel',
-              'count(playerid) as RegNum',
-              'count(distinct concat(mac,imei,imsi)) as android',
-          );
-          $EquipmentAndroid   = M('game_account')
-                                ->where(' reg_channel in('.$ChannelIn.')  and  os_type = 2  
+            ->field($EquipmentIosField)
+            ->group('GroupChannel')
+            ->select();
+        $EquipmentIosSort = array();
+        foreach ($EquipmentIos as $k=>$v){
+            $EquipmentIosSort[$v['GroupChannel']] = $v;
+        }
+        return $EquipmentIosSort;
+    }
+    //注册 android
+    public function EquipmentAndroid($ChannelIn,$StartTime,$EndTime){
+        $EquipmentAndroidField = array(
+            'reg_channel as GroupChannel',
+            'count(playerid) as RegNum',
+            'count(distinct concat(mac,imei,imsi)) as android',
+        );
+        $EquipmentAndroid   = M('game_account')
+            ->where(' reg_channel in('.$ChannelIn.')  and  os_type = 2  
                                 and  regtime< str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and
                                 regtime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                                ->field($EquipmentAndroidField)
-                                ->group('GroupChannel')
-                                ->select();
-          $EquipmentAndroidSort    = array();
-          foreach ($EquipmentAndroid as $k=>$v){
-              $EquipmentAndroidSort[$v['GroupChannel']] = $v;
-          }
-          return $EquipmentAndroidSort ;
-      }
+            ->field($EquipmentAndroidField)
+            ->group('GroupChannel')
+            ->select();
+        $EquipmentAndroidSort    = array();
+        foreach ($EquipmentAndroid as $k=>$v){
+            $EquipmentAndroidSort[$v['GroupChannel']] = $v;
+        }
+        return $EquipmentAndroidSort ;
+    }
     //支付统计
     public  function  UsersOrder($ChannelIn,$StartTime,$EndTime){
         $UsersOrderFiled = array(
@@ -80,12 +80,12 @@ class ChannelDataModel extends Model{
             'round(sum(if(Status = 2 and IsFirst = 2,Price,0)),2) as FirstMoney',
         );
         $UsersOrder = M('jy_users_order_info')
-                      ->where('PayChannel in ('.$ChannelIn.')   and  
+            ->where('PayChannel in ('.$ChannelIn.')   and  
                                FoundTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
                                and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= FoundTime and IsTest = 2')
-                      ->field($UsersOrderFiled)
-                      ->group('GroupChannel')
-                      ->select();
+            ->field($UsersOrderFiled)
+            ->group('GroupChannel')
+            ->select();
         $UsersOrderSort = array();
         foreach ($UsersOrder as $k=>$v){
             $UsersOrderSort[$v['GroupChannel']] = $v;
@@ -113,26 +113,24 @@ class ChannelDataModel extends Model{
     }
     //周活跃
     public function WauAct($ChannelIn,$Time){
-            $field = array(
-                'reg_channel as GroupChannel',
-                'count(distinct playerid) as WAU',
-            );
-             $EndTime   = $Time;
-             $StartTime = date('Y-m-d H:i:s',strtotime($Time)-7*24*60*60) ;
-             $catData   = M('game_login_action')
-                                ->where(' login_channel in('.$ChannelIn.')  
+        $field = array(
+            'reg_channel as GroupChannel',
+            'count(distinct playerid) as WAU',
+        );
+        $EndTime   = $Time;
+        $StartTime = date('Y-m-d H:i:s',strtotime($Time)-7*24*60*60) ;
+        $catData   = M('game_login_action')
+            ->where(' login_channel in('.$ChannelIn.')  
                                 and  login_time< str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and
                                 login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
-                                ->field($field)
-                                ->group('GroupChannel')
-                                ->select();
-             $catDataSort    = array();
-            foreach ($catData as $k=>$v){
-                $catDataSort[$v['GroupChannel']] = $v;
-            }
-            return $catDataSort ;
-
-
+            ->field($field)
+            ->group('GroupChannel')
+            ->select();
+        $catDataSort    = array();
+        foreach ($catData as $k=>$v){
+            $catDataSort[$v['GroupChannel']] = $v;
+        }
+        return $catDataSort ;
 
     }
     //月活跃
@@ -156,7 +154,6 @@ class ChannelDataModel extends Model{
         }
         return $catDataSort ;
     }
-
     //支付老用户统计
     public  function  GameAccountOld($ChannelIn,$StartTime,$EndTime){
         $GameAccountOldField = array(
@@ -165,15 +162,15 @@ class ChannelDataModel extends Model{
             'sum(b.Price) as OrderTotalOld'
         );
         $GameAccountOld   = M('game_account as a')
-                            ->join('jy_users_order_info as b on     a.playerid  = b.playerid  
+            ->join('jy_users_order_info as b on     a.playerid  = b.playerid  
                                     and  b.PayChannel in ('.$ChannelIn.')   and  
                                     a.reg_channel = b.PayChannel  and b.Status = 2 and 
                                     b.FoundTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
                                     and str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= b.FoundTime ')
-                                    ->where(' a.reg_channel in('.$ChannelIn.')    and a.regtime < str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") and IsTest = 2')
-                            ->group('GroupChannel')
-                            ->field($GameAccountOldField)
-                            ->select();
+            ->where(' a.reg_channel in('.$ChannelIn.')    and a.regtime < str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s") and IsTest = 2')
+            ->group('GroupChannel')
+            ->field($GameAccountOldField)
+            ->select();
         $GameAccountOldSort      = array();
         foreach ($GameAccountOld as $k=>$v){
             $GameAccountOldSort[$v['GroupChannel']] = $v;
