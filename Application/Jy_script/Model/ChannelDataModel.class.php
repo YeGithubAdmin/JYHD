@@ -96,7 +96,7 @@ class ChannelDataModel extends Model{
     public function EquipmentAct($ChannelIn,$StartTime,$EndTime){
         $EquipmentAndroidField = array(
             'reg_channel as GroupChannel',
-            'count(distinct concat(mac,imei,imsi,uuid)) as EquipmentAct',
+            'count(distinct concat(mac,imei,imsi,uuid)) as EquipmentActNum',
         );
         $EquipmentAndroid   = M('game_login_action')
             ->where(' login_channel in('.$ChannelIn.')  
@@ -110,13 +110,50 @@ class ChannelDataModel extends Model{
             $EquipmentAndroidSort[$v['GroupChannel']] = $v;
         }
         return $EquipmentAndroidSort ;
+    }
+    //周活跃
+    public function WauAct($ChannelIn,$Time){
+            $field = array(
+                'reg_channel as GroupChannel',
+                'count(distinct playerid) as WAU',
+            );
+             $EndTime   = $Time;
+             $StartTime = date('Y-m-d H:i:s',strtotime($Time)-7*24*60*60) ;
+             $catData   = M('game_login_action')
+                                ->where(' login_channel in('.$ChannelIn.')  
+                                and  login_time< str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and
+                                login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+                                ->field($field)
+                                ->group('GroupChannel')
+                                ->select();
+             $catDataSort    = array();
+            foreach ($catData as $k=>$v){
+                $catDataSort[$v['GroupChannel']] = $v;
+            }
+            return $catDataSort ;
 
     }
-
-
-
-
-
+    //月活跃
+    public function MauAct($ChannelIn,$Time){
+        $field = array(
+            'reg_channel as GroupChannel',
+            'count(distinct playerid) as MAU',
+        );
+        $EndTime   = $Time;
+        $StartTime = date('Y-m-d H:i:s',strtotime($Time)-30*24*60*60) ;
+        $catData   = M('game_login_action')
+            ->where(' login_channel in('.$ChannelIn.')  
+                                and  login_time< str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") and
+                                login_time >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+            ->field($field)
+            ->group('GroupChannel')
+            ->select();
+        $catDataSort    = array();
+        foreach ($catData as $k=>$v){
+            $catDataSort[$v['GroupChannel']] = $v;
+        }
+        return $catDataSort ;
+    }
     //支付老用户统计
     public  function  GameAccountOld($ChannelIn,$StartTime,$EndTime){
         $GameAccountOldField = array(

@@ -24,11 +24,26 @@ class NewChannelDataController extends Controller {
         $EquipmentAndroidSort = $ChannelData->EquipmentAndroid($ChannelIn,$StartTime,$EndTime);
         $EquipmentIosSort     = $ChannelData->EquipmentIos($ChannelIn,$StartTime,$EndTime);
         $EquipmentActSort     = $ChannelData->EquipmentAct($ChannelIn,$StartTime,$EndTime);
-
+        $WauActSort           = $ChannelData->WauAct($ChannelIn,$StartTime);
+        $MauActSort           = $ChannelData->MauAct($ChannelIn,$StartTime);
 
         $info = array();
         foreach ($ChannelList['ChannelList'] as $k=>$v){
             $info[$k]['Channel']       = $v['GroupChannel'];
+
+            //周活跃
+
+            if($WauActSort[$v['GroupChannel']]){
+                $info[$k]['WAU'] = $WauActSort[$v['GroupChannel']]['WAU'] ;
+            }else{
+                $info[$k]['WAU'] = 0;
+            }
+            //月活跃
+            if($MauActSort[$v['GroupChannel']]){
+                $info[$k]['MAU'] = $MauActSort[$v['GroupChannel']]['MAU'] ;
+            }else{
+                $info[$k]['MAU'] = 0;
+            }
             //活跃 ios
             if($gameLoginActionSort[$v['GroupChannel']]){
                 $info[$k]['ActiveNum'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'] ;
@@ -57,9 +72,9 @@ class NewChannelDataController extends Controller {
 
             //活跃设备
             if(in_array($v['GroupChannel'],$GroupChannel)){
-                $info[$k]['EquipmentAct'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
+                $info[$k]['EquipmentActNum'] = $gameLoginActionSort[$v['GroupChannel']]['ActiveNum'];
             }else{
-                $info[$k]['EquipmentAct'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentAct'];
+                $info[$k]['EquipmentActNum'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentActNum'];
             }
             //注册设备
             if(in_array($v['GroupChannel'],$GroupChannel)){
@@ -67,7 +82,6 @@ class NewChannelDataController extends Controller {
             }else{
                 $info[$k]['EquipmentRegNum'] = $EquipmentRegNum;
             }
-
 
 
             $info[$k]['RegNum'] = $RegNum;

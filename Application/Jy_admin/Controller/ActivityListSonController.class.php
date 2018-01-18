@@ -77,8 +77,8 @@ class ActivityListSonController extends ComController {
             $GoodsID                    =       I('param.GoodsID','','trim');                   //物品ID
             $Number                     =       I('param.Number','','trim');                    //物品数量
             $Schedule                   =       I('param.Schedule',0,'intval');                  //条件数值
-//            $ImgUrl                     =       I('param.pic','','trim');                    //图片
-//            $ImgUrl                     =       $ImgUrl[0];
+            $ActivityType               =       I('param.ActivityType',0,'intval');              //活动类型
+            $LayoutType                 =       I('param.LayoutType',0,'intval');                //布局类型
             $Title                      =       I('param.Title','','trim');                      //标题
             $ImgCode                    =       I('param.ImgCode','','trim');
             $dataActivitySonList = array(
@@ -89,6 +89,8 @@ class ActivityListSonController extends ComController {
                 'ImgUrl'=>'',
                 'Title'=>$Title,
                 'ImgCode'=>$ImgCode,
+                'ActivityType'=>$ActivityType,
+                'LayoutType'=>$LayoutType,
             );
 
             $addActivitySonList = M('jy_activity_son_list')

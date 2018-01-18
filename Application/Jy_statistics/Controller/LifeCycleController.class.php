@@ -9,29 +9,55 @@ defined('THINK_PATH') or exit('Access Defined!');
 class LifeCycleController extends ComController {
     //列表
     public function index(){
-        $page                  =    $this->page;
         $time                  =    date("Y-m-d",time()-24*60*60);
         $DateTime              =    $time;
         $time                  =    strtotime($time);
         $Statime               =    date('Y-m-d',$time-15*24*60*60);
-        $Endtime               =    date('Y-m-d',$time);
         $search['datemin']     =    I('param.datemin',$Statime,'trim');
-        $search['datemax']     =    I('param.datemax',$Endtime,'trim');
         $search['Channel']     =    I('param.Channel','','trim');
-        $search['num']         =    I('param.num',30,'intval');
         $where = '1';
-        //默认前15天数据
-        if ($search['datemin'] != ''){
-            $where .= ' and  DateTime >= str_to_date("'.$search['datemin'].'","%Y-%m-%d %H:%i:%s")';
+        $Data = array(
+              1=>array(
+                  'Name' => '2-3天',
+                   'Day' =>2,
+              ),
+              2=> array(
+                  'Name' => '4-7天',
+                  'Day'  => 4,
+              ),
+              3=> array(
+                  'Name' => '8-14天',
+                  'Day'  =>  8,
+              ),
+              4=>array(
+                  'Name' =>  '15-30天',
+                  'Day'  =>  16,
+              ),
+              5=>array(
+                  'Name' => '31-90天',
+                  'Day'  =>  60,
+              ),
+              6=>array(
+                  'Name' => '90天-180天',
+                  'Day'  =>  91,
+              ),
+              7=>array(
+                  'Name' =>  '180-365天',
+                  'Day'  =>   186,
+              ),
+              8=>array(
+                  'Name' =>  '1年以上',
+                  'Day'  =>  365,
+              ),
+        );
+        $LossUsers = D('LossUsers');
+        $info = array();
+        foreach ($Data as $k=>$v){
+            $catData = $LossUsers->LifeCycle($v['Day'],$search['datemin'], $search['Channel'] );
+            $Data[$k]['Rate']   =  $catData[0]['Rate'];
+            $Data[$k]['Loss']   =  $catData[0]['loss']?$catData[0]['loss']:0;
+            $Data[$k]['Num']    =  $catData[0]['num']?$catData[0]['num']:0;
         }
-        if ($search['datemax'] != ''){
-            $datemax =  date('Y-m-d',strtotime($search['datemax'] )+24*60*60);
-            $where .= ' and  DateTime < str_to_date("'.$datemax.'","%Y-%m-%d %H:%i:%s")';
-        }
-        if ($search['Channel'] != ''){
-            $where .= ' and  Channel = "'.$search['Channel'].'"';
-        }
-
         //渠道列表
         $Channel = M('jy_admin_users')
             ->where('channel = 2 and isdel = 1')
@@ -41,49 +67,11 @@ class LifeCycleController extends ComController {
             ))
             ->select();
 
-        $LogUsersLoss = M('log_users_loss');
-        //总计
-        $count        =  $LogUsersLoss
-                          ->where($where)->field(
-                                array(
-                                    'count(Id) as Num',
-                                    'sum(Loss) as Loss',
-                                    'round(100*sum(Loss)/sum(LoginUser),2) as Rate',
-                                    'sum(WLoss) as WLoss',
-                                    'round(100*sum(WLoss)/sum(LoginUser),2) as WRate',
-                                    'sum(Backflow) as Backflow',
-                                    'round(sum(Loss)/7,2) as CycleLt',
-                                    'round(sum(WLoss)/7,2) as WCycleLt',
 
-                                )
-                            )
-                            ->select();
-        //列表
-        $info         =  $LogUsersLoss
-                         ->where($where)
-                         ->field(
-                             array(
-                                 'Loss',
-                                 'round(100*Loss/LoginUser,2) as Rate',
-                                 'WLoss',
-                                 'round(100*WLoss/LoginUser,2) as WRate',
-                                 'Backflow',
-                                 'round(Loss/7,2) as CycleLt',
-                                 'round(WLoss/7,2) as WCycleLt',
-                                 'Channel',
-                                 'DateTime'
-                             )
-                         )
-                         ->limit($page* $search['num'],$search['num'])
-                         ->select();
-        $countNum     =  $count[0]['Num'];
-        $Page       = new \Common\Lib\Page($countNum,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
-        $show       = $Page->show();// 分页显示输出
+
         $this->assign('search',$search);
-        $this->assign('page',$show);
-        $this->assign('info',$info);
+        $this->assign('info',$Data);
         $this->assign('Channel',$Channel);
-        $this->assign('count',$count);
         $this->display('index');
     }
     //到出excel

@@ -286,32 +286,38 @@ class ActivityListController extends ComController {
 
     //验证类型
     public function Verification(){
-        $Type       =  I('param.Type',0,'intval');
-        $Channel       =  I('param.Channel',0,'intval');
+        $Type        =  I('param.Type',0,'intval');
+        $Channel     =  I('param.Channel',0,'intval');
         $CpChannel   = I('param.CpChannel',0,'intval');
+        $Cp          = I('param.Cp',0,'intval');
+        $result = 1;
         if($Type == ''){
-            echo 0;
-            exit();
+            $result = 0;
+            goto end;
         }
         $activityFatherList = M('jy_activity_father_list')
             ->where('Type = "'.$Type.'" and Channel = '.$Channel)
             ->field('id')
             ->find();
-        $CatCpChannel = M('jy_activity_father_list')
-            ->where('Type = "'.$Type.'" and Channel = '.$CpChannel)
-            ->field('id')
-            ->find();
+        if($Cp == 2){
+            $CatCpChannel = M('jy_activity_father_list')
+                ->where('Type = "'.$Type.'" and Channel = '.$CpChannel)
+                ->field('id')
+                ->find();
 
-        if(empty($activityFatherList) && !empty($CatCpChannel)){
-            echo 1;
-            exit();
-        }else if (!empty($activityFatherList)){
-            echo 2;
-            exit();
-        }else if(empty($CatCpChannel)){
-            echo 3;
-            exit();
+            if(empty($CatCpChannel)){
+                $result =  3;
+                goto  end;
+            }
         }
+
+        if(!empty($activityFatherList)){
+            $result =  2;
+            goto  end;
+        }
+        end:
+          echo $result;
+          exit();
 
     }
     public function SendAjax(){

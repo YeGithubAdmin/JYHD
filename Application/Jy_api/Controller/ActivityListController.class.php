@@ -57,7 +57,6 @@ class ActivityListController extends ComController {
                                     a.ShowStartTime <= str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s")         
                                     and  str_to_date("'.$time.'","%Y-%m-%d %H:%i:%s") <= a.ShowEndTime')
                             ->select();
-
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
         $catUserOrderField = array(
             'count(b.Id) as Id',

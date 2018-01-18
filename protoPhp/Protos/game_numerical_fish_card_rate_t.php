@@ -1,24 +1,24 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2018-01-02 15:38:42
+ * Auto generated from PB_gm_tool.proto at 2018-01-18 17:53:25
  *
  * protos package
  */
 
 namespace Protos {
 /**
- * const_return_gold_rate message embedded in game_numerical message
+ * fish_card_rate_t message embedded in game_numerical message
  */
-class game_numerical_const_return_gold_rate extends \ProtobufMessage
+class game_numerical_fish_card_rate_t extends \ProtobufMessage
 {
     /* Field index constants */
-    const ROOM_LEVEL = 1;
+    const FC_MAX = 1;
     const RATE = 2;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::ROOM_LEVEL => array(
-            'name' => 'room_level',
+        self::FC_MAX => array(
+            'name' => 'fc_max',
             'required' => true,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
@@ -44,7 +44,7 @@ class game_numerical_const_return_gold_rate extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::ROOM_LEVEL] = null;
+        $this->values[self::FC_MAX] = null;
         $this->values[self::RATE] = null;
     }
 
@@ -59,25 +59,25 @@ class game_numerical_const_return_gold_rate extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'room_level' property
+     * Sets value of 'fc_max' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setRoomLevel($value)
+    public function setFcMax($value)
     {
-        return $this->set(self::ROOM_LEVEL, $value);
+        return $this->set(self::FC_MAX, $value);
     }
 
     /**
-     * Returns value of 'room_level' property
+     * Returns value of 'fc_max' property
      *
      * @return integer
      */
-    public function getRoomLevel()
+    public function getFcMax()
     {
-        $value = $this->get(self::ROOM_LEVEL);
+        $value = $this->get(self::FC_MAX);
         return $value === null ? (integer)$value : $value;
     }
 

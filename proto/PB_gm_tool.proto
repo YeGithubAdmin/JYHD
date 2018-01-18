@@ -67,30 +67,33 @@ message PBS_GetGameNumericalReturn
 	optional RPB_GameNumerical data = 2; 
 }
 
-message game_numerical {
-	message const_return_gold_rate {
-		required int32 room_level = 1;
-		required float rate = 2;
+message game_numerical {	
+	message gold_pool_ratio_t {
+		required float low = 1;
+		required float mid = 2;
+		required float high = 3;
+		required int32 pool_low = 4;
+		required int32 pool_high = 5;
 	}
-	message const_recharge_effect {
+	message recharge_effect_t {
 		required string pay_type = 1; 										// "pay1" "pay3" "pay7" "pay30"
 		required float add_rate = 2;
 		required int32 plan_recharge = 3;
 	}
-	message const_key_recharge_effect {
+	message key_recharge_effect_t {
 		required string pay_type = 1; 										// "pay1" "pay3" "pay7" "pay30"
 		required float add_rate = 2;
 		required int32 plan_recharge = 3;
 	}
-	message const_down_grade {
+	message down_grade_t {
 		required string type = 1;											// "att_useing_50" "att_useing_100" "att_useing_200"
 		required int32 num = 2;
 	}
-	message const_fish_card_rate {
+	message fish_card_rate_t {
 		required int32 fc_max = 1;
 		required float rate = 2;
 	}
-	message const_boss_rate_params {
+	message boss_rate_params_t {
 		required int32 boss_id = 1;  										// 2001 - 2006
 		required int32 stage = 2; 											// 1 - 3
 		optional float crrt_param = 3;
@@ -98,37 +101,23 @@ message game_numerical {
 		optional float ag_rate = 5;
 		optional float au_rate = 6;
 	}
-	message const_gold_pool_ratio {
-		required int32 room_level = 1;
-		required float low = 2;
-		required float mid = 3;
-		required float high = 4;
-		required int32 pool_low = 5;
-		required int32 pool_high = 6;
-	}
 
-	message dynamic_gold_pool {
-		required int32 room_level = 1;
-		required float pool_ratio = 2;
-		required int64 pool = 3;
-		required int64 pump = 4;
-	}
-
-	optional float pool_ratio = 1; 											// [poolRatio]：通过奖池状态影响每个游戏场的基础抽水率  					【dynamic】
+	optional float pool_ratio = 1; 											// [poolRatio]：通过奖池状态影响每个游戏场的基础抽水率  					[dynamic]
 	optional float limit_ratio = 2;											// 极限系数：
 	optional int32 change_point = 3; 										// 折算值
 	optional float fish_card_p1 = 4; 										// 控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]
 	optional int32 fish_card_p2 = 5; 										// 控制渔券大于1000时的渔券鱼捕中率和玩家充值返奖率[0.04,20]
-	optional int32 boss_award_pool = 6; 									// BOSS奖池配置：[0,2000000]
+	optional int64 boss_award_pool_line = 6; 								// BOSS奖池配置：[0,2000000]												
 	optional float gold_pool_pump_rate = 7; 								// 1 - 抽水比例
-	repeated const_return_gold_rate return_gold_rate = 20;      			// [场返奖率]：影响每个游戏场的基础抽水率
-	repeated const_recharge_effect recharge_effect = 21;					// 基础捕中率加成：影响付费玩家捕中率加成
-	repeated const_key_recharge_effect key_recharge_effect = 22;			// KEY鱼捕中加成：影响付费玩家接近临界值时对KEY鱼的捕中率加成
-	repeated const_down_grade down_grade = 23;      						// [downGrade]：控制临界值及到临界值时对玩家的补救倍数
-	repeated const_fish_card_rate fish_card_rate = 24;      				// 渔券相关配置
-	repeated const_boss_rate_params boss_rate_params = 25;      			// BOSS捕中率配置 核弹掉落率配置
-	repeated const_gold_pool_ratio gold_pool_ratio = 26;					// 奖池系数[a,b,c, A, B]
-	repeated dynamic_gold_pool gold_pool = 27;								// 奖池  抽水  pool_ratio 													【dynamic】
+	optional float return_gold_rate = 8; 									// [场返奖率]：影响每个游戏场的基础抽水率 									
+	optional int64 gold_pool = 9;											// 金币池																	[dynamic]
+	optional int64 boss_award_pool = 10;									// BOSS奖池																	[dynamic]
+	optional gold_pool_ratio_t gold_pool_ratio = 20;						// 奖池系数[a,b,c, A, B]
+	repeated recharge_effect_t recharge_effect = 21;						// 基础捕中率加成：影响付费玩家捕中率加成
+	repeated key_recharge_effect_t key_recharge_effect = 22;				// KEY鱼捕中加成：影响付费玩家接近临界值时对KEY鱼的捕中率加成
+	repeated down_grade_t down_grade = 23;									// [downGrade]：控制临界值及到临界值时对玩家的补救倍数
+	repeated fish_card_rate_t fish_card_rate = 24; 							// 渔券相关配置
+	repeated boss_rate_params_t boss_rate_params = 25;      				// BOSS捕中率配置 核弹掉落率配置
 }
 
 // 更改数值数据

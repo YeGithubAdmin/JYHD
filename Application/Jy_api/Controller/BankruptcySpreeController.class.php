@@ -19,7 +19,6 @@ class BankruptcySpreeController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
-        $obj    = new \Common\Lib\func();
         $result = 2001;
         $info   =  array();
         $msgArr[2001] = "获取成功！";
@@ -27,100 +26,175 @@ class BankruptcySpreeController extends ComController {
         $msgArr[4007] = "物品不存在！";
         $msgArr[4008] = "物品不存在！";
         $playerid = $DataInfo['playerid'];
-        //查询礼包
+        $ComFun = D('ComFun');
+        $Status = 2;
+        //物品概率
+        $Rate =  array(
+            array(
+                'Code'=>17,
+                'Rate'=>30,
+            ),
+            array(
+                'Code'=>18,
+                'Rate'=>50,
+            ),
+            array(
+                'Code'=>19,
+                'Rate'=>20,
+            ),
+        );
+        //查询物品
         $catData = M('jy_goods_all')
-                   ->where('CateGory = 4 and    Code = 11 and IsDel = 1')
-                   ->field(array(
-                       'Id',
-                       'CurrencyNum as Price',
-                       'Name',
-                       'GiveInfo',
-                       'LimitShopNum',
-                       'LimitShop',
-                       'IosCode',
-                   ))
-                   ->find();
+            ->where('CateGory = 0 and  ShowType = 6  and  Type = 0  and IsDel = 1')
+            ->field(array(
+                'Id',
+                'CurrencyNum as Price',
+                'Name',
+                'GiveInfo',
+                'Code',
+                'IosCode',
+            ))
+            ->select();
         if(empty($catData)){
             $result = 4007;
             goto  response;
         }
-
-        $MoreThan = $playerid%10;
-
-        $GiveInfo =  $catData['GiveInfo'];
-        $catGiveInfo = array();
-        if(!empty($GiveInfo)){
-            $GiveInfo     = json_decode($GiveInfo,true);
-            $GiveInfoSort = array();
-            $GoodsID = array();
-            foreach ($GiveInfo as $k=>$v){
-                $GoodsID[] = $v['Id'];
-                $GiveInfoSort[$v['Id']] = $v;
-            }
-            if(!empty($GoodsID)){
-                $GoodsID = implode(',',$GoodsID);
-            }
-            $catGiveInfo = M('jy_goods_all')
-                           ->where('Id in ('.$GoodsID.') and IsDel = 1')
-                           ->field(array(
-                               'GetNum',
-                               'ImgCode',
-                               'Type',
-                               'Id',
-                           ))
-                           ->select();
-            if(!empty($catGiveInfo)){
-                foreach ($catGiveInfo as $k=>$v){
-                    $SortVal =  $GiveInfoSort[$v['Id']];
-                    if($SortVal){
-                        $catGiveInfo[$k]['Number'] = $v['GetNum']*$SortVal['GetNum'];
-                        $catGiveInfo[$k]['Name'] = $SortVal['Name'];
-                        unset($catGiveInfo[$k]['GetNum']);
-                    }else{
-                       unset($catGiveInfo[$k]);
+        $NewData = array();
+        foreach ($catData as $k=>$v){
+            $GiveInfo    =  $v['GiveInfo'];
+            $catGiveInfo = array();
+            if(!empty($GiveInfo)){
+                $GiveInfo     = json_decode($GiveInfo,true);
+                $GiveInfoSort = array();
+                $GoodsID = array();
+                foreach ($GiveInfo as $key=>$val){
+                    $GoodsID[] = $val['Id'];
+                    $GiveInfoSort[$val['Id']] = $val;
+                }
+                if(!empty($GoodsID)){
+                    $GoodsID = implode(',',$GoodsID);
+                }
+                $catGiveInfo = M('jy_goods_all')
+                    ->where('Id in ('.$GoodsID.') and IsDel = 1')
+                    ->field(array(
+                        'GetNum',
+                        'ImgCode',
+                        'Type',
+                        'Id',
+                    ))
+                    ->select();
+                if(!empty($catGiveInfo)){
+                    foreach ($catGiveInfo as $key=>$val){
+                        $SortVal =  $GiveInfoSort[$val['Id']];
+                        if($SortVal){
+                            $catGiveInfo[$key]['Number'] = $val['GetNum']*$SortVal['GetNum'];
+                            $catGiveInfo[$key]['Name'] = $SortVal['Name'];
+                            unset($catGiveInfo[$key]['GetNum']);
+                        }else{
+                            unset($catGiveInfo[$key]);
+                        }
                     }
                 }
+                $NewData[$v['Code']]['Id']          = $v['Id'];
+                $NewData[$v['Code']]['GiveInfo']    = $catGiveInfo;
+                $NewData[$v['Code']]['Price']       = $v['Price'];
+                $NewData[$v['Code']]['Name']        = $v['Name'];
+                $NewData[$v['Code']]['IosCode']     = $v['IosCode'];
+                $NewData[$v['Code']]['Code']        = $v['Code'];
             }
-            $catData['GiveInfo'] = $catGiveInfo;
+            $LimitShop[] = $v['Id'];
         }
-        $Status = 2;
-        if($catData['LimitShop'] > 1){
-            //判断是否限购
-            $where = ' playerid = '.$playerid.' and GoodsID = '.$catData['Id'];
-            switch ($catData['LimitShop']) {
-                //日限购
-                case 2:
-                    $where .= ' and  TO_DAYS(DateTime) = TO_DAYS(NOW())';
-                    break;
-                //周先限购
-                case 3:
-                    $where .= ' and  WEEKOFYEAR(DateTime)=WEEKOFYEAR(now())';
-                    break;
-                //月限购
-                case 4:
-                    $where .= ' and MONTH(DateTime)=MONTH(NOW()) and year(DateTime)=year(now())';
-                    break;
+        $MoreThan = $playerid%10;
+        $LimitShop = implode(',',$LimitShop);
+        $where = ' playerid = '.$playerid.' and GoodsID in ('.$LimitShop.') and  TO_DAYS(DateTime) = TO_DAYS(NOW())';
+        $logUsersShop = M('log_users_shop_'.$MoreThan)
+            ->where($where)
+            ->field(
+                array(
+                    'GoodsID',
+                    'Code'
+                ))
+            ->select();
+        $Num = count($logUsersShop);
+        $random = 1;  //是否想随机 1 否 2 是
+        $BagData = array();
+        //是超过购买次数
+        if($Num ==  2){
+            $info['GoodsInfo'] = array();
+            $Status = 1;
+            goto  response;
+        }elseif ($Num ==  1){
+            //查询随机信息
+            $BankruptcybagReta = M('log_bankruptcybag_reta')
+                                ->where('playerid = '.$playerid.'  and  TO_DAYS(DateTime) = TO_DAYS(NOW())')
+                                ->field(array(
+                                       'Code',
+                                       'GoodsID'
+                                ))->select();
+            $RetaNum = count($BankruptcybagReta);
+            if($RetaNum == 2){
+                 //筛选物品
+                 foreach ($BankruptcybagReta as $k=>$v) $BankruptcybagRetaSort[$v['Code']] = $v;
+                 foreach ($BankruptcybagReta as $k=>$v){
+                      foreach ($logUsersShop as $key=>$val){
+                            if($val['Code'] != $v['Code'] && count($BankruptcybagRetaSort) == 2){
+                                $BagData['Code']    = $v['Code'];
+                            }else if($val['Code'] == $v['Code']  && count($BankruptcybagRetaSort) == 1){
+                                $BagData['Code']    = $v['Code'];
+                            }
+                      }
+                 }
+            }else if ($RetaNum == 1){
+                $random = 2;
             }
-            $logUsersShop = array(
-                'count(Id) as num'
+        }elseif ($Num == 0){
+            //查询随机信息
+            $BankruptcybagReta = M('log_bankruptcybag_reta')
+                ->where('playerid = '.$playerid.'  and  TO_DAYS(DateTime) = TO_DAYS(NOW())')
+                ->field(array(
+                    'Code',
+                    'GoodsID'
+                ))->select();
+            $RetaNum = count($BankruptcybagReta);
+            $BagData = array();
+            if($RetaNum == 1){
+                //筛选物品
+                $BagData['Code']   = $BankruptcybagReta[0]['Code'];
+            }else if ($RetaNum == 0){
+                $random = 2;
+            }
+        }
+        //是否随机
+        if($random == 2){
+            foreach ($Rate as $key => $value) {
+                $proArr[$value['Code']] = $value['Rate'];
+            }
+            $GoodsCode= $ComFun->getRand($proArr);
+            $BagData['Code'] = $GoodsCode;
+            $RateInfo =  $NewData[$GoodsCode];
+            if(empty($RateInfo)){
+                $result = 4007;
+                goto  response;
+            }
+            $BankruptcybagReta = array(
+                'playerid'  =>  $playerid,
+                'Code'      =>  $RateInfo['Code'],
+                'GoodsID'   =>  $RateInfo['Id']
             );
-            $logUsersShop = M('log_users_shop_'.$MoreThan)
-                ->where($where)
-                ->field($logUsersShop)
-                ->select();
-            $num = $logUsersShop[0]['num'];
-            if($catData['LimitShop'] == 5 && $num==1){
-                $Status = 1;
-            }
-            if($catData['LimitShop'] < 5 && $catData['LimitShopNum'] ==  $num){
-                $Status = 1;
+            $addBankruptcybagReta = M('log_bankruptcybag_reta')->add($BankruptcybagReta);
+            if(!$addBankruptcybagReta){
+                $result = 3002;
+                goto  response;
             }
         }
-        $catData['Status'] = $Status;
-        unset($catData['LimitShopNum']);
-        unset($catData['LimitShop']);
-        $info = $catData;
-         response:
+        if($NewData[$BagData['Code']]){
+            $info['GoodsInfo'] = $NewData[$BagData['Code']];
+        }else{
+            $info['GoodsInfo'] = array();
+        }
+        response:
+
+            $info['Status'] = $Status;
             $response = array(
                 'result'    => $result,
                 'msg'       => $msgArr[$result],

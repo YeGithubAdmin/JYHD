@@ -160,8 +160,50 @@ class LossUsersModel extends Model{
           foreach ($Backflow as $k=>$v)  $BackflowSort[$v['Channel']] = $v;
           return $BackflowSort;
       }
-
-
+      /***
+       * 生命周期
+       *
+       */
+       public function LifeCycle($Day,$Date,$Channel =''){
+           //统计日登录的用户
+           $model         =  new Model();
+           $time          =  strtotime($Date);
+           $StarTime      =  date('Y-m-d H:i:s',$time);
+           $EndTime       =  date('Y-m-d H:i:s',$time+24*60*60);
+           //统计流失 时间
+           $LossStartTime =  date('Y-m-d H:i:s',$time+24*60*60*$Day);
+           $LossEndTime   =  date('Y-m-d H:i:s',strtotime($LossStartTime)+24*60*60*($Day));
+           $a =array(
+               '$StarTime'=>$StarTime,
+               '$EndTime'=>$EndTime,
+               '$LossStartTime'=>$LossStartTime,
+               '$LossEndTime'=>$LossEndTime,
+           );
+           //流失用户
+           if($Channel != ''){
+               $where = ' a.login_channel  = "'.$Channel.'"  and  a.`login_time` >= str_to_date("'.$StarTime.'","%Y-%m-%d %H:%i:%s")
+                      and  a.`login_time` <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")';
+           }else{
+               $where = 'a.`login_time` >= str_to_date("'.$StarTime.'","%Y-%m-%d %H:%i:%s")
+                      and  a.`login_time` <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")';
+           }
+           if(strtotime($LossEndTime) > strtotime(date('Y-m-d',time()))){
+                    return 0;
+           }
+           $Loss = $model
+               ->table('game_login_action as  a')
+               ->join('game_login_action as b  on  a.`playerid` = b.`playerid`
+                                  and  b.`login_time` >= str_to_date("'.$LossStartTime.'","%Y-%m-%d %H:%i:%s")
+                                  and  b.`login_time` <  str_to_date("'.$LossEndTime.'","%Y-%m-%d %H:%i:%s") ','left')
+               ->where($where)
+               ->field(array(
+                   'count(distinct  a.`playerid`)-count(distinct b.`playerid`) as loss',
+                   '(count(distinct a.`playerid`)-count(distinct b.`playerid`))/count(distinct a.`playerid`)  as Rate',
+                   'count(distinct  a.`playerid`)  as num',
+               ))
+               ->select();
+           return  $Loss;
+       }
 
       public function  CalculationPrice($data){
              foreach ($data as $k=>$v){

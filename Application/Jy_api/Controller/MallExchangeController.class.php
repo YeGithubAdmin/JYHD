@@ -26,7 +26,6 @@ class MallExchangeController extends ComController {
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
             ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and   a.ShowType = 4 and a.IsDel = 1')
             ->field('a.Id,a.Name,a.CurrencyNum,a.Code,a.Type,a.GetNum,a.ImgCode,a.Describe')
-            ->limit(($page-1)*$num,$num)
             ->order('a.Sort asc')
             ->select();
         if(empty($GoodsAll)){
