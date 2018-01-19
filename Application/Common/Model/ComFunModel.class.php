@@ -174,9 +174,7 @@ class ComFunModel extends Model{
         exit;
     }
 
-
-
-   public function getRand($proArr) {
+     public function getRand($proArr) {
          $result = '';
         //概率数组的总概率精度
         $proSum = array_sum($proArr);
