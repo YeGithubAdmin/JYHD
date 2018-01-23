@@ -109,7 +109,6 @@ class TimedBagController extends ComController {
         if($Num == 1 || !empty($LogTimedSend)){
             $Status = 1;
             $info['GoodsInfo'] = array();
-            $result = 7002;
             goto response;
         }
          $info['GoodsInfo'] = $catData[0];

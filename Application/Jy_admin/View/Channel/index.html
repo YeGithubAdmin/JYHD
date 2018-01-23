@@ -40,16 +40,6 @@
             <input type="hidden" name="c" value="Channel" />
             <input type="hidden" name="a" value="index" />
 			<div class="text-c">
-					<span style="width: 150px"
-						  class="select-box"> <select size="1" name="islock"
-													  class="select">
-						<option value="">合作模式</option>
-						<option value="1"<if  condition= "$search['islock'] eq '1'">selected</if>>正常</option>
-						<option value="2"<if condition="$search['islock'] eq '2'" >selected</if>>锁定</option>
-				</select>
-				</span>
-
-
 				<input
 						type="text" class="input-text" style="width: 150px"
 						placeholder="请输入渠道号" id="" value="{$search['account']}"
@@ -85,12 +75,11 @@
 				    <th width="30">id</th>
 					<th width="60">渠道名</th>
 					<th width="60">渠道号</th>
+					<th width="60">是否通用</th>
 					<th width="60">渠道商品</th>
-					<th width="60">渠道支付</th>
-					<th width="60">基本信息</th>
 					<th width="60">添加人</th>
 					<th width="60">添加时间</th>
-					<th width="100">操作</th>
+					<th width="10">修改</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -99,9 +88,11 @@
 						<td>{$val['adminUserID']}</td>
 						<td>{$val['name']}</td>
 						<td>{$val['account']}</td>
+						<td class="td-status">
+							<span class="<if condition ="$val['isown'] eq 1" >label label-defaunt radius<else/>label label-success radius</if>"><if condition ="$val['isown'] eq 1">
+									否
+									<else/>是</if></span></td>
 						<td><a  style="color:red" onclick="Channel_good('渠道商品','/jy_admin/Channel/goods/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
-						<td><a  style="color:red" onclick="Channel_pay('渠道支付','/jy_admin/Channel/pay/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
-						<td><a  style="color:red" onclick="Channel_information('渠道信息','/jy_admin/Channel/information/id/{$val['adminUserID']}')">查看</a></td>
 						<td>{$val['addName']}</td>
 						<td>{$val['mtime']}</td>
 						<td class="td-manage">

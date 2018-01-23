@@ -29,7 +29,7 @@
 	<div class="pd-20">
 		<form action="" method="post" class="form form-horizontal" id="form-menu-add">
 			<div class="row cl">
-				<label class="form-label col-2"><span class="c-red">*</span>渠道号：</label>
+				<label class="form-label col-3"><span class="c-red">*</span>渠道号：</label>
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-2"><span class="c-red">*</span>本公司：</label>
+				<label class="form-label col-1"><span class="c-red">*</span>是否通用：</label>
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
@@ -52,78 +52,51 @@
 							</select>
 						</span>
 					</div>
-
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-2"><span class="c-red">*</span>合作模式：</label>
+			</div>
+			<div class="row cl" id = "panent" >
+				<label class="form-label col-3"><span class="c-red">*</span>复制通用渠道：</label>
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select" name="pattern" >
-								<option   value="1">苹果</option>
-								<option   value="2">安卓</option>
+							<select class="select" name="isown" >
+								<option   value="1">否</option>
+								<option   value="2">是</option>
 							</select>
 						</span>
 					</div>
-
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>渠道：</label>
+				<div class="formControls col-1">
+					<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select" name="isown" >
+								<option   value="1">否</option>
+								<option   value="2">是</option>
+							</select>
+						</span>
+					</div>
 				</div>
 				<div class="col-1"></div>
 			</div>
 
-			<div class="row cl">
-				<label class="form-label col-2"><span class="c-red">*</span>公司名称：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="CorporateName" datatype="*2-16" nullmsg="公司名称不能为空">
-				</div>
-				<div class="col-2"></div>
-				<label class="form-label col-1"><span class="c-red">*</span>公司电话：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="CompanyPhone" datatype="*2-16" nullmsg="公司电话不能为空">
-				</div>
-				<div class="col-1"></div>
-				<label class="form-label col-2"><span class="c-red">*</span>联系人：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="contacts" datatype="*2-16" nullmsg="联系人不能为空">
-				</div>
-				<div class="col-1"></div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-2"><span class="c-red">*</span>联系电话：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="ContactNumber" datatype="*2-16" nullmsg="联系电话不能为空">
-				</div>
-				<div class="col-2"></div>
-				<label class="form-label col-1"><span class="c-red">*</span>联系邮箱：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="ContactMailbox" datatype="*2-16" nullmsg="联系邮箱不能为空">
-				</div>
-				<div class="col-1"></div>
 
-			</div>
 			<div class="row cl">
-				<label class="form-label col-2"><span class="c-red">*</span>公司地址：</label>
-				<div class="formControls col-5">
-					<input type="text" class="input-text" value="" placeholder=""
-						 name="CompanyAddress" datatype="*2-16" nullmsg="公司地址不能为空">
-				</div>
-				<div class="col-2"></div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-2"><span class="c-red"></span>备注信息：</label>
-				<div class="formControls col-7">
-					<textarea id="url" name="remark"   cols="200" rows="5" ></textarea>
+				<label class="form-label col-3"><span class="c-red"></span>备注信息：</label>
+				<div class="formControls col-6">
+					<textarea id="url" name="remark"   rows="5"  style="width: 100%;"></textarea>
 				</div>
 				<div class="col-4"></div>
 			</div>
-
 			<div class="row cl">
-				<div class="col-9 col-offset-2">
-					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<div class="col-3 col-offset-5">
+					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
+
+
+
+					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;发布&nbsp;&nbsp;">
 				</div>
 			</div>
 		</form>
