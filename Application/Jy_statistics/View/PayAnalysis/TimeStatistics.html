@@ -22,12 +22,12 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>流失回流</title>
+    <title>日付费统计</title>
 </head>
 <body>
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i> 运营查询 <span class="c-gray en">&gt;</span>
-    流失用户 <span class="c-gray en">&gt;</span>流失回流 <a
+    付费分析 <span class="c-gray en">&gt;</span>日付费统计 <a
         class="btn btn-success radius r mr-20"
         style="line-height: 1.6em; margin-top: 3px"
         href="javascript:location.replace(location.href);" title="刷新"><i
@@ -68,7 +68,7 @@
     </form>
 
     <div class="cl pd-5 bg-1 bk-gray mt-20" >
-        <form action="/Jy_statistics/LossBackflow/excelData" id="excel" method="post">
+        <form action="/Jy_statistics/PayAnalysis/TimeStatisticsExcel" id="excel" method="post">
             <textarea  style="display: none;" name = "data">{$info|json_encode}</textarea>
 			<span class="l"> <a href="javascript:;"
                                 onclick="excelData()"
@@ -81,27 +81,17 @@
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
         <thead>
         <tr class="text-c" >
-            <td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>汇总</td>
+            <td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 13>汇总</td>
         </tr>
         <tr class="text-c">
-            <th width="30">流失账号数（人）</th>
-            <th width="30">流失率</th>
-            <th width="30">非次日流失账号数</th>
-            <th width="30">非次日流失率</th>
-            <th width="30">回流账号数（人）</th>
-            <th width="30">生命周期LT（人/天）</th>
-            <th width="30">非次日生命周期（人/天）</th>
+            <th width="30">购买用户数</th>
+            <th width="30">付费总金额</th>
         </tr>
         </thead>
         <tbody>
         <tr class="text-c">
-            <td>{$count[0]['Loss']}</td>
-            <td>{$count[0]['Rate']}%</td>
-            <td>{$count[0]['WLoss']}</td>
-            <td>{$count[0]['WRate']}%</td>
-            <td>{$count[0]['Backflow']}</td>
-            <td>{$count[0]['CycleLt']}</td>
-            <td>{$count[0]['WCycleLt']}</td>
+            <td>{$count[0]['First']}</td>
+            <td>{$count[0]['FirstMoney']}</td>
         </tr>
         </tbody>
     </table>
@@ -111,13 +101,8 @@
         <tr class="text-c">
             <th width="30">日期</th>
             <th width="30">渠道</th>
-            <th width="30">流失账号数（人）</th>
-            <th width="30">流失率</th>
-            <th width="30">非次日流失账号数</th>
-            <th width="30">非次日流失率</th>
-            <th width="30">回流账号数（人）</th>
-            <th width="30">生命周期LT（人/天）</th>
-            <th width="30">非次日生命周期（人/天）</th>
+            <th width="30">购买用户数</th>
+            <th width="30">付费总金额</th>
         </tr>
         </thead>
         <tbody>
@@ -125,13 +110,8 @@
             <tr class="text-c">
                 <td>{$val['DateTime']}</td>
                 <td>{$val['Channel']}</td>
-                <td>{$val['Loss']}</td>
-                <td>{$val['Rate']}%</td>
-                <td>{$val['WLoss']}</td>
-                <td>{$val['WRate']}%</td>
-                <td>{$val['Backflow']}</td>
-                <td>{$val['CycleLt']}</td>
-                <td>{$val['WCycleLt']}</td>
+                <td>{$val['First']}</td>
+                <td>{$val['FirstMoney']}</td>
             </tr>
         </volist>
         </tbody>

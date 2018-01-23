@@ -22,7 +22,7 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>流失回流</title>
+    <title>日付费统计</title>
 </head>
 <body>
 <nav class="breadcrumb">
@@ -68,7 +68,7 @@
     </form>
 
     <div class="cl pd-5 bg-1 bk-gray mt-20" >
-        <form action="/Jy_statistics/LossBackflow/excelData" id="excel" method="post">
+        <form action="/Jy_statistics/PayAnalysis/DailyPayExcel" id="excel" method="post">
             <textarea  style="display: none;" name = "data">{$info|json_encode}</textarea>
 			<span class="l"> <a href="javascript:;"
                                 onclick="excelData()"
@@ -81,10 +81,9 @@
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
         <thead>
         <tr class="text-c" >
-            <td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 10>汇总</td>
+            <td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 13>汇总</td>
         </tr>
         <tr class="text-c">
-            <th width="30">日期</th>
             <th width="30">登陆账号数DAU</th>
             <th width="30">新增账号数</th>
             <th width="30">付费人数APA</th>
@@ -102,13 +101,19 @@
         </thead>
         <tbody>
         <tr class="text-c">
-            <td>{$count[0]['Loss']}</td>
-            <td>{$count[0]['Rate']}%</td>
-            <td>{$count[0]['WLoss']}</td>
-            <td>{$count[0]['WRate']}%</td>
-            <td>{$count[0]['Backflow']}</td>
-            <td>{$count[0]['CycleLt']}</td>
-            <td>{$count[0]['WCycleLt']}</td>
+            <td>{$count[0]['ActiveNum']}</td>
+            <td>{$count[0]['RegNum']}</td>
+            <td>{$count[0]['UserPayNum']}</td>
+            <td>{$count[0]['RegPayUsers']}</td>
+            <td>{$count[0]['First']}</td>
+            <td>{$count[0]['TotalMoney']}</td>
+            <td>{$count[0]['RegPayMoney']}</td>
+            <td>{$count[0]['ARPU']}</td>
+            <td>{$count[0]['ARPPU']}</td>
+            <td>{$count[0]['RegARPU']}</td>
+            <td>{$count[0]['RegARPU']}</td>
+            <td>{$count[0]['MallGold']}</td>
+            <td>{$count[0]['MallDiamonds']}</td>
         </tr>
         </tbody>
     </table>
@@ -117,6 +122,7 @@
         <thead>
         <tr class="text-c">
             <th width="30">日期</th>
+            <th width="30">渠道</th>
             <th width="30">登陆账号数DAU</th>
             <th width="30">新增账号数</th>
             <th width="30">付费人数APA</th>
@@ -137,13 +143,19 @@
             <tr class="text-c">
                 <td>{$val['DateTime']}</td>
                 <td>{$val['Channel']}</td>
-                <td>{$val['Loss']}</td>
-                <td>{$val['Rate']}%</td>
-                <td>{$val['WLoss']}</td>
-                <td>{$val['WRate']}%</td>
-                <td>{$val['Backflow']}</td>
-                <td>{$val['CycleLt']}</td>
-                <td>{$val['WCycleLt']}</td>
+                <td>{$val['ActiveNum']}</td>
+                <td>{$val['RegNum']}</td>
+                <td>{$val['UserPayNum']}</td>
+                <td>{$val['RegPayUsers']}</td>
+                <td>{$val['First']}</td>
+                <td>{$val['TotalMoney']}</td>
+                <td>{$val['RegPayMoney']}</td>
+                <td>{$val['ARPU']}</td>
+                <td>{$val['ARPPU']}</td>
+                <td>{$val['RegARPU']}</td>
+                <td>{$val['RegARPU']}</td>
+                <td>{$val['MallGold']}</td>
+                <td>{$val['MallDiamonds']}</td>
             </tr>
         </volist>
         </tbody>

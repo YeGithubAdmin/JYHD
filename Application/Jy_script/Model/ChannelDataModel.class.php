@@ -177,4 +177,63 @@ class ChannelDataModel extends Model{
         }
         return $GameAccountOldSort;
     }
+
+    //商城金币付费
+    public function PayMallGold($ChannelIn,$StartTime,$EndTime){
+        $UsersOrderFiled = array(
+            'a.PayChannel as GroupChannel',
+            'if(sum(a.Price),sum(a.Price),0) as MallGold'
+        );
+        $UsersOrder = M('jy_users_order_info as a')
+            ->join('jy_users_order_goods as b on a.PlatformOrder = b.PlatformOrder and a.playerid = b.playerid  and  IsGive = 1 and Type = 1')
+            ->where('a.PayChannel in ('.$ChannelIn.')  and a.Form = 3 
+                     and  a.CallbackTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
+                     and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= a.CallbackTime  
+                     and  a.Status = 2  and a.IsTest = 2')
+            ->field($UsersOrderFiled)
+            ->group('GroupChannel')
+            ->select();
+        $UsersOrderSort = array();
+        foreach ($UsersOrder as $k=>$v){
+            $UsersOrderSort[$v['GroupChannel']] = $v;
+        }
+        return  $UsersOrderSort;
+    }
+
+    //商城钻石付费
+    public function PayMallDiamonds($ChannelIn,$StartTime,$EndTime){
+        $UsersOrderFiled = array(
+            'a.PayChannel as GroupChannel',
+            'if(sum(a.Price),sum(a.Price),0) as MallDiamonds'
+        );
+        $UsersOrder = M('jy_users_order_info as a')
+            ->join('jy_users_order_goods as b on a.PlatformOrder = b.PlatformOrder and a.playerid = b.playerid  and  IsGive = 1 and Type = 2')
+            ->where('a.PayChannel in ('.$ChannelIn.')  and a.Form = 3 
+                     and  a.CallbackTime  <  str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
+                     and  str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")  <= a.CallbackTime  
+                     and  a.Status = 2  and a.IsTest = 2')
+            ->field($UsersOrderFiled)
+            ->group('GroupChannel')
+            ->select();
+        $UsersOrderSort = array();
+        foreach ($UsersOrder as $k=>$v){
+            $UsersOrderSort[$v['GroupChannel']] = $v;
+        }
+        return  $UsersOrderSort;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
