@@ -26,13 +26,26 @@ class NewChannelDataController extends Controller {
         $EquipmentActSort     = $ChannelData->EquipmentAct($ChannelIn,$StartTime,$EndTime);
         $WauActSort           = $ChannelData->WauAct($ChannelIn,$StartTime);
         $MauActSort           = $ChannelData->MauAct($ChannelIn,$StartTime);
-
+        $MallGoldSort         = $ChannelData->PayMallGold($ChannelIn,$StartTime,$EndTime);
+        $MallDiamondsSort     = $ChannelData->PayMallDiamonds($ChannelIn,$StartTime,$EndTime);
         $info = array();
         foreach ($ChannelList['ChannelList'] as $k=>$v){
             $info[$k]['Channel']       = $v['GroupChannel'];
+            //商城金币
+            if($MallGoldSort[$v['GroupChannel']]){
+                $info[$k]['MallGold'] = $MallGoldSort[$v['GroupChannel']]['MallGold'] ;
+            }else{
+                $info[$k]['MallGold'] = 0;
+            }
+
+            //商城钻石
+            if($MallDiamondsSort[$v['GroupChannel']]){
+                $info[$k]['MallDiamonds'] = $MallDiamondsSort[$v['GroupChannel']]['MallDiamonds'] ;
+            }else{
+                $info[$k]['MallDiamonds'] = 0;
+            }
 
             //周活跃
-
             if($WauActSort[$v['GroupChannel']]){
                 $info[$k]['WAU'] = $WauActSort[$v['GroupChannel']]['WAU'] ;
             }else{
@@ -62,6 +75,7 @@ class NewChannelDataController extends Controller {
                 $EquipmentRegNum =  $EquipmentAndroidSort[$v['GroupChannel']]['android']+$EquipmentRegNum;
                 $RegNum =  $EquipmentAndroidSort[$v['GroupChannel']]['RegNum']+$RegNum;
             }
+
 
             $GroupChannel = array(
                 'JYHD_HUAWEI',
@@ -129,7 +143,6 @@ class NewChannelDataController extends Controller {
             $info[$k]['UsersThirtyNum'] = 0.00;
             $info[$k]['DateTime'] = $DateTime;
         }
-
         //添加数据
         $addStatisticsUsersPay = $model
             ->table('log_channel_data')
