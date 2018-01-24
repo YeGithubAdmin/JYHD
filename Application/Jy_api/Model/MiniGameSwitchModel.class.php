@@ -42,16 +42,14 @@ class MiniGameSwitchModel extends \Common\Model\ComFunModel {
          $Header = array(
              'PBName:'.'protos.PBS_UsrDataOprater',
              'PBSize:'.strlen($PBSUsrDataOpraterString),
-             'UID:1',
+             'UID:'.$playerid,
              'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
              'Version:'.$version,
          );
          $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
-
          if(strlen($PBS_UsrDataOpraterRespond)==0 || $PBS_UsrDataOpraterRespond  == 504){
              return false;
          }
-
          //接受回应
          $PBS_UsrDataOpraterReturn =  new  PBS_UsrDataOpraterReturn();
          $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);

@@ -56,12 +56,11 @@ class VipInfoController extends ComController {
         $Header = array(
             'PBName:'.'protos.PBS_UsrDataOprater',
             'PBSize:'.strlen($PBSUsrDataOpraterString),
-            'UID:1',
+            'UID:'.$playerid,
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
             'Version:'.$DataInfo['version'],
         );
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
-
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
             goto response;

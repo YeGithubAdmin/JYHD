@@ -66,7 +66,7 @@ class VipRewardController extends ComController {
         $Header = array(
             'PBName:'.'protos.PBS_UsrDataOprater',
             'PBSize:'.strlen($PBSUsrDataOpraterString),
-            'UID:1',
+            'UID:'.$playerid,
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
             'Version:'.$DataInfo['version'],
         );

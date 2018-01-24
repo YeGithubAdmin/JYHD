@@ -27,14 +27,14 @@ class WaterMarginModel extends Model{
                 $FileName = PROTOC_PATH.'/'.$Class[0].'.php';
             }
             try{
-                if(file_exists($FileName)){
-                    include  $FileName;
-                }else{
-                    throw new Exception('file is not exists');
-                }
-            }catch (Exception $exception){
-                $exception->getMessage();
+            if(file_exists($FileName)){
+                include  $FileName;
+            }else{
+                throw new Exception('file is not exists');
             }
+        }catch (Exception $exception){
+            $exception->getMessage();
+        }
     }
 
     /***
