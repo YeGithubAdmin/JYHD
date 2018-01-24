@@ -78,16 +78,94 @@ class ChannelController extends ComController {
     public function add(){
         $userInfo       = $this->userInfo;          //用户信息
         $obj = new \Common\Lib\func();
+        //管理信息
+        $adminUsers = M('jy_admin_users as a')
+            ->join('jy_admin_group as b')
+            ->where('b.id = a.admingroup and a.channel = 1  and a.isdel = 1')
+            ->field('a.id,account,a.name')
+            ->select();
+        //查询通用的渠道
+        $catChannel = M('jy_admin_users as a')
+            ->join('jy_channel_info as b on b.adminUserID = a.id and b.isown = 2')
+            ->where('a.channel = 2 and a.isdel = 1')
+            ->field(array(
+                'a.Name',
+                'a.account',
+            ))
+            ->select();
+        if(IS_POST){
+            $adminUserID                        =       I('param.adminUserID',0,'intval');                 //合作方式
+            $pattern                        =       I('param.pattern',1,'intval');                 //合作方式
+            $DividedInto                    =       I('param.DividedInto','','trim');              //分成
+            $RegisterNum                    =       I('param.RegisterNum','','trim');              //注册人数（结算率）
+            $RechargeNum                    =       I('param.RechargeNum','','trim');              //充值人数（结算率）
+            $CorporateName                  =       I('param.CorporateName','','trim');            //公司名称
+            $CompanyAddress                 =       I('param.CompanyAddress','','trim');           //公司地址
+            $CompanyPhone                   =       I('param.CompanyPhone','','trim');             //联系电话
+            $contacts                       =       I('param.contacts','','trim');                 //联系人
+            $ContactNumber                  =       I('param.ContactNumber','','trim');            //联系电话
+            $ContactMailbox                 =       I('param.ContactMailbox','','trim');           //联系邮箱
+            $remark                         =       I('param.remark','','trim');                   //备注信息
+            $isown                          =       I('param.isown',1,'intval');                   //是否本公司渠道
+            $addName                        =       $userInfo['name'];                             //添加人名
+            $addId                          =       $userInfo['id'];                               //添加人ID
+            $CpChannel                      =       I('param.CpChannel',0,'trim');                 //复制渠道
+            $ConfStatus                     =       I('param.ConfStatus',1,'intval');              //配置状态
+            $IsCp                           =       I('param.IsCp',1,'intval');              //配置状态
+            if($isown == 2){
+                $CpChannel = 0;
+                $IsCp = 1;
+            }
 
+            if($IsCp == 1){
+                $CpChannel = 0;
+            }
 
-
-//        $GameList = M('')
-
-
+            //渠道信息
+            $dataChannelInfo = array(
+                'adminUserID'   =>  $adminUserID,
+                'pattern'       =>  $pattern,
+                'DividedInto'   =>  $DividedInto,
+                'RegisterNum'   =>  $RegisterNum,
+                'RechargeNum'   =>  $RechargeNum,
+                'CorporateName' =>  $CorporateName,
+                'CompanyAddress'=>  $CompanyAddress,
+                'CompanyPhone'  =>  $CompanyPhone,
+                'contacts'      =>  $contacts,
+                'ContactNumber' =>  $ContactNumber,
+                'ContactMailbox'=>  $ContactMailbox,
+                'remark'        =>  $remark,
+                'isown'         =>  $isown,
+                'addName'       =>  $addName,
+                'addId'         =>  $addId,
+                'CpChannel'     =>  $CpChannel,
+                'ConfStatus'    =>  $ConfStatus,
+                'IsCp'          =>  $IsCp,
+            );
+            $model = new Model();
+            $model->startTrans();
+            //渠道信息
+            $addChannelInfo = $model
+                ->table('jy_channel_info')
+                ->add($dataChannelInfo);
+            //修改管理信息
+            $UpAdminUser = $model->table('jy_admin_users')->where('id = '.$adminUserID)->save(array(
+                'channel'=>2,
+            ));
+            if($addChannelInfo && $UpAdminUser){
+                //提交事物
+                $model->commit();
+                $obj->showmessage('添加成功','/jy_admin/Channel/index');
+            }else{
+                //回滚
+                $model->rollback();
+                $obj->showmessage('添加失败');
+            }
+        }
 
         $this->assign('adminUsers',$adminUsers);
         $this->assign('Channel',$catChannel);
-        $this->display('add');
+        $this->display();
     }
     //修改
     public function  edit(){
