@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_base_data.proto at 2018-01-18 17:53:25
+ * Auto generated from PB_base_data.proto at 2018-01-24 16:26:41
  */
 
 namespace {
@@ -32,6 +32,8 @@ final class OptReason
     const online_reward = 21;
     const broke_reward = 22;
     const exchange_cdk = 23;
+    const hhmf = 24;
+    const shuihu = 25;
 
     /**
      * Returns defined enum values
@@ -64,6 +66,8 @@ final class OptReason
             'online_reward' => self::online_reward,
             'broke_reward' => self::broke_reward,
             'exchange_cdk' => self::exchange_cdk,
+            'hhmf' => self::hhmf,
+            'shuihu' => self::shuihu,
         );
     }
 }

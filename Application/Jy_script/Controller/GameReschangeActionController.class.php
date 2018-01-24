@@ -4,13 +4,15 @@
 */
 namespace Jy_script\Controller;
 use Think\Controller;
+use Think\Model;
+
 class GameReschangeActionController extends Controller {
     public function index(){
         $time       =  strtotime(date('Y-m-d',time()));
         $DaySecond  = 24*60*60;
-        $StartTime  =  date('Y-m-d H:i:s',$time-$DaySecond);
-        $EndTime    =  date('Y-m-d H:i:s',$time);
+        $Date  =  date('Y-m-d',$time-$DaySecond);
         //渠道
+        $TableName = 'game_reschange_action_'.$Date;
         $SummaryGoodsField = array(
             'os_type as Ostype',
             'count(distinct playerid) as UserNum',
@@ -21,9 +23,7 @@ class GameReschangeActionController extends Controller {
             'opt_time as DataTime',
             'sum(add_num) as Number',
         );
-        $SummaryGoods = M('game_reschange_action')
-                        ->where('opt_time  < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s")  
-                            and opt_time  >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")')
+        $SummaryGoods = M($TableName)
                         ->field($SummaryGoodsField)
                         ->order('Reason')
                         ->group('Ostype,Channel,Itemid,Reason,VerSion')

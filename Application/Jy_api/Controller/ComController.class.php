@@ -23,6 +23,7 @@ class ComController extends RestController{
     public   $page;
     public   $num;
     public   $tagKey;
+    public   $channeinfo;
 
     public function __construct(){
         parent::__construct();
@@ -158,18 +159,17 @@ class ComController extends RestController{
             $result  =  6002;
             goto end;
         }
-
         //渠道号信息验证
         $ChannelInfo = M('jy_admin_users as a')
                        ->join('jy_channel_info as b on a.id = b.adminUserID')
-                       ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2')
-                       ->field('a.account,a.id,b.pattern,b.DividedInto,b.RegisterNum,b.RechargeNum')
+                       ->where('a.account = "'.$DataInfo['channel'].'" and  a.channel  = 2  and b.ConfStatus = 2')
+                       ->field('a.account,a.id,b.pattern,b.DividedInto,b.isown,b.CpChannel,b.IsCp,b.RegisterNum,b.RechargeNum')
                        ->find();
-
         if(empty($ChannelInfo)){
             $result  =  6003;
             goto end;
         }
+        $this->channeinfo = $ChannelInfo;
 
         //渠道功能验证
         end:

@@ -50,6 +50,8 @@ enum OptReason
 	online_reward   = 21;	// 在线奖励
 	broke_reward 	= 22;	// 破产奖励
 	exchange_cdk 	= 23;	// 兑换cdk
+	hhmf 			= 24;	// 黑红梅芳
+	shuihu 			= 25;	// 水浒传
 }
 
 message PB_Attr

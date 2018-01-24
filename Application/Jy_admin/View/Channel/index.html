@@ -76,7 +76,9 @@
 					<th width="60">渠道名</th>
 					<th width="60">渠道号</th>
 					<th width="60">是否通用</th>
-					<th width="60">渠道商品</th>
+					<th width="60">状态</th>
+					<th width="50">渠道商品</th>
+					<th width="50">小游戏</th>
 					<th width="60">添加人</th>
 					<th width="60">添加时间</th>
 					<th width="10">修改</th>
@@ -91,13 +93,37 @@
 						<td class="td-status">
 							<span class="<if condition ="$val['isown'] eq 1" >label label-defaunt radius<else/>label label-success radius</if>"><if condition ="$val['isown'] eq 1">
 									否
-									<else/>是</if></span></td>
-						<td><a  style="color:red" onclick="Channel_good('渠道商品','/jy_admin/Channel/goods/id/{$val['adminUserID']}/platform/{$val['platform']}')">查看</a></td>
+									<else/>是</if></span>
+						</td>
+						<td class="td-status">
+							<span class="<if condition ="$val['ConfStatus'] eq 1" >label label-defaunt radius<else/>label label-success radius</if>"><if condition ="$val['ConfStatus'] eq 1">
+							未发布
+							<else/>已发布</if>
+							</span>
+						</td>
+						<td>
+							<if condition = " $val['IsCp'] eq 1">
+								<a  style="color:red" onclick="Channel_good('渠道商品','/jy_admin/Channel/goods/id/{$val['adminUserID']}/platform/{$val['platform']}')">
+									查看
+								</a>
+							<else/>
+								复制渠道：{$val['CpChannel']}
+							</if>
+						</td>
+						<td>
+							<if condition = " $val['IsCp'] eq 1">
+								<a  style="color:red" onclick="Channel_good('渠道商品','/jy_admin/MiniGame/index/Channel/{$val['account']}')">
+									查看
+								</a>
+								<else/>
+								复制渠道：{$val['CpChannel']}
+							</if>
+						</td>
 						<td>{$val['addName']}</td>
 						<td>{$val['mtime']}</td>
 						<td class="td-manage">
 							<a title="编辑" href="javascript:;"
-							onclick="Channel_edit('编辑','/jy_admin/Channel/edit/id/{$val['adminUserID']}')"
+							onclick="Channel_edit('编辑','/jy_admin/Channel/edit/Id/{$val['adminUserID']}')"
 							class="ml-5" style="text-decoration: none"><i
 								class="Hui-iconfont">&#xe6df;</i>
 							</a>

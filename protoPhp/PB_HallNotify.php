@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_notify.proto at 2018-01-18 17:53:25
+ * Auto generated from PB_notify.proto at 2018-01-24 16:26:41
  */
 
 namespace {
@@ -26,6 +26,7 @@ class PB_HallNotify extends \ProtobufMessage
     const ATTR_CHANGE = 15;
     const CFG_CHANGED = 16;
     const CS_NEW_MSG = 17;
+    const LITTLE_GAME_UPDATE = 18;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -109,6 +110,11 @@ class PB_HallNotify extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_BOOL,
         ),
+        self::LITTLE_GAME_UPDATE => array(
+            'name' => 'little_game_update',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_BOOL,
+        ),
     );
 
     /**
@@ -142,6 +148,7 @@ class PB_HallNotify extends \ProtobufMessage
         $this->values[self::ATTR_CHANGE] = null;
         $this->values[self::CFG_CHANGED] = null;
         $this->values[self::CS_NEW_MSG] = null;
+        $this->values[self::LITTLE_GAME_UPDATE] = null;
     }
 
     /**
@@ -505,6 +512,29 @@ class PB_HallNotify extends \ProtobufMessage
     public function getCsNewMsg()
     {
         $value = $this->get(self::CS_NEW_MSG);
+        return $value === null ? (boolean)$value : $value;
+    }
+
+    /**
+     * Sets value of 'little_game_update' property
+     *
+     * @param boolean $value Property value
+     *
+     * @return null
+     */
+    public function setLittleGameUpdate($value)
+    {
+        return $this->set(self::LITTLE_GAME_UPDATE, $value);
+    }
+
+    /**
+     * Returns value of 'little_game_update' property
+     *
+     * @return boolean
+     */
+    public function getLittleGameUpdate()
+    {
+        $value = $this->get(self::LITTLE_GAME_UPDATE);
         return $value === null ? (boolean)$value : $value;
     }
 }

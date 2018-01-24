@@ -13,9 +13,7 @@ use Jy_api\Controller\ComController;
 use Think\Controller;
 class MallGoodsListController extends ComController {
     public function index(){
-        $page           =       $this->page;
-        $num            =       $this->num;
-        $platform       =       $this->platform;
+
         $channelid      =       $this->channelid;
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
@@ -55,33 +53,38 @@ class MallGoodsListController extends ComController {
             'a.Proportion',
 
         );
+
+
+
+
+
+        //渠道信息
+        $ChannelInfo = $this->channeinfo;
+        if($ChannelInfo['isown'] == 2){
+             $Channel = $channelid;
+        }else{
+            if($ChannelInfo['IsCp'] == 1){
+                $Channel = $channelid;
+            }else{
+                $CatChannelData  = M('jy_admin_users')->where('account = "'.$ChannelInfo['CpChannel'].'"')->field('id')->find();
+                if(empty($CatChannelData)){
+                    $result = 5002;
+                    goto  response;
+                }
+                $Channel = $CatChannelData['id'];
+
+            }
+        }
+
         $GoodsAll  = M('jy_goods_all as a')
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
-            ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  
+            ->where('b.adminUserID = '.$Channel.' and  a.Status in(1,3)  and  a.CateGory = '.$CateGory.'  
                       and  a.ShowType = '.$ShowType.' and a.IsDel = 1')
             ->field($GoodsAllField)
             ->group('a.Id')
             ->order('a.Sort asc')
             ->select();
-        if(empty($GoodsAll)){
-            //查询本公司的渠道商品
-            $Mychannel = M('jy_channel_info')
-                ->where('isown = 2')
-                        ->field('adminUserID')
-                        ->find();
-            if(empty($Mychannel['adminUserID'])){
-                goto  response;
-            }
-            $GoodsAll  = M('jy_goods_all as a')
-                ->join('jy_channel_goods as b on a.Id = b.goodsID')
-                ->where('b.adminUserID = '.$Mychannel['adminUserID'].' and  
-                         a.Status in(1,3)  and  a.CateGory = '.$CateGory.' 
-                        and ShowType = '.$ShowType.' and IsDel = 1')
-                ->field($GoodsAllField)
-                ->group('a.Id')
-                ->order('a.Sort asc')
-                ->select();
-        }
+
         //过滤首次充值
         $MoreThan = $playerid%10;
         $ShopLogField = array(

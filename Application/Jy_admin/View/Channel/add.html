@@ -46,7 +46,7 @@
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select" name="isown" >
+							<select class="select"  onchange="IsCuFun(this)" name="isown" >
 								<option   value="1">否</option>
 								<option   value="2">是</option>
 							</select>
@@ -60,7 +60,7 @@
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select" name="isown" >
+							<select class="select" onchange="IsCpFun(this)"  name="IsCp" >
 								<option   value="1">否</option>
 								<option   value="2">是</option>
 							</select>
@@ -68,21 +68,22 @@
 					</div>
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red">*</span>渠道：</label>
-				<div class="formControls col-1">
-					<div style="width:100%;text-align:center;float:left">
+				<div id = "CpChannel" style="display: none;">
+					<label class="form-label col-1"><span class="c-red">*</span>渠道：</label>
+					<div class="formControls col-1">
+						<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select" name="isown" >
-								<option   value="1">否</option>
-								<option   value="2">是</option>
+							<select class="select"   name="CpChannel" >
+								<volist name = "Channel" id = "val">
+									<option   value="{$val['account']}">{$val['Name']}</option>
+								</volist>
 							</select>
 						</span>
+						</div>
 					</div>
+					<div class="col-1"></div>
 				</div>
-				<div class="col-1"></div>
 			</div>
-
-
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red"></span>备注信息：</label>
 				<div class="formControls col-6">
@@ -91,12 +92,9 @@
 				<div class="col-4"></div>
 			</div>
 			<div class="row cl">
-				<div class="col-3 col-offset-5">
-					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
-
-
-
-					<input class="btn btn-primary radius" type="submit" name="submit" value="&nbsp;&nbsp;发布&nbsp;&nbsp;">
+				<div class="col-10 col-offset-3">
+					<button  class="btn btn-primary radius" name = "ConfStatus"   value="1" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存配置</button>
+					<button  class="btn btn-primary radius" name = "ConfStatus"    value="2" type="submit"><i class="Hui-iconfont">&#xe632;</i> 发布配置</button>
 				</div>
 			</div>
 		</form>
@@ -125,13 +123,36 @@
 				tiptype : 2,
 				callback : function(form) {
 					form[0].submit();
-					var index = parent.layer.getFrameIndex(window.name);
-					parent.$('.btn-refresh').click();
-					parent.layer.close(index);
+
 				}
 			});
 
 		});
+		//是否通用
+		function IsCuFun(my) {
+            var Index 		= my.selectedIndex;         				//索引
+            var Value 		= my.options[Index].value;   				//选择中值
+			var panent		= document.getElementById('panent');
+			if(Value == 1){
+                panent.style.display = "block";
+			}else{
+                panent.style.display = "none";
+			}
+        }
+        //是否进行复制
+        function IsCpFun(my) {
+            var Index 		= my.selectedIndex;         				//索引
+            var Value 		= my.options[Index].value;   				//选择中值
+            var panent		= document.getElementById('CpChannel');
+            if(Value == 1){
+                panent.style.display = "none";
+            }else{
+                panent.style.display = "block";
+
+            }
+
+        }
+
 
 	</script>
 	</literal>

@@ -13,38 +13,35 @@ use Jy_api\Controller\ComController;
 use Think\Controller;
 class MallExchangeController extends ComController {
     public function index(){
-        $page           =       $this->page;
-        $num            =       $this->num;
-        $platform       =       $this->platform;
         $channelid      =       $this->channelid;
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
-
         $result = 2001;
         $info   =  array();
+        //渠道信息
+        $ChannelInfo = $this->channeinfo;
+        if($ChannelInfo['isown'] == 2){
+            $Channel = $channelid;
+        }else{
+            if($ChannelInfo['IsCp'] == 1){
+                $Channel = $channelid;
+            }else{
+                $CatChannelData  = M('jy_admin_users')->where('account = "'.$ChannelInfo['CpChannel'].'"')->field('id')->find();
+                if(empty($CatChannelData)){
+                    $result = 5002;
+                    goto  response;
+                }
+                $Channel = $CatChannelData['id'];
+
+            }
+        }
         $GoodsAll  = M('jy_goods_all as a')
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
-            ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and   a.ShowType = 4 and a.IsDel = 1')
+            ->where('b.adminUserID = '.$Channel.' and  a.Status in(1,3)  and   a.ShowType = 4 and a.IsDel = 1')
             ->field('a.Id,a.Name,a.CurrencyNum,a.Code,a.Type,a.GetNum,a.ImgCode,a.Describe')
             ->order('a.Sort asc')
             ->select();
-        if(empty($GoodsAll)){
-            //查询本公司的渠道商品
-            $Mychannel = M('jy_channel_info')
-                ->where('isown = 2')
-                ->limit(($page-1)*$num,$num)
-                        ->field('adminUserID')
-                        ->find();
-            if(empty($Mychannel['adminUserID'])){
-                goto  response;
-            }
-            $GoodsAll  = M('jy_goods_all as a')
-                ->join('jy_channel_goods as b on a.Id = b.goodsID')
-                ->where('b.adminUserID = '.$channelid.' and  a.Status in(1,3)  and   a.ShowType = 4 and a.IsDel = 1')
-                ->field('a.Id,a.Name,a.CurrencyNum,a.Code,a.ImgCode,a.Type,a.GetNum,a.Describe')
-                ->order('a.Sort asc')
-                ->select();
-        }
+
         $info = $GoodsAll;
         response:
             $response = array(

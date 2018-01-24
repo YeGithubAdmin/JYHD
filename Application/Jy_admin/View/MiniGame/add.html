@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加逻辑</title>
+</head>
+<body>
+	<div class="pd-20">
+		<form action="" method="post" class="form form-horizontal" id="form-vipInfo-add">
+			<input type="hidden"  id = "Channel" value="{$Channel}"  name="Channel" >
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>开关：</label>
+				<div class="formControls col-5 skin-minimal">
+					<div class="radio-box">
+						<input type="radio" id="Status-1"  name="Status" onclick="StatusFun(this)"  checked ="true" value="2" nullmsg="">
+						<label for="Status-2">开</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="Status-2" value="1" onclick="StatusFun(this)" name="Status">
+						<label for="Status-1">关</label>
+					</div>
+				</div>
+			</div>
+
+			<div id ="parent">
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>小游戏：</label>
+					<label class="form-label col-2">水浒传：</label>
+
+					<div class="formControls col-1 skin-minimal">
+						<div class="check-box">
+							<input type="checkbox"  value="WaterMargin"   nullmsg = "必选一个" name="Game[]" id="checkbox-pinglun">
+							<label for="checkbox-pinglun">&nbsp;</label>
+
+						</div>
+					</div>
+					<label class="form-label col-2">红黑牌：</label>
+					<div class="formControls col-1 skin-minimal">
+						<div class="check-box">
+							<input type="checkbox"  value="RedBlackCard" name="Game[]" id="">
+							<label for="checkbox-pinglun">&nbsp;</label>
+						</div>
+					</div>
+
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>VIP等级：</label>
+					<div class="formControls col-1">
+						<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "GameLevel"   nullmsg="" >
+								<for start="0" end="11">
+									<option     value="{$i}">{$i}</option>
+								</for>
+                            </select>
+						</span>
+						</div>
+					</div>
+					<div class="col-1"></div>
+					<label class="form-label col-2"><span class="c-red">*</span>游戏等级：</label>
+					<div class="formControls col-1">
+						<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select" name = "GameLevel"   nullmsg="" >
+								<for start="0" end="101">
+									<option     value="{$i}">{$i}</option>
+								</for>
+                            </select>
+						</span>
+						</div>
+					</div>
+					<div class="col-1"></div>
+				</div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>版本：</label>
+				<div class="formControls col-2">
+					<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select"  datatype="Verification" id = "Version"  name = "Version"   nullmsg="" >
+									<volist name = "GameVersion" id ="val">
+										<option   value="{$val['Version']}">{$val['Version']}</option>
+									</volist>
+                            </select>
+						</span>
+					</div>
+				</div>
+				<div class="col-3"></div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red"></span>备注：</label>
+				<div class="formControls col-5">
+					<textarea     name="Remark"  style="width:100%" rows="7" cols="10" ></textarea>
+				</div>
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
+				<div class="col-10 col-offset-3">
+					<button  class="btn btn-primary radius" name = "ConfStatus"   value="1" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存配置</button>
+					<button  class="btn btn-primary radius" name = "ConfStatus"    value="2" type="submit"><i class="Hui-iconfont">&#xe632;</i> 发布配置</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+
+			$("#form-vipInfo-add").Validform({
+				tiptype : 2,
+                datatype:{
+				  'Verification':function (gets,obj,curform,regxp) {
+					  if(gets ==''){
+							return false;
+					  }
+					  //验证等级存在
+                      var _Verification = true;
+					  var  Channel = document.getElementById('Channel');
+					  var  Version = document.getElementById('Version');
+                      $.ajax(
+                          {
+                              type:"POST",
+                              url:'/jy_admin/MiniGame/Verification',
+                              async:false,
+                              data:{'Channel':Channel.value,'Version':Version.value},
+                              success:function (msg) {
+                                  if(msg == 0){
+                                      _Verification =   false;
+                                  }else if(msg == 1){
+                                      _Verification =   true;
+                                  }else if(msg == 2){
+                                      _Verification   = '版本逻辑线已存在！';
+                                  }
+                              }
+                          }
+                      );
+                      return   _Verification;
+
+                  }
+				},
+				callback : function(form) {
+					form[0].submit();
+				}
+			});
+
+		});
+		
+		
+		function StatusFun(my) {
+		    	var parent = document.getElementById('parent');
+				var  Value = my.value;
+				if(Value == 1){
+                    parent.style.display = "none";
+				}else{
+                    parent.style.display = "block";
+				}
+        }
+		
+	</script>
+	</literal>
+</body>
+</html>
