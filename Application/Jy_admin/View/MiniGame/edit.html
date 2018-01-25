@@ -52,7 +52,7 @@
 
 				<div class="formControls col-1 skin-minimal">
 					<div class="check-box">
-						<input type="checkbox"  value="WaterMargin"
+						<input type="checkbox"  datatype="*"  value="WaterMargin"
 						<volist name = "info['Game']" id = "val">
 							<if condition = "$val eq 'WaterMargin'">
 								checked ="true"
@@ -60,14 +60,16 @@
 						</volist>
 						nullmsg = "必选一个" name="Game[]" id="checkbox-pinglun">
 						<label for="Game-WaterMargin">&nbsp;</label>
-
 					</div>
+
 				</div>
+
+				<div class="col-1"></div>
 				<label class="form-label col-2">红黑牌：</label>
 				<div class="formControls col-1 skin-minimal">
 					<div class="check-box">
-						<input type="checkbox"
-						<volist name = "info['Game']" id = "val">
+						<input type="checkbox" datatype="*" nullmsg = "必选一个"
+						<volist name = "info['Game']"  id = "val">
 							<if condition = "$val eq 'RedBlackCard'">
 								checked ="true"
 							</if>
@@ -76,7 +78,7 @@
 						<label for="Game-RedBlackCard">&nbsp;</label>
 					</div>
 				</div>
-
+				<div class="col-1"></div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>VIP等级：</label>
@@ -193,12 +195,20 @@
 
 
         function StatusFun(my) {
-            var parent = document.getElementById('parent');
+            var parent 		= document.getElementById('parent');
+            var parentValue = parent.getElementsByTagName('input');
             var  Value = my.value;
             if(Value == 1){
                 parent.style.display = "none";
+                for(i=0;i<parentValue.length;i++){
+                    parentValue[i].removeAttribute('datatype');
+				}
+
             }else{
                 parent.style.display = "block";
+                for(i=0;i<parentValue.length;i++){
+                    parentValue[i].setAttribute('datatype','*');
+                }
             }
         }
 

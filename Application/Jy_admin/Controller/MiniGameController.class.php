@@ -21,17 +21,22 @@ class MiniGameController extends ComController {
             ->where($where)
             ->limit($page*$num,$num)
             ->select();
-//        foreach ($catData as $k=>$v){
-//            $Game = '';
-//            foreach (json_decode($v['Game']) as $key=>$val){
-//                    $GameName[] = $val[''];
-//            }
-//            $catData[$k]['Game'] = $Game;
-//        }
-
-
-
-
+        foreach ($catData as $k=>$v){
+            $Game= array();
+            foreach (json_decode($v['Game'],true) as $key=>$val){
+                    switch ($val){
+                        //水浒传
+                        case 'WaterMargin':
+                            $Game[] = "水浒传";
+                            break;
+                        //红黑牌
+                        case 'RedBlackCard':
+                            $Game[] = "红黑牌";
+                            break;
+                    }
+            }
+            $catData[$k]['Game'] = implode('、',$Game);
+        }
         $this->assign('page',$show);
         $this->assign('info',$catData);
         $this->assign('Channel',$Channel);
@@ -68,20 +73,28 @@ class MiniGameController extends ComController {
                        )
                        ->select();
         if(IS_POST){
-            $Version = I('param.Version','','trim');
+            $Version    =  I('param.Version','','trim');
+            $Stauts     =  I('param.Status',1,'intval');
+            $Game       =  json_encode(I('param.Game','','trim'));
+            $VipLevel   =  I('param.VipLevel',0,'intval');
+            $GameLevel  =  I('param.GameLevel',0,'intval');
+            if($Stauts == 1){
+                $Game       = '';
+                $VipLevel   = 0;
+                $GameLevel  = 0;
+            }
             $Data = array(
                 'Channel'       =>  $Channel,
-                'Game'          =>  json_encode(I('param.Game','','trim')),
-                'VipLevel'      =>  I('param.VipLevel',0,'intval'),
-                'GameLevel'     =>  I('param.GameLevel',0,'intval'),
-                'Status'        =>  I('param.Status',1,'intval'),
+                'Game'          =>  $Game,
+                'VipLevel'      =>  $VipLevel,
+                'GameLevel'     =>  $GameLevel,
+                'Status'        =>  $Stauts,
                 'Version'       =>  $Version,
                 'Remark'        =>  I('param.Remark','','trim'),
                 'AName'         =>  $userInfo['name'],
                 'AId'           =>  $userInfo['id'],
                 'ConfStatus'    =>  I('param.ConfStatus',1,'intval'),
             );
-            //$Push = $MiniGame->Push($obj,$Version);
             //添加
             $addData = M('conf_mini_game_switch')
                 ->add($Data);
@@ -139,13 +152,21 @@ class MiniGameController extends ComController {
             $catData['Game'] = json_decode( $catData['Game']);
         }
         if(IS_POST){
-            $Version =   $Version = I('param.Version','','trim');
+            $Stauts     =  I('param.Status',1,'intval');
+            $Game       =  json_encode(I('param.Game','','trim'));
+            $VipLevel   =  I('param.VipLevel',0,'intval');
+            $GameLevel  =  I('param.GameLevel',0,'intval');
+            if($Stauts == 1){
+                $Game       = '';
+                $VipLevel   = 0;
+                $GameLevel  = 0;
+            }
             $Data = array(
-                'Game'          =>  json_encode(I('param.Game','','trim')),
-                'VipLevel'      =>  I('param.VipLevel',0,'intval'),
-                'GameLevel'     =>  I('param.GameLevel',0,'intval'),
+                'Game'          =>  $Game,
+                'VipLevel'      =>  $VipLevel,
+                'GameLevel'     =>  $GameLevel,
                 'Remark'        =>  I('param.Remark','','trim'),
-                'Status'        =>  I('param.Status',1,'intval'),
+                'Status'        =>  $Stauts,
                 'AName'         =>  $userInfo['name'],
                 'AId'           =>  $userInfo['id'],
                 'ConfStatus'    =>  I('param.ConfStatus',1,'intval'),

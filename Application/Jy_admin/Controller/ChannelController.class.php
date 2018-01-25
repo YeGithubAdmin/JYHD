@@ -94,7 +94,7 @@ class ChannelController extends ComController {
             ))
             ->select();
         if(IS_POST){
-            $adminUserID                        =       I('param.adminUserID',0,'intval');                 //合作方式
+            $adminUserID                    =       I('param.adminUserID',0,'intval');                 //合作方式
             $pattern                        =       I('param.pattern',1,'intval');                 //合作方式
             $DividedInto                    =       I('param.DividedInto','','trim');              //分成
             $RegisterNum                    =       I('param.RegisterNum','','trim');              //注册人数（结算率）
@@ -270,18 +270,6 @@ class ChannelController extends ComController {
         $this->display('edit');
     }
 
-
-    public function MiniGame(){
-        $obj = new \Common\Lib\func();
-        $Id = I('param.Id',0,'intval');
-        if($Id<=0){
-            $obj->showmessage('非法操作');
-        }
-        //查询信息
-
-        $this->display('MiniGame');
-
-    }
 
 
     //删除

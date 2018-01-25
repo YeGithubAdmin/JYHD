@@ -60,7 +60,7 @@
 			<volist name = "info" id ="val">
 				<tr class="text-c">
 					<td width="30">{$val['Version']}</td>
-					<td width="100">{$val['Game']}</td>
+					<td width="100"><if condition = "$val['Status'] eq 1">全部<else/>{$val['Game']}</if></td>
 					<td class="td-status">
 						<span class="<if condition ="$val['Status'] eq 1" >label label-defaunt radius<else/>label label-success radius</if>"><if condition ="$val['Status'] eq 1">
 						关
