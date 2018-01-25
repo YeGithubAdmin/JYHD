@@ -76,6 +76,7 @@ class PeriodicValueController extends ComController {
                              )
                          )
                          ->limit($page* $search['num'],$search['num'])
+                         ->order('DateTime desc')
                          ->select();
         $countNum     =  $count[0]['Num'];
         $Page       = new \Common\Lib\Page($countNum,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)

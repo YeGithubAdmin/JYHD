@@ -8,6 +8,8 @@ use Protos\PBS_SysBroadcastReturn;
 use Think\Controller;
 class LossUsersController extends Controller {
     public function index(){
+
+           set_time_limit(0);
           $LossUsers = D('LossUsers');
           //用户流失
           $LossData  =   $LossUsers->LossUsers(8);
@@ -16,7 +18,6 @@ class LossUsersController extends Controller {
           //回流用户
           $Backflow  =   $LossUsers->Backflow(8);
           $DataTime  =   strtotime(date('Y-m-d',time()-24*60*60));
-
           foreach ($LossData as $k=>$v){
               $LossData[$k]['DateTime']   =  date('Y-m-d',$DataTime) ;
               $LossData[$k]['MeterDate']  =  date('Y-m-d',$DataTime-7*24*60*60) ;
@@ -32,7 +33,18 @@ class LossUsersController extends Controller {
               }else{
                   $LossData[$k]['Backflow'] = 0;
               }
+              if(!$v['LoginUser']){
+                  $LossData[$k]['LoginUser'] = 0;
+              }
+              if(!$v['Loss']){
+                  $LossData[$k]['Loss'] = 0;
+              }
+              if(!$v['LossPrice']){
+                  $LossData[$k]['LossPrice'] = 0;
+              }
+
           }
+
            $AddData = M('log_users_loss')
                       ->addAll($LossData);
 
