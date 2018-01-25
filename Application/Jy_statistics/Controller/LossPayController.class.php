@@ -60,7 +60,7 @@ class LossPayController extends ComController {
         }
         foreach ($Section as $k=>$v){
             $Rete = $v['Num']/$LossNum;
-            $Section[$k]['Rate'] =  $Rete?round($Rete*100,2)."%":"0.00%";
+            $Section[$k]['Rate'] =  $Rete?round($Rete*100,2):"0.00%";
         }
         //渠道列表
         $Channel = M('jy_admin_users')
