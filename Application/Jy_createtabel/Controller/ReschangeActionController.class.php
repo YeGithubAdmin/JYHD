@@ -23,6 +23,7 @@ class ReschangeActionController extends Controller {
                           `cur_num` int(11) DEFAULT NULL,
                           `reason` tinyint(4) DEFAULT NULL,
                           `opt_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                          `src_player` bigint(20) DEFAULT "0",
                           PRIMARY KEY (`id`),
                           KEY `itemid` (`itemid`) USING BTREE,
                           KEY `reason` (`reason`) USING BTREE,
