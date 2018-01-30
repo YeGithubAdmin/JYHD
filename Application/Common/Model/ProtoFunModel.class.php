@@ -176,7 +176,7 @@ class ProtoFunModel extends Model{
         $Header = array(
             'PBName:'.'protos.PBS_UsrDataOprater',
             'PBSize:'.strlen($String),
-            'UID:1',
+            'UID:'.$playerid,
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
             'Version:'.$Version,
         );

@@ -50,7 +50,7 @@ class PeriodicValueController extends ComController {
                                 array(
                                     'count(Id) as Num',
                                     'sum(Loss) as Loss',
-                                    'round(sum(Loss)/7,2) as CycleLt',
+                                    'round(sum(Loss/7),2) as CycleLt',
                                     'sum(LossPrice) as LossPrice',
                                     'round(sum(LossPrice)/sum(Loss),2) as CycleLtLtv',
                                     'sum(WLoss) as WLoss',

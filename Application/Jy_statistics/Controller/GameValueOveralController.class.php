@@ -41,69 +41,75 @@ class GameValueOveralController extends ComController {
             $SummaryFishWhere .= ' and   `DateTime` < str_to_date("'.$datemax.'","%Y-%m-%d  %H:%i:%s") ';
         }
         $count  =M('game_numerical')
+                ->field(array(
+                    'date_format(mdate,"%Y%m%d") as T'
+                ))
                 ->where($where)
-                ->count();
-        $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+                ->group('T')
+                ->select();
+        $Page       = new \Common\Lib\Page(count($count),$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
-        //发放的金币
-        $SummaryGold  =  M('summary_goods')
-                         ->where($SummaryGoldWhere)
-                         ->field(array(
-                            'sum(Number) as Gold',
-                            'date_format(DateTime,"%Y%m%d") as T'
-                         ))
-                         ->group('T')
-                         ->select();
-        //兑出的鱼卷
-        $SummaryFish  =  M('summary_goods')
-                         ->where($SummaryFishWhere)
-                         ->field(array(
-                            'sum(Number) as Fish',
-                            'date_format(DateTime,"%Y%m%d") as T'
-                         ))
-                         ->group('T')
-                         ->select();
+//        //发放的金币
+//        $SummaryGold  =  M('summary_goods')
+//                         ->where($SummaryGoldWhere)
+//                         ->field(array(
+//                            'sum(Number) as Gold',
+//                            'date_format(DateTime,"%Y%m%d") as T'
+//                         ))
+//                         ->group('T')
+//                         ->select();
+//        //兑出的鱼卷
+//        $SummaryFish  =  M('summary_goods')
+//                         ->where($SummaryFishWhere)
+//                         ->field(array(
+//                            'sum(Number) as Fish',
+//                            'date_format(DateTime,"%Y%m%d") as T'
+//                         ))
+//                         ->group('T')
+//                         ->select();
 
 
 
-        $SummaryGoldSort = array();
-        $SummaryFishSort = array();
-
-        foreach ($SummaryGold as $k=>$v) $SummaryGoldSort[$v['T']] = $v;
-        foreach ($SummaryFish as $k=>$v) $SummaryFishSort[$v['T']] = $v;
+//        $SummaryGoldSort = array();
+//        $SummaryFishSort = array();
+//
+//        foreach ($SummaryGold as $k=>$v) $SummaryGoldSort[$v['T']] = $v;
+//        foreach ($SummaryFish as $k=>$v) $SummaryFishSort[$v['T']] = $v;
 
         //
         $infoField = array(
             'mdate',
-            '(produce_gold_1+produce_gold_2+produce_gold_3+produce_gold_4) as produce_gold',
-            '(consume_gold_1 + consume_gold_2 + consume_gold_3 +consume_gold_4) as consume_gold',
-            '(fish_card_1+fish_card_2+fish_card_3+fish_card_4) as fish_card',
-            '(bomb_1+bomb_2+bomb_3+bomb_4) as bomb',
-            '(score_1+score_2+score_3+score_4) as score',
-            '(gold_pump_1+gold_pump_2+gold_pump_3+gold_pump_4) as gold_pump',
-            'boss_award_pool',
+            'sum(gold_pool) as gold_pool',
+            'sum(gold_pump) as gold_pump',
+            'sum(produce_gold) as produce_gold',
+            'sum(consume_gold) as consume_gold',
+            'sum(produce_fish_card) as produce_fish_card',
+            'sum(produce_score) as produce_score',
+            'sum(produce_bomb_cu) as produce_bomb_cu',
+            'sum(produce_bomb_ag) as produce_bomb_ag',
+            'sum(produce_bomb_au) as produce_bomb_au',
             'date_format(mdate,"%Y%m%d") as T'
         );
-
         $info = M('game_numerical')
                 ->where($where)
                 ->limit($page*$num,$num)
                 ->order('mdate desc')
                 ->field($infoField)
+                 ->group('T')
                 ->select();
-        foreach ($info as $k=>$v){
-            if($SummaryGoldSort[$v['T']]){
-                $info[$k]['Gold'] =   $SummaryGoldSort[$v['T']]['Gold'];
-            }else{
-                $info[$k]['Gold'] =   0;
-            }
-            if($SummaryFishSort[$v['T']]){
-                $info[$k]['Fish'] =   $SummaryFishSort[$v['T']]['Fish'];
-            }else{
-                $info[$k]['Fish'] =   0;
-            }
-
-        }
+//        foreach ($info as $k=>$v){
+//            if($SummaryGoldSort[$v['T']]){
+//                $info[$k]['Gold'] =   $SummaryGoldSort[$v['T']]['Gold'];
+//            }else{
+//                $info[$k]['Gold'] =   0;
+//            }
+//            if($SummaryFishSort[$v['T']]){
+//                $info[$k]['Fish'] =   $SummaryFishSort[$v['T']]['Fish'];
+//            }else{
+//                $info[$k]['Fish'] =   0;
+//            }
+//
+//        }
 
 //         dump($info);
 

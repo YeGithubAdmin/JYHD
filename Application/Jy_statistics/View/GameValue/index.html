@@ -26,8 +26,8 @@
 </head>
 <body>
 	<nav class="breadcrumb">
-		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
-		用户中心 <span class="c-gray en">&gt;</span>用户列表 <a
+		<i class="Hui-iconfont">&#xe67f;</i> 统计 <span class="c-gray en">&gt;</span>
+		游戏数值 <span class="c-gray en">&gt;</span>场次数据 <a
 			class="btn btn-success radius r mr-20"
 			style="line-height: 1.6em; margin-top: 3px"
 			href="javascript:location.replace(location.href);" title="刷新"><i
@@ -38,7 +38,7 @@
 		<form action="" method="get">
 			<div class="text-c">
 
-				注册时间： <input type="text"
+				时间范围： <input type="text"
 					onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
 					id="datemin" value="{$search['datemin']}" name="datemin"
 					class="input-text Wdate" style="width: 120px;"> - <input
@@ -46,6 +46,16 @@
 					onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
 					id="datemax" value="{$search['datemax']}" name="datemax"
 					class="input-text Wdate" style="width: 120px;">
+
+				<span style="width: 100px" class="select-box">
+                <select size="1" name="RoomLevel" class="select">
+						<option   <eq name = "search['RoomLevel']" value ="">selected = "true"</eq> value="">场次</option>
+						<option   <eq name = "search['RoomLevel']" value ="1">selected = "true"</eq>  value="1">十炮场</option>
+					     <option  <eq name = "search['RoomLevel']" value ="2">selected = "true"</eq>  value="2">百炮场</option>
+					     <option  <eq name = "search['RoomLevel']" value ="3">selected = "true"</eq>  value="3">千炮场</option>
+					     <option  <eq name = "search['RoomLevel']" value ="4">selected = "true"</eq>  value="4">万炮场</option>
+				</select>
+				</span>
 				<button type="submit" class="btn btn-success" id="" name="">
 					<i class="Hui-iconfont">&#xe665;</i> 搜索
 				</button>
@@ -64,56 +74,50 @@
 			<thead>
 				<tr class="text-c">
 					<th width="60">日期</th>
-					<th width="60">核弹奖池</th>
-					<th width="60">十炮场产出金币</th>
-					<th width="60">十炮场消耗金币</th>
-					<th width="60">十炮场产出渔劵</th>
-					<th width="60">十炮场产出核弹</th>
-
-
-					<th width="60">百炮场产出金币</th>
-					<th width="60">百炮场消耗金币</th>
-					<th width="60">百炮场产出渔劵</th>
-					<th width="60">百炮场产出核弹</th>
-
-
-					<th width="60">千炮场产出金币</th>
-					<th width="60">千炮场消耗金币</th>
-					<th width="60">千炮场产出渔劵</th>
-					<th width="60">千炮场产出核弹</th>
-
-
-					<th width="60">万炮场产出金币</th>
-					<th width="60">万炮场消耗金币</th>
-					<th width="60">万炮场产出渔劵</th>
-					<th width="60">万炮场产出核弹</th>
+					<th width="60">房间等级</th>
+					<th width="60">金币奖池</th>
+					<th width="60">金币抽水</th>
+					<th width="60">产出金币</th>
+					<th width="60">消耗金币</th>
+					<th width="60">产出鱼券</th>
+					<th width="60">产出积分</th>
+					<th width="60">产出铜核弹</th>
+					<th width="60">产出银核弹</th>
+					<th width="60">产出金核弹</th>
 				</tr>
 			</thead>
 			<tbody>
 				<volist name='info' id = 'val'>
 					<tr class="text-c">
-						<th>{$val['mdate']}</th>
-						<th>{$val['boss_award_pool']}</th>
+						<td>{$val['mdate']}</td>
+						<td>
+							<switch name = "val['room_level']" >
+								<case value = "1">
+									十炮场
+								</case>
+								<case value = "2">
+									百炮场
+								</case>
+								<case value = "3">
+									千炮场
+								</case>
+								<case value = "4">
+									万炮场
+								</case>
+								<default/>
+					       			...
+							</switch>
 
-						<th>{$val['produce_gold_1']}</th>
-						<th>{$val['consume_gold_1']}</th>
-						<th>{$val['fish_card_1']}</th>
-						<th>{$val['bomb_1']}</th>
-
-						<th>{$val['produce_gold_2']}</th>
-						<th>{$val['consume_gold_2']}</th>
-						<th>{$val['fish_card_2']}</th>
-						<th>{$val['bomb_2']}</th>
-
-						<th>{$val['produce_gold_3']}</th>
-						<th>{$val['consume_gold_3']}</th>
-						<th>{$val['fish_card_3']}</th>
-						<th>{$val['bomb_3']}</th>
-
-						<th>{$val['produce_gold_4']}</th>
-						<th>{$val['consume_gold_4']}</th>
-						<th>{$val['fish_card_4']}</th>
-						<th>{$val['bomb_4']}</th>
+						</td>
+						<td>{$val['gold_pool']}</td>
+						<td>{$val['gold_pump']}</td>
+						<td>{$val['produce_gold']}</td>
+						<td>{$val['consume_gold']}</td>
+						<td>{$val['produce_fish_card']}</td>
+						<td>{$val['produce_score']}</td>
+						<td>{$val['produce_bomb_cu']}</td>
+						<td>{$val['produce_bomb_ag']}</td>
+						<td>{$val['produce_bomb_au']}</td>
 					</tr>
 				</volist>
 			</tbody>

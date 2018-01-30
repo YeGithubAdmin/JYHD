@@ -120,6 +120,7 @@ class FeedBackController extends ComController {
                           'UpDateTime'=>date('Y-m-d H:i:s'),
                           'UpName'=>$UserInfo['name'],
                       ));
+
             if($UpData && $FeedBack){
                 $db->commit();
                 $obj->showmessage('回复成功','/jy_admin/FeedBack/index');
