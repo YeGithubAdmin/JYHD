@@ -58,22 +58,22 @@ class UsersAttributeController extends ComController {
 
 
             $result  = 2001;
-            $playerid       =       I('param.playerid',0,'intval');                   //用户ID
-            $Name           =       I('param.Name',0,'trim');                         //昵称
-            $Sex            =       I('param.Sex',0,'intval');                        //1 男 2 女
-            $Vip            =       I('param.Vip',0,'intval');                        //vip 等级
-            $VipExp         =       I('param.VipExp',0,'intval');                     //vip 经验
-            $Gold           =       I('param.Gold',0,'intval');                       //金币
-            $diamond        =       I('param.Diamond',0,'intval');                    //钻石
-            $Deposit        =       I('param.Deposit',0,'intval');                    //存款
-            $Profit         =       I('param.Profit',0,'intval');                     //当日盈利
-            $Glevel         =       I('param.Glevel',0,'intval');                     //游戏等级
-            $Gexp           =       I('param.Gexp',0,'intval');                       //游戏经验
-            $SignDay        =       I('param.SignDay',0,'intval');                    //累计签到天数
-            $SignTime       =       I('param.SignTime',0,'trim,strtotime');           //签到时间
-            $Gunid          =       I('param.Gunid',0,'intval');                      //当前炮的id
-            $IsMc           =       I('param.IsMc',0,'intval');                       //是否是月卡用户
-            $McOvertime     =       I('param.McOvertime',0,'trim,strtotime');         //月卡结束时间
+            $playerid       =       I('param.playerid','','trim');                   //用户ID
+            $Name           =       I('param.Name','','trim');                         //昵称
+            $Sex            =       I('param.Sex','','trim');                        //1 男 2 女
+            $Vip            =       I('param.Vip','','trim');                        //vip 等级
+            $VipExp         =       I('param.VipExp','','trim');                     //vip 经验
+            $Gold           =       I('param.Gold','','trim');                       //金币
+            $diamond        =       I('param.Diamond','','trim');                    //钻石
+            $Deposit        =       I('param.Deposit','','trim');                    //存款
+            $Profit         =       I('param.Profit','','trim');                     //当日盈利
+            $Glevel         =       I('param.Glevel','','trim');                     //游戏等级
+            $Gexp           =       I('param.Gexp','','trim');                       //游戏经验
+            $SignDay        =       I('param.SignDay','','trim');                    //累计签到天数
+            $SignTime       =       I('param.SignTime','','trim,strtotime');           //签到时间
+            $Gunid          =       I('param.Gunid','','trim');                      //当前炮的id
+            $IsMc           =       I('param.IsMc','','trim');                       //是否是月卡用户
+            $McOvertime     =       I('param.McOvertime','','trim,strtotime');         //月卡结束时间
             $IsGive         =       I('param.IsGive',1,'intval');                     //是否赠送道具  1 -否 2-是
             $DataProp       =       I('param.Prop','','trim');                        //道具
             if($playerid == 0){
@@ -143,7 +143,7 @@ class UsersAttributeController extends ComController {
                 $RPB_PlayerData->setMcOvertime(0);
             }
             foreach ($DataInfo as $k=>$v){
-                if($v != 0 && $v != '' ){
+                if( $v != '' ){
                     $setData = "set".$k;
                     $RPB_PlayerData->$setData($v);
                     if($k == "Gold"){

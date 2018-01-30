@@ -140,12 +140,8 @@ class ThirtyDaySignController extends ComController {
                         ->select();
         //修改签到状态 1-未签 2-已签 3-今日  4-明日
         foreach ($catSignGoods as $k=>$v){
-             if($MoSignDay == 0 && $isSign == 2){
-                 if($v['Day'] == 1){
+             if($MoSignDay == 0 && $isSign == 2 ){
                      $catSignGoods[$k]['SignStatus'] = 2;
-                 }else{
-                     $catSignGoods[$k]['SignStatus'] = 1;
-                 }
              }
              if($MoSignDay == 0 && $isSign == 1){
 
@@ -276,6 +272,7 @@ class ThirtyDaySignController extends ComController {
         $info['continuity']       =       $Continuity;
         $info['Status']           =       $isSign;
         $info['configure']        =       $Status;
+        $info['MoSignDay']        =       $MoSignDay;
         response:
             $response = array(
                 'result' => $result,

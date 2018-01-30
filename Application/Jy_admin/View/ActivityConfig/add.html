@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>添加活动列表</title>
+</head>
+<body>
+	<div class="pd-20">
+		<form action="" method="post"  onsubmit="return false" class="form form-horizontal" id="form-menu-add">
+			<div class="row cl">
+				<div class="col-1"></div>
+				<label class="form-label col-2"><span class="c-red">*</span>活动类型：</label>
+				<div class="formControls col-1">
+					<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select"  datatype ="Type" name="Type" >
+								<option   value="1">累计充值</option>
+								<option   value="2">单笔充值</option>
+								<!--<option   value="3">循环充值</option>-->
+								<option   value="4">图片类型</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>渠道：</label>
+				<div class="formControls col-1">
+					<div style="width: 100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel"  class="select">
+								<volist name = "catChannel" id = "val">
+									<option value="{$val['id']}">{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+					</div>
+				</div>
+				<div class="col-1"></div>
+			</div>
+			<div class="row cl">
+				<div class="col-1"></div>
+				<label class="form-label col-2"><span class="c-red">*</span>是否复制：</label>
+				<div class="formControls col-1">
+					<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select class="select" onclick="Cpfun(this)"  name="Cp" >
+								<option   value="2">是</option>
+								<option   value="1">否</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				<div class="col-1"></div>
+				<div id = "CpChannel">
+					<label class="form-label col-1"><span class="c-red">*</span>复制渠道：</label>
+					<div class="formControls col-1">
+						<div style="width: 100%;text-align:center;float:left">
+							<span class="select-box">
+								<select size="1" name="CpChannel" class="select">
+									<volist name = "catChannel" id = "val">
+										<option value="{$val['id']}">{$val['name']}</option>
+									</volist>
+								</select>
+							</span>
+						</div>
+					</div>
+					<div class="col-1"></div>
+				</div>
+
+
+
+			</div>
+			<div id ="param" style="display: none;">
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>计费：</label>
+					<div class="formControls col-1">
+						<input type="text"
+							   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',maxDate:'#F{$dp.$D(\'AddUpEndTime\')||\'2080-10-01\'}'})</literal>"
+							   id="AddUpStartTime" value="" name="AddUpStartTime"
+							   class="input-text Wdate" style="width: 150px;">
+					</div>
+					<div class="col-1"></div>
+					<div class="formControls col-1">
+						<input
+								type="text"
+								onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',minDate:'#F{$dp.$D(\'AddUpStartTime\')}',maxDate:'2080-10-01'})</literal>"
+								id="AddUpEndTime" value="" name="AddUpEndTime"
+								class="input-text Wdate" style="width: 150px;">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>显示：</label>
+					<div class="formControls col-1">
+						<input type="text"
+							   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',maxDate:'#F{$dp.$D(\'ShowEndTime\')||\'2080-10-01\'}'})</literal>"
+							   id="ShowStartTime" value="" name="ShowStartTime"
+							   class="input-text Wdate" style="width: 150px;">
+					</div>
+					<div class="col-1"></div>
+					<div class="formControls col-1">
+						<input  type="text"
+								onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',minDate:'#F{$dp.$D(\'ShowStartTime\')}',maxDate:'2080-10-01'})</literal>"
+								id="ShowEndTime" value="" name="ShowEndTime"
+								class="input-text Wdate" style="width: 150px;">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>外标题：</label>
+					<div class="formControls col-5">
+						<input type="text" class="input-text" value="" placeholder=""
+							   name="Title"  nullmsg="活动标题不能为空">
+					</div>
+					<div class="col-4"></div>
+				</div>
+
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>内描述：</label>
+					<div class="formControls col-5">
+						<textarea  name="Describe" style="width: 100%;"  cols="100" rows="10" ></textarea>
+					</div>
+					<div class="col-4"></div>
+				</div>
+
+
+
+			</div>
+			<div class="row cl">
+				<div class="col-1 col-offset-4">
+					<input class="btn btn-primary radius" id = "save"  type="submit" name="" value="保存配置">
+				</div>
+				<div class="col-1">
+					<input class="btn disabled radius" type="button"  id ="send"   Aid = 0  onclick="SendFun(this)" name="" value="发布配置">
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+            $("#form-menu-add").Validform({
+                tiptype : 2,
+                datatype:{
+                    'Type':function (gets,obj,curform,regxp) {
+                        if(gets ==''){
+                            return false;
+                        }
+                        if(gets.length<0 || gets.length>3){
+                            return false;
+                        }
+                        var Type = document.getElementsByName('Type')[0];
+                        var Channel = document.getElementsByName('Channel')[0];
+                        var CpChannel = document.getElementsByName('CpChannel')[0];
+                        var Cp = document.getElementsByName('Cp')[0];
+                        //检查活动是否已出在
+                        var _Verification = true;
+                        $.ajax(
+                            {
+                                type:"POST",
+                                url:'/jy_admin/ActivityList/Verification',
+                                async:false,
+                                data:{'Type':Type.value,'Channel':Channel.value,'CpChannel':CpChannel.value,'Cp':Cp.value},
+                                success:function (msg) {
+                                    if(msg == 0){
+                                        _Verification =   false;
+                                    }else if(msg == 1){
+                                        _Verification =   true;
+                                    }else if(msg == 2){
+                                        _Verification   = '活动类型已经存在';
+                                    }
+                                    else if(msg == 3){
+                                        _Verification   = '复制的渠道的活动不存在';
+                                    }
+                                }
+                            }
+                        );
+                        return   _Verification;
+                    }
+                },
+                callback : function(form){
+                    var Type = document.getElementsByName('Type')[0];
+                    var Channel = document.getElementsByName('Channel')[0];
+                    var CpChannel = document.getElementsByName('CpChannel')[0];
+                    var Cp = document.getElementsByName('Cp')[0];
+                    var Title = document.getElementsByName('Title')[0];
+                    var AddUpStartTime = document.getElementsByName('AddUpStartTime')[0];
+                    var AddUpEndTime = document.getElementsByName('AddUpEndTime')[0];
+                    var ShowStartTime = document.getElementsByName('ShowStartTime')[0];
+                    var ShowEndTime = document.getElementsByName('ShowEndTime')[0];
+                    var Describe = document.getElementsByName('Describe')[0];
+                    var save = document.getElementById('save');
+                    var send = document.getElementById('send');
+                    $.ajax(
+                        {
+                            type:"POST",
+                            url:'/jy_admin/ActivityList/AddAjax',
+                            data:{'Type':Type.value,
+								  'Channel':Channel.value,
+								  'CpChannel':CpChannel.value,
+								  'Cp':Cp.value,
+								  'Title':Title.value,
+								  'AddUpStartTime':AddUpStartTime.value,
+								  'AddUpEndTime':AddUpEndTime.value,
+								  'ShowStartTime':ShowStartTime.value,
+								  'ShowEndTime':ShowEndTime.value,
+								  'Describe':Describe.value,
+								},
+                            success:function (msg) {
+									if(msg > 0){
+                                        save.className = "btn disabled radius";
+                                        send.className = "btn btn-primary radius";
+                                        send.setAttribute('Aid',msg);
+                                        layer.msg('保存成功!', {icon: 6, time: 3000});
+									}else{
+                                        layer.msg('保存失败!', {icon: 5, time: 3000});
+									}
+                            }
+                        }
+                    );
+
+                }
+            });
+
+		});
+		//发布配置
+        function SendFun(my) {
+			var Aid = my.getAttribute('Aid');
+            var send = document.getElementById('send');
+            $.ajax(
+                {
+                    type:"POST",
+                    url:'/jy_admin/ActivityList/SendAjax',
+                    data:{'Id':Aid
+                    },
+                    success:function (msg) {
+                        if(msg > 0){
+                            send.className = "btn disabled radius";
+                            layer.msg('发布成功!', {icon: 6, time: 3000});
+                        }else{
+                            layer.msg('发布失败!', {icon: 5, time: 3000});
+                        }
+                    }
+                }
+            );
+        }
+
+
+		//是否复制
+		function Cpfun(my) {
+		    var param  =  document.getElementById('param');
+			var Index  =  my.selectedIndex;
+			var Value  =  my.options[Index].value;
+			var Inputs =  param.getElementsByTagName('input');
+			var CpChannel = document.getElementById('CpChannel');
+
+			if(Value == 2){
+				for(i=0;i<Inputs.length;i++){
+				    Inputs[i].removeAttribute('datatype');
+				}
+                param.style.display = "none";
+                CpChannel.style.display = "block";
+			}else if(Value == 1){
+
+                for(i=0;i<Inputs.length;i++){
+                    var Name = Inputs[i].name;
+                    if(Name == 'Title'){
+                        Inputs[i].setAttribute('datatype','*2-8');
+					}else{
+                        Inputs[i].setAttribute('datatype','*');
+					}
+                }
+                CpChannel.style.display = "none";
+				param.style.display = "block";
+			}
+        }
+	</script>
+	</literal>
+</body>
+</html>

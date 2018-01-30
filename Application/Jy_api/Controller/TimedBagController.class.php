@@ -24,7 +24,6 @@ class TimedBagController extends ComController {
         $msgArr[2001] = "获取成功！";
         $msgArr[4006] = "用户信息缺失！";
         $msgArr[4007] = "物品不存在！";
-        $msgArr[4008] = "物品不存在！";
         $msgArr[7001] = "超过购买次数！";
         $playerid = $DataInfo['playerid'];
         $Status = 2;

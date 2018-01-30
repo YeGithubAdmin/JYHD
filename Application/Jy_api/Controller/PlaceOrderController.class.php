@@ -36,6 +36,7 @@ class PlaceOrderController extends ComController {
         $msgArr[5002] = "物品不存在！";
         $msgArr[5003] = "支付信息不存在！";
         $msgArr[5004] = "支付类型暂时未接通！";
+        $msgArr[5005] = "礼包暂时不可以购买！";
         $msgArr[7002] = "超过限购次数！";
         $msgArr[7003] = "月卡还有效，请等月卡过期在购买！";
         $msgArr[7004] = "支付功能，暂时停止！";
@@ -400,6 +401,13 @@ class PlaceOrderController extends ComController {
                 //苹果支付
             case 5:
                 $Payment = true;
+
+                if(!$catGoodsAll['IosCode']){
+                    $result = 5005;
+                    goto response;
+                }
+
+
                 $info['IosCode'] = $catGoodsAll['IosCode'];
                 $info['Order']   = $PlatformOrder;
             break;
