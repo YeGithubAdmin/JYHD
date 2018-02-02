@@ -21,34 +21,55 @@ message RPB_PlayerNumerical
 	optional int32 draw_count 			= 25;	// 抽奖次数
 	optional int64 diamond_day			= 26;	// 每天获得钻石
 	optional int64 item_day				= 27;	// 每天获得道具数量
+	optional int32 pay_total			= 28;	// 历史总充值
+	optional int32 drop_bomb_worth		= 29;	// 总核弹掉落价值
+	// hhmf
+	optional int32 hhmf_bet_flag_1 		= 51; 	// 0 没押注 1 已经押注
+	optional int32 hhmf_bet_flag_2 		= 52;	// 0 没押注 1 已经押注
+	optional int32 hhmf_bet_flag_3 		= 53;	// 0 没押注 1 已经押注
 }
 
 message RPB_GameNumerical
 {
 
 	// new numerical. flag[add] can save other place and set 0 every day when you need.  flag[set] calculate by room server, can not modify
-	optional int64 gold_pool 				= 1;   				// [set]
-	optional int64 gold_pump 				= 2;				// [add]
-	optional int64 produce_gold 			= 3;				// [add]
-	optional int64 consume_gold 			= 4;				// [add]
-	optional int64 produce_fish_card 		= 5;				// [add]
-	optional int64 produce_score 			= 6;				// [add]
-	optional int64 produce_bomb_cu 			= 7;				// [add]
-	optional int64 produce_bomb_ag 			= 8;				// [add]
-	optional int64 produce_bomb_au 			= 9;				// [add]
-	optional string mdate 					= 20;
+	optional int64 gold_pool 				= 1;   				// [set] 			金币奖池
+	optional int64 gold_pump 				= 2;				// [add]			金币抽水
+	optional int64 produce_gold 			= 3;				// [add]			产出金币
+	optional int64 consume_gold 			= 4;				// [add]			消耗金币
+	optional int64 produce_fish_card 		= 5;				// [add]			产出鱼券
+	optional int64 produce_score 			= 6;				// [add]			产出积分 
+	optional int64 produce_bomb_cu 			= 7;				// [add]			产出铜核弹
+	optional int64 produce_bomb_ag 			= 8;				// [add]			产出银核弹
+	optional int64 produce_bomb_au 			= 9;				// [add]			产出金核弹
+	optional string mdate 					= 20;									
 	optional string update_time 			= 21;
-	optional int32 room_level				= 22;
+	optional int32 room_level				= 22;				// 场次					
 }
 
 message RPB_BossNumerical
 {
-	optional int64 boss_award_pool 	  		= 1;
-	optional int64 boss_consume 	  	  	= 2;
-	optional int64 boss_produce_gold  	 	= 3;
-	optional int64 boss_produce_bomb_gold 	= 4;
+	optional int64 boss_award_pool 	  		= 1;				// boss奖池				
+	optional int64 boss_consume 	  	  	= 2;				// boss消耗
+	optional int64 boss_produce_gold  	 	= 3;				// boss产出
+	optional int64 boss_produce_bomb_gold 	= 4;				// 产出核弹对应金币
 	optional string mdate 					= 20;
 	optional string update_time 			= 21;
+}
+
+message RPB_HhmfNumerical
+{
+	optional int64 cur_player_num 			= 1;				// 每个场次游戏人数
+	optional int64 player_join_num 			= 2;				// 人次 					
+	optional int64 total_online_time 		= 3;				// 总在线时长
+	optional int64 produce_gold 			= 4;				// 总产出流水（剔除机器人）
+	optional int64 consume_gold 			= 5;				// 总消耗流水（剔除机器人）
+	optional int64 total_win 				= 6; 				// 总盈亏（人数需去重）
+	optional int64 robot_banker_win 		= 7;				// 机器人 庄 总赢亏
+	optional int64 robot_player_win 		= 8; 				// 机器人 闲 总赢亏
+	optional int64 bet_times 				= 9; 				// 每个场次押注占比，次数
+	//optional int64 bet_player_num 		= 10; 				// 每个场次押注占比，人数 ==>> RPB_PlayerNumerical hhmf_bet_flag_*
+	optional int32 room_level				= 22;				// 场次					
 }
 
 message PBS_GameNumericalOpt
@@ -59,6 +80,8 @@ message PBS_GameNumericalOpt
 		optional RPB_GameNumerical    game_numerical_incr = 3;	// incr opt
 		optional RPB_BossNumerical    boss_numerical_set  = 4;	// set  opt
 		optional RPB_BossNumerical    boss_numerical_incr = 5;	// incr opt
+		optional RPB_HhmfNumerical    hhmf_numerical_set  = 6;	// set 	opt
+		optional RPB_HhmfNumerical    hhmf_numerical_incr = 7;	// incr opt
 		optional int32 				  room_level 		  = 10;
 	}
 

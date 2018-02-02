@@ -53,7 +53,7 @@ class PayAnalysisController extends ComController {
                     'if(sum(TotalMoney)/sum(ActiveNum),round(sum(TotalMoney)/sum(ActiveNum),2),0) as ARPU',
                     'if(sum(TotalMoney)/sum(UserPayNum),round(sum(TotalMoney)/sum(UserPayNum),2),0)  as ARPPU',
                     'if((sum(TotalMoney) - sum(OrderTotalOld))/sum(RegNum),round((sum(TotalMoney) - sum(OrderTotalOld))/sum(RegNum),2),0)  as RegARPU',
-                    'if((sum(TotalMoney)-sum(OrderTotalOld))/(sum(UserPayNum)-sum(UserPayNumOld)),round((sum(TotalMoney)-sum(OrderTotalOld))/(sum(UserPayNum)-sum(UserPayNumOld)),2),0)  as RegARPU',
+                    'if((sum(TotalMoney)-sum(OrderTotalOld))/(sum(UserPayNum)-sum(UserPayNumOld)),round((sum(TotalMoney)-sum(OrderTotalOld))/(sum(UserPayNum)-sum(UserPayNumOld)),2),0)  as RegARPPU',
                     'if(sum(MallGold),round(sum(MallGold),2),0)  as MallGold',
                     'if(sum(MallDiamonds),round(sum(MallDiamonds),2),0) as MallDiamonds',
                     'count(Id) as Num',
@@ -81,7 +81,7 @@ class PayAnalysisController extends ComController {
                     'if(TotalMoney/ActiveNum,round(TotalMoney/ActiveNum,2),0) as ARPU',
                     'if(TotalMoney/UserPayNum,round(TotalMoney/UserPayNum,2),0)  as ARPPU',
                     ' if((TotalMoney-OrderTotalOld )/RegNum,round((TotalMoney-OrderTotalOld )/RegNum,2),0)  as RegARPU',
-                    ' if((TotalMoney-OrderTotalOld )/(UserPayNum-UserPayNumOld),round((TotalMoney-OrderTotalOld )/(UserPayNum-UserPayNumOld),2),0)  as RegARPU',
+                    ' if((TotalMoney-OrderTotalOld )/(UserPayNum-UserPayNumOld),round((TotalMoney-OrderTotalOld )/(UserPayNum-UserPayNumOld),2),0)  as RegARPPU',
                     'MallGold',
                     'MallDiamonds',
                 )

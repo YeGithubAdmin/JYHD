@@ -181,15 +181,12 @@ class ProtoFunModel extends Model{
             'Version:'.$Version,
         );
         $Respond = $this->ObjFun->ProtobufSend($Header,$String);
-
         if($Respond == 504){
             return false;
         }
-
         if(strlen($Respond) == 0){
             return false;
         }
-
         $UsrDataOpraterReturn->parseFromString($Respond);
         $ReplyCode = $UsrDataOpraterReturn->getCode();
         if($ReplyCode != 1){

@@ -1,0 +1,23 @@
+
+import "PB_error_code.proto";
+
+// 达人计划
+message PB_TaskA 
+{
+	optional int64 playerid  	= 1;
+	optional int32 unlock_gun 	= 2;	// 解锁炮倍
+	optional int64 unlock_time 	= 3;	// 解锁时间
+}
+
+message PB_TaskAInfoRequest
+{
+	required int64 playerid = 1;
+	required int64 start = 2;	// 活动开始时间
+	required int64 end = 3;		// 活动结束时间
+}
+
+message PB_TaskAInfoReturn
+{
+	required PB_ErrorCode code = 1;
+	repeated PB_TaskA tasks = 2;
+}

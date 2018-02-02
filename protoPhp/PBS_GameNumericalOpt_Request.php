@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2018-01-24 16:26:41
+ * Auto generated from PB_statistics_data.proto at 2018-02-01 10:24:00
  */
 
 namespace {
@@ -15,6 +15,8 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
     const GAME_NUMERICAL_INCR = 3;
     const BOSS_NUMERICAL_SET = 4;
     const BOSS_NUMERICAL_INCR = 5;
+    const HHMF_NUMERICAL_SET = 6;
+    const HHMF_NUMERICAL_INCR = 7;
     const ROOM_LEVEL = 10;
 
     /* @var array Field descriptors */
@@ -44,6 +46,16 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
             'required' => false,
             'type' => '\RPB_BossNumerical'
         ),
+        self::HHMF_NUMERICAL_SET => array(
+            'name' => 'hhmf_numerical_set',
+            'required' => false,
+            'type' => '\RPB_HhmfNumerical'
+        ),
+        self::HHMF_NUMERICAL_INCR => array(
+            'name' => 'hhmf_numerical_incr',
+            'required' => false,
+            'type' => '\RPB_HhmfNumerical'
+        ),
         self::ROOM_LEVEL => array(
             'name' => 'room_level',
             'required' => false,
@@ -71,6 +83,8 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
         $this->values[self::GAME_NUMERICAL_INCR] = null;
         $this->values[self::BOSS_NUMERICAL_SET] = null;
         $this->values[self::BOSS_NUMERICAL_INCR] = null;
+        $this->values[self::HHMF_NUMERICAL_SET] = null;
+        $this->values[self::HHMF_NUMERICAL_INCR] = null;
         $this->values[self::ROOM_LEVEL] = null;
     }
 
@@ -193,6 +207,50 @@ class PBS_GameNumericalOpt_Request extends \ProtobufMessage
     public function getBossNumericalIncr()
     {
         return $this->get(self::BOSS_NUMERICAL_INCR);
+    }
+
+    /**
+     * Sets value of 'hhmf_numerical_set' property
+     *
+     * @param \RPB_HhmfNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setHhmfNumericalSet(\RPB_HhmfNumerical $value=null)
+    {
+        return $this->set(self::HHMF_NUMERICAL_SET, $value);
+    }
+
+    /**
+     * Returns value of 'hhmf_numerical_set' property
+     *
+     * @return \RPB_HhmfNumerical
+     */
+    public function getHhmfNumericalSet()
+    {
+        return $this->get(self::HHMF_NUMERICAL_SET);
+    }
+
+    /**
+     * Sets value of 'hhmf_numerical_incr' property
+     *
+     * @param \RPB_HhmfNumerical $value Property value
+     *
+     * @return null
+     */
+    public function setHhmfNumericalIncr(\RPB_HhmfNumerical $value=null)
+    {
+        return $this->set(self::HHMF_NUMERICAL_INCR, $value);
+    }
+
+    /**
+     * Returns value of 'hhmf_numerical_incr' property
+     *
+     * @return \RPB_HhmfNumerical
+     */
+    public function getHhmfNumericalIncr()
+    {
+        return $this->get(self::HHMF_NUMERICAL_INCR);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2018-01-24 16:26:41
+ * Auto generated from PB_gm_tool.proto at 2018-02-01 10:23:59
  *
  * protos package
  */
@@ -22,6 +22,8 @@ class game_numerical extends \ProtobufMessage
     const RETURN_GOLD_RATE = 8;
     const GOLD_POOL = 9;
     const BOSS_AWARD_POOL = 10;
+    const BOSS_BLOOD_RANDOM_NUM_MIN = 11;
+    const BOSS_BLOOD_RANDOM_NUM_MAX = 12;
     const GOLD_POOL_RATIO = 20;
     const RECHARGE_EFFECT = 21;
     const KEY_RECHARGE_EFFECT = 22;
@@ -81,6 +83,16 @@ class game_numerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::BOSS_BLOOD_RANDOM_NUM_MIN => array(
+            'name' => 'boss_blood_random_num_min',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
+        self::BOSS_BLOOD_RANDOM_NUM_MAX => array(
+            'name' => 'boss_blood_random_num_max',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_FLOAT,
+        ),
         self::GOLD_POOL_RATIO => array(
             'name' => 'gold_pool_ratio',
             'required' => false,
@@ -138,6 +150,8 @@ class game_numerical extends \ProtobufMessage
         $this->values[self::RETURN_GOLD_RATE] = null;
         $this->values[self::GOLD_POOL] = null;
         $this->values[self::BOSS_AWARD_POOL] = null;
+        $this->values[self::BOSS_BLOOD_RANDOM_NUM_MIN] = null;
+        $this->values[self::BOSS_BLOOD_RANDOM_NUM_MAX] = null;
         $this->values[self::GOLD_POOL_RATIO] = null;
         $this->values[self::RECHARGE_EFFECT] = array();
         $this->values[self::KEY_RECHARGE_EFFECT] = array();
@@ -384,6 +398,52 @@ class game_numerical extends \ProtobufMessage
     {
         $value = $this->get(self::BOSS_AWARD_POOL);
         return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'boss_blood_random_num_min' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setBossBloodRandomNumMin($value)
+    {
+        return $this->set(self::BOSS_BLOOD_RANDOM_NUM_MIN, $value);
+    }
+
+    /**
+     * Returns value of 'boss_blood_random_num_min' property
+     *
+     * @return double
+     */
+    public function getBossBloodRandomNumMin()
+    {
+        $value = $this->get(self::BOSS_BLOOD_RANDOM_NUM_MIN);
+        return $value === null ? (double)$value : $value;
+    }
+
+    /**
+     * Sets value of 'boss_blood_random_num_max' property
+     *
+     * @param double $value Property value
+     *
+     * @return null
+     */
+    public function setBossBloodRandomNumMax($value)
+    {
+        return $this->set(self::BOSS_BLOOD_RANDOM_NUM_MAX, $value);
+    }
+
+    /**
+     * Returns value of 'boss_blood_random_num_max' property
+     *
+     * @return double
+     */
+    public function getBossBloodRandomNumMax()
+    {
+        $value = $this->get(self::BOSS_BLOOD_RANDOM_NUM_MAX);
+        return $value === null ? (double)$value : $value;
     }
 
     /**
