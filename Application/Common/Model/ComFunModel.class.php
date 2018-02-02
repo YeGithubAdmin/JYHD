@@ -193,6 +193,60 @@ class ComFunModel extends Model{
     }
 
 
+    /***
+     * proto 请求
+     * @param  string  $url    地址
+     * @param  array  $header  头信息
+     * @param  string  $content   proto 体
+     * @param  int  $timeOut   请求超时
+     **/
+    public function Prototocurl($url, $header, $content,$timeOut = 5){
+        $ch = curl_init();
+        if(substr($url,0,5)=='https'){
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);  // 从证书中检查SSL加密算法是否存在
+        }
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_TIMEOUT , $timeOut);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_POST, true);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+        $response = curl_exec($ch);
+        if($response === false){
+            if(curl_errno($ch) == CURLE_OPERATION_TIMEDOUT){
+                return 504;
+            }
+        }
+        curl_close($ch);
+        return $response;
+    }
+    /***
+     * protobuf发送请求
+     * @param $PBName    string       包名
+     * @param $content   protobuf     包体
+     */
+    public function   ProtobufSend($Header,$content,$Server=''){
+        $TheBagBody = array(
+            'body'=>$content
+        );
+        if(empty($Server)){
+            $Server = SERVER_PROTO;
+        }
+        $Respond = $this->Prototocurl($Server,$Header,$TheBagBody);
+        if($Respond  == 504){
+            return  504;
+        }
+        return $Respond;
+    }
+
+
+
+
+
+
+
 
 
 

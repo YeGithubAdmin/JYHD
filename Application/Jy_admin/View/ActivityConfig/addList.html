@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,gprs-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>子活动添加</title>
+</head>
+<body>
+	<div class="pd-20">
+
+		<form action="" method="post" class="form form-horizontal" id="form-vipInfo-add">
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>标题：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="" placeholder=""
+						   name="SonTitle" datatype="*" nullmsg="">
+					<input type="hidden" class="input-text" value="{$Id}" placeholder=""
+						   name="Id"  nullmsg="">
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>达成条件值：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['Number']}" placeholder=""
+						   name="Aname" datatype="*1-16" nullmsg="">
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red">*</span>图片名：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['Number']}" placeholder=""
+						   name="ImgCode" datatype="*" nullmsg="">
+				</div>
+				<div class="col-1"></div>
+
+			</div>
+
+			<div class="row cl">
+
+				<label class="form-label col-3"><span class="c-red">*</span>活动类型值：</label>
+				<div class="formControls col-1">
+					<div style="width:100%;text-align:center;float:left">
+							<span class="select-box">
+								<select  class="select GoodsType"  name = "TypeCode" datatype="*"  onchange="selectGoodsFun(this)" nullmsg="" >
+									<volist name = "StlyeValue" id ="val">
+									 		<option value="{$val['Value']}">{$val['Name']}</option>
+									</volist>
+								</select>
+							</span>
+					</div>
+				</div>
+				<div class="col-1"></div>
+				<label class="form-label col-1"><span class="c-red"></span>排序：</label>
+				<div class="formControls col-1">
+					<input type="text" class="input-text" value="" placeholder=""
+						   name="Sort"  nullmsg="">
+				</div>
+				<div class="col-1"></div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red">*</span>是否跳转：</label>
+				<div class="formControls col-2 skin-minimal">
+					<div class="radio-box">
+						<input type="radio" id="StopPay-2" checked = "true" value="1" name="Jump">
+						<label for="StopPay-2">否</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="StopPay-1"  value="2"  name="Jump">
+						<label for="StopPay-1">是</label>
+					</div>
+
+				</div>
+				<div class="col-1"> </div>
+			</div>
+
+			<div id = "parent" >
+				<div class="row cl GiveInfo"  >
+					<label class="form-label col-3"><span class="c-red"></span></label>
+					<div class="formControls col-1">
+						<div style="width:100%;text-align:center;float:left">
+							<span class="select-box">
+								<select  class="select GoodsType"  name = "GiveInfo[0][Type]" datatype="*"  onchange="selectGoodsFun(this)" nullmsg="" >
+									 <option value="">请选择类型</option>
+									 <option value="1">金币</option>
+									 <option value="2">钻石</option>
+									 <option value="3">道具</option>
+									 <option value="0">其他</option>
+								</select>
+							</span>
+						</div>
+					</div>
+					<div class="col-1"></div>
+					<div class="formControls col-1">
+						<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select Id" name = "GiveInfo[0][Id]"    onchange="GetNumFun(this)"   datatype="*" nullmsg="" >
+								 <option value="">请选择商品</option>
+								<volist name = "GoodsAllList" id="val">
+								 		<option class="type{$val['Type']}"   GetNum = "{$val['GetNum']}"  style="display: none;" value="{$val['Id']}">{$val['Name']}</option>
+								</volist>
+                            </select>
+						</span>
+						</div>
+					</div>
+					<div class="col-1"></div>
+					<div class="formControls col-1">
+						<input type="text"  class="input-text NumBer"  datatype="*" value="" placeholder="请输入倍数"
+							   name="GiveInfo[0][NumBer]"  nullmsg="">
+						<input type="hidden"  class="input-text GetNum"   value="" placeholder=""
+							   name="GiveInfo[0][GetNum]"  nullmsg="">
+					</div>
+					<div class="col-1"></div>
+					<div class="formControls col-1">
+						<input type="text"  class="input-text GoodName"  datatype="*" value="" placeholder="请输入名称"
+							   name="GiveInfo[0][Name]"  nullmsg="">
+					</div>
+					<div class="col-1"></div>
+					<div class="formControls col-0 operation"  index =0 onclick="GiveInfoAdd(this)">
+						<input class="btn btn-primary radius" type="button"  value="增加">
+					</div>
+				</div>
+			</div>
+			<div id ="child">
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-3"><span class="c-red"></span>说明：</label>
+				<div class="formControls col-5">
+					<textarea     name="Explain"  style="width:100%" rows="7" cols="10" ></textarea>
+				</div>
+				<div class="col-4"></div>
+			</div>
+			<div class="row cl">
+				<div class="col-2 col-offset-3">
+					<input class="btn btn-primary radius"   type="submit" name="submit" value="保存配置">
+				</div>
+				<div class="col-1">
+					<input class="btn btn-primary radius"   type="submit" name="submit" value="发布配置">
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/icheck/jquery.icheck.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript"
+		src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+
+	<literal>
+	<script type="text/javascript">
+		$(function() {
+			$('.skin-minimal input').iCheck({
+				checkboxClass : 'icheckbox-blue',
+				radioClass : 'iradio-blue',
+				increaseArea : '20%'
+			});
+
+			$("#form-vipInfo-add").Validform({
+				tiptype : 2,
+                datatype:{
+				  'Code':function (gets,obj,curform,regxp) {
+					  if(gets ==''){
+							return false;
+					  }
+					  //验证等级存在
+                      var _Verification = true;
+                      $.ajax(
+                          {
+                              type:"POST",
+                              url:'/jy_admin/CdkGoodsConfigure/Verification',
+                              async:false,
+                              data:{'Code':gets},
+                              success:function (msg) {
+                                  if(msg == 0){
+                                      _Verification =   false;
+                                  }else if(msg == 1){
+                                      _Verification =   true;
+                                  }else if(msg == 2){
+                                      _Verification   = '编码已存在！';
+                                  }
+                              }
+                          }
+                      );
+                      return   _Verification;
+
+                  }
+				},
+				callback : function(form) {
+					form[0].submit();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.$('.btn-refresh').click();
+					parent.layer.close(index);
+				}
+			});
+
+		});
+        //增加
+        function GiveInfoAdd(my) {
+            var  parent    = document.getElementById('parent');
+            var  child     = document.getElementById('child');
+            var  GiveInfo  = document.getElementsByClassName('GiveInfo');
+            var  del       = document.getElementById('del');
+			var  index     = my.getAttribute('index');
+            index++
+
+            child.innerHTML +=  parent.innerHTML;
+            var Id 				=  document.getElementsByClassName('Id');
+            var Length			=  Id.length;
+            var GetNum 			=  document.getElementsByClassName('GetNum');
+            var NumBer 			=  document.getElementsByClassName('NumBer');
+            var GoodsType 		=  document.getElementsByClassName('GoodsType');
+            var GoodName		=  document.getElementsByClassName('GoodName');
+            var operation 		=  document.getElementsByClassName('operation');
+			var operationVal	=   operation[Length-1].getElementsByTagName('input')[0];
+            GoodsType[Length-1].setAttribute('name','GiveInfo['+index+'][Type]');
+            GetNum[Length-1].setAttribute('name','GiveInfo['+index+'][GetNum]');
+            NumBer[Length-1].setAttribute('name','GiveInfo['+index+'][NumBer]');
+            GoodName[Length-1].setAttribute('name','GiveInfo['+index+'][Name]');
+            Id[Length-1].setAttribute('name','GiveInfo['+index+'][Id]');
+			operation[Length-1].setAttribute('onclick','GiveInfoDel(this)');
+            operationVal.setAttribute('value','删除');
+            my.setAttribute('index',index);
+			
+        }
+        function GiveInfoDel(my) {
+            var  child    = document.getElementById('child');
+            var  MyParent = my.parentNode;
+            child.removeChild(MyParent);
+            console.log(MyParent);
+
+        }
+        //选择商品
+        function  selectGoodsFun(my) {
+            var GoodsType 			= document.getElementsByClassName('GoodsType');
+            var Id 					= document.getElementsByClassName('Id');
+            for(i=0;i<GoodsType.length;i++){
+                GoodsType[i].index = i;
+            }
+            var MyIndex 			= my.index;
+            var IdSelect 			= Id[MyIndex];
+            var seleIndex           = my.selectedIndex;
+            var selectValue			= my.options[seleIndex].value;
+            var selectOptions       = my.options;
+            var IdSelectOptionType 		= IdSelect.getElementsByClassName('type'+selectValue);
+            var IdSelectOption 		= IdSelect.options;
+            for(j = 0;j<IdSelectOption.length;j++){
+                if(j>0){
+                    IdSelectOption[j].style.display = "none";
+                }
+            }
+            for(k=0;k<IdSelectOptionType.length;k++){
+                IdSelectOptionType[k].style.display = "inline-block";
+            }
+
+        }
+
+		function GetNumFun(my) {
+            var seleIndex           = my.selectedIndex;
+            var selectValue			= my.options[seleIndex].getAttribute('GetNum');
+            var Id 					= document.getElementsByClassName('Id');
+            for(i=0;i<Id.length;i++){
+                Id[i].index = i;
+            }
+            var MyIndex 			= my.index;
+			var GetNum				= document.getElementsByClassName('GetNum');
+            GetNum[MyIndex].value = selectValue;
+        }
+
+
+
+
+
+	</script>
+	</literal>
+</body>
+</html>

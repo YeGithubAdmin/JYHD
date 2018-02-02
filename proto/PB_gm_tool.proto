@@ -112,6 +112,8 @@ message game_numerical {
 	optional float return_gold_rate = 8; 									// [场返奖率]：影响每个游戏场的基础抽水率 									
 	optional int64 gold_pool = 9;											// 金币池																	[dynamic]
 	optional int64 boss_award_pool = 10;									// BOSS奖池																	[dynamic]
+	optional float boss_blood_random_num_min = 11;							// 血量浮动值 下限
+	optional float boss_blood_random_num_max = 12;							// 血量浮动值 上限
 	optional gold_pool_ratio_t gold_pool_ratio = 20;						// 奖池系数[a,b,c, A, B]
 	repeated recharge_effect_t recharge_effect = 21;						// 基础捕中率加成：影响付费玩家捕中率加成
 	repeated key_recharge_effect_t key_recharge_effect = 22;				// KEY鱼捕中加成：影响付费玩家接近临界值时对KEY鱼的捕中率加成
@@ -193,6 +195,34 @@ message PBS_gm_set_shuihu_numerical {
 message PBS_gm_set_shuihu_numerical_return {
 	required PB_ErrorCode code = 1;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// 黑红梅方
+message cfg_hhmf_numerical {
+	optional int32 gold_range_min = 1; 		 										// 机器人押注 值域下限
+	optional int32 gold_range_max = 2;												// 机器人押注 值域上限
+}
+
+// 查询水浒传数值参数
+message PBS_gm_get_hhmf_numerical {
+	required int32 serverid = 1;
+}
+
+message PBS_gm_get_hhmf_numerical_return {
+	required cfg_hhmf_numerical data = 1;
+   	required PB_ErrorCode code = 2;
+}
+
+// 设置水浒传数值参数
+message PBS_gm_set_hhmf_numerical {
+	required cfg_hhmf_numerical data = 1;
+	optional int32 serverid = 2;
+}
+
+message PBS_gm_set_hhmf_numerical_return {
+	required PB_ErrorCode code = 1;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // 捕鱼逻辑控制操作

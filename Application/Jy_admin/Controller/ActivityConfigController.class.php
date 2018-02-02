@@ -1,6 +1,6 @@
 <?php
-/**
-*  活动配置
+/****
+*   新活动
 **/
 namespace Jy_admin\Controller;
 use Think\Controller;
@@ -19,10 +19,10 @@ class ActivityConfigController extends ComController {
             $where  .= '  and   b.id  = '.$search['Channel'];
         }
         if( $search['Status'] != 0 ){
-            $where  .= '  and   a.Status  ='.$search['Status'];
+            $where  .= '  and   a.ConfStatus  ='.$search['Status'];
         }
         if( $search['Type'] != 0 ){
-            $where  .= '  and   a.Type  ='.$search['Type'];
+            $where  .= '  and   a.Style  ='.$search['Type'];
         }
         $catChannelField = array(
             'name',
@@ -33,30 +33,56 @@ class ActivityConfigController extends ComController {
             ->where('channel = 2')
             ->field($catChannelField)
             ->select();
-        $count  = M('jy_activity_father_list as a')
-            ->join('jy_admin_users as b on a.Channel = b.id and b.channel = 2')
+        $count  = M('conf_activity_father as a')
+            ->join('jy_admin_users as b on a.Channel = b.account and b.account = 2')
             ->where($where)
             ->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
         $activityFatherlistFile = array(
             'a.Id',
-            'a.Type',
-            'a.Title',
             'b.name',
-            'a.Status',
-            'a.AddUpStartTime',
-            'a.AddUpEndTime',
+            'a.ConfStatus',
             'a.ShowStartTime',
+            'a.ShowStartTime',
+            'a.AbroadTitle',
+            'a.Style',
             'a.ShowEndTime',
-            'a.Describe',
         );
-        $info = M('jy_activity_father_list as a')
-            ->join('jy_admin_users as b on a.Channel = b.id and b.channel = 2')
+
+        //查询子活动
+
+        $catSon = M('conf_activity_son')->field(array(
+            'Id',
+            'FatherID',
+            'SonTitle',
+        ))->select();
+
+
+
+
+        $info = M('conf_activity_father as a')
+            ->join('jy_admin_users as b on a.Channel = b.account and b.channel = 2')
             ->where($where)
             ->limit($page*$num,$num)
             ->field($activityFatherlistFile)
             ->select();
+
+
+        foreach ($info as $k=>$v){
+            $dataSon = array();
+            $dataSonName = array();
+            foreach ($catSon as $key=>$val){
+                if($v['Id'] == $val['FatherID']){
+                    $dataSon['data'] = $val;
+                    $dataSonName[] = $val['SonTitle'];
+                }
+            }
+            $info[$k]['dataSon']    = $dataSon;
+            $info[$k]['dataSonName'] = implode('、',$dataSonName);
+
+        }
+        print_r($info);
 
         $this->assign('page',$show);
         $this->assign('catChannel',$catChannel);
@@ -66,133 +92,141 @@ class ActivityConfigController extends ComController {
     }
     //添加
     public  function add(){
+        $model = new Model;
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
         $catChannelField = array(
             'name',
             'account',
             'id',
         );
-        $catChannel = M('jy_admin_users')
+        $catChannel = $model->table('jy_admin_users')
             ->where('channel = 2')
             ->field($catChannelField)
             ->select();
+        if(IS_POST){
+             $AbroadTitle   = I('param.AbroadTitle','','trim');
+             $ShowStartTime = I('param.ShowStartTime','','trim');
+             $ShowEndTime   = I('param.ShowEndTime','','trim');
+             $Style         = I('param.Style',1,'intval');
+             $Hot           = I('param.Hot',1,'intval');
+             $Sort          = I('param.Sort',0,'intval');
+             $Channel       = I('param.Channel','','trim');
+             $ConfStatus    = I('param.ConfStatus',1,'intval');
+             //判断是否复制
+             $IsCp          = I('param.IsCp',1,'intval');
+             $CpChannel     = I('param.CpChannel','','trim');
+             if($IsCp == 2){
+                 //查询渠道信息
+                 $catCpChannel = $model
+                                 ->table('conf_activity_father')
+                                 ->field(array(
+                                     'Id',
+                                     'AbroadTitle',
+                                     'ShowStartTime',
+                                     'ShowEndTime',
+                                     'Style',
+                                     'Hot',
+                                 ))
+                                 ->where('Channel = "'.$CpChannel.'"')
+                                 ->find();
+                 if(empty($catCpChannel)){
+                     $Obj->showmessage('复制渠道部存在');
+                     exit();
+                 }
+                 $model->startTrans();
+                 //添加活动
+                 $DataActivityFather = array(
+                      'AbroadTitle'     =>  $catCpChannel['AbroadTitle'],
+                      'ShowStartTime'   =>  $catCpChannel['ShowStartTime'],
+                      'ShowEndTime'     =>  $catCpChannel['ShowEndTime'],
+                      'Style'           =>  $catCpChannel['Style'],
+                      'Hot'             =>  $catCpChannel['Hot'],
+                      'ConfStatus'      =>  $ConfStatus,
+                      'Aname'           =>  $UsersInfo['name'],
+                      'Channel'         =>  $Channel,
+                      'Sort'            =>  $Sort,
+                      'Aid'             =>  $UsersInfo['id'],
+                 );
+                 $addActivityData = $model->table('conf_activity_father')->add($DataActivityFather);
+                 if(!$addActivityData){
+                     $model->rollback();
+                     $Obj->showmessage('添加失败！');
+                     exit();
+                 }
+                 //查询子活动
+                 $catSon = $model
+                           ->table('conf_activity_son')
+                           ->where('FatherID = '.$catCpChannel['Id'])
+                           ->field(
+                               array(
+
+                                  'SonTitle',
+                                  'Schedule',
+                                  'ImgCode',
+                                  'GiveInfo',
+                                  'Sort',
+                                  'TypeCode',
+                                  'Explain',
+                                  'Jump',
+                                  'ConfStatus',
+                               )
+                           )
+                           ->select();
+                 $dataSon = array();
+                 foreach ($catSon as $k=>$v){
+                     $dataInfo['Aid']       =  $UsersInfo['id'];
+                     $dataInfo['Aname']     =  $UsersInfo['name'];
+                     $dataInfo['FatherID']  =  $addActivityData;
+                     $dataSon[$k]      =   array_merge($dataInfo,$v);
+                 }
+
+                 $addActivitySonData = 1;
+                 if(!empty($dataSon)){
+                     $addActivitySonData = $model->table('conf_activity_son')->addAll($dataSon);
+                 }
+                 if(!$addActivitySonData){
+                     $model->rollback();
+                     $Obj->showmessage('添加失败！');
+                     exit();
+                 }else{
+                     $model->commit();
+                     $Obj->showmessage('添加成功','back');
+                 }
+
+             }else{
+                 $DataActivityFather = array(
+                     'AbroadTitle'     =>  $AbroadTitle,
+                     'ShowStartTime'   =>  $ShowStartTime,
+                     'ShowEndTime'     =>  $ShowEndTime,
+                     'Style'           =>  $Style,
+                     'Hot'             =>  $Hot,
+                     'Channel'         =>  $Channel,
+                     'ConfStatus'      =>  $ConfStatus,
+                     'Aname'           =>  $UsersInfo['name'],
+                     'Sort'            =>  $Sort,
+                     'Aid'             =>  $UsersInfo['id'],
+                 );
+                 $addActivityData = $model->table('conf_activity_father')->add($DataActivityFather);
+                 if(!$addActivityData){
+                     $Obj->showmessage('添加失败');
+                 }else{
+                     $Obj->showmessage('添加成功','back');
+                 }
+             }
+        }
         $this->assign('catChannel',$catChannel);
         $this->display('add');
     }
 
-    public function AddAjax(){
-        $result = 1;
-        if(!IS_POST){
-            $result = 0;
-            goto response;
-        }
-        //是否复制
-        $Cp                         = I('param.Cp',1,'intval');
-        $CpChannel                  = I('param.CpChannel',1,'intval');
-        $Type                       =       I('param.Type',1,'intval');                 //活动类型  1-累计充值 2-单笔充值   3-循环充值    4-图片类型
-        $Channel                    =       I('param.Channel',0,'intval');
-        $Model = new Model();
-        if($Cp == 1){
-            $Title                  =       I('param.Title','','trim');                //标题
-            $AddUpStartTime         =       I('param.AddUpStartTime','','trim');       //计费开始时间
-            $AddUpEndTime           =       I('param.AddUpEndTime','','trim');         //计费结束时间
-            $ShowStartTime          =       I('param.ShowStartTime','','trim');        //显示开始时间
-            $ShowEndTime            =       I('param.ShowEndTime','','trim');          //显示结束时间
-            $Describe               =       I('param.Describe','','trim');
-            $dataActivityFatherList = array(
-                'Type'              =>      $Type,
-                'Title'             =>      $Title,
-                'Channel'           =>      $Channel,
-                'AddUpStartTime'    =>      $AddUpStartTime,
-                'AddUpEndTime'      =>      $AddUpEndTime,
-                'ShowStartTime'     =>      $ShowStartTime,
-                'ShowEndTime'       =>      $ShowEndTime,
-                'Describe'          =>      $Describe,
-            );
-            $addActivityFatherList = $Model->table('jy_activity_father_list')
-                ->add($dataActivityFatherList);
-            if(!$addActivityFatherList){
-                $result = 0;
-                goto  response;
-            }
-        }else{
-            //查询复制的渠道
-            $CatCpChannel = $Model->table('jy_activity_father_list')
-                ->where('Channel =  '.$CpChannel.' and  Type = '.$Type)
-                ->field(array(
-                    'Id',
-                    'Type',
-                    'Title',
-                    'AddUpStartTime',
-                    'AddUpEndTime',
-                    'ShowStartTime',
-                    'ShowEndTime',
-                    'Describe',
-                ))
-                ->find();
-            if(empty($CatCpChannel)){
-                $result = 0;
-                goto response;
-            }
-            $dataActivityFatherList = array(
-                'Type'              =>      $Type,
-                'Title'             =>      $CatCpChannel['Title'],
-                'Channel'           =>      $Channel,
-                'AddUpStartTime'    =>      $CatCpChannel['AddUpStartTime'],
-                'AddUpEndTime'      =>      $CatCpChannel['AddUpEndTime'],
-                'ShowStartTime'     =>      $CatCpChannel['ShowStartTime'],
-                'ShowEndTime'       =>      $CatCpChannel['ShowEndTime'],
-                'Describe'          =>      $CatCpChannel['Describe'],
-            );
-            //查询复制商品
-            $CatSonList = $Model->table('jy_activity_son_list')
-                ->where('FatherID = '.$CatCpChannel['Id'])
-                ->field(array(
-                    'GoodsID',
-                    'Title',
-                    'Number',
-                    'Schedule',
-                    'ImgUrl',
-                    'ImgCode',
-                ))
-                ->select();
-            $Model->startTrans();
-            $FatherId = $Model->table('jy_activity_father_list')
-                ->add($dataActivityFatherList);
 
-            if(!$FatherId){
-                $Model->rollback();
-                $result = 0;
-                goto response;
-            }
-            $DataSonlist = array();
-            foreach ($CatSonList as $k=>$v){
-                $DataSonlist[$k]['GoodsID'] =  $v['GoodsID'];
-                $DataSonlist[$k]['Title']   =  $v['Title'];
-                $DataSonlist[$k]['Number']  =  $v['Number'];
-                $DataSonlist[$k]['ImgCode'] =  $v['ImgCode'];
-                $DataSonlist[$k]['ImgUrl']  =  $v['ImgUrl'];
-                $DataSonlist[$k]['FatherID']=  $FatherId;
-                $DataSonlist[$k]['Schedule']=  $v['Schedule'];
-            }
-            $AddSonlist = $Model->table('jy_activity_son_list')->addAll($DataSonlist);
-            if($AddSonlist && $FatherId){
-                $Model->commit();
-                $result = $FatherId;
-
-
-
-            }else{
-                $Model->rollback();
-                $result = 0;
-            }
-        }
-        response:
-        echo $result;
-    }
     //修改
     public function edit(){
         $obj = new \Common\Lib\func();
         $Id = I('param.Id',0,'intval');
+
+
+        $UsersInfo = $this->userInfo;
         $catChannelField = array(
             'name',
             'account',
@@ -208,71 +242,69 @@ class ActivityConfigController extends ComController {
         //查询信息
         $ActivityFatherListField = array(
             'Id',
-            'Type',
-            'Title',
-            'AddUpStartTime',
-            'AddUpEndTime',
+            'AbroadTitle',
             'ShowStartTime',
-            'Channel',
             'ShowEndTime',
-            'Describe',
+            'Style',
+            'Hot',
+            'Sort',
         );
-        $ActivityFatherList = M('jy_activity_father_list')
+        $ActivityFatherList = M('conf_activity_father')
                               ->where('Id = '.$Id)
                               ->field($ActivityFatherListField)
                               ->find();
+        if(IS_POST){
+            $AbroadTitle   = I('param.AbroadTitle','','trim');
+            $ShowStartTime = I('param.ShowStartTime','','trim');
+            $ShowEndTime   = I('param.ShowEndTime','','trim');
+            $Hot           = I('param.Hot',1,'intval');
+            $Sort          = I('param.Sort',0,'intval');
+            $ConfStatus    = I('param.ConfStatus',1,'intval');
+
+            $DataUp = array(
+                'AbroadTitle'   =>  $AbroadTitle,
+                'ShowStartTime' =>  $ShowStartTime,
+                'ShowEndTime'   =>  $ShowEndTime,
+                'Hot'           =>  $Hot,
+                'Sort'          =>  $Sort,
+                'ConfStatus'    =>  $ConfStatus,
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $UpData = M('conf_activity_father')->where('Id = '.$Id)->save($DataUp);
+            if($UpData !== false) {
+                $obj->showmessage('修改成功', 'back');
+            }else{
+                $obj->showmessage('修改失败');
+            }
+
+
+        }
+
+
+
         $this->assign('info',$ActivityFatherList);
         $this->assign('catChannel',$catChannel);
         $this->display('edit');
     }
 
 
-    public function  EditAjax(){
-        if(!IS_POST){
-            $result = 0;
-            goto response;
-        }
-        $Id = I('param.Id',0,'intval');
-        if($Id <= 0){
-            $result = 0;
-            goto response;
-        }
-        $result = $Id;
-        $Title                  =       I('param.Title','','trim');                //标题
-        $AddUpStartTime         =       I('param.AddUpStartTime','','trim');       //计费开始时间
-        $AddUpEndTime           =       I('param.AddUpEndTime','','trim');         //计费结束时间
-        $ShowStartTime          =       I('param.ShowStartTime','','trim');        //显示开始时间
-        $ShowEndTime            =       I('param.ShowEndTime','','trim');          //显示结束时间
-        $Describe               =       I('param.Describe','','trim');
-        $DataUp = array(
-            'Title'             =>      $Title,
-            'AddUpStartTime'    =>      $AddUpStartTime,
-            'AddUpEndTime'      =>      $AddUpEndTime,
-            'ShowStartTime'     =>      $ShowStartTime,
-            'ShowEndTime'       =>      $ShowEndTime,
-            'Describe'          =>      $Describe,
-            'Status'            =>      1,
-        );
-        $UpData = M('jy_activity_father_list')->where('Id = '.$Id)->save($DataUp);
-        if($UpData === false){
-            $result = 0;
-        }
-        response:
-        echo $result;
-    }
-
-
-
     //删除
     public function del(){
         $Id = I('param.Id',0,'intval');
+
         if($Id == 0){
             echo  0;
         }else{
             $Model = new Model();
             $Model->startTrans();
-            $DelFather = $Model->table('jy_activity_father_list')->where('Id = '.$Id)->delete();
-            $DelSon    = $Model->table('jy_activity_son_list')->where('FatherID = '.$Id)->delete();
+            $DelFather = $Model->table('conf_activity_father')->where('Id = '.$Id)->delete();
+
+            $catSon = $Model->table('conf_activity_son')->where('FatherID = '.$Id)->select();
+            $DelSon = true;
+            if(!empty($catSon)){
+                $DelSon    = $Model->table('conf_activity_son')->where('FatherID = '.$Id)->delete();
+            }
             if($DelFather && $DelSon){
                 $Model->commit();
                 echo 1;
@@ -287,24 +319,24 @@ class ActivityConfigController extends ComController {
     //验证类型
     public function Verification(){
         $Type        =  I('param.Type',0,'intval');
-        $Channel     =  I('param.Channel',0,'intval');
-        $CpChannel   = I('param.CpChannel',0,'intval');
-        $Cp          = I('param.Cp',0,'intval');
+        $Channel     =  I('param.Channel','','trim');
+        $CpChannel   = I('param.CpChannel','','trim');
+        $Cp          = I('param.IsCp',0,'intval');
+
         $result = 1;
         if($Type == ''){
             $result = 0;
             goto end;
         }
-        $activityFatherList = M('jy_activity_father_list')
-            ->where('Type = "'.$Type.'" and Channel = '.$Channel)
+        $activityFatherList = M('conf_activity_father')
+            ->where('Style = '.$Type.' and Channel =  "'.$Channel.'"')
             ->field('id')
             ->find();
         if($Cp == 2){
-            $CatCpChannel = M('jy_activity_father_list')
-                ->where('Type = "'.$Type.'" and Channel = '.$CpChannel)
+            $CatCpChannel = M('conf_activity_father')
+                ->where('Style = '.$Type.' and Channel = "'.$CpChannel.'"')
                 ->field('id')
                 ->find();
-
             if(empty($CatCpChannel)){
                 $result =  3;
                 goto  end;
@@ -318,25 +350,72 @@ class ActivityConfigController extends ComController {
         end:
           echo $result;
           exit();
+    }
+    //添加列表
+    public function addList(){
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
+        $Id     = I('param.Id',0,'intval');
+        $Style  = I('param.Style',0,'intval');
+        if($Id<=0 || $Style <=0){
+            $Obj->showmessage('非法操作');
+        }
+
+        $catGoodsAll =
+            M('jy_goods_all')
+            ->where('IsDel = 1')
+            ->field('Id,Type,GetNum,Name')
+            ->select();
+
+
+
+        //查询类型值
+
+        $catStlyeValue = M('conf_conf_activity_value')
+                         ->where('Style = '.$Style)
+                        ->field(array(
+                            'Name',
+                            'Value'
+                        ))->select();
+
+        if(IS_POST){
+            $GiveInfo       = I('param.GiveInfo',0,'intval');
+            $data = array(
+                'FatherID'      =>  I('param.Id',0,'intval'),
+                'SonTitle'      =>  I('param.SonTitle','','trim'),
+                'Schedule'      =>  I('param.Schedule',0,'intval'),
+                'ImgCode'       =>  I('param.ImgCode','','trim'),
+                'GiveInfo'      =>  json_encode($GiveInfo) ,
+                'Sort'          =>  I('param.Sort',0,'intval'),
+                'TypeCode'      =>  I('param.TypeCode',0,'intval'),
+                'Explain'       =>  I('param.Explain','','trim'),
+                'Jump'          =>  I('param.Jump',0,'intval'),
+                'ConfStatus'    =>  I('param.ConfStatus',0,'intval'),
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $addData = M('conf_activity_son')->add($data);
+            if($addData){
+                $Obj->showmessage('添加成功','back');
+            }else{
+                $Obj->showmessage('添加失败');
+            }
+        }
+        $this->assign('Id',$Id);
+        $this->assign('GoodsAllList',$catGoodsAll);
+        $this->assign('StlyeValue',$catStlyeValue);
+        $this->assign('Style',$Style);
+        $this->display();
+    }
+    //添加图片
+    public function addImg(){
 
     }
-    public function SendAjax(){
-        $Id = I('param.Id',0,'intval');
-        $result = 1;
-        if($Id<=0){
-            $result = 0;
-            goto end;
-        }
-        $Data = array(
-            'Status'=>2,
-        );
-        $Updata = M('jy_activity_father_list')->where('Id = '.$Id)->save($Data);
-        if($Updata === false){
-            $result = 0 ;
-        }
-        end:
-            echo $result;
-            exit();
+    //添加抽奖
+    public function addLuckDraw(){
+
     }
+
+
 
 }

@@ -53,7 +53,6 @@ class SetGameValueModel extends Model{
                 return $PBS_gm_numerical_require_respond;
         }
         $PBS_gm_numerical_require_return->parseFromString($PBS_gm_numerical_require_respond);
-
         $Code = $PBS_gm_numerical_require_return->getCode();
         if($Code != 1){
             return $Code;
@@ -101,7 +100,7 @@ class SetGameValueModel extends Model{
         // BOSS捕中率配置 核弹掉落率配置
         $game_numerical_boss_rate_params_ = $Data->getBossRateParams();
         $getBossRateParams = array();
-        for ($i=0;$i<$Data->getFishCardRateCount();$i++){
+        for ($i=0;$i<$Data->getBossRateParamsCount();$i++){
             $getBossRateParams[$i]['getAuRate']    = $game_numerical_boss_rate_params_[$i]->getAuRate();
             $getBossRateParams[$i]['getAgRate']    = $game_numerical_boss_rate_params_[$i]->getAgRate();
             $getBossRateParams[$i]['getCuRate']    = $game_numerical_boss_rate_params_[$i]->getCuRate();

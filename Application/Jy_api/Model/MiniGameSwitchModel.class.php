@@ -4,6 +4,7 @@ use Protos\OptSrc;
 use Protos\PBS_UsrDataOprater;
 use Protos\PBS_UsrDataOpraterReturn;
 use Protos\UsrDataOpt;
+use Think\Exception;
 use Think\Model;
 class MiniGameSwitchModel extends \Common\Model\ComFunModel {
     protected $autoCheckFields = false;
