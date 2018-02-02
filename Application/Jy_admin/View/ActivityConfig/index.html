@@ -66,11 +66,7 @@
 		</form>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-<<<<<<< HEAD
-	        <a href="javascript:;" onclick="activity_add('添加活动','/jy_admin/ActivityList/add')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加活动</a>
-=======
 	        <a href="javascript:;" onclick="activity_add('添加活动','/jy_admin/ActivityConfig/add')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加活动</a>
->>>>>>> ActivityConfig
         </span>
 		</div>
 		<table
@@ -79,18 +75,6 @@
 				<tr class="text-c">
 				    <th width="30">id</th>
 					<th width="30">渠道</th>
-<<<<<<< HEAD
-					<th width="30">活动类型</th>
-					<th width="30">子活动</th>
-					<th width="30">发布状态</th>
-					<th width="30">计费起始时间</th>
-					<th width="30">计费结束时间</th>
-					<th width="30">显示起始时间</th>
-					<th width="30">显示结束时间</th>
-					<th width="60">活动标题</th>
-					<th width="10">修改</th>
-					<th width="10">删除</th>
-=======
 					<th width="30">类型</th>
 					<th width="30">标题</th>
 					<th width="30">子级</th>
@@ -102,7 +86,6 @@
 					<th width="5">删除子级</th>
 					<th width="5">修改父子</th>
 					<th width="5">删除父子</th>
->>>>>>> ActivityConfig
 				</tr>
 			</thead>
 			<tbody>
@@ -110,21 +93,6 @@
 						<tr class="text-c">
 							<td>{$val['Id']}</td>
 							<td>{$val['name']}</td>
-<<<<<<< HEAD
-							<td>
-								<switch name = "val['Type']" >
-									<case value = "1">
-										累计充值
-									</case>
-									<case value = "2">
-										单笔充值
-									</case>
-									<case value = "3">
-										循环充值
-									</case>
-									<case value = "4">
-										图片类型
-=======
 
 							<td>
 								<switch name = "val['Style']" >
@@ -142,31 +110,11 @@
 									</case>
 									<case value = "5">
 										首充奖励
->>>>>>> ActivityConfig
 									</case>
 									<default/>
 									...
 								</switch>
 							</td>
-<<<<<<< HEAD
-							<td>
-								<a  style="color:red" onclick="activity_Son('子活动','/jy_admin/ActivityListSon/index/Id/{$val['Id']}/Type/{$val['Type']}')">查看</a>
-							</td>
-
-							<td class="td-status">
-								<span class="<if condition ="$val['Status'] eq 2" >label label-success radius<else/>label label-defaunt radius</if>">
-										<if condition ="$val['Status'] eq 2">已发布<else/>未发布</if>
-								</span>
-							</td>
-
-							<td>{$val['AddUpStartTime']}</td>
-							<td>{$val['AddUpEndTime']}</td>
-							<td>{$val['ShowStartTime']}</td>
-							<td>{$val['ShowEndTime']}</td>
-							<td>{$val['Title']}</td>
-							<td>
-								<a title="编辑" href="javascript:;" onclick="activity_edit('编辑','/jy_admin/ActivityList/edit/Id/{$val['Id']}')" class="ml-5" style="text-decoration:none">
-=======
 							<td>{$val['AbroadTitle']}</td>
 							<td>{$val['dataSonName']}</td>
 							<td class="td-status">
@@ -231,7 +179,6 @@
 							</td>
 							<td>
 								<a title="编辑" href="javascript:;" onclick="activity_edit('编辑','/jy_admin/ActivityConfig/edit/Id/{$val['Id']}')" class="ml-5" style="text-decoration:none">
->>>>>>> ActivityConfig
 									<i class="Hui-iconfont">&#xe6df;</i>
 								</a>
 							</td>
@@ -245,10 +192,7 @@
 			</tbody>
 		</table>
 	</div>
-<<<<<<< HEAD
-=======
 
->>>>>>> ActivityConfig
 	<div class = "cl">
 
 		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
@@ -312,11 +256,7 @@
 	/*管理组-删除*/
     function activity_del(obj,id){
         layer.confirm('确认要删除吗？',function(index){
-<<<<<<< HEAD
-            $.post('/jy_admin/ActivityList/del',{'Id':id},function(msg){
-=======
             $.post('/jy_admin/ActivityConfig/del',{'Id':id},function(msg){
->>>>>>> ActivityConfig
                 console.log(msg);
                 if(msg == "1"){
                     $(obj).parents("tr").remove();
