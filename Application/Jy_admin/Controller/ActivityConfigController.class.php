@@ -47,19 +47,18 @@ class ActivityConfigController extends ComController {
             'a.ShowStartTime',
             'a.AbroadTitle',
             'a.Style',
+            'a.Aname',
+            'a.Aid',
+            'a.DateTime',
             'a.ShowEndTime',
         );
-
         //查询子活动
-
         $catSon = M('conf_activity_son')->field(array(
             'Id',
             'FatherID',
             'SonTitle',
-        ))->select();
-
-
-
+        ))->order('Sort asc')
+        ->select();
 
         $info = M('conf_activity_father as a')
             ->join('jy_admin_users as b on a.Channel = b.account and b.channel = 2')
@@ -67,23 +66,18 @@ class ActivityConfigController extends ComController {
             ->limit($page*$num,$num)
             ->field($activityFatherlistFile)
             ->select();
-
-
         foreach ($info as $k=>$v){
             $dataSon = array();
             $dataSonName = array();
             foreach ($catSon as $key=>$val){
                 if($v['Id'] == $val['FatherID']){
-                    $dataSon['data'] = $val;
+                    $dataSon['data'][] = $val;
                     $dataSonName[] = $val['SonTitle'];
                 }
             }
             $info[$k]['dataSon']    = $dataSon;
             $info[$k]['dataSonName'] = implode('、',$dataSonName);
-
         }
-        print_r($info);
-
         $this->assign('page',$show);
         $this->assign('catChannel',$catChannel);
         $this->assign('info',$info);
@@ -277,12 +271,7 @@ class ActivityConfigController extends ComController {
             }else{
                 $obj->showmessage('修改失败');
             }
-
-
         }
-
-
-
         $this->assign('info',$ActivityFatherList);
         $this->assign('catChannel',$catChannel);
         $this->display('edit');
@@ -360,24 +349,18 @@ class ActivityConfigController extends ComController {
         if($Id<=0 || $Style <=0){
             $Obj->showmessage('非法操作');
         }
-
         $catGoodsAll =
             M('jy_goods_all')
             ->where('IsDel = 1')
-            ->field('Id,Type,GetNum,Name')
+            ->field('Id,Type,GetNum,Code,Name')
             ->select();
-
-
-
         //查询类型值
-
         $catStlyeValue = M('conf_conf_activity_value')
                          ->where('Style = '.$Style)
                         ->field(array(
                             'Name',
                             'Value'
                         ))->select();
-
         if(IS_POST){
             $GiveInfo       = I('param.GiveInfo',0,'intval');
             $data = array(
@@ -409,12 +392,366 @@ class ActivityConfigController extends ComController {
     }
     //添加图片
     public function addImg(){
-
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
+        $Id     = I('param.Id',0,'intval');
+        $Style  = I('param.Style',0,'intval');
+        if($Id<=0 || $Style <=0){
+            $Obj->showmessage('非法操作');
+        }
+        $catGoodsAll =
+            M('jy_goods_all')
+                ->where('IsDel = 1')
+                ->field('Id,Type,Code,GetNum,Name')
+                ->select();
+        //查询类型值
+        $catStlyeValue = M('conf_conf_activity_value')
+            ->where('Style = '.$Style)
+            ->field(array(
+                'Name',
+                'Value'
+            ))->select();
+        if(IS_POST){
+            $GiveInfo       = I('param.GiveInfo',0,'intval');
+            $data = array(
+                'FatherID'      =>  I('param.Id',0,'intval'),
+                'SonTitle'      =>  I('param.SonTitle','','trim'),
+                'Schedule'      =>  I('param.Schedule',0,'intval'),
+                'ImgCode'       =>  I('param.ImgCode','','trim'),
+                'GiveInfo'      =>  json_encode($GiveInfo) ,
+                'Sort'          =>  I('param.Sort',0,'intval'),
+                'TypeCode'      =>  I('param.TypeCode',0,'intval'),
+                'Explain'       =>  I('param.Explain','','trim'),
+                'Jump'          =>  I('param.Jump',1,'intval'),
+                'ConfStatus'    =>  I('param.ConfStatus',0,'intval'),
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $addData = M('conf_activity_son')->add($data);
+            if($addData){
+                $Obj->showmessage('添加成功','back');
+            }else{
+                $Obj->showmessage('添加失败');
+            }
+        }
+        $this->assign('Id',$Id);
+        $this->assign('GoodsAllList',$catGoodsAll);
+        $this->assign('StlyeValue',$catStlyeValue);
+        $this->assign('Style',$Style);
+        $this->display();
     }
     //添加抽奖
     public function addLuckDraw(){
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
+        $Id     = I('param.Id',0,'intval');
+        $Style  = I('param.Style',0,'intval');
+        if($Id<=0 || $Style <=0){
+            $Obj->showmessage('非法操作');
+        }
+        $catGoodsAll =
+            M('jy_goods_all')
+                ->where('IsDel = 1')
+                ->field('Id,Type,Code,GetNum,Name')
+                ->select();
+        //查询类型值
+        $catStlyeValue = M('conf_conf_activity_value')
+            ->where('Style = '.$Style)
+            ->field(array(
+                'Name',
+                'Value'
+            ))->select();
+        if(IS_POST){
+            $GiveInfo       = I('param.GiveInfo',0,'intval');
+            $data = array(
+                'FatherID'      =>  I('param.Id',0,'intval'),
+                'SonTitle'      =>  I('param.SonTitle','','trim'),
+                'Schedule'      =>  I('param.Schedule',0,'intval'),
+                'ImgCode'       =>  I('param.ImgCode','','trim'),
+                'GiveInfo'      =>  json_encode($GiveInfo) ,
+                'Sort'          =>  I('param.Sort',0,'intval'),
+                'TypeCode'      =>  I('param.TypeCode',0,'intval'),
+                'Explain'       =>  I('param.Explain','','trim'),
+                'Jump'          =>  I('param.Jump',1,'intval'),
+                'ConfStatus'    =>  I('param.ConfStatus',0,'intval'),
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $addData = M('conf_activity_son')->add($data);
+            if($addData){
+                $Obj->showmessage('添加成功','back');
+            }else{
+                $Obj->showmessage('添加失败');
+            }
+        }
+        $this->assign('Id',$Id);
+        $this->assign('GoodsAllList',$catGoodsAll);
+        $this->assign('StlyeValue',$catStlyeValue);
+        $this->assign('Style',$Style);
+        $this->display();
+    }
+
+
+    //修改列表
+    public function editList(){
+        $Id = I('param.Id',0,'intval');
+
+        $Style  = I('param.Style',0,'intval');
+
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
+        if($Id <= 0 || $Style <=0){
+            $Obj->showmessage('非法操作！');
+        }
+        //查询类型值
+        $catStlyeValue = M('conf_conf_activity_value')
+            ->where('Style = '.$Style)
+            ->field(array(
+                'Name',
+                'Value'
+            ))->select();
+
+        //查询物品
+        $catGoodsAll =
+            M('jy_goods_all')
+                ->where('IsDel = 1')
+                ->field('Id,Type,Code,GetNum,Name')
+                ->select();
+        //查询信息
+        $info = M('conf_activity_son')
+                ->where('Id = '.$Id)
+                ->field(array(
+                    'Id',
+                    'SonTitle',
+                    'Schedule',
+                    'ImgCode',
+                    'GiveInfo',
+                    'Jump',
+                    'Sort',
+                    'TypeCode',
+                    'Explain',
+                    'ConfStatus',
+                    'Aname',
+                    'Aid',
+                ))
+                ->find();
+
+        if(IS_POST){
+            $GiveInfo       = I('param.GiveInfo',0,'intval');
+
+            dump($GiveInfo);
+            $data = array(
+                'SonTitle'      =>  I('param.SonTitle','','trim'),
+                'Schedule'      =>  I('param.Schedule',0,'intval'),
+                'ImgCode'       =>  I('param.ImgCode','','trim'),
+                'GiveInfo'      =>  json_encode($GiveInfo) ,
+                'Sort'          =>  I('param.Sort',0,'intval'),
+                'Explain'       =>  I('param.Explain','','trim'),
+                'Jump'          =>  I('param.Jump',1,'intval'),
+                'ConfStatus'    =>  I('param.ConfStatus',0,'intval'),
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $upData = M('conf_activity_son')
+                      ->where('Id = '.$Id)
+                      ->save($data);
+            if($upData !== false  ){
+                $Obj->showmessage('修改成功','back');
+            }else{
+                $Obj->showmessage('修改失败');
+            }
+        }
+        $this->assign('GoodsAllList',$catGoodsAll);
+        $this->assign('info',$info);
+        $this->assign('StlyeValue',$catStlyeValue);
+        $this->assign('GiveInfo',json_decode($info['GiveInfo'],true));
+        $this->display();
+    }
+
+    //修改转盘
+    public function editLuckDraw(){
+        $Id = I('param.Id',0,'intval');
+        $Style  = I('param.Style',0,'intval');
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
+        if($Id <= 0 || $Style <=0){
+            $Obj->showmessage('非法操作！');
+        }
+        //查询类型值
+        $catStlyeValue = M('conf_conf_activity_value')
+            ->where('Style = '.$Style)
+            ->field(array(
+                'Name',
+                'Value'
+            ))->select();
+
+        //查询物品
+        $catGoodsAll =
+            M('jy_goods_all')
+                ->where('IsDel = 1')
+                ->field('Id,Type,Code,GetNum,Name')
+                ->select();
+        //查询信息
+        $info = M('conf_activity_son')
+            ->where('Id = '.$Id)
+            ->field(array(
+                'Id',
+                'SonTitle',
+                'Schedule',
+                'ImgCode',
+                'GiveInfo',
+                'Sort',
+                'Jump',
+                'TypeCode',
+                'Explain',
+                'ConfStatus',
+                'Aname',
+                'Aid',
+            ))
+            ->find();
+        if(IS_POST){
+            $GiveInfo       = I('param.GiveInfo',0,'intval');
+            dump($GiveInfo);
+            $data = array(
+                'SonTitle'      =>  I('param.SonTitle','','trim'),
+                'Schedule'      =>  I('param.Schedule',0,'intval'),
+                'ImgCode'       =>  I('param.ImgCode','','trim'),
+                'GiveInfo'      =>  json_encode($GiveInfo) ,
+                'Sort'          =>  I('param.Sort',0,'intval'),
+                'Explain'       =>  I('param.Explain','','trim'),
+                'Jump'          =>  I('param.Jump',1,'intval'),
+                'ConfStatus'    =>  I('param.ConfStatus',1,'intval'),
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $upData = M('conf_activity_son')
+                ->where('Id = '.$Id)
+                ->save($data);
+            if($upData !== false  ){
+                $Obj->showmessage('修改成功','back');
+            }else{
+                $Obj->showmessage('修改失败');
+            }
+        }
+
+
+        $this->assign('GoodsAllList',$catGoodsAll);
+        $this->assign('StlyeValue',$catStlyeValue);
+        $this->assign('GiveInfo',json_decode($info['GiveInfo'],true));
+        $this->assign('info',$info);
+        $this->display();
 
     }
+    //添加图片
+    public function editImg(){
+
+        $Id = I('param.Id',0,'intval');
+        $Style  = I('param.Style',0,'intval');
+        $Obj = new \Common\Lib\func();
+        $UsersInfo = $this->userInfo;
+        if($Id <= 0 || $Style <=0){
+            $Obj->showmessage('非法操作！');
+        }
+        //查询类型值
+        $catStlyeValue = M('conf_conf_activity_value')
+            ->where('Style = '.$Style)
+            ->field(array(
+                'Name',
+                'Value'
+            ))->select();
+
+        //查询物品
+        $catGoodsAll =
+            M('jy_goods_all')
+                ->where('IsDel = 1')
+                ->field('Id,Type,GetNum,Name')
+                ->select();
+        //查询信息
+        $info = M('conf_activity_son')
+            ->where('Id = '.$Id)
+            ->field(array(
+                'Id',
+                'SonTitle',
+                'Schedule',
+                'ImgCode',
+                'GiveInfo',
+                'Sort',
+                'Jump',
+                'TypeCode',
+                'Explain',
+                'ConfStatus',
+                'Aname',
+                'Aid',
+            ))
+            ->find();
+        if(IS_POST){
+            $GiveInfo       = I('param.GiveInfo',0,'intval');
+            $data = array(
+                'SonTitle'      =>  I('param.SonTitle','','trim'),
+                'Schedule'      =>  I('param.Schedule',0,'intval'),
+                'ImgCode'       =>  I('param.ImgCode','','trim'),
+                'Sort'          =>  I('param.Sort',0,'intval'),
+                'Explain'       =>  I('param.Explain','','trim'),
+                'Jump'          =>  I('param.Jump',1,'intval'),
+                'ConfStatus'    =>  I('param.ConfStatus',0,'intval'),
+                'Aname'         =>  $UsersInfo['name'],
+                'Aid'           =>  $UsersInfo['id'],
+            );
+            $upData = M('conf_activity_son')
+                ->where('Id = '.$Id)
+                ->save($data);
+            if($upData !== false  ){
+                $Obj->showmessage('修改成功','back');
+            }else{
+                $Obj->showmessage('修改失败');
+            }
+        }
+        $this->assign('GoodsAllList',$catGoodsAll);
+        $this->assign('StlyeValue',$catStlyeValue);
+        $this->assign('info',$info);
+        $this->display();
+
+    }
+
+    public function delSon(){
+        $Id = I('param.Id',0,'intval');
+        $result = 1;
+        if($Id <= 0){
+            $result = 0;
+            goto end;
+        }
+        $delData = M('conf_activity_son')
+                   ->where('Id = '.$Id)
+                   ->delete();
+        if(!$delData){
+            $result = 0;
+            goto end;
+        }
+        end:
+        echo $result;
+        exit();
+    }
+
+    public function TypeCodeVerification(){
+        $TypeCode   = I('param.TypeCode','','trim');
+        $result = 1;
+        if(  $TypeCode ==""  ){
+            $result  = 0;
+            goto  end;
+        }
+        $catData = M('conf_activity_son')->where('TypeCode = '.$TypeCode)->field('Id')->find();
+        if(!empty($catData)){
+            $result = 0;
+            goto  end;
+        }
+        end:
+        echo $result;
+        exit();
+    }
+
+
+
+
 
 
 

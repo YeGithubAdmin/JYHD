@@ -35,7 +35,7 @@
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select"  datatype ="Type" name="Type" >
+							<select class="select"  datatype ="Type" name="Style" >
 								<option   value="1">达人计划</option>
 								<option   value="2">玩转捕鱼乐</option>
 								<!--<option   value="3">循环充值</option>-->
@@ -52,6 +52,7 @@
 					<div style="width: 100%;text-align:center;float:left">
 		        		<span class="select-box">
 							<select size="1" name="Channel"  class="select">
+								<option value="global">全渠道</option>
 								<volist name = "catChannel" id = "val">
 									<option value="{$val['account']}">{$val['name']}</option>
 								</volist>

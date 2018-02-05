@@ -33,64 +33,34 @@
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>标题：</label>
 				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
+					<input type="text" class="input-text" value="{$info['SonTitle']}" placeholder=""
 						   name="SonTitle" datatype="*" nullmsg="">
-					<input type="hidden" class="input-text" value="{$Id}" placeholder=""
+					<input type="hidden" class="input-text" value="{$info['Id']}" placeholder=""
 						   name="Id"  nullmsg="">
 				</div>
 				<div class="col-1"></div>
 				<label class="form-label col-1"><span class="c-red">*</span>达成条件值：</label>
 				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
+					<input type="text" class="input-text" value="{$info['Schedule']}" placeholder=""
 						   name="Schedule" datatype="*1-16" nullmsg="">
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red">*</span>图片名：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="ImgCode" datatype="*" nullmsg="">
-				</div>
-				<div class="col-1"></div>
-
 			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>活动类型值：</label>
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 							<span class="select-box">
-								<select  class="select "  name = "TypeCode" datatype="TypeCode"   nullmsg="" >
+								<select  class="select "  disabled = "disabled"  nullmsg="" >
 									<volist name = "StlyeValue" id ="val">
-									 		<option value="{$val['Value']}">{$val['Name']}</option>
+										<option  <if condition = "$val['Value'] eq $info['TypeCode']"> selected = "true"</if> value="{$val['Value']}">{$val['Name']}</option>
 									</volist>
 								</select>
 							</span>
 					</div>
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red"></span>排序：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="Sort"  nullmsg="">
-				</div>
-				<div class="col-1"></div>
 			</div>
-
-			<div class="row cl">
-				<label class="form-label col-3"><span class="c-red">*</span>是否跳转：</label>
-				<div class="formControls col-2 skin-minimal">
-					<div class="radio-box">
-						<input type="radio" id="StopPay-2" checked = "true" value="1" name="Jump">
-						<label for="StopPay-2">否</label>
-					</div>
-					<div class="radio-box">
-						<input type="radio" id="StopPay-1"  value="2"  name="Jump">
-						<label for="StopPay-1">是</label>
-					</div>
-
-				</div>
-				<div class="col-1"> </div>
-			</div>
-
 			<div id = "parent" >
 				<div class="row cl GiveInfo"  >
 					<label class="form-label col-3"><span class="c-red"></span></label>
@@ -99,10 +69,12 @@
 							<span class="select-box">
 								<select  class="select GoodsType"  name = "GiveInfo[0][Type]" datatype="*"  onchange="selectGoodsFun(this)" nullmsg="" >
 									 <option value="">请选择类型</option>
-									 <option value="1">金币</option>
-									 <option value="2">钻石</option>
-									 <option value="3">道具</option>
-									 <option value="0">其他</option>
+									<option   <if condition ="$v[Type] eq 1" >selected ="true"</if>  value="1">金币</option>
+									<option  <if condition ="$v[Type] eq 2" >selected ="true"</if>  value="2">钻石</option>
+									<option  <if condition ="$v[Type] eq 3" >selected ="true"</if>  value="3">道具</option>
+									<option  <if condition ="$v[Type] eq 4" >selected ="true"</if>  value="4">话费卡</option>
+									<option  <if condition ="$v[Type] eq 5">selected ="true"</if>  value="5">京东卡</option>
+									<option  <if condition ="$v[Type] eq 6" >selected ="true"</if>  value="6">实物</option>
 								</select>
 							</span>
 						</div>
@@ -114,47 +86,122 @@
 							<select  class="select GoodsID" name = "GiveInfo[0][GoodsID]"    onchange="GetNumFun(this)"   datatype="*" nullmsg="" >
 								 <option value="">请选择商品</option>
 								<volist name = "GoodsAllList" id="val">
-								 		<option class="type{$val['Type']}"   GetNum = "{$val['GetNum']}"  Code = "{$val['Code']}"  style="display: none;" value="{$val['Id']}">{$val['Name']}</option>
+								 		<option class="type{$val['Type']}"    <if condition = "$val['Type'] neq   $GiveInfo[0]['Type']">style="display: none;"</if> <if condition = "$val['Id'] eq  $GiveInfo[0]['GoodsID']">selected ="true"</if>   GetNum = "{$val['GetNum']}"  style="display: none;" value="{$val['Id']}">{$val['Name']}</option>
 								</volist>
                             </select>
 						</span>
 						</div>
 					</div>
 					<div class="formControls col-1">
-						<input type="text"  class="input-text Number"  datatype="*" value="" placeholder="请输入倍数"
+						<input type="text"  class="input-text Number"  datatype="*" value="{$GiveInfo[0]['Number']}" placeholder="请输入倍数"
 							   name="GiveInfo[0][Number]"  nullmsg="">
-						<input type="hidden"  class="input-text GetNum"   value="" placeholder=""
+						<input type="hidden"  class="input-text GetNum"   value="{$GiveInfo[0]['GetNum']}" placeholder=""
 							   name="GiveInfo[0][GetNum]"  nullmsg="">
-						<input type="hidden"  class="input-text Code"   value="" placeholder=""
+						<input type="hidden"  class="input-text Code"   value="{$GiveInfo[0]['Code']}" placeholder=""
 							   name="GiveInfo[0][Code]"  nullmsg="">
 					</div>
 
 					<div class="formControls col-1">
-						<input type="text"  class="input-text GoodName"  datatype="*" value="" placeholder="请输入名称"
+						<input type="text"  class="input-text GoodName"  datatype="*" value="{$GiveInfo[0]['GoodsName']}" placeholder="请输入名称"
 							   name="GiveInfo[0][GoodsName]"  nullmsg="">
 					</div>
-
-
 					<div class="formControls col-1">
-						<input type="text"  class="input-text ImgCode"  datatype="*" value="" placeholder="请输入图片"
+						<input type="text"  class="input-text ImgCode"  datatype="*" value="{$GiveInfo[0]['ImgCode']}" placeholder="请输入图片"
 							   name="GiveInfo[0][ImgCode]"  nullmsg="">
 					</div>
-
-
+					<div class="formControls col-1">
+						<input type="text"  class="input-text Reta"  datatype="*" value="{$GiveInfo[0]['Reta']}" placeholder="概率"
+							   name="GiveInfo[0][Reta]"  nullmsg="">
+					</div>
+					<div class="formControls col-1">
+						<input type="text"  class="input-text Sort"  datatype="*" value="{$GiveInfo[0]['Sort']}" placeholder="排序"
+							   name="GiveInfo[0][Sort]"  nullmsg="">
+					</div>
 					<div class="formControls col-0 operation"  index =0 onclick="GiveInfoAdd(this)">
 						<input class="btn btn-primary radius" type="button"  value="增加">
 					</div>
+
 				</div>
 			</div>
 			<div id ="child">
+
+				<volist name = "GiveInfo" id = "v" key ="k">
+					<if condition = "$k gt 1 ">
+
+						<div class="row cl GiveInfo"  >
+							<label class="form-label col-3"><span class="c-red"></span></label>
+							<div class="formControls col-1">
+								<div style="width:100%;text-align:center;float:left">
+							<span class="select-box">
+								<select  class="select GoodsType"  name = "GiveInfo[{$k}][Type]" datatype="*"  onchange="selectGoodsFun(this)" nullmsg="" >
+									 <option value="">请选择类型</option>
+								     <option   <if condition ="$v[Type] eq 1" >selected ="true"</if>  value="1">金币</option>
+									<option  <if condition ="$v[Type] eq 2" >selected ="true"</if>  value="2">钻石</option>
+									<option  <if condition ="$v[Type] eq 3" >selected ="true"</if>  value="3">道具</option>
+									<option  <if condition ="$v[Type] eq 4" >selected ="true"</if>  value="4">话费卡</option>
+									<option  <if condition ="$v[Type] eq 5">selected ="true"</if>  value="5">京东卡</option>
+									<option  <if condition ="$v[Type] eq 6" >selected ="true"</if>  value="6">实物</option>
+								</select>
+							</span>
+								</div>
+							</div>
+							<div class="col-1"></div>
+							<div class="formControls col-1">
+								<div style="width:100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select  class="select GoodsID" name = "GiveInfo[{$k}][GoodsID]"  datatype="*" nullmsg="" >
+								 <option value="">请选择商品</option>
+								<volist name = "GoodsAllList" id="val">
+									<option class="type{$val['Type']}"  <if condition = "$v['Type'] neq   $val[Type]">style="display: none;"</if> <if condition = "$val['Id'] eq  $v['GoodsID']">selected ="true"</if>  value="{$val['Id']}">{$val['Name']}</option>
+								</volist>
+                            </select>
+						</span>
+								</div>
+							</div>
+
+							<div class="formControls col-1">
+								<input type="text"  class="input-text Number"  datatype="*" value="{$v['Number']}" placeholder="请输入倍数"
+									   name="GiveInfo[{$k}][Number]"  nullmsg="">
+								<input type="hidden"  class="input-text GetNum"  datatype="*" value="{$v['GetNum']}" placeholder=""
+									   name="GiveInfo[{$k}][GetNum]"  nullmsg="">
+								<input type="hidden"  class="input-text Code"  datatype="*" value="{$v['Code']}" placeholder=""
+									   name="GiveInfo[{$k}][Code]"  nullmsg="">
+							</div>
+
+							<div class="formControls col-1">
+								<input type="text"  class="input-text GoodName"  datatype="*" value="{$v['GoodsName']}" placeholder="请输入名称"
+									   name="GiveInfo[{$k}][GoodsName]"  nullmsg="">
+							</div>
+
+							<div class="formControls col-1">
+								<input type="text"  class="input-text ImgCode"  datatype="*" value="{$v['ImgCode']}" placeholder="请输入名称"
+									   name="GiveInfo[{$k}][ImgCode]"  nullmsg="">
+							</div>
+							<div class="formControls col-1">
+								<input type="text"  class="input-text Reta"  datatype="*" value="{$v['Reta']}" placeholder="概率"
+									   name="GiveInfo[{$k}][Reta]"  nullmsg="">
+							</div>
+							<div class="formControls col-1">
+								<input type="text"  class="input-text Sort"  datatype="*" value="{$v['Sort']}" placeholder="排序"
+									   name="GiveInfo[{$k}][Sort]"  nullmsg="">
+							</div>
+
+							<div class="formControls col-0 operation"  onclick="GiveInfoDel(this)">
+								<input class="btn btn-primary radius" type="button"  value="删除">
+							</div>
+						</div>
+					</if>
+
+				</volist>
+
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red"></span>说明：</label>
 				<div class="formControls col-5">
-					<textarea     name="Explain"  style="width:100%" rows="20"  ></textarea>
+					<textarea     name="Explain"  style="width:100%" rows="20"  >{$info['Explain']}</textarea>
 				</div>
-				<div class="col-4"></div>
+
 			</div>
 			<div class="row cl">
 				<div class="col-1 col-offset-4">
@@ -190,6 +237,7 @@
 			$("#form-vipInfo-add").Validform({
 				tiptype : 2,
                 datatype:{
+
                     'TypeCode':function (gets) {
                         if(gets ==''){
                             return false;
@@ -203,7 +251,6 @@
                                 async:false,
                                 data:{'TypeCode':gets},
                                 success:function (msg) {
-                                    console.log(msg);
                                     if(msg == 0){
                                         _Verification =   '类型已存在';
                                     }else if(msg == 1){
@@ -215,7 +262,7 @@
                         return   _Verification;
 
                     }
-
+					
 				},
 				callback : function(form) {
 					form[0].submit();
@@ -236,19 +283,23 @@
             var Id 				=  document.getElementsByClassName('GoodsID');
             var Length			=  Id.length;
             var GetNum 			=  document.getElementsByClassName('GetNum');
-            var Code 			=  document.getElementsByClassName('Code');
-            var ImgCode 			=  document.getElementsByClassName('ImgCode');
             var Number 			=  document.getElementsByClassName('Number');
             var GoodsType 		=  document.getElementsByClassName('GoodsType');
             var GoodName		=  document.getElementsByClassName('GoodName');
+            var Reta		    =  document.getElementsByClassName('Reta');
+            var Sort		    =  document.getElementsByClassName('Sort');
+            var ImgCode		    =  document.getElementsByClassName('ImgCode');
+            var Code		    =  document.getElementsByClassName('Code');
             var operation 		=  document.getElementsByClassName('operation');
 			var operationVal	=   operation[Length-1].getElementsByTagName('input')[0];
             GoodsType[Length-1].setAttribute('name','GiveInfo['+index+'][Type]');
             GetNum[Length-1].setAttribute('name','GiveInfo['+index+'][GetNum]');
-            Code[Length-1].setAttribute('name','GiveInfo['+index+'][Code]');
-            ImgCode[Length-1].setAttribute('name','GiveInfo['+index+'][ImgCode]');
             Number[Length-1].setAttribute('name','GiveInfo['+index+'][Number]');
             GoodName[Length-1].setAttribute('name','GiveInfo['+index+'][GoodsName]');
+            Reta[Length-1].setAttribute('name','GiveInfo['+index+'][Reta]');
+            Sort[Length-1].setAttribute('name','GiveInfo['+index+'][Sort]');
+            Code[Length-1].setAttribute('name','GiveInfo['+index+'][Code]');
+            ImgCode[Length-1].setAttribute('name','GiveInfo['+index+'][ImgCode]');
             Id[Length-1].setAttribute('name','GiveInfo['+index+'][GoodsID]');
 			operation[Length-1].setAttribute('onclick','GiveInfoDel(this)');
             operationVal.setAttribute('value','删除');
@@ -294,8 +345,8 @@
                 GoodsID[i].index = i;
             }
             var MyIndex 			= my.index;
-			var GetNum				= document.getElementsByClassName('GetNum');
-			var Code				= document.getElementsByClassName('Code');
+            var GetNum				= document.getElementsByClassName('GetNum');
+            var Code				= document.getElementsByClassName('Code');
             GetNum[MyIndex].value = selectValue;
             Code[MyIndex].value = CodeValue;
         }

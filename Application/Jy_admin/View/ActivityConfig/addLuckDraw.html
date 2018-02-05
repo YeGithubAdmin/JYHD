@@ -45,12 +45,6 @@
 						   name="Schedule" datatype="*1-16" nullmsg="">
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red">*</span>图片名：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="ImgCode" datatype="*" nullmsg="">
-				</div>
-				<div class="col-1"></div>
 
 			</div>
 			<div class="row cl">
@@ -67,30 +61,7 @@
 					</div>
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red"></span>排序：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="" placeholder=""
-						   name="Sort"  nullmsg="">
-				</div>
-				<div class="col-1"></div>
 			</div>
-
-			<div class="row cl">
-				<label class="form-label col-3"><span class="c-red">*</span>是否跳转：</label>
-				<div class="formControls col-2 skin-minimal">
-					<div class="radio-box">
-						<input type="radio" id="StopPay-2" checked = "true" value="1" name="Jump">
-						<label for="StopPay-2">否</label>
-					</div>
-					<div class="radio-box">
-						<input type="radio" id="StopPay-1"  value="2"  name="Jump">
-						<label for="StopPay-1">是</label>
-					</div>
-
-				</div>
-				<div class="col-1"> </div>
-			</div>
-
 			<div id = "parent" >
 				<div class="row cl GiveInfo"  >
 					<label class="form-label col-3"><span class="c-red"></span></label>
@@ -114,7 +85,7 @@
 							<select  class="select GoodsID" name = "GiveInfo[0][GoodsID]"    onchange="GetNumFun(this)"   datatype="*" nullmsg="" >
 								 <option value="">请选择商品</option>
 								<volist name = "GoodsAllList" id="val">
-								 		<option class="type{$val['Type']}"   GetNum = "{$val['GetNum']}"  Code = "{$val['Code']}"  style="display: none;" value="{$val['Id']}">{$val['Name']}</option>
+								 		<option class="type{$val['Type']}"   GetNum = "{$val['GetNum']}"   Code = "{$val['Code']}"   style="display: none;" value="{$val['Id']}">{$val['Name']}</option>
 								</volist>
                             </select>
 						</span>
@@ -133,17 +104,22 @@
 						<input type="text"  class="input-text GoodName"  datatype="*" value="" placeholder="请输入名称"
 							   name="GiveInfo[0][GoodsName]"  nullmsg="">
 					</div>
-
-
 					<div class="formControls col-1">
 						<input type="text"  class="input-text ImgCode"  datatype="*" value="" placeholder="请输入图片"
 							   name="GiveInfo[0][ImgCode]"  nullmsg="">
 					</div>
-
-
+					<div class="formControls col-1">
+						<input type="text"  class="input-text Reta"  datatype="*" value="" placeholder="概率"
+							   name="GiveInfo[0][Rete]"  nullmsg="">
+					</div>
+					<div class="formControls col-1">
+						<input type="text"  class="input-text Sort"  datatype="*" value="" placeholder="排序"
+							   name="GiveInfo[0][Sort]"  nullmsg="">
+					</div>
 					<div class="formControls col-0 operation"  index =0 onclick="GiveInfoAdd(this)">
 						<input class="btn btn-primary radius" type="button"  value="增加">
 					</div>
+
 				</div>
 			</div>
 			<div id ="child">
@@ -152,7 +128,7 @@
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red"></span>说明：</label>
 				<div class="formControls col-5">
-					<textarea     name="Explain"  style="width:100%" rows="20"  ></textarea>
+					<textarea     name="Explain"  style="width:100%" rows="4"  ></textarea>
 				</div>
 				<div class="col-4"></div>
 			</div>
@@ -190,6 +166,7 @@
 			$("#form-vipInfo-add").Validform({
 				tiptype : 2,
                 datatype:{
+
                     'TypeCode':function (gets) {
                         if(gets ==''){
                             return false;
@@ -203,7 +180,6 @@
                                 async:false,
                                 data:{'TypeCode':gets},
                                 success:function (msg) {
-                                    console.log(msg);
                                     if(msg == 0){
                                         _Verification =   '类型已存在';
                                     }else if(msg == 1){
@@ -215,7 +191,7 @@
                         return   _Verification;
 
                     }
-
+					
 				},
 				callback : function(form) {
 					form[0].submit();
@@ -236,19 +212,23 @@
             var Id 				=  document.getElementsByClassName('GoodsID');
             var Length			=  Id.length;
             var GetNum 			=  document.getElementsByClassName('GetNum');
-            var Code 			=  document.getElementsByClassName('Code');
-            var ImgCode 			=  document.getElementsByClassName('ImgCode');
             var Number 			=  document.getElementsByClassName('Number');
             var GoodsType 		=  document.getElementsByClassName('GoodsType');
             var GoodName		=  document.getElementsByClassName('GoodName');
+            var Reta		    =  document.getElementsByClassName('Reta');
+            var Sort		    =  document.getElementsByClassName('Sort');
+            var ImgCode		    =  document.getElementsByClassName('ImgCode');
+            var Code		    =  document.getElementsByClassName('Code');
             var operation 		=  document.getElementsByClassName('operation');
 			var operationVal	=   operation[Length-1].getElementsByTagName('input')[0];
             GoodsType[Length-1].setAttribute('name','GiveInfo['+index+'][Type]');
             GetNum[Length-1].setAttribute('name','GiveInfo['+index+'][GetNum]');
-            Code[Length-1].setAttribute('name','GiveInfo['+index+'][Code]');
-            ImgCode[Length-1].setAttribute('name','GiveInfo['+index+'][ImgCode]');
             Number[Length-1].setAttribute('name','GiveInfo['+index+'][Number]');
             GoodName[Length-1].setAttribute('name','GiveInfo['+index+'][GoodsName]');
+            Reta[Length-1].setAttribute('name','GiveInfo['+index+'][Reta]');
+            Sort[Length-1].setAttribute('name','GiveInfo['+index+'][Sort]');
+            Code[Length-1].setAttribute('name','GiveInfo['+index+'][Code]');
+            ImgCode[Length-1].setAttribute('name','GiveInfo['+index+'][ImgCode]');
             Id[Length-1].setAttribute('name','GiveInfo['+index+'][GoodsID]');
 			operation[Length-1].setAttribute('onclick','GiveInfoDel(this)');
             operationVal.setAttribute('value','删除');
@@ -294,8 +274,8 @@
                 GoodsID[i].index = i;
             }
             var MyIndex 			= my.index;
-			var GetNum				= document.getElementsByClassName('GetNum');
-			var Code				= document.getElementsByClassName('Code');
+            var GetNum				= document.getElementsByClassName('GetNum');
+            var Code				= document.getElementsByClassName('Code');
             GetNum[MyIndex].value = selectValue;
             Code[MyIndex].value = CodeValue;
         }
