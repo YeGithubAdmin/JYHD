@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2018-02-01 10:24:00
+ * Auto generated from PB_statistics_data.proto at 2018-02-06 16:55:50
  */
 
 namespace {
@@ -27,7 +27,6 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     const DRAW_COUNT = 25;
     const DIAMOND_DAY = 26;
     const ITEM_DAY = 27;
-    const PAY_TOTAL = 28;
     const DROP_BOMB_WORTH = 29;
     const HHMF_BET_FLAG_1 = 51;
     const HHMF_BET_FLAG_2 = 52;
@@ -120,11 +119,6 @@ class RPB_PlayerNumerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
-        self::PAY_TOTAL => array(
-            'name' => 'pay_total',
-            'required' => false,
-            'type' => \ProtobufMessage::PB_TYPE_INT,
-        ),
         self::DROP_BOMB_WORTH => array(
             'name' => 'drop_bomb_worth',
             'required' => false,
@@ -179,7 +173,6 @@ class RPB_PlayerNumerical extends \ProtobufMessage
         $this->values[self::DRAW_COUNT] = null;
         $this->values[self::DIAMOND_DAY] = null;
         $this->values[self::ITEM_DAY] = null;
-        $this->values[self::PAY_TOTAL] = null;
         $this->values[self::DROP_BOMB_WORTH] = null;
         $this->values[self::HHMF_BET_FLAG_1] = null;
         $this->values[self::HHMF_BET_FLAG_2] = null;
@@ -584,29 +577,6 @@ class RPB_PlayerNumerical extends \ProtobufMessage
     public function getItemDay()
     {
         $value = $this->get(self::ITEM_DAY);
-        return $value === null ? (integer)$value : $value;
-    }
-
-    /**
-     * Sets value of 'pay_total' property
-     *
-     * @param integer $value Property value
-     *
-     * @return null
-     */
-    public function setPayTotal($value)
-    {
-        return $this->set(self::PAY_TOTAL, $value);
-    }
-
-    /**
-     * Returns value of 'pay_total' property
-     *
-     * @return integer
-     */
-    public function getPayTotal()
-    {
-        $value = $this->get(self::PAY_TOTAL);
         return $value === null ? (integer)$value : $value;
     }
 

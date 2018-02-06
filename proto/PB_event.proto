@@ -39,13 +39,6 @@ message GoldUpdate
 	optional int32 inc_gold = 3;
 }
 
-// 付费金币更新
-message PayGoldUpdate
-{
-	required int32 inc_gold = 1;
-	optional int64 playerid = 2;
-}
-
 // 钻石更新
 message DiamondUpdate
 {
@@ -65,16 +58,6 @@ message VipUpdate
 {
 	required int64 playerid = 1;
 	required int32 vip  	= 2;	// vip 等级
-}
-
-// 许可证更新
-message LicenceUpdate
-{
-	message LicenceData {
-		optional int64 playerid = 1;
-		optional bool licence   = 2;
-	}
-	repeated LicenceData datas = 1;
 }
 
 // 兑换人民币事件
@@ -108,14 +91,8 @@ message RmbUpdate
 	optional int32 serverid = 3;
 }
 
-message KillFishAction
+// 炮解锁事件
+message GunUnlockEvent
 {
-	message ActionInfo {
-		optional int32 fishid 	= 1;
-		optional bool  isboss 	= 2;
-		optional int32 gun_coin = 3;	// 炮倍率
-		optional int32 gold     = 4;	// 获得金币
-	}
-	repeated ActionInfo acts  = 1;
+	optional int32 cur_gun  = 1; // 当前炮倍
 }
-

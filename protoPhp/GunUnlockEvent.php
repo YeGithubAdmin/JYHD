@@ -1,24 +1,22 @@
 <?php
 /**
- * Auto generated from PB_gm_tool.proto at 2018-02-06 16:55:50
- *
- * protos package
+ * Auto generated from PB_event.proto at 2018-02-06 16:55:49
  */
 
-namespace Protos {
+namespace {
 /**
- * PBS_gm_get_hhmf_numerical message
+ * GunUnlockEvent message
  */
-class PBS_gm_get_hhmf_numerical extends \ProtobufMessage
+class GunUnlockEvent extends \ProtobufMessage
 {
     /* Field index constants */
-    const SERVERID = 1;
+    const CUR_GUN = 1;
 
     /* @var array Field descriptors */
     protected static $fields = array(
-        self::SERVERID => array(
-            'name' => 'serverid',
-            'required' => true,
+        self::CUR_GUN => array(
+            'name' => 'cur_gun',
+            'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
     );
@@ -38,7 +36,7 @@ class PBS_gm_get_hhmf_numerical extends \ProtobufMessage
      */
     public function reset()
     {
-        $this->values[self::SERVERID] = null;
+        $this->values[self::CUR_GUN] = null;
     }
 
     /**
@@ -52,25 +50,25 @@ class PBS_gm_get_hhmf_numerical extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'serverid' property
+     * Sets value of 'cur_gun' property
      *
      * @param integer $value Property value
      *
      * @return null
      */
-    public function setServerid($value)
+    public function setCurGun($value)
     {
-        return $this->set(self::SERVERID, $value);
+        return $this->set(self::CUR_GUN, $value);
     }
 
     /**
-     * Returns value of 'serverid' property
+     * Returns value of 'cur_gun' property
      *
      * @return integer
      */
-    public function getServerid()
+    public function getCurGun()
     {
-        $value = $this->get(self::SERVERID);
+        $value = $this->get(self::CUR_GUN);
         return $value === null ? (integer)$value : $value;
     }
 }

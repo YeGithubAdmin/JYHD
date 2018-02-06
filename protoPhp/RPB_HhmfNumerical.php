@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto generated from PB_statistics_data.proto at 2018-02-01 10:24:00
+ * Auto generated from PB_statistics_data.proto at 2018-02-06 16:55:50
  */
 
 namespace {
@@ -20,6 +20,7 @@ class RPB_HhmfNumerical extends \ProtobufMessage
     const ROBOT_PLAYER_WIN = 8;
     const BET_TIMES = 9;
     const ROOM_LEVEL = 22;
+    const UPDATE_TIME = 23;
 
     /* @var array Field descriptors */
     protected static $fields = array(
@@ -73,6 +74,11 @@ class RPB_HhmfNumerical extends \ProtobufMessage
             'required' => false,
             'type' => \ProtobufMessage::PB_TYPE_INT,
         ),
+        self::UPDATE_TIME => array(
+            'name' => 'update_time',
+            'required' => false,
+            'type' => \ProtobufMessage::PB_TYPE_STRING,
+        ),
     );
 
     /**
@@ -100,6 +106,7 @@ class RPB_HhmfNumerical extends \ProtobufMessage
         $this->values[self::ROBOT_PLAYER_WIN] = null;
         $this->values[self::BET_TIMES] = null;
         $this->values[self::ROOM_LEVEL] = null;
+        $this->values[self::UPDATE_TIME] = null;
     }
 
     /**
@@ -340,6 +347,29 @@ class RPB_HhmfNumerical extends \ProtobufMessage
     {
         $value = $this->get(self::ROOM_LEVEL);
         return $value === null ? (integer)$value : $value;
+    }
+
+    /**
+     * Sets value of 'update_time' property
+     *
+     * @param string $value Property value
+     *
+     * @return null
+     */
+    public function setUpdateTime($value)
+    {
+        return $this->set(self::UPDATE_TIME, $value);
+    }
+
+    /**
+     * Returns value of 'update_time' property
+     *
+     * @return string
+     */
+    public function getUpdateTime()
+    {
+        $value = $this->get(self::UPDATE_TIME);
+        return $value === null ? (string)$value : $value;
     }
 }
 }
