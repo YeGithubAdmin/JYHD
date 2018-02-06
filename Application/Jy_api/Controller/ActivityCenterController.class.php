@@ -37,6 +37,7 @@ class ActivityCenterController extends ComController {
         foreach ($ActivityList as $k=>$v){
             $StyleData[$v['Style']] = $v;
         }
+
         //累计炮倍
         if($StyleData[1]){
             //获取炮倍信息
@@ -107,7 +108,7 @@ class ActivityCenterController extends ComController {
                         $GiveInfo[$key]['Type']      = $val['Type'];
                         $GiveInfo[$key]['Code']      = $val['Code'];
                     }
-                    $DataSon['GiveInfo']                       = $GiveInfo ;
+                    $DataSon['GiveInfo']                       = array_values($GiveInfo) ;
                     $DataSon['Status']                         = $Status;
                     $DataSon['SonTitle']                       = $v['SonTitle'];
                     $DataSon['ImgCode']                        = $v['ImgCode'];
@@ -153,7 +154,7 @@ class ActivityCenterController extends ComController {
                         $GiveInfo[$key]['Type']      = $val['Type'];
                         $GiveInfo[$key]['Code']      = $val['Code'];
                     }
-                    $DataSon['GiveInfo']                       = $GiveInfo;
+                    $DataSon['GiveInfo']                       = array_values($GiveInfo);
                     $DataSon['Status']                         = $Status;
                     $DataSon['SonTitle']                       = $v['SonTitle'];
                     $DataSon['ImgCode']                        = $v['ImgCode'];
@@ -161,7 +162,7 @@ class ActivityCenterController extends ComController {
                     $DataSon['Jump']                           = $v['Jump'];
                     $DataSon['Schedule']                       = $v['Schedule'];
                     $DataSon['TypeCode']                       = $v['TypeCode'];
-                    $DataSon['ActivityId']                             = $v['SonId'];
+                    $DataSon['ActivityId']                     = $v['SonId'];
                     $DataSon['Advance']                        = $UserPayPrice;
                     $ActivityListSort[$v['Id']]['AbroadTitle'] = $v['AbroadTitle'];
                     $ActivityListSort[$v['Id']]['WithinTitle'] = $v['WithinTitle'];
@@ -201,7 +202,7 @@ class ActivityCenterController extends ComController {
                         $GiveInfo[$key]['Code']      = $val['Code'];
                     }
                     //组装
-                    $DataSon['GiveInfo']         = $GiveSort;
+                    $DataSon['GiveInfo']         = array_values($GiveSort);
                     $DataSon['Status']           = $Status;
                     $DataSon['SonTitle']         = $v['SonTitle'];
                     $DataSon['Schedule']         = $v['Schedule'];

@@ -45,13 +45,6 @@
 						   name="Schedule" datatype="*1-16" nullmsg="">
 				</div>
 				<div class="col-1"></div>
-				<label class="form-label col-1"><span class="c-red">*</span>图片名：</label>
-				<div class="formControls col-1">
-					<input type="text" class="input-text" value="{$info['ImgCode']}" placeholder=""
-						   name="ImgCode" datatype="*" nullmsg="">
-				</div>
-				<div class="col-1"></div>
-
 			</div>
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>活动类型值：</label>
@@ -286,7 +279,13 @@
             var  del       = document.getElementById('del');
 			var  index     = my.getAttribute('index');
             index++;
-            child.innerHTML +=  parent.innerHTML;
+//            child.innerHTML +=  parent.innerHTML;
+
+
+            var div = document.createElement("div");
+            div.innerHTML = parent.innerHTML;
+            child.appendChild(div);
+
             var Id 				=  document.getElementsByClassName('GoodsID');
             var Length			=  Id.length;
             var GetNum 			=  document.getElementsByClassName('GetNum');

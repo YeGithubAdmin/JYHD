@@ -35,7 +35,7 @@
 				<div class="formControls col-1">
 					<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select"  datatype ="Type" name="Style" >
+							<select class="select"   name="Style" >
 								<option   value="1">达人计划</option>
 								<option   value="2">玩转捕鱼乐</option>
 								<!--<option   value="3">循环充值</option>-->
@@ -51,7 +51,7 @@
 				<div class="formControls col-1">
 					<div style="width: 100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select size="1" name="Channel"  class="select">
+							<select size="1" name="Channel"  onchange="GlobalFun(this)" class="select">
 								<option value="global">全渠道</option>
 								<volist name = "catChannel" id = "val">
 									<option value="{$val['account']}">{$val['name']}</option>
@@ -62,24 +62,26 @@
 				</div>
 				<div class="col-1"></div>
 			</div>
-			<div class="row cl">
-				<div class="col-1"></div>
-				<label class="form-label col-2"><span class="c-red">*</span>是否复制：</label>
-				<div class="formControls col-1">
-					<div style="width:100%;text-align:center;float:left">
+			<div id = "global" style="display: none;">
+				<div class="row cl">
+					<div class="col-1"></div>
+					<label class="form-label col-2"><span class="c-red">*</span>是否复制：</label>
+					<div class="formControls col-1">
+						<div style="width:100%;text-align:center;float:left">
 		        		<span class="select-box">
-							<select class="select" onclick="Cpfun(this)"  name="IsCp" >
+							<select class="select" onclick="Cpfun(this)"  id = "IsCp" name="IsCp" >
+									<option   value="1">否</option>
 								<option   value="2">是</option>
-								<option   value="1">否</option>
+
 							</select>
 						</span>
+						</div>
 					</div>
-				</div>
-				<div class="col-1"></div>
-				<div id = "CpChannel">
-					<label class="form-label col-1"><span class="c-red">*</span>复制渠道：</label>
-					<div class="formControls col-1">
-						<div style="width: 100%;text-align:center;float:left">
+					<div class="col-1"></div>
+					<div id = "CpChannel" style="display: none;">
+						<label class="form-label col-1"><span class="c-red">*</span>复制渠道：</label>
+						<div class="formControls col-1">
+							<div style="width: 100%;text-align:center;float:left">
 							<span class="select-box">
 								<select size="1" name="CpChannel" class="select">
 									<volist name = "catChannel" id = "val">
@@ -87,15 +89,13 @@
 									</volist>
 								</select>
 							</span>
+							</div>
 						</div>
+						<div class="col-1"></div>
 					</div>
-					<div class="col-1"></div>
 				</div>
-
-
-
 			</div>
-			<div id ="param" style="display: none;">
+			<div id ="param">
 				<div class="row cl">
 					<label class="form-label col-3"><span class="c-red">*</span>标题：</label>
 					<div class="formControls col-3">
@@ -104,6 +104,14 @@
 							   class="input-text"   placeholder="" >
 					</div>
 
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3"><span class="c-red">*</span>说明：</label>
+					<div class="formControls col-3">
+						<input type="text"
+							   value="" name="WithinTitle"
+							   class="input-text"   placeholder="" >
+					</div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3"><span class="c-red">*</span>活动时间：</label>
@@ -190,7 +198,7 @@
                         if(gets.length<0 || gets.length>3){
                             return false;
                         }
-                        var Type = document.getElementsByName('Type')[0];
+                        var Type = document.getElementsByName('Style')[0];
                         var Channel = document.getElementsByName('Channel')[0];
                         var CpChannel = document.getElementsByName('CpChannel')[0];
                         var Cp = document.getElementsByName('IsCp')[0];
@@ -253,6 +261,48 @@
                 param.style.display = "block";
             }
         }
+        function GlobalFun(my) {
+            var global  =  document.getElementById('global');
+            var Index  =  my.selectedIndex;
+            var Value  =  my.options[Index].value;
+            var param  =  document.getElementById('param');
+            var Inputs =  param.getElementsByTagName('input');
+            var IsCpOption   = document.getElementById('IsCp').getElementsByTagName('option');
+            var CpChannel = document.getElementById('CpChannel');
+            if(Value == 'global'){
+                for(i=0;i<Inputs.length;i++){
+                    Inputs[i].removeAttribute('datatype');
+                }
+                for(i=0;i<Inputs.length;i++){
+                    var Name = Inputs[i].name;
+                    if(Name == 'Title'){
+                        Inputs[i].setAttribute('datatype','*2-8');
+                    }else{
+                        Inputs[i].setAttribute('datatype','*');
+                    }
+                }
+                global.style.display = "none";
+                param.style.display = "block";
+
+            }else{
+                for(i=0;i<Inputs.length;i++){
+                    Inputs[i].removeAttribute('datatype');
+                }
+				for (j=0;j<IsCpOption.length;j++){
+                    if(IsCpOption[j].value == 1){
+                        IsCpOption[j].selected = "true";
+					}
+				}
+                CpChannel.style.display = "none";
+                global.style.display = "block";
+            }
+        }
+
+
+
+
+
+
 
 	</script>
 	</literal>

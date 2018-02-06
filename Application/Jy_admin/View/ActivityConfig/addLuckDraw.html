@@ -208,7 +208,9 @@
             var  del       = document.getElementById('del');
 			var  index     = my.getAttribute('index');
             index++;
-            child.innerHTML +=  parent.innerHTML;
+            var div = document.createElement("div");
+            div.innerHTML = parent.innerHTML;
+            child.appendChild(div);
             var Id 				=  document.getElementsByClassName('GoodsID');
             var Length			=  Id.length;
             var GetNum 			=  document.getElementsByClassName('GetNum');

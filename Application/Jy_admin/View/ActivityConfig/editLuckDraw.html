@@ -69,12 +69,12 @@
 							<span class="select-box">
 								<select  class="select GoodsType"  name = "GiveInfo[0][Type]" datatype="*"  onchange="selectGoodsFun(this)" nullmsg="" >
 									 <option value="">请选择类型</option>
-									<option   <if condition ="$v[Type] eq 1" >selected ="true"</if>  value="1">金币</option>
-									<option  <if condition ="$v[Type] eq 2" >selected ="true"</if>  value="2">钻石</option>
-									<option  <if condition ="$v[Type] eq 3" >selected ="true"</if>  value="3">道具</option>
-									<option  <if condition ="$v[Type] eq 4" >selected ="true"</if>  value="4">话费卡</option>
-									<option  <if condition ="$v[Type] eq 5">selected ="true"</if>  value="5">京东卡</option>
-									<option  <if condition ="$v[Type] eq 6" >selected ="true"</if>  value="6">实物</option>
+									<option   <if condition ="$GiveInfo[0][Type] eq 1" >selected ="true"</if>  value="1">金币</option>
+									<option  <if condition ="$GiveInfo[0][Type] eq 2" >selected ="true"</if>  value="2">钻石</option>
+									<option  <if condition ="$GiveInfo[0][Type] eq 3" >selected ="true"</if>  value="3">道具</option>
+									<option  <if condition ="$GiveInfo[0][Type] eq 4" >selected ="true"</if>  value="4">话费卡</option>
+									<option  <if condition ="$GiveInfo[0][Type] eq 5">selected ="true"</if>  value="5">京东卡</option>
+									<option  <if condition ="$GiveInfo[0][Type] eq 6" >selected ="true"</if>  value="6">实物</option>
 								</select>
 							</span>
 						</div>
@@ -162,9 +162,9 @@
 							<div class="formControls col-1">
 								<input type="text"  class="input-text Number"  datatype="*" value="{$v['Number']}" placeholder="请输入倍数"
 									   name="GiveInfo[{$k}][Number]"  nullmsg="">
-								<input type="hidden"  class="input-text GetNum"  datatype="*" value="{$v['GetNum']}" placeholder=""
+								<input type="hidden"  class="input-text GetNum"   value="{$v['GetNum']}" placeholder=""
 									   name="GiveInfo[{$k}][GetNum]"  nullmsg="">
-								<input type="hidden"  class="input-text Code"  datatype="*" value="{$v['Code']}" placeholder=""
+								<input type="hidden"  class="input-text Code"  value="{$v['Code']}" placeholder=""
 									   name="GiveInfo[{$k}][Code]"  nullmsg="">
 							</div>
 
@@ -279,7 +279,9 @@
             var  del       = document.getElementById('del');
 			var  index     = my.getAttribute('index');
             index++;
-            child.innerHTML +=  parent.innerHTML;
+            var div = document.createElement("div");
+            div.innerHTML = parent.innerHTML;
+            child.appendChild(div);
             var Id 				=  document.getElementsByClassName('GoodsID');
             var Length			=  Id.length;
             var GetNum 			=  document.getElementsByClassName('GetNum');
