@@ -37,8 +37,33 @@
 					   value="{$info['AbroadTitle']}" name="AbroadTitle"
 					   class="input-text"   placeholder="" >
 			</div>
-
 		</div>
+
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>说明：</label>
+			<div class="formControls col-3">
+				<input type="text"
+					   value="{$info['WithinTitle']}" name="WithinTitle"
+					   class="input-text"   placeholder="" >
+			</div>
+		</div>
+
+		<div class = "row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>渠道：</label>
+			<div class="formControls col-1">
+				<div style="width: 100%;text-align:center;float:left">
+		        		<span class="select-box">
+							<select size="1" name="Channel"  onchange="GlobalFun(this)" class="select">
+								<option value="global"  >全渠道</option>
+								<volist name = "catChannel" id = "val">
+									<option    <if condition = "$val['account'] eq $info['Channel']">selected = "true"</if>   value="{$val['account']}">{$val['name']}</option>
+								</volist>
+						    </select>
+						</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>活动时间：</label>
 			<div class="formControls col-1">

@@ -33,13 +33,10 @@ class ActivityCenterController extends ComController {
         if(empty($ActivityList)){
             goto response;
         }
-
-
         $StyleData = array();
         foreach ($ActivityList as $k=>$v){
             $StyleData[$v['Style']] = $v;
         }
-
 
         //累计炮倍
         if($StyleData[1]){
@@ -66,8 +63,7 @@ class ActivityCenterController extends ComController {
         if($StyleData[4]){
             $DUserPay        = $ActivityCenter->UsersPay($playerid,$StyleData[4]['ShowStartTime'],$StyleData[4]['ShowEndTime']);
             $DUserPayPrice   = $DUserPay[0]['Price']?$DUserPay[0]['Price']:0;
-            //查询抽奖物品
-            $LuckdrawInfo    = $ActivityCenter->LuckdrawInfo();
+
 
         }
         if($StyleData[4] || $StyleData[1]){
@@ -78,10 +74,8 @@ class ActivityCenterController extends ComController {
                 $DReceiveStatus  = $ActivityCenter->ReceiveStatus($playerid,$StyleData[4]['ShowStartTime'],$StyleData[1]['ShowEndTime']);
             }
         }
-
         foreach ($ActivityList as $k=>$v){
             $DataSon = array();
-
             $ShowStartTime  = array(
                 'year'=>date('Y',$v['ShowStartTime']),
                 'month'=>date('m',$v['ShowStartTime']),
@@ -107,15 +101,14 @@ class ActivityCenterController extends ComController {
                     }
                     //组装
                     $GiveInfo = array();
-
                     foreach (json_decode($v['GiveInfo'],true) as $key=>$val){
                         $GiveInfo[$key]['ImgCode']   = $val['ImgCode'];
                         $GiveInfo[$key]['GoodsName'] = $val['GoodsName'];
-                        $GiveInfo[$key]['Number']    = $val['Number']*$v['GetNum'];
+                        $GiveInfo[$key]['Number']    = $val['Number']*$val['GetNum'];
                         $GiveInfo[$key]['Type']      = $val['Type'];
                         $GiveInfo[$key]['Code']      = $val['Code'];
                     }
-                    $DataSon['GiveInfo']                       = $GiveInfo ;
+                    $DataSon['GiveInfo']                       = array_values($GiveInfo) ;
                     $DataSon['Status']                         = $Status;
                     $DataSon['SonTitle']                       = $v['SonTitle'];
                     $DataSon['ImgCode']                        = $v['ImgCode'];
@@ -151,6 +144,9 @@ class ActivityCenterController extends ComController {
                     }
                     //组装
                     $GiveInfo = array();
+
+
+
                     foreach (json_decode($v['GiveInfo'],true) as $key=>$val){
                         $GiveInfo[$key]['ImgCode']   = $val['ImgCode'];
                         $GiveInfo[$key]['GoodsName'] = $val['GoodsName'];
@@ -158,7 +154,7 @@ class ActivityCenterController extends ComController {
                         $GiveInfo[$key]['Type']      = $val['Type'];
                         $GiveInfo[$key]['Code']      = $val['Code'];
                     }
-                    $DataSon['GiveInfo']                       = $GiveInfo;
+                    $DataSon['GiveInfo']                       = array_values($GiveInfo);
                     $DataSon['Status']                         = $Status;
                     $DataSon['SonTitle']                       = $v['SonTitle'];
                     $DataSon['ImgCode']                        = $v['ImgCode'];
@@ -166,7 +162,7 @@ class ActivityCenterController extends ComController {
                     $DataSon['Jump']                           = $v['Jump'];
                     $DataSon['Schedule']                       = $v['Schedule'];
                     $DataSon['TypeCode']                       = $v['TypeCode'];
-                    $DataSon['ActivityId']                             = $v['SonId'];
+                    $DataSon['ActivityId']                     = $v['SonId'];
                     $DataSon['Advance']                        = $UserPayPrice;
                     $ActivityListSort[$v['Id']]['AbroadTitle'] = $v['AbroadTitle'];
                     $ActivityListSort[$v['Id']]['WithinTitle'] = $v['WithinTitle'];
@@ -182,7 +178,6 @@ class ActivityCenterController extends ComController {
                     $Status          = 1;
                     $LuckdrawInfoNum = 0;
                     if($v['TypeCode'] == 4001){
-                        $ActivityList[$k]['GiveInfo'] =  $LuckdrawInfo;
                         $LuckdrawInfoNum =  floor($DUserPayPrice/$v['Schedule'])-$DNum;
                         if($LuckdrawInfoNum != 0){
                             $Status = 2;
@@ -193,16 +188,21 @@ class ActivityCenterController extends ComController {
 
                     }
                     $GiveInfo = array();
-                    foreach ($LuckdrawInfo as $key=>$val){
+                    $GiveSort = array();
+                    if(!empty($v['GiveInfo'])){
+                        $GiveSort           =  array_values(json_decode($v['GiveInfo'],true));
+                        $column             =  array_column($GiveSort,'Sort');
+                        array_multisort($column,SORT_ASC,$GiveSort);
+                    }
+                    foreach ($GiveSort as $key=>$val){
                         $GiveInfo[$key]['ImgCode']   = $val['ImgCode'];
                         $GiveInfo[$key]['GoodsName'] = $val['GoodsName'];
                         $GiveInfo[$key]['Number']    = $val['Number']*$val['GetNum'];
                         $GiveInfo[$key]['Type']      = $val['Type'];
                         $GiveInfo[$key]['Code']      = $val['Code'];
                     }
-
                     //组装
-                    $DataSon['GiveInfo']         = $GiveInfo;
+                    $DataSon['GiveInfo']         = array_values($GiveSort);
                     $DataSon['Status']           = $Status;
                     $DataSon['SonTitle']         = $v['SonTitle'];
                     $DataSon['Schedule']         = $v['Schedule'];
@@ -428,10 +428,8 @@ class ActivityCenterController extends ComController {
             $result = 4007;
             goto  response;
         }
-
         //查询活动信息
         $SingleActivityInfo = $ActivityCenter->SingleActivityInfo($ActivityId,$DataInfo['channel']);
-
         if(empty($SingleActivityInfo)){
             $result = 5002;
             goto response;
@@ -456,7 +454,7 @@ class ActivityCenterController extends ComController {
             goto response;
         }
         //查询抽奖内容
-        $LuckdrawInfo = $ActivityCenter->LuckdrawInfo();
+        $LuckdrawInfo = json_decode($SingleActivityInfo['GiveInfo'],'true');
         if(empty($LuckdrawInfo)){
             $result = 5004;
             goto response;

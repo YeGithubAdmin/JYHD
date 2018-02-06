@@ -42,31 +42,102 @@ class ActivityCenterModel extends Model{
     public function ActivityList($Channel){
         //显示时间
         $DateTime   = date('Y-m-d H:i:s',time());
-        $catData = M('conf_activity_father as a')
-                   ->join('conf_activity_son as b on a.Id = b.FatherID and b.ConfStatus = 2','left')
-                   ->where('a.ConfStatus = 2   and  a.Channel = "'.$Channel.'"  and 
+
+
+        //查询是否已存在活动
+        $cataChannel = M('conf_activity_father')
+                    ->where('Channel = "'.$Channel.'"')
+                    ->field(array(
+                        'IsCp',
+                        'Channel',
+                        'Style',
+                        'CpChannel',
+                    ))->select();
+
+        if(empty($cataChannel)){
+            //查询全渠道
+            $catData = M('conf_activity_father as a')
+                ->join('conf_activity_son as b on a.Id = b.FatherID and b.ConfStatus = 2','left')
+                ->where('a.ConfStatus = 2   and  a.Channel = "global"  and 
                             a.ShowStartTime    <= str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")   
                             and  a.ShowEndTime > str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")')
-                   ->field(array(
-                        'a.Id',
-                        'a.Style',
-                        'a.AbroadTitle',
-                        'a.ShowStartTime',
-                        'a.ShowEndTime',
-                        'a.Sort',
-                        'a.Hot',
-                        'a.WithinTitle',
-                        'b.SonTitle',
-                        'b.ImgCode',
-                        'b.Schedule',
-                        'b.Jump',
-                        'b.Explain',
-                        'b.GiveInfo',
-                        'b.Id as SonId',
-                        'b.TypeCode',
-                   ))
-                   ->order('b.Sort asc')
-                   ->select();
+                ->field(array(
+                    'a.Id',
+                    'a.Style',
+                    'a.AbroadTitle',
+                    'a.ShowStartTime',
+                    'a.ShowEndTime',
+                    'a.Sort',
+                    'a.Hot',
+                    'a.WithinTitle',
+                    'b.SonTitle',
+                    'b.ImgCode',
+                    'b.Schedule',
+                    'b.Jump',
+                    'b.Explain',
+                    'b.GiveInfo',
+                    'b.Id as SonId',
+                    'b.TypeCode',
+                ))
+                ->order('b.Sort asc')
+                ->select();
+        }else{
+            //过滤复制情况
+            $CpChannel = array();
+            $Style     = array();
+            foreach ($cataChannel as $k=>$v){
+                if($v['IsCp'] == 2){
+                    $CpChannel[] = '"'.$v['CpChannel'].'"';
+                }
+                $Style[] = $v['Style'];
+            }
+            if(!empty($CpChannel)){
+                $CpChannel = array_unique($CpChannel);
+                $CpChannel = implode(',',$CpChannel);
+                $Style = array_unique($Style);
+                $Style = implode(',',$Style);
+                if(empty($Style)){
+                    return array();
+                }
+                $where = 'a.ConfStatus = 2  and a.Channel in ('.$CpChannel.') and 
+                            a.Style in ('.$Style.') and         
+                            a.ShowStartTime    <= str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")   
+                            and  a.ShowEndTime > str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")
+                            or  a.IsCp = 1  and  a.ConfStatus = 2   and  a.Channel = "'.$Channel.'"  and 
+                            a.ShowStartTime    <= str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")   
+                            and  a.ShowEndTime > str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")               
+                            ';
+            }else{
+                $where = 'a.ConfStatus = 2   and  a.Channel = "'.$Channel.'"  and 
+                            a.ShowStartTime    <= str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")   
+                            and  a.ShowEndTime > str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")';
+            }
+            $catData = M('conf_activity_father as a')
+                ->join('conf_activity_son as b on a.Id = b.FatherID and b.ConfStatus = 2','left')
+                ->where($where)
+                ->field(array(
+                    'a.Id',
+                    'a.Style',
+                    'a.AbroadTitle',
+                    'a.ShowStartTime',
+                    'a.ShowEndTime',
+                    'a.Sort',
+                    'a.Hot',
+                    'a.WithinTitle',
+                    'b.SonTitle',
+                    'b.ImgCode',
+                    'b.Schedule',
+                    'b.Jump',
+                    'b.Explain',
+                    'b.GiveInfo',
+                    'b.Id as SonId',
+                    'b.TypeCode',
+                ))
+                ->order('b.Sort asc')
+                ->select();
+        }
+
+
         return  $catData;
     }
     /***
