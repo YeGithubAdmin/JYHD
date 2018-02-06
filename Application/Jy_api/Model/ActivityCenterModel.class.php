@@ -328,7 +328,7 @@ class ActivityCenterModel extends Model{
         $DateTime   = date('Y-m-d H:i:s',time());
         $catData = M('conf_activity_father as a')
             ->join('conf_activity_son as b on a.Id = b.FatherID and b.ConfStatus = 2 and b.Id = '.$ActivityID)
-            ->where('a.ConfStatus = 2   and  a.Channel = "'.$Channel.'"  and 
+            ->where('a.ConfStatus = 2     and 
                             a.ShowStartTime    <= str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")   
                             and  a.ShowEndTime > str_to_date("'.$DateTime.'","%Y-%m-%d %H:%i:%s")')
             ->field(array(
