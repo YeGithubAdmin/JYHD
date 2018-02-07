@@ -55,38 +55,24 @@
 			</button>
 		</div>
 	</form>
-
 	<div class="mt-20">
 	<form action="" method="post"  class="form form-horizontal" id="form-UsersAttribute-add">
 		<input  type="hidden"  value="{$Serverid}" name="Serverid">
 		<input  type="hidden"  value="{$Version}" name="Version">
 		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>影响返奖率和最高返奖倍数：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>机器人押注值域下限：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  title = "影响返奖率和最高返奖倍数" value="{$info['CfgShuihuReturnMultiple']|round=2}" placeholder=""
-					name = "CfgShuihuReturnMultiple"  datatype="*"  nullmsg="">
+				<input type="text" class="input-text"   value="{$info['GoldRangeMin']|round=2}" placeholder=""
+					name = "GoldRangeMin"  datatype="*"  nullmsg="">
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>水果机公式分母1：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>机器人押注值域上限：</label>
 			<div class="formControls col-1">
-				<input type="text" class="input-text"  title="【limit_ratio】
-极限系数：影响资产折算对玩家捕中率的影响上限。" value="{$info['CfgShuiguojiDenominator1']|round=2}" placeholder=""
-					   name="CfgShuiguojiDenominator1" datatype="*"  nullmsg="">
+				<input type="text" class="input-text"   value="{$info['GoldRangeMax']|round=2}" placeholder=""
+					   name="GoldRangeMax" datatype="*"  nullmsg="">
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>水果机公式分母2：</label>
-			<div class="formControls col-1">
-				<input type="text" class="input-text"  title=""   value="{$info['CfgShuiguojiDenominator2']|round=2}"  datatype="*"  placeholder=""
-					   name="CfgShuiguojiDenominator2" datatype="*"   nullmsg="">
-			</div>
-			<div class="col-1"></div>
-
 		</div>
-
-		
-
-
-
 		<div class="row cl">
 			<div class="col-5 col-offset-6">
 				<input class="btn btn-primary radius"  type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">

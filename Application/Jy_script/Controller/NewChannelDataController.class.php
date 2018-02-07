@@ -90,6 +90,7 @@ class NewChannelDataController extends Controller {
             }else{
                 $info[$k]['EquipmentActNum'] = $EquipmentActSort[$v['GroupChannel']]['EquipmentActNum'];
             }
+
             //注册设备
             if(in_array($v['GroupChannel'],$GroupChannel)){
                 $info[$k]['EquipmentRegNum'] = $RegNum;
@@ -99,7 +100,7 @@ class NewChannelDataController extends Controller {
 
 
             $info[$k]['RegNum'] = $RegNum;
-            $info[$k]['EquipmentRegNum'] = $EquipmentRegNum;
+
             $DateTime = date('Y-m-d H:i:s',strtotime($StartTime)+24*60*60-1);
 
             //支付

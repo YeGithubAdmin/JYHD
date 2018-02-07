@@ -42,6 +42,7 @@ class RedCardModel extends Model{
             $PBS_gm_get_hhmf_numerical           = new PBS_gm_get_hhmf_numerical();
             $PBS_gm_get_hhmf_numerical_return    = new PBS_gm_get_hhmf_numerical_return();
             $PBS_gm_get_hhmf_numerical->setServerid($Serverid);
+            $PBS_gm_get_hhmf_numerical->dump();
             $ProtocString = $PBS_gm_get_hhmf_numerical->serializeToString();
             $Header = array(
                 'PBName:'.'protos.PBS_gm_get_hhmf_numerical',
@@ -50,6 +51,7 @@ class RedCardModel extends Model{
                 'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
                 'Version:'.$Version,
             );
+             dump($Header);
             $Respond  =  $obj->ProtobufSend($Header,$ProtocString);
             if($Respond == 504 || strlen($Respond) == 0){
                 return false;

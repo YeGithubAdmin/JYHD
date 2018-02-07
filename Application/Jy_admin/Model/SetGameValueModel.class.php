@@ -119,6 +119,8 @@ class SetGameValueModel extends Model{
             'getReturnGoldRate'         =>    $Data->getReturnGoldRate(),
             'getGoldPool'               =>    $Data->getGoldPool(),                  //dynamic
             'getBossAwardPool'          =>    $Data->getBossAwardPool(),             //dynamic
+            'BossBloodRandomNumMax'     =>    $Data->getBossBloodRandomNumMax(),
+            'BossBloodRandomNumMin'     =>    $Data->getBossBloodRandomNumMin(),
             'getGoldPoolRatio'          =>    $getGoldPoolRatio,
             'getRechargeEffect'         =>    $getRechargeEffect,
             'getKeyRechargeEffect'      =>    $getKeyRechargeEffect,
@@ -146,7 +148,8 @@ class SetGameValueModel extends Model{
         $getGoldPoolPumpRate        =   I('param.getGoldPoolPumpRate','','trim');
         $getReturnGoldRate          =   I('param.getReturnGoldRate','','trim');
         $getGoldPoolRatio           =   I('param.getGoldPoolRatio','','trim');
-
+        $BossBloodRandomNumMax      =   I('param.BossBloodRandomNumMax','','trim');
+        $BossBloodRandomNumMin      =   I('param.BossBloodRandomNumMin','','trim');
 
 
         $getRechargeEffect          =   I('param.getRechargeEffect','','trim');
@@ -154,8 +157,6 @@ class SetGameValueModel extends Model{
         $getDownGrade               =   I('param.getDownGrade','','trim');
         $getFishCardRate            =   I('param.getFishCardRate','','trim');
         $getBossRateParams          =   I('param.getBossRateParams','','trim');
-
-
 
         $a = array(
             '$getLimitRatio'=>$getLimitRatio,
@@ -174,8 +175,6 @@ class SetGameValueModel extends Model{
         );
 
 
-
-
         $PBS_gm_numerical->setLimitRatio($getLimitRatio);
         $PBS_gm_numerical->setChangePoint($getChangePoint);
         $PBS_gm_numerical->setFishCardP1($getFishCardP1);
@@ -183,6 +182,8 @@ class SetGameValueModel extends Model{
         $PBS_gm_numerical->setBossAwardPoolLine($getBossAwardPoolLine);
         $PBS_gm_numerical->setGoldPoolPumpRate($getGoldPoolPumpRate);
         $PBS_gm_numerical->setReturnGoldRate($getReturnGoldRate);
+        $PBS_gm_numerical->setBossBloodRandomNumMax($BossBloodRandomNumMax);
+        $PBS_gm_numerical->setBossBloodRandomNumMin($BossBloodRandomNumMin);
 
 
         $GoldPoolRatio  = new   game_numerical_gold_pool_ratio_t();

@@ -163,10 +163,11 @@ class ActivityCenterModel extends Model{
     *  @param  $playerid int 用户ID
     *  return  array
     */
-    public function ReceiveStatus($playerid){
+    public function ReceiveStatus($playerid,$StartTime,$EndTime){
         $catData = M('conf_activity_son as a')
             ->join('log_users_activity as b on a.Id = b.ActSonId and b.playerid = '.$playerid,'left')
-            ->where('a.ConfStatus = 2')
+            ->where('a.ConfStatus = 2 and  b.DateTime >= str_to_date("'.$StartTime.'","%Y-%m-%d %H:%i:%s")
+                            and  b.DateTime < str_to_date("'.$EndTime.'","%Y-%m-%d %H:%i:%s") ')
             ->field(array(
                'a.Id as Id',
                'count(b.Id) as Num',
@@ -349,18 +350,13 @@ class ActivityCenterModel extends Model{
     * return  奖励信息
     */
     public function GetLuckDraw($data){
-           $ComFun = D('ComFun');
+            $ComFun = D('ComFun');
+            $proArr = array();
             foreach ($data as $k=>$v){
-                $proArr[$v['Id']] = $v['Rate'];
+                $proArr[] = $v['Reta'];
             }
             $GoodsId= $ComFun->getRand($proArr);
-            $GoodsInfo = array();
-            foreach ($data as $k=>$v){
-                if($v['Id'] == $GoodsId){
-                    $GoodsInfo = $v;
-                }
-            }
-            return $GoodsInfo;
+            return $GoodsId;
     }
     /***
     * 获取当前炮倍信息
@@ -405,6 +401,40 @@ class ActivityCenterModel extends Model{
         return  $Data;
     }
 
+    /***
+    * 查询子级活动
+    * @param $FatherID int 父级ID
+    * return array
+    */
+    public function catSonInfo($FatherID){
+        $catData = M('conf_activity_son')
+                   ->where('FatherID = '.$FatherID.' and ConfStatus = 2')
+                   ->field(array(
+                       'Id as ActivityID',
+                   ))
+                   ->select();
+
+        return $catData;
+    }
+
+    /***
+    *  查看已查看的用户活动
+    *  @param $playerid int 用户ID
+    *  return array
+    */
+
+    public function catUsersSon($playerid){
+        $catData = M('log_cat_activity')
+                   ->where('playerid = '.$playerid)
+                   ->field(array(
+                        'ActivityID',
+                   ))
+                   ->group('ActivityID')
+                   ->select();
+        $catDataSort = array();
+        foreach ($catData as $k=>$v) $catDataSort[$v['ActivityID']] = $v['ActivityID'];
+        return $catDataSort;
+    }
 
 
 }

@@ -27,12 +27,12 @@ class RedCardController extends ComController {
         $Version  = I('param.Version','','trim');
 
         if($Serverid != 0 && $Version !='' ){
-            $GetModel = D('WaterMargin');
+            $GetModel = D('RedCard');
             $infoVal = $GetModel->GetVal($Serverid,$obj,$Version);
         }
         if(IS_POST){
             if($Serverid != 0 && $Version !='' ){
-                $GetModel = D('WaterMargin');
+                $GetModel = D('RedCard');
                 $SetVal =  $GetModel->SetVal($Serverid,$obj,$Version);
             }else{
                 $obj->showmessage('服务器ID');

@@ -135,6 +135,18 @@
 					   name="getBossAwardPoolLine" >
 			</div>
 			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span> BOSS血量浮动值下限</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*" title="血量浮动值下限:boss_blood_random_num_min "    value="{$info['BossBloodRandomNumMin']|round=2}" placeholder=""
+					   name="BossBloodRandomNumMin" >
+			</div>
+			<div class="col-1"></div>
+			<label class="form-label col-2"><span class="c-red">*</span> BOSS血量浮动值上限</label>
+			<div class="formControls col-1">
+				<input type="text" class="input-text"  datatype="*" title="血量浮动值上限:boss_blood_random_num_max"    value="{$info['BossBloodRandomNumMax']|round=2}" placeholder=""
+					   name="BossBloodRandomNumMax" >
+			</div>
+			<div class="col-1"></div>
 
 		</div>
 
@@ -340,7 +352,7 @@
 				<input type="text" class="input-text" title=""  id = "CrrtParam" value="{$info['getBossRateParams'][0]['getCrrtParam']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getCrrtParam]"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>铜核弹概率（cu_rate）：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>蓝色核弹概率（cu_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title=""  id = "CuRate" value="{$info['getBossRateParams'][0]['getCuRate']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getCuRate]"  >
 			</div>
@@ -349,12 +361,12 @@
 
 		</div>
 		<div class="row cl">
-			<label class="form-label col-2"><span class="c-red">*</span>银核弹概率（ag_rate）：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>红色核弹概率（ag_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title=""  id = "AgRate"  value="{$info['getBossRateParams'][0]['getAgRate']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getAgRate]"  >
 			</div>
 			<div class="col-1"></div>
-			<label class="form-label col-2"><span class="c-red">*</span>金核弹概率（au_rate）：</label>
+			<label class="form-label col-2"><span class="c-red">*</span>紫色核弹概率（au_rate）：</label>
 			<div class="formControls col-1">
 				<input type="text" class="input-text" title="" id = "AuRate" value="{$info['getBossRateParams'][0]['getAuRate']|round=2}" datatype="*" placeholder="" name="getBossRateParams[getAuRate]"  >
 			</div>

@@ -319,26 +319,52 @@ class ActivityConfigController extends ComController {
                             'Name',
                             'Value'
                         ))->select();
-        if(IS_POST){
-            $GiveInfo       = I('param.GiveInfo','','trim');
+        if(IS_POST) {
+            $GiveInfo = I('param.GiveInfo', '', 'trim');
+            if (!empty($GiveInfo)) {
+                $GoodsID = array();
+                foreach ($GiveInfo as $k => $v) $GoodsID[$v['GoodsID']] = $v['GoodsID'];
+                $GoodsID = implode(',', $GoodsID);
+                if (!empty($GoodsID)) {
+                    //查询物品
+                    $catGoodsInfo = M('jy_goods_all')
+                        ->field(array(
+                            'Code',
+                            'Id',
+                            'GetNum',
+                            'Name',
+                        ))
+                        ->where('Id in (' . $GoodsID . ')  and  IsDel = 1')
+                        ->select();
+                    foreach ($GiveInfo as $k => $v) {
+                        foreach ($catGoodsInfo as $key => $val) {
+                            if ($val['Id'] == $v['GoodsID']) {
+                                $GiveInfo[$k]['Code'] = $val['Code'];
+                                $GiveInfo[$k]['GetNum'] = $val['GetNum'];
+                                $GiveInfo[$k]['Name'] = $val['Name'];
+                            }
+                        }
+                    }
+                }
+            }
             $data = array(
-                'FatherID'      =>  I('param.Id',0,'intval'),
-                'SonTitle'      =>  I('param.SonTitle','','trim'),
-                'Schedule'      =>  I('param.Schedule',0,'intval'),
-                'ImgCode'       =>  I('param.ImgCode','','trim'),
-                'GiveInfo'      =>  json_encode($GiveInfo) ,
-                'Sort'          =>  I('param.Sort',0,'intval'),
-                'TypeCode'      =>  I('param.TypeCode',0,'intval'),
-                'Explain'       =>  I('param.Explain','','trim'),
-                'Jump'          =>  I('param.Jump',0,'intval'),
-                'ConfStatus'    =>  I('param.ConfStatus',0,'intval'),
-                'Aname'         =>  $UsersInfo['name'],
-                'Aid'           =>  $UsersInfo['id'],
+                'FatherID' => I('param.Id', 0, 'intval'),
+                'SonTitle' => I('param.SonTitle', '', 'trim'),
+                'Schedule' => I('param.Schedule', 0, 'intval'),
+                'ImgCode' => I('param.ImgCode', '', 'trim'),
+                'GiveInfo' => json_encode($GiveInfo),
+                'Sort' => I('param.Sort', 0, 'intval'),
+                'TypeCode' => I('param.TypeCode', 0, 'intval'),
+                'Explain' => I('param.Explain', '', 'trim'),
+                'Jump' => I('param.Jump', 0, 'intval'),
+                'ConfStatus' => I('param.ConfStatus', 0, 'intval'),
+                'Aname' => $UsersInfo['name'],
+                'Aid' => $UsersInfo['id'],
             );
             $addData = M('conf_activity_son')->add($data);
-            if($addData){
-                $Obj->showmessage('添加成功','back');
-            }else{
+            if ($addData) {
+                $Obj->showmessage('添加成功', 'back');
+            } else {
                 $Obj->showmessage('添加失败');
             }
         }
@@ -421,6 +447,32 @@ class ActivityConfigController extends ComController {
             ))->select();
         if(IS_POST){
             $GiveInfo       = I('param.GiveInfo','','trim');
+            if (!empty($GiveInfo)) {
+                $GoodsID = array();
+                foreach ($GiveInfo as $k => $v) $GoodsID[$v['GoodsID']] = $v['GoodsID'];
+                $GoodsID = implode(',', $GoodsID);
+                if (!empty($GoodsID)) {
+                    //查询物品
+                    $catGoodsInfo = M('jy_goods_all')
+                        ->field(array(
+                            'Code',
+                            'Id',
+                            'GetNum',
+                            'Name',
+                        ))
+                        ->where('Id in (' . $GoodsID . ')  and  IsDel = 1')
+                        ->select();
+                    foreach ($GiveInfo as $k => $v) {
+                        foreach ($catGoodsInfo as $key => $val) {
+                            if ($val['Id'] == $v['GoodsID']) {
+                                $GiveInfo[$k]['Code'] = $val['Code'];
+                                $GiveInfo[$k]['GetNum'] = $val['GetNum'];
+                                $GiveInfo[$k]['Name'] = $val['Name'];
+                            }
+                        }
+                    }
+                }
+            }
             $data = array(
                 'FatherID'      =>  I('param.Id',0,'intval'),
                 'SonTitle'      =>  I('param.SonTitle','','trim'),
@@ -500,7 +552,34 @@ class ActivityConfigController extends ComController {
         if(IS_POST){
             $GiveInfo       = I('param.GiveInfo','','trim');
 
-            dump($GiveInfo);
+
+
+            if (!empty($GiveInfo)) {
+                $GoodsID = array();
+                foreach ($GiveInfo as $k => $v) $GoodsID[$v['GoodsID']] = $v['GoodsID'];
+                $GoodsID = implode(',', $GoodsID);
+                if (!empty($GoodsID)) {
+                    //查询物品
+                    $catGoodsInfo = M('jy_goods_all')
+                        ->field(array(
+                            'Code',
+                            'Id',
+                            'GetNum',
+                            'Name',
+                        ))
+                        ->where('Id in (' . $GoodsID . ')  and  IsDel = 1')
+                        ->select();
+                    foreach ($GiveInfo as $k => $v) {
+                        foreach ($catGoodsInfo as $key => $val) {
+                            if ($val['Id'] == $v['GoodsID']) {
+                                $GiveInfo[$k]['Code'] = $val['Code'];
+                                $GiveInfo[$k]['GetNum'] = $val['GetNum'];
+                                $GiveInfo[$k]['Name'] = $val['Name'];
+                            }
+                        }
+                    }
+                }
+            }
             $data = array(
                 'SonTitle'      =>  I('param.SonTitle','','trim'),
                 'Schedule'      =>  I('param.Schedule',0,'intval'),
@@ -572,7 +651,32 @@ class ActivityConfigController extends ComController {
             ->find();
         if(IS_POST){
             $GiveInfo       = I('param.GiveInfo','','trim');
-            dump($GiveInfo);
+            if (!empty($GiveInfo)) {
+                $GoodsID = array();
+                foreach ($GiveInfo as $k => $v) $GoodsID[$v['GoodsID']] = $v['GoodsID'];
+                $GoodsID = implode(',', $GoodsID);
+                if (!empty($GoodsID)) {
+                    //查询物品
+                    $catGoodsInfo = M('jy_goods_all')
+                        ->field(array(
+                            'Code',
+                            'Id',
+                            'GetNum',
+                            'Name',
+                        ))
+                        ->where('Id in (' . $GoodsID . ')  and  IsDel = 1')
+                        ->select();
+                    foreach ($GiveInfo as $k => $v) {
+                        foreach ($catGoodsInfo as $key => $val) {
+                            if ($val['Id'] == $v['GoodsID']) {
+                                $GiveInfo[$k]['Code'] = $val['Code'];
+                                $GiveInfo[$k]['GetNum'] = $val['GetNum'];
+                                $GiveInfo[$k]['Name'] = $val['Name'];
+                            }
+                        }
+                    }
+                }
+            }
             $data = array(
                 'SonTitle'      =>  I('param.SonTitle','','trim'),
                 'Schedule'      =>  I('param.Schedule',0,'intval'),

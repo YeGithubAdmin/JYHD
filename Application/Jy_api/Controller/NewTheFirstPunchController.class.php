@@ -17,7 +17,8 @@ use Think\Controller;
 use Think\Model;
 class NewTheFirstPunchController extends ComController {
     public function index(){
-       $DataInfo       =       $this->DataInfo;
+        $DataInfo       =       $this->DataInfo;
+        $channelid      =       $this->channelid;
         $msgArr         =       $this->msgArr;
         $obj    = new \Common\Lib\func();
         $result = 2001;
@@ -33,9 +34,29 @@ class NewTheFirstPunchController extends ComController {
             goto response;
         }
         $MoreThan =  $playerid%10;
+
+
+        //渠道信息
+        $ChannelInfo = $this->channeinfo;
+        if($ChannelInfo['isown'] == 2){
+            $Channel = $channelid;
+        }else{
+            if($ChannelInfo['IsCp'] == 1){
+                $Channel = $channelid;
+            }else{
+                $CatChannelData  = M('jy_admin_users')->where('account = "'.$ChannelInfo['CpChannel'].'"')->field('id')->find();
+                if(empty($CatChannelData)){
+                    $result = 5002;
+                    goto  response;
+                }
+                $Channel = $CatChannelData['id'];
+
+            }
+        }
         //查询物品信息
         $catGoods = M('conf_novice_pack as a')
             ->join('jy_goods_all as b on  a.`GoodsID` = b.`Id` and `IsDel` = 1')
+            ->join('jy_channel_goods as c on c.`goodsID` = a.`GoodsID` and  c.`adminUserID` = '.$Channel)
             ->field(array(
                 'b.Id',
                 'b.Name',

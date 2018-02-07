@@ -41,7 +41,7 @@ class ActivityCenterController extends ComController {
         //累计炮倍
         if($StyleData[1]){
             //获取炮倍信息
-            $DoubleGunInfo = $ActivityCenter->DoubleGunInfo($playerid,$DataInfo['version'],$StyleData[1]['ShowStartTime'],$StyleData[1]['ShowEndTime']);
+            $DoubleGunInfo = $ActivityCenter->DoubleGunInfo($playerid,$DataInfo['version'],strtotime($StyleData[1]['ShowStartTime']),strtotime($StyleData[1]['ShowEndTime']));
             if($DoubleGunInfo === false){
                 $result = 3002;
                 goto response;
@@ -74,20 +74,32 @@ class ActivityCenterController extends ComController {
                 $DReceiveStatus  = $ActivityCenter->ReceiveStatus($playerid,$StyleData[4]['ShowStartTime'],$StyleData[1]['ShowEndTime']);
             }
         }
+
+
+        //获取用户已查看的活动
+
+        $catUsersSon = $ActivityCenter->catUsersSon($playerid);
+
         foreach ($ActivityList as $k=>$v){
-            $DataSon = array();
+            $DataSon    = array();
+
+            $strtotimeStart = strtotime($v['ShowStartTime']);
+            $strtotimeEnd   = strtotime($v['ShowEndTime']);
             $ShowStartTime  = array(
-                'year'=>date('Y',$v['ShowStartTime']),
-                'month'=>date('m',$v['ShowStartTime']),
-                'day'=>date('d',$v['ShowStartTime']),
-                'dateTime'=>date('H:i',$v['ShowStartTime']),
+                'year'=>date('Y',$strtotimeStart),
+                'month'=>date('m',$strtotimeStart),
+                'day'=>date('d',$strtotimeStart),
+                'dateTime'=>date('H:i',$strtotimeStart),
             );
             $ShowEndTime = array(
-                'year'=>date('Y',$v['ShowEndTime']),
-                'month'=>date('m',$v['ShowEndTime']),
-                'day'=>date('d',$v['ShowEndTime']),
-                'dateTime'=>date('H:i',$v['ShowEndTime']),
+                'year'=>date('Y',$strtotimeEnd),
+                'month'=>date('m',$strtotimeEnd),
+                'day'=>date('d',$strtotimeEnd),
+                'dateTime'=>date('H:i',$strtotimeEnd),
             );
+            if($catUsersSon[$v['SonId']]){
+                $ActivityListSort[$v['Id']]['IsCat'][]          = $v['SonId'];
+            }
             switch ($v['Style']){
                 //炮台
                 case 1:
@@ -116,15 +128,24 @@ class ActivityCenterController extends ComController {
                     $DataSon['Explain']                        = $v['Explain'];
                     $DataSon['Jump']                           = $v['Jump'];
                     $DataSon['TypeCode']                       = $v['TypeCode'];
-                    $DataSon['ActivityId']                             = $v['SonId'];
-                    $ActivityListSort[$v['Id']]['AbroadTitle'] = $v['AbroadTitle'];
-                    $ActivityListSort[$v['Id']]['WithinTitle'] = $v['WithinTitle'];
-                    $ActivityListSort[$v['Id']]['Sort']        = $v['Sort'];
-                    $ActivityListSort[$v['Id']]['Style']       = $v['Style'];
-                    $ActivityListSort[$v['Id']]['Hot']         = $v['Hot'];
-                    $ActivityListSort[$v['Id']]['ShowStartTime']         = $ShowStartTime;
-                    $ActivityListSort[$v['Id']]['ShowEndTime']         = $ShowEndTime;
-                    $ActivityListSort[$v['Id']]['DataSon'][]   = $DataSon ;
+                    $DataSon['ActivityId']                     = $v['SonId'];
+                    $DataSon['Advance']                        = "0";
+                    $ActivityListSort[$v['Id']]['AbroadTitle']      = $v['AbroadTitle'];
+                    $ActivityListSort[$v['Id']]['WithinTitle']      = $v['WithinTitle'];
+                    $ActivityListSort[$v['Id']]['Sort']             = $v['Sort'];
+                    $ActivityListSort[$v['Id']]['Style']            = $v['Style'];
+                    $ActivityListSort[$v['Id']]['Hot']              = $v['Hot'];
+                    $ActivityListSort[$v['Id']]['FatherID']         = $v['Id'];
+                    $ActivityListSort[$v['Id']]['ShowStartTime']    = $ShowStartTime;
+                    $ActivityListSort[$v['Id']]['ShowEndTime']      = $ShowEndTime;
+                    $ActivityListSort[$v['Id']]['DataSon'][]        = $DataSon ;
+
+                    if($Status == 2){
+                        $ActivityListSort[$v['Id']]['DataStatus'][]        = $v['SonId'] ;
+                    }
+
+
+
                     break;
                 //渔场
                 case 2:
@@ -132,8 +153,6 @@ class ActivityCenterController extends ComController {
                 //累计充值
                 case 3:
                     $Num  = $ReceiveStatus[$v['SonId']]['Num'] ? $ReceiveStatus[$v['SonId']]['Num']:0 ;
-                    $Status = 1;
-                    if($v['TypeCode'] == 3001){
                         if($UserPayPrice >= $v['Schedule'] && $Num <= 0 ){
                             $Status = 2;
                         }else if($UserPayPrice >= $v['Schedule'] && $Num > 0 ){
@@ -141,12 +160,9 @@ class ActivityCenterController extends ComController {
                         }else{
                             $Status = 1;
                         }
-                    }
+
                     //组装
                     $GiveInfo = array();
-
-
-
                     foreach (json_decode($v['GiveInfo'],true) as $key=>$val){
                         $GiveInfo[$key]['ImgCode']   = $val['ImgCode'];
                         $GiveInfo[$key]['GoodsName'] = $val['GoodsName'];
@@ -164,17 +180,23 @@ class ActivityCenterController extends ComController {
                     $DataSon['TypeCode']                       = $v['TypeCode'];
                     $DataSon['ActivityId']                     = $v['SonId'];
                     $DataSon['Advance']                        = $UserPayPrice;
-                    $ActivityListSort[$v['Id']]['AbroadTitle'] = $v['AbroadTitle'];
-                    $ActivityListSort[$v['Id']]['WithinTitle'] = $v['WithinTitle'];
-                    $ActivityListSort[$v['Id']]['Sort']        = $v['Sort'];
-                    $ActivityListSort[$v['Id']]['Style']       = $v['Style'];
-                    $ActivityListSort[$v['Id']]['ShowStartTime']         = $ShowStartTime;
-                    $ActivityListSort[$v['Id']]['ShowEndTime']         = $ShowEndTime;
-                    $ActivityListSort[$v['Id']]['DataSon'][]   = $DataSon ;
+                    $ActivityListSort[$v['Id']]['AbroadTitle']      = $v['AbroadTitle'];
+                    $ActivityListSort[$v['Id']]['WithinTitle']      = $v['WithinTitle'];
+                    $ActivityListSort[$v['Id']]['Sort']             = $v['Sort'];
+                    $ActivityListSort[$v['Id']]['Style']            = $v['Style'];
+                    $ActivityListSort[$v['Id']]['Hot']              = $v['Hot'];
+                    $ActivityListSort[$v['Id']]['FatherID']         = $v['Id'];
+                    $ActivityListSort[$v['Id']]['ShowStartTime']    = $ShowStartTime;
+                    $ActivityListSort[$v['Id']]['ShowEndTime']      = $ShowEndTime;
+                    $ActivityListSort[$v['Id']]['DataSon'][]        = $DataSon;
+                    if($Status == 2){
+                        $ActivityListSort[$v['Id']]['DataStatus'][]        = $v['SonId'] ;
+                    }
                     break;
                 //抽奖
                 case 4:
-                    $DNum  = $DReceiveStatus[$v['ActSonId']]['Num'] ?$DReceiveStatus[$v['ActSonId']]['Num']:0 ;
+                    $DNum  = $DReceiveStatus[$v['SonId']]['Num'] ?$DReceiveStatus[$v['SonId']]['Num']:0 ;
+
                     $Status          = 1;
                     $LuckdrawInfoNum = 0;
                     if($v['TypeCode'] == 4001){
@@ -209,15 +231,21 @@ class ActivityCenterController extends ComController {
                     $DataSon['Explain']          = $v['Explain'];
                     $DataSon['Jump']             = $v['Jump'];
                     $DataSon['TypeCode']         = $v['TypeCode'];
-                    $DataSon['ActivityId']               = $v['SonId'];
+                    $DataSon['ActivityId']       = $v['SonId'];
                     $DataSon['LuckdrawInfoNum']  = $LuckdrawInfoNum;
-                    $ActivityListSort[$v['Id']]['AbroadTitle'] = $v['AbroadTitle'];
-                    $ActivityListSort[$v['Id']]['WithinTitle'] = $v['WithinTitle'];
-                    $ActivityListSort[$v['Id']]['Sort']        = $v['Sort'];
-                    $ActivityListSort[$v['Id']]['Style']       = $v['Style'];
-                    $ActivityListSort[$v['Id']]['ShowStartTime']         = $ShowStartTime;
-                    $ActivityListSort[$v['Id']]['ShowEndTime']         = $ShowEndTime;
-                    $ActivityListSort[$v['Id']]['DataSon'][]   = $DataSon ;
+                    $DataSon['Advance']          = "0";
+                    $ActivityListSort[$v['Id']]['AbroadTitle']      = $v['AbroadTitle'];
+                    $ActivityListSort[$v['Id']]['WithinTitle']      = $v['WithinTitle'];
+                    $ActivityListSort[$v['Id']]['Sort']             = $v['Sort'];
+                    $ActivityListSort[$v['Id']]['Hot']              = $v['Hot'];
+                    $ActivityListSort[$v['Id']]['Style']            = $v['Style'];
+                    $ActivityListSort[$v['Id']]['FatherID']         = $v['Id'];
+                    $ActivityListSort[$v['Id']]['ShowStartTime']    = $ShowStartTime;
+                    $ActivityListSort[$v['Id']]['ShowEndTime']      = $ShowEndTime;
+                    $ActivityListSort[$v['Id']]['DataSon'][]        = $DataSon ;
+                    if($Status == 2){
+                        $ActivityListSort[$v['Id']]['DataStatus'][]        = $v['SonId'] ;
+                    }
                     break;
                 //图片
                 case 5:
@@ -226,16 +254,27 @@ class ActivityCenterController extends ComController {
                     $ActivityListSort[$v['Id']]['WithinTitle'] = $v['WithinTitle'];
                     $ActivityListSort[$v['Id']]['Sort']        = $v['Sort'];
                     $ActivityListSort[$v['Id']]['Style']       = $v['Style'];
+                    $ActivityListSort[$v['Id']]['Hot']         = $v['Hot'];
                     $DataSon['ImgCode']                        = $v['ImgCode'];
                     $DataSon['TypeCode']                       = $v['TypeCode'];
                     $DataSon['Explain']                        = $v['Explain'];
                     $DataSon['Jump']                           = $v['Jump'];
-                    $ActivityListSort[$v['Id']]['ShowStartTime']         = $ShowStartTime;
-                    $ActivityListSort[$v['Id']]['ShowEndTime']         = $ShowEndTime;
-                    $ActivityListSort[$v['Id']]['DataSon'][]   = $DataSon ;
+                    $DataSon['Advance']                        = "0";
+                    $ActivityListSort[$v['Id']]['ShowStartTime']      = $ShowStartTime;
+                    $ActivityListSort[$v['Id']]['ShowEndTime']        = $ShowEndTime;
+                    $ActivityListSort[$v['Id']]['FatherID']           = $v['Id'];
+                    $ActivityListSort[$v['Id']]['DataSon'][]          = $DataSon;
                     break;
             }
         }
+        foreach ($ActivityListSort as $k=>$v){
+            if(count($v['DataSon']) == count($v['IsCat']) && empty($v['DataStatus']) ){
+                $ActivityListSort[$k]['IsCat'] = 2;
+            }else{
+                $ActivityListSort[$k]['IsCat'] = 1;
+            }
+        }
+
         //排序
         $ActivityListSort =  array_values($ActivityListSort);
         $column           =  array_column($ActivityListSort,'Sort');
@@ -293,7 +332,7 @@ class ActivityCenterController extends ComController {
         switch ($Style){
             //炮倍
             case 1:
-                $DoubleGunInfo = $ActivityCenter->DoubleGunInfo($playerid,$DataInfo['version'],$SingleActivityInfo['ShowStartTime'],$SingleActivityInfo['ShowEndTime']);
+                $DoubleGunInfo = $ActivityCenter->DoubleGunInfo($playerid,$DataInfo['version'],strtotime($SingleActivityInfo['ShowStartTime']),strtotime($SingleActivityInfo['ShowEndTime']));
                 if(!$DoubleGunInfo){
                     $result = 3004;
                     goto response;
@@ -304,7 +343,10 @@ class ActivityCenterController extends ComController {
                      $result = 7004;
                      goto response;
                 }
-                if($DReceiveStatus > 0){
+
+                $DReceiveStatusNum = $DReceiveStatus[$ActivityId]['Num']?$DReceiveStatus[$ActivityId]['Num']:0;
+
+                if($DReceiveStatusNum > 0){
                      $result = 7005;
                      goto response;
                 }
@@ -318,7 +360,7 @@ class ActivityCenterController extends ComController {
                 $StartTime      = date('Y-m-d H:i:s',$Time);
                 $EndTime        = date('Y-m-d H:i:s',$Time+24*60*60);
                 //查询领取奖励想
-                if($TypeCode == 3001){
+
                     //查看充值
                     $UsersPay   =$ActivityCenter->UsersPay($playerid,$StartTime,$EndTime);
                     $UserPayPrice   = $UsersPay[0]['Price']?$UsersPay[0]['Price']:0;
@@ -334,7 +376,7 @@ class ActivityCenterController extends ComController {
                         $result = 7003;
                         goto response;
                     }
-                }
+
                 break;
             default:
                 $result = 5003;
@@ -443,7 +485,7 @@ class ActivityCenterController extends ComController {
             goto  response;
         }
         //当天领奖情况
-        $ReceiveStatus  = $ActivityCenter->ReceiveStatus($playerid);
+        $ReceiveStatus  = $ActivityCenter->ReceiveStatus($playerid,$SingleActivityInfo['ShowStartTime'],$SingleActivityInfo['ShowEndTime']);
         $ReceiveNum     = $ReceiveStatus[$ActivityId]['Num'] ?$ReceiveStatus[$ActivityId]['Num']:0 ;
         //查看充值
         $UsersPay   =$ActivityCenter->UsersPay($playerid,$SingleActivityInfo['ShowStartTime'],$SingleActivityInfo['ShowEndTime']);
@@ -453,16 +495,18 @@ class ActivityCenterController extends ComController {
             $result = 7002;
             goto response;
         }
+        $GiveSort           =  array_values(json_decode($SingleActivityInfo['GiveInfo'],true));
+        $column             =  array_column($GiveSort,'Sort');
+        array_multisort($column,SORT_ASC,$GiveSort);
         //查询抽奖内容
-        $LuckdrawInfo = json_decode($SingleActivityInfo['GiveInfo'],'true');
+        $LuckdrawInfo =  $GiveSort ;
         if(empty($LuckdrawInfo)){
             $result = 5004;
             goto response;
         }
         //抽奖
-        $GetLuckDraw = $ActivityCenter->GetLuckDraw($LuckdrawInfo);
-
-
+        $Index= $ActivityCenter->GetLuckDraw($LuckdrawInfo);
+        $GetLuckDraw = $LuckdrawInfo[$Index];
         if(empty($GetLuckDraw)){
             $result = 5005;
             goto response;
@@ -506,7 +550,14 @@ class ActivityCenterController extends ComController {
         }
         if($GetLuckDraw['Type']>3){
             //发送邮件
-            $DataEmail = '';
+            $DataEmail = '亲爱的玩家:
+            
+           恭喜您在幸运转转乐中获得'.$GetLuckDraw['Name'].' X'.$GetLuckDraw['GoodsName'].'，请联系我们客服MM（游戏大厅左下角“鱼锚”处）进行领取。
+
+
+
+                                      '.date('Y年m月d日',time()).'
+                                      巨翼互动运营团队';
             $UserProto = $ActivityCenter->SenEmail($playerid,$DataInfo['version'],$DataEmail);
         }else{
             //添加物品
@@ -517,7 +568,11 @@ class ActivityCenterController extends ComController {
             $result = 3002;
             goto response;
         }else{
-            $info = $GoodsData;
+            $info['Index']  = $Index ;
+            $info['Type']   = $GetLuckDraw['Type'] ;
+            $info['Code']   = $GetLuckDraw['Code'] ;
+            $info['ImgCode']   = $GetLuckDraw['ImgCode'] ;
+            $info['Number'] = $GetLuckDraw['Number']*$GetLuckDraw['GetNum'] ;
             $Model->commit();
         }
 
@@ -532,11 +587,49 @@ class ActivityCenterController extends ComController {
         $this->response($response,'json');
 
     }
+    public function CatSon(){
+        $DataInfo       =       $this->DataInfo;
+        $msgArr         =       $this->msgArr;
+        $result = 2001;
+        $info   =  array();
+        $msgArr[3001] = "网络错误，请稍后子再试！";
+        $msgArr[4006] = "用户信息缺失！";
+        $msgArr[4007] = "父级ID缺失！";
+        $playerid       =      $DataInfo['playerid'];
+        $FatherID       =      $DataInfo['FatherID'];
+        if(empty($playerid)){
+            $result = 4006;
+            goto response;
+        }
 
+        if(empty($FatherID)){
+            $result = 4007;
+            goto response;
+        }
 
+        $ActivityCenter =      D('ActivityCenter');
+        $catSonInfo = $ActivityCenter->catSonInfo($FatherID);
+        foreach ($catSonInfo as $k=>$v){
+            $catSonInfo[$k]['FatherID'] = $FatherID;
+            $catSonInfo[$k]['playerid'] = $playerid;
+        }
+        $addDta = true;
+        if(!empty($catSonInfo)){
+            $addDta = M('log_cat_activity')
+                      ->addAll($catSonInfo);
+        }
+        if(!$addDta){
+            $result = 3001;
+            goto response;
+        }
+        response:
+        $response = array(
+            'result' => $result,
+            'msg' => $msgArr[$result],
+            'sessionid'=>$DataInfo['sessionid'],
+            'data' => $info,
+        );
+        $this->response($response,'json');
 
-
-
-
-
+    }
 }
