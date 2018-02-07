@@ -278,7 +278,10 @@ class ActivityCenterController extends ComController {
         //排序
         $ActivityListSort =  array_values($ActivityListSort);
         $column           =  array_column($ActivityListSort,'Sort');
-        array_multisort($column,SORT_ASC,$ActivityListSort);
+
+        $StyleSort        =  array_column($ActivityListSort,'Style');
+
+        array_multisort($column,SORT_ASC,$StyleSort,SORT_ASC,$ActivityListSort);
         $info = $ActivityListSort;
         response:
             $response = array(
