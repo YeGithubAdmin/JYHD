@@ -44,6 +44,8 @@ class NoticeController extends ComController {
             'a.Remark',
             'b.name',
             'a.Status',
+            'a.Btime',
+            'unix_timestamp(a.Btime)-now() as IsBe',
             'a.DateTime',
             'a.Id',
         );

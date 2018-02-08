@@ -67,13 +67,17 @@
 			<thead>
 				<tr class="text-c">
 				    <th width="10">id</th>
-					<th width="60">渠道</th>
-					<th width="60">公告内容</th>
+					<th width="20">渠道</th>
+					<th width="10">公告内容</th>
 					<th width="60">标题</th>
-					<th width="60">是否已发布</th>
+					<th width="10">是否已发布</th>
+					<th width="10">是否已过期</th>
 					<th width="100">备注</th>
-					<th width="60">创建时间</th>
-					<th width="100">操作</th>
+					<th width="30">过期时间</th>
+					<th width="30">创建时间</th>
+					<th width="5">发布</th>
+					<th width="5">修改</th>
+					<th width="5">删除</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -88,18 +92,36 @@
 								condition="$val['Status'] eq 2">是<else/>否</if>
 							</span>
 						</td>
+
+
+						<td class="td-status" ><span
+								class="<if condition ="$val['IsBe'] lt 0" >label label-danger radius<else/>label label-success radius</if>"><if
+								condition="$val['IsBe'] lt 0">是<else/>否</if>
+							</span>
+						</td>
+
+
 						<td>{$val['Remark']}</td>
+						<td>{$val['Btime']}</td>
 						<td>{$val['DateTime']}</td>
+
 						<td class="td-manage">
 							<a style="text-decoration: none"
 							   onClick="<if condition="$val['Status'] eq 2" >Notice_stop<else/>Notice_start</if>(this, '{$val['Id']}')"
 							href="javascript:;"
 							title="<if  condition = "$val['Status'] eq 1" >发布<else/>撤销</if>"> <i
 								class="Hui-iconfont"><if condition ="$val['Status'] eq 1" >&#xe631;<else/>&#xe615;</if></i>
-							</a> <a title="编辑" href="javascript:;"
-									onclick="Notice_edit('编辑','/jy_admin/Notice/edit/Id/{$val['Id']}','','510')"
-									class="ml-5" style="text-decoration: none"><i
-								class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"
+							</a>
+						</td>
+
+						<td>
+							<a title="编辑" href="javascript:;"
+							   onclick="Notice_edit('编辑','/jy_admin/Notice/edit/Id/{$val['Id']}','','510')"
+							   class="ml-5" style="text-decoration: none"><i
+									class="Hui-iconfont">&#xe6df;</i></a>
+						</td>
+						<td>
+							 <a title="删除"
 																		 href="javascript:;" onclick="Notice_del(this,'{$val['Id']}')"
 																		 class="ml-5" style="text-decoration: none"><i
 								class="Hui-iconfont">&#xe6e2;</i>
