@@ -32,7 +32,7 @@ class NoticeController extends ComController {
         );
         $ChannelID =  $this->channelid;
         $catGameNotice = M('jy_game_notice')
-                         ->where(' Channel = '.$ChannelID.'  and Status = 2 and Btime > str_to_date("'.$dateTime.'","%Y-%m-%d %H:%i:%s")')
+                         ->where(' Channel = '.$ChannelID.'  and Status = 2 and Btime > str_to_date("'.$dateTime.'","%Y-%m-%d %H:%i:%s") or  Channel = 0  and Status = 2 and Btime > str_to_date("'.$dateTime.'","%Y-%m-%d %H:%i:%s")')
                          ->field($catGameNoticeField)
                          ->order('Sort desc','Num asc')
                          ->limit(0,10)
