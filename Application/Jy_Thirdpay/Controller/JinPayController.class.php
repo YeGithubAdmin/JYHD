@@ -134,25 +134,7 @@ class JinPayController extends Controller {
             $result = 5003;
             goto OrderSave;
         }
-
-        /**
-         * 服务器查询
-         * statr
-         */
-        $dataJinpayLog = array(
-            'api_key'=>$dataThirdpay['api_key'],
-            'close_time'=>$dataThirdpay['close_time'],
-            'create_time'=>$dataThirdpay['create_time'],
-            'deal_price'=>$dataThirdpay['deal_price'],
-            'out_order_no'=>$dataThirdpay['out_order_no'],
-            'pay_channel'=>$dataThirdpay['pay_channel'],
-            'submit_time'=>$dataThirdpay['submit_time'],
-            'user_id'=>$dataThirdpay['user_id'],
-            'sign'=>$dataThirdpay['sign'],
-            'DateTime'=>$dataThirdpay['DateTime'],
-        );
-        $addJinpayLog = M('jy_jinpay_log')->add($dataJinpayLog);
-
+        
         $ObjFun->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',

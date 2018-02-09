@@ -7,6 +7,7 @@
 		\D('') => [
 			'VivoLogin' instanceof Jy_api\Model\VivoLoginModel,
 			'Mongo' instanceof Think\Model\MongoModel,
+			'RedCard' instanceof jy_admin\Model\RedCardModel,
 			'MiniGame' instanceof jy_admin\Model\MiniGameModel,
 			'WaterMargin' instanceof jy_admin\Model\WaterMarginModel,
 			'HuaWeiLogin' instanceof Jy_api\Model\HuaWeiLoginModel,
