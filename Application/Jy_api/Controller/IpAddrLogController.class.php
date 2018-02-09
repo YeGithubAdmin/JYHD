@@ -66,7 +66,6 @@ class IpAddrLogController extends Controller {
         $response = array(
             'result' => $result,
             'msg' => $msgArr[$result],
-            'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
         echo json_encode($response);

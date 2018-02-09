@@ -174,6 +174,8 @@ class ActivityCenterModel extends Model{
             ))
             ->group('Id')
             ->select();
+        $catDataSort = array();
+
         foreach ($catData as $k=>$v) $catDataSort[$v['Id']] = $v;
         return $catDataSort;
 
@@ -199,6 +201,8 @@ class ActivityCenterModel extends Model{
             ))
             ->group('Id')
             ->select();
+        $catDataSort = array();
+
         foreach ($catData as $k=>$v) $catDataSort[$v['Id']] = $v;
         return $catDataSort;
 
