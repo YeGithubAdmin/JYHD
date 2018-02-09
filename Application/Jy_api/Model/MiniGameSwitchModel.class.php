@@ -32,7 +32,6 @@ class MiniGameSwitchModel extends \Common\Model\ComFunModel {
         }
     }
      public function  getUserInfo($playerid,$obj,$version){
-        error_reporting(0);
          $PBS_UsrDataOprater = new PBS_UsrDataOprater();
          $UsrDataOpt         = new  UsrDataOpt();
          $OptSrc             = new  OptSrc();
@@ -54,14 +53,8 @@ class MiniGameSwitchModel extends \Common\Model\ComFunModel {
          }
          //接受回应
          $PBS_UsrDataOpraterReturn =  new  PBS_UsrDataOpraterReturn();
-         try{
-             @$PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
-             @$ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
-         }catch (Exception $exception){
-             return false;
-         }
-
-
+         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
+         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
          //判断结果
          if($ReplyCode != 1){
             return false;
