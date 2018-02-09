@@ -237,7 +237,7 @@ class NovicePackController extends ComController {
         $db = M('jy_novice_pack_log');
         $addNovicePackLog = $db
                             ->addAll($CardGoodsInfo);
-
+        
         if(!$addNovicePackLog){
             $result = 3001;
             goto response;
