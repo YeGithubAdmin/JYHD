@@ -200,7 +200,7 @@ class ActivityCenterController extends ComController {
                     $Status          = 1;
                     $LuckdrawInfoNum = 0;
                     if($v['TypeCode'] == 4001){
-                        $LuckdrawInfoNum =  floor($DUserPayPrice/$v['Schedule'])-$DNum;
+                        $LuckdrawInfoNum =  (floor($DUserPayPrice/$v['Schedule'])-$DNum)<0?0:(floor($DUserPayPrice/$v['Schedule'])-$DNum);
                         if($LuckdrawInfoNum != 0){
                             $Status = 2;
                         }else{
