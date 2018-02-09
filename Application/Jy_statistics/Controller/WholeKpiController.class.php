@@ -66,12 +66,44 @@ class WholeKpiController extends ComController {
                 }
             }
         }
+
+        $allData = array();
+        //汇总
+
+        foreach ($info as $k=>$v){
+            $allData['EquipmentActNum'] += $v['EquipmentActNum'];
+            $allData['ActiveNum']       += $v['ActiveNum'];
+            $allData['EquipmentRegNum'] += $v['EquipmentRegNum'];
+            $allData['RegNum']          += $v['RegNum'];
+            $allData['UsersOneNum']     += $v['UsersOneNum'];
+            $allData['UsersThreeNum']   += $v['UsersThreeNum'];
+            $allData['UsersSevenNum']   += $v['UsersSevenNum'];
+            $allData['UserPayNum']      += $v['UserPayNum'];
+            $allData['First']           += $v['First'];
+            $allData['TotalMoney'] += $v['TotalMoney'];
+            $allData['ActiveArppu'] += $v['ActiveArppu'];
+            $allData['PayArppu'] += $v['PayArppu'];
+
+        }
+
+            $allData['EquipmentActNum']     = $allData['EquipmentActNum']/count($info);
+            $allData['ActiveNum']           = $allData['ActiveNum']/count($info);
+            $allData['EquipmentRegNum']     = $allData['EquipmentRegNum']/count($info);
+            $allData['RegNum']              = $allData['RegNum']/count($info);
+            $allData['UsersOneNum']         = $allData['UsersOneNum']/count($info);
+            $allData['UsersThreeNum']       = $allData['UsersThreeNum']/count($info);
+            $allData['UsersSevenNum']       = $allData['UsersSevenNum']/count($info);
+            $allData['UserPayNum']          = $allData['UserPayNum']/count($info);
+            $allData['First']               = $allData['First']/count($info);
+            $allData['ActiveArppu']         = $allData['ActiveArppu']/count($info);
+            $allData['PayArppu']            = $allData['PayArppu']/count($info);
         $Page       = new \Common\Lib\Page($countNum,$search['num']);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
         $this->assign('search',$search);
         $this->assign('page',$show);
         $this->assign('info',$info);
         $this->assign('count',$count);
+        $this->assign('allData',$allData);
         $this->display('index');
     }
     //到出excel

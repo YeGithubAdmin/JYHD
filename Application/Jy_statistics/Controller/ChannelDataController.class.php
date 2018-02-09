@@ -217,7 +217,22 @@ class ChannelDataController extends ComController {
             $Sheet->setCellValue('B'.$i,$v['name']);
             $Sheet->setCellValue('C'.$i,$v['t']);
             if($channel == 2){
-                $Sheet->setCellValue('D'.$i,$v['EquipmentRegNum']);
+
+
+                $GroupChannel = array(
+                    'JYHD_HUAWEI',
+                    'JYHD_MI',
+                    'JYHD_OPPO',
+                    'JYHD_VIVO',
+                );
+
+                //活跃设备
+                if(in_array($v['GroupChannel'],$GroupChannel)){
+                    $Sheet->setCellValue('D'.$i,$v['RegNum']);
+                }else{
+                    $Sheet->setCellValue('D'.$i,$v['EquipmentRegNum']);
+                }
+
                 $Sheet->setCellValue('E'.$i,$v['TotalMoney']);
                 $Sheet->setCellValue('F'.$i,$v['RegArpu']);
                 $Sheet->setCellValue('G'.$i,$v['ActiveArpu']);
@@ -235,7 +250,21 @@ class ChannelDataController extends ComController {
                 $Sheet->setCellValue('S'.$i,$v['UsersThirtyNum']."%");
             }else{
                 $Sheet->setCellValue('D'.$i,$v['RegNum']);
-                $Sheet->setCellValue('E'.$i,$v['EquipmentRegNum']);
+
+
+                $GroupChannel = array(
+                    'JYHD_HUAWEI',
+                    'JYHD_MI',
+                    'JYHD_OPPO',
+                    'JYHD_VIVO',
+                );
+
+                //活跃设备
+                if(in_array($v['GroupChannel'],$GroupChannel)){
+                    $Sheet->setCellValue('E'.$i,$v['RegNum']);
+                }else{
+                    $Sheet->setCellValue('E'.$i,$v['EquipmentRegNum']);
+                }
                 $Sheet->setCellValue('F'.$i,$v['TotalMoney']);
                 $Sheet->setCellValue('G'.$i,$v['RegArpu']);
                 $Sheet->setCellValue('H'.$i,$v['ActiveArpu']);

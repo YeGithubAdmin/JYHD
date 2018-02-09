@@ -238,7 +238,6 @@ class NovicePackController extends ComController {
         $addNovicePackLog = $db
                             ->addAll($CardGoodsInfo);
 
-        echo $db->getError();
         if(!$addNovicePackLog){
             $result = 3001;
             goto response;

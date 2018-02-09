@@ -70,6 +70,48 @@
 			</span>
         </form>
     </div>
+
+
+    <table
+            class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c" >
+            <td  class="panel-header" style="background-color: #5a98de;color: #ffffff" colspan = 12>汇总</td>
+        </tr>
+        <tr class="text-c">
+            <th width="30">活跃用户</th>
+            <th width="30">活跃账号DAU</th>
+            <th width="30">新增用户</th>
+            <th width="30">新增账号</th>
+            <th width="30">次留</th>
+            <th width="30">3日留存</th>
+            <th width="30">7日留存</th>
+            <th width="30">付费总账号</th>
+            <th width="30">新增付费账号</th>
+            <th width="30">付费总额</th>
+            <th width="30">活跃ARPU</th>
+            <th width="30">付费ARPPU</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr class="text-c">
+                <td>{$allData['EquipmentActNum']}</td>
+                <td>{$allData['ActiveNum']}</td>
+                <td>{$allData['EquipmentRegNum']}</td>
+                <td>{$allData['RegNum']}</td>
+                <td>{$allData['UsersOneNum']*100|round=2}%</td>
+                <td>{$allData['UsersThreeNum']*100|round=2}%</td>
+                <td>{$allData['UsersSevenNum']*100|round=2}%</td>
+                <td>{$allData['UserPayNum']}</td>
+                <td>{$allData['First']}</td>
+                <td>{$allData['TotalMoney']|round=2}</td>
+                <td>{$allData['ActiveArppu']|round=2}</td>
+                <td>{$allData['PayArppu']|round=2}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
     <table
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
         <thead>
