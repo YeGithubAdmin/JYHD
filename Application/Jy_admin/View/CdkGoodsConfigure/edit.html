@@ -236,7 +236,9 @@
             var  del       = document.getElementById('del');
             var  index     = my.getAttribute('index');
             index++
-            child.innerHTML +=  parent.innerHTML;
+            var div = document.createElement("div");
+            div.innerHTML = parent.innerHTML;
+            child.appendChild(div);
             var Id 				=  document.getElementsByClassName('Id');
             var Length			=  Id.length;
             var GetNum 			=  document.getElementsByClassName('GetNum');
@@ -255,9 +257,9 @@
         }
         function GiveInfoDel(my) {
             var  child    = document.getElementById('child');
-            var  MyParent = my.parentNode;
+            var  MyParent = my.parentNode.parentNode;
             child.removeChild(MyParent);
-            console.log(MyParent);
+
 
         }
         //选择商品

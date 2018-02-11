@@ -85,7 +85,7 @@
 		</form>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<form action="/Jy_admin/CdkList/excelData" method="get">
-				<input type="hidden" name = "data" value="{$search|json_encode}"/>
+				<textarea  style="display: none;" name = "data">{$search|json_encode}</textarea>
 				<button type="submit" class="btn btn-primary radius" id="" name="">
 					<i class="Hui-iconfont">&#xe600;</i>
 					导出

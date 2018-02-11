@@ -100,6 +100,7 @@ class CdkListController extends ComController {
         }
         $search = json_decode($data,true);
 
+
         $where = '1';
         if($search['Code'] != 0){
             $where .= '  and  `Code`='.$search['Code'];

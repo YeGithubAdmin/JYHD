@@ -68,14 +68,14 @@
 			<label class="form-label col-3"><span class="c-red">*</span>活动时间：</label>
 			<div class="formControls col-1">
 				<input type="text"
-					   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',maxDate:'#F{$dp.$D(\'ShowEndTime\')||\'2080-10-01\'}'})</literal>"
+					   onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00',startDate:'%y-%M-%d 00:00:00',maxDate:'#F{$dp.$D(\'ShowEndTime\')||\'2080-10-01\'}'})</literal>"
 					   id="ShowStartTime" value="{$info['ShowStartTime']}" name="ShowStartTime"
 					   class="input-text Wdate"  placeholder="开始时间" style="width: 150px;">
 			</div>
 			<div class="col-1"></div>
 			<div class="formControls col-1">
 				<input  type="text"
-						onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH',minDate:'#F{$dp.$D(\'ShowStartTime\')}',maxDate:'2080-10-01'})</literal>"
+						onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00',minDate:'#F{$dp.$D(\'ShowStartTime\')}',maxDate:'2080-10-01'})</literal>"
 						id="ShowEndTime" value="{$info['ShowEndTime']}" placeholder="结束时间" name="ShowEndTime"
 						class="input-text Wdate" style="width: 150px;">
 			</div>

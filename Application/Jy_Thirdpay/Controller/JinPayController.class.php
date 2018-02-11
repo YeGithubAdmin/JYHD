@@ -134,7 +134,7 @@ class JinPayController extends Controller {
             $result = 5003;
             goto OrderSave;
         }
-        
+
         $ObjFun->ProtobufObj(array(
             'Protos/PBS_UsrDataOprater.php',
             'Protos/PBS_UsrDataOpraterReturn.php',

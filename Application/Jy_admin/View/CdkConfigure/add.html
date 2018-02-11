@@ -67,11 +67,11 @@
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>有效期：</label>
 				<div class="formControls col-1">
-					<input type="text" class="input-text Wdate" value="{$info['Number']}"  placeholder ="起始时间"  onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'EndTime\')||\'2080-10-01\'}'})</literal>" value="{$info['Number']}"
+					<input type="text" class="input-text Wdate" value="{$info['Number']}"  placeholder ="起始时间"  onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00',maxDate:'#F{$dp.$D(\'EndTime\')||\'2080-10-01\'}'})</literal>" value="{$info['Number']}"
 						  id ="StartTime"  name="StartTime"   datatype="*" nullmsg="">
 				</div>
 				<div class="formControls col-1">
-					<input type="text" class="input-text Wdate" onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'StartTime\')}',maxDate:'2080-10-01'})</literal>" value="{$info['Number']}"
+					<input type="text" class="input-text Wdate" onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00',minDate:'#F{$dp.$D(\'StartTime\')}',maxDate:'2080-10-01'})</literal>" value="{$info['Number']}"
 						 id = "EndTime"  name="EndTime" placeholder ="截止时间"  datatype="*" nullmsg="">
 				</div>
 				<div class="col-1"></div>
@@ -205,6 +205,7 @@
                         var obj = JSON.parse(msg);
                         if(obj.result > 0){
                             layer.msg('生成完毕!',{icon:1,time:1000});
+                            Produce.setAttribute('class','btn disabled radius');
                         }else{
                             layer.msg('生成失败!',{icon:1,time:1000});
                         }
