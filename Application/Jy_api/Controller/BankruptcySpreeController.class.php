@@ -26,6 +26,12 @@ class BankruptcySpreeController extends ComController {
         $msgArr[4007] = "物品不存在！";
         $msgArr[4008] = "物品不存在！";
         $playerid = $DataInfo['playerid'];
+        $obj = new  \Common\Lib\func();
+        if(C('ACCESS_lOGS')){
+            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $obj->record_log($dir,'BankruptcySpree.log',json_encode($DataInfo));
+        }
+
         $ComFun = D('ComFun');
         $Status = 2;
         //物品概率
@@ -118,6 +124,7 @@ class BankruptcySpreeController extends ComController {
         $Num = count($logUsersShop);
         $random = 1;  //是否想随机 1 否 2 是
         $BagData = array();
+
         //是超过购买次数
         if($Num ==  2){
             $info['GoodsInfo'] = array();
@@ -132,7 +139,7 @@ class BankruptcySpreeController extends ComController {
                                        'GoodsID'
                                 ))->select();
             $RetaNum = count($BankruptcybagReta);
-            if($RetaNum == 2){
+            if($RetaNum >= 2){
                  //筛选物品
                  foreach ($BankruptcybagReta as $k=>$v) $BankruptcybagRetaSort[$v['Code']] = $v;
                  foreach ($BankruptcybagReta as $k=>$v){
@@ -144,7 +151,10 @@ class BankruptcySpreeController extends ComController {
                             }
                       }
                  }
-            }else if ($RetaNum == 1){
+
+
+
+            }else if ($Num == 1){
                 $random = 2;
             }
         }elseif ($Num == 0){
@@ -155,6 +165,8 @@ class BankruptcySpreeController extends ComController {
                     'Code',
                     'GoodsID'
                 ))->select();
+
+
             $RetaNum = count($BankruptcybagReta);
             $BagData = array();
             if($RetaNum == 1){
@@ -164,6 +176,9 @@ class BankruptcySpreeController extends ComController {
                 $random = 2;
             }
         }
+
+
+
         //是否随机
         if($random == 2){
             foreach ($Rate as $key => $value) {
@@ -201,6 +216,10 @@ class BankruptcySpreeController extends ComController {
                 'sessionid' => $DataInfo['sessionid'],
                 'data'      => $info,
             );
+        if(C('ACCESS_lOGS')){
+            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $obj->record_log($dir,'BankruptcySpree.log',json_encode($response));
+        }
        $this->response($response,'json');
     }
 }

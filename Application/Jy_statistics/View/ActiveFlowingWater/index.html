@@ -22,12 +22,12 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>留存数据</title>
+    <title>整体概况KPI</title>
 </head>
 <body>
 <nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
-    留存分析 <span class="c-gray en">&gt;</span>留存数据 <a
+    <i class="Hui-iconfont">&#xe67f;</i> 运营查询 <span class="c-gray en">&gt;</span>
+    活动数据 <span class="c-gray en">&gt;</span>流水 <a
         class="btn btn-success radius r mr-20"
         style="line-height: 1.6em; margin-top: 3px"
         href="javascript:location.replace(location.href);" title="刷新"><i
@@ -36,26 +36,35 @@
 <div class="pd-20">
     <!--搜索 -->
     <form action="" method="get">
+
         <div class="text-c">
-            创建时间： <input type="text"
-                         onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
+            创建时间：<input type="text"
+                         onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-{%d}\'}'})</literal>"
                          id="datemin" value="{$search['datemin']}" name="datemin"
-                         class="input-text Wdate" style="width: 120px;">  <input
+                         class="input-text Wdate" style="width: 120px;"> - <input
                 type="text"
-                onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
+                onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-{%d}'})</literal>"
                 id="datemax" value="{$search['datemax']}" name="datemax"
                 class="input-text Wdate" style="width: 120px;">
+
+
             <span style="width: 150px" class="select-box">
-                <select size="1" name="channel" class="select">
+                <select size="1" name="Channel" class="select">
                         <option value="">渠道</option>
-                        <volist name = "ChannelList" id = "val">
+                        <volist name = "Channel" id = "val">
                               <option  value="{$val['account']}"   <if condition  = "$search['channel'] eq $val['account']"> selected = "true"</if>   >{$val['name']}</option>
                         </volist>
 				</select>
 			</span>
+            <span style="width: 150px" class="select-box">
+                <select size="1" name="Style" class="select">
+                        <option value="">活动类型</option>
+                        <option value="1">达人计划</option>
+                        <option value="3">累充送豪礼</option>
+                        <option value="4">幸运转转乐</option>
 
-
-
+				</select>
+			</span>
             <button type="submit" class="btn btn-success" id="" name="">
                 <i class="Hui-iconfont">&#xe665;</i> 搜索
             </button>
@@ -64,55 +73,60 @@
 
 
 
-</div>
-<div class="pd-20">
+
+
+
+
     <table
             class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
         <thead>
         <tr class="text-c">
-            <th width="30">日期</th>
-            <th width="30">渠道</th>
-            <th width="30">渠道号</th>
-            <th width="30" class = "ths">账号新增</th>
-            <th width="30" class = "ths">设备新增</th>
-            <th width="60">次日留存</th>
-            <th width="60">3天留存</th>
-            <th width="60">7日天留存</th>
-            <th width="60">15日留存</th>
-            <th width="60">30日留存</th>
+            <th width="15">日期</th>
+            <th width="15">项目</th>
+            <th width="100">详细</th>
         </tr>
         </thead>
-        <tbody  class = "Tables" >
-        <volist name = "info" id = "val">
-            <tr   class="text-c">
-            <th width="60">{$val['t']}</th>
-            <th width="60">{$val['name']}</th>
-            <th width="60">{$val['GroupChannel']}</th>
-            <td wdidth="30" class = "ths">{$val['RegNum']}</td>
-            <td width="30" class = "ths">
-                <switch name = "val['GroupChannel']" >
-                    <case value = "JYHD_MI">
-                        {$val['RegNum']}
-                    </case>
-                    <case value = "JYHD_HUAWEI">
-                        {$val['RegNum']}
-                    </case>
-                    <default/>
-                    {$val['EquipmentRegNum']}
-                </switch>
-            </td>
-            <th width="60">{$val['UsersOneNum']}%</th>
-            <th width="60">{$val['UsersThreeNum']}%</th>
-            <th width="60">{$val['UsersSevenNum']}%</th>
-            <th width="60">{$val['UsersFifteenNum']}%</th>
-            <th width="60">{$val['UsersThirtyNum']}%</th>
+        <tbody>
+        <volist name = "info" id ="val">
+            <tr class="text-c">
+                <td>{$val['DateTime']}</td>
+                <td>{$val['AbroadTitle']}</td>
+                <td>
+                    <table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+                        <tr class="text-c">
+                            <th width="15">项目</th>
+                            <th width="15">参数次数</th>
+                            <th width="15">奖励</th>
+                        </tr>
+                        <volist name = "val['data']" id ="v">
+                            <tr class="text-c">
+                                <th width="15">{$v['SonTitle']}</th>
+                                <th width="15">{$v['UsersNum']}</th>
+                                <th width="15">
+                                    <table class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+                                        <tr class="text-c">
+                                            <th width="15">名称</th>
+                                            <th width="15">数量</th>
+                                        </tr>
+                                        <volist name = "v['data']['Goods']" id ="value">
+                                            <tr class="text-c">
+                                                <th width="15">{$value['Name']}</th>
+                                                <th width="15">{$value['Number']}</th>
+                                            </tr>
+                                        </volist>
+
+                                    </table>
+                                </th>
+
+                            </tr>
+                        </volist>
+                    </table>
+                </td>
             </tr>
         </volist>
         </tbody>
     </table>
-
 </div>
-
 <div class = "cl">
     <div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
          class="dataTables_paginate paging_simple_numbers">{$page}</div>
@@ -126,23 +140,14 @@
 
 </body>
 </html>
-<script>
+<!--导出excel-->
+<script type="text/javascript">
+//导出excel
+    var excel = document.getElementById('excel');
+    function excelData() {
+        excel.submit();
+    }
 
-
-        function  Table(my) {
-            var _input = document.getElementsByClassName('inputs');
-            var  _ths    = document.getElementsByClassName('ths');
-            var _tables  =document.getElementsByClassName('Tables');
-            for(i=0;i<_input.length;i++){
-                _input[i].index = i;
-            }
-            var myIndex = my.index;
-            for(i=0;i<_input.length;i++){
-                _tables[i].style.display = "none";
-                _ths[i].style.display = "none";
-            }
-
-            _tables[myIndex].style.display = "table-footer-group";
-            _ths[myIndex].setAttribute('style','');
-        }
 </script>
+
+

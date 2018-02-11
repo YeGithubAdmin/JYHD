@@ -33,6 +33,14 @@ class MiniGameSwitchController extends ComController {
         $result = 2001;
         $info   =  array();
         $playerid = $DataInfo['playerid'];
+
+
+        if(C('ACCESS_lOGS')){
+            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+            $obj->record_log($dir,'MiniGameSwitch.log',json_encode($DataInfo));
+        }
+
+
         if(empty($playerid)){
             $result = 4006;
             goto response;
@@ -93,6 +101,10 @@ class MiniGameSwitchController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            if(C('ACCESS_lOGS')){
+                $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
+                $obj->record_log($dir,'MiniGameSwitch.log',json_encode($response));
+            }
             $this->response($response,'json');
     }
 }

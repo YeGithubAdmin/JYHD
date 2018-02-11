@@ -200,12 +200,18 @@ class ActivityCenterController extends ComController {
                     $Status          = 1;
                     $LuckdrawInfoNum = 0;
                     if($v['TypeCode'] == 4001){
+
+
+
+
+
                         $LuckdrawInfoNum =  (floor($DUserPayPrice/$v['Schedule'])-$DNum)<0?0:(floor($DUserPayPrice/$v['Schedule'])-$DNum);
                         if($LuckdrawInfoNum != 0){
                             $Status = 2;
                         }else{
                             $Status = 1;
                         }
+
                         $ActivityList[$k]['LuckdrawInfoNum'] = $LuckdrawInfoNum;
 
                     }
@@ -412,6 +418,7 @@ class ActivityCenterController extends ComController {
             $DataUsersGoodsLog[$k]['Code']      = $v['Code'];
             $DataUsersGoodsLog[$k]['Type']      = $v['Type'];
             $DataUsersGoodsLog[$k]['GoodsName'] = $v['GoodsName'];
+            $DataUsersGoodsLog[$k]['GoodsID']   = $v['GoodsID'];
             $DataUsersGoodsLog[$k]['GetNum']    = $v['GetNum'];
             $DataUsersGoodsLog[$k]['Number']    = $v['Number'];
             $DataUsersGoodsLog[$k]['ActSonId']  = $ActivityId;
@@ -533,6 +540,7 @@ class ActivityCenterController extends ComController {
             'Code'      =>  $GetLuckDraw['Code'],
             'GoodsName' =>  $GetLuckDraw['GoodsName'],
             'GetNum'    =>  $GetLuckDraw['GetNum'],
+            'GoodsID'   =>  $GetLuckDraw['GoodsID'],
             'Number'    =>  $GetLuckDraw['Number'],
             'ActSonId'  =>  $ActivityId,
             'Style'     =>  $Style,
