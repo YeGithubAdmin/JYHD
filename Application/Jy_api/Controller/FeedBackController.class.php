@@ -27,10 +27,13 @@ class FeedBackController extends ComController {
         $msgArr[4006] = "用户信息缺失！";
         $result = 2001;
         $info = array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         //用户ID
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //查询时间
@@ -67,12 +70,15 @@ class FeedBackController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
     //提交问题
     public  function Submit(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $LogFeedBack    =       D('LogFeedBack');
         $msgArr[2001]   = "请求成功";
         $msgArr[3001]   = "网络错误,请稍后在试！";
@@ -88,18 +94,21 @@ class FeedBackController extends ComController {
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //内容
         $Fcontent = $DataInfo['Fcontent'];
         if(empty($Fcontent)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //问题类型
         $Type     =  $DataInfo['Type'];
         if(empty($Type)){
             $result = 4008;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //电话 或  QQ
@@ -107,12 +116,14 @@ class FeedBackController extends ComController {
         $TxQq  = $DataInfo['TxQq'];
         if(empty($Phone) && empty($TxQq)){
             $result = 4009;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //判断字符
         $Lenth = strlen($Fcontent);
         if($Lenth >200){
             $result = 7001;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //是否超过条数
@@ -127,6 +138,7 @@ class FeedBackController extends ComController {
         $SendCount = $LogFeedBack->SendCount($playerid);
         if(!$SendCount){
             $result = 7003;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //过滤敏感
@@ -147,9 +159,9 @@ class FeedBackController extends ComController {
 
         if(!$AddDate){
             $result = 3001;
+            $LogLevel = 'CRITICAL';
             goto  response;
         }
-
         response:
         $response = array(
             'result' => $result,
@@ -157,6 +169,7 @@ class FeedBackController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
 

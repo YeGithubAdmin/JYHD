@@ -26,7 +26,8 @@ class ExchangeController extends ComController {
         $obj   = new \Common\Lib\func();
         $result = 2001;
         $info   =  array();
-
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[2001] = '兑换成功，已发放到邮件';
         $msgArr[3002] = "与游戏服务器断开，请稍后再试！";
         $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
@@ -44,11 +45,13 @@ class ExchangeController extends ComController {
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $GoodsID =  $DataInfo['GoodsID'];
         if(empty($GoodsID)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $Number = empty($DataInfo['Number'])? 1:$DataInfo['Number'];
@@ -69,6 +72,7 @@ class ExchangeController extends ComController {
                        ->field($catGoodsAllFile)
                        ->find();
         if(empty($catGoodsAll)){
+            $LogLevel = 'ERROR';
             $result = 5002;
             goto response;
         }
@@ -76,24 +80,29 @@ class ExchangeController extends ComController {
         if($catGoodsAll['Type'] > 3){
             if(empty($DataInfo['UserName'])){
                 $result = 4008;
+                $LogLevel = 'NOTICE';
                 goto response;
 
             }
             if(empty($DataInfo['Phone'])){
                 $result = 4009;
+                $LogLevel = 'NOTICE';
                 goto response;
             }
             if(!$obj->checkPhone($DataInfo['Phone'])){
                 $result = 4010;
+                $LogLevel = 'NOTICE';
                 goto response;
             }
 
             if(empty($DataInfo['Address'])){
                 $result = 4011;
+                $LogLevel = 'NOTICE';
                 goto response;
             }
             if(empty($DataInfo['Txqq'])){
                 $result = 4012;
+                $LogLevel = 'NOTICE';
                 goto response;
             }
         }
@@ -140,11 +149,13 @@ class ExchangeController extends ComController {
         );
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
 
@@ -154,6 +165,7 @@ class ExchangeController extends ComController {
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -203,11 +215,13 @@ class ExchangeController extends ComController {
         );
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -217,6 +231,7 @@ class ExchangeController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //设置用户
@@ -254,10 +269,12 @@ class ExchangeController extends ComController {
         $Respond =  $obj->ProtobufSend($Header,$UsrDataString);
         if($Respond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($Respond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -266,6 +283,7 @@ class ExchangeController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //增加兑换记录
@@ -289,6 +307,7 @@ class ExchangeController extends ComController {
                               ->add($dataUsersExchangeLog);
         if(!$addUsersExchangeLog){
             $result = 3006;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $info['Type'] =  $catGoodsAll['Type'];
@@ -301,6 +320,7 @@ class ExchangeController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
 }

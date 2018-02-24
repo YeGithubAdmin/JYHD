@@ -28,6 +28,8 @@ class NewTheFirstPunchController extends ComController {
         $msgArr[4007] = "物品不存在！";
         $msgArr[4008] = "物品不存在！";
         $playerid = $DataInfo['playerid'];
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
        // 查询购状态   6元 Code:12  12元 Code:13
         if(!$playerid){
             $result = 4006;
@@ -47,6 +49,7 @@ class NewTheFirstPunchController extends ComController {
                 $CatChannelData  = M('jy_admin_users')->where('account = "'.$ChannelInfo['CpChannel'].'"')->field('id')->find();
                 if(empty($CatChannelData)){
                     $result = 5002;
+                    $LogLevel = 'ERROR';
                     goto  response;
                 }
                 $Channel = $CatChannelData['id'];
@@ -74,6 +77,7 @@ class NewTheFirstPunchController extends ComController {
             ->select();
          if(empty($catGoods)){
             $result = 4007;
+             $LogLevel = 'ERROR';
             goto  response;
          }
          $logUsersShopField = array(
@@ -174,6 +178,7 @@ class NewTheFirstPunchController extends ComController {
                 'sessionid' => $DataInfo['sessionid'],
                 'data'      => $info,
             );
-       $this->response($response,'json');
+        $ComFun->SeasLog($response,$LogLevel);
+        $this->response($response,'json');
     }
 }

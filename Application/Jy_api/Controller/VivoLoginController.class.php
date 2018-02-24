@@ -28,21 +28,26 @@ class VivoLoginController extends ComController {
         $msgArr[4006] = "Authtoken缺失！";
         $msgArr[7001] = "非法登陆！";
         $result = 2001;
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $info              =  array();
         $Authtoken      =  $DataInfo['Authtoken'];
         if(empty($Authtoken)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $Channel = $DataInfo['channel'];
         $LoginInfo = $VivoLogin->Login($Authtoken);
         if(!$LoginInfo){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
 
         if($LoginInfo['retcode'] != 0){
             $result = 7001;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //游戏服务器
@@ -66,16 +71,19 @@ class VivoLoginController extends ComController {
         $Respond =  $obj->ProtobufSend($Header,$prcoto);
         if($Respond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($Respond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $PBS_ThirdPartyLoginReturn->parseFromString($Respond);
         $ReplyCode = $PBS_ThirdPartyLoginReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -89,6 +97,7 @@ class VivoLoginController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 

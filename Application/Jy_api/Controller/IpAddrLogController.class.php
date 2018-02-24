@@ -20,16 +20,14 @@ use Think\Controller;
 use Think\Model;
 class IpAddrLogController extends Controller {
     public function index(){
-
-        $ObjFun   = new \Common\Lib\func();
         $DataInfo = file_get_contents('php://input');
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         if(!is_array($DataInfo)){
             $DataInfo = json_decode($DataInfo,true);
         }
-        if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
-            $ObjFun->record_log($dir,'access_'.date('Ymd').'.log',json_encode($DataInfo));
-        }
+
+        $ComFun->SeasLog($DataInfo,$LogLevel);
         $msgArr = array(
             2001=>'请求成功！',
             3001=>'网络错误，请稍后再试！',
@@ -38,13 +36,16 @@ class IpAddrLogController extends Controller {
         );
         $result = 2001;
         $info   = array();
+
         if(empty($DataInfo['Channel'])){
             $result = 4001;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
 
         if(empty($DataInfo['Type'])){
             $result = 4002;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
 
@@ -60,6 +61,7 @@ class IpAddrLogController extends Controller {
                    ->add($Data);
         if (!$AddData){
             $result = 3001;
+            $LogLevel = 'CRITICAL';
             goto  response;
         }
         response:
@@ -68,6 +70,7 @@ class IpAddrLogController extends Controller {
             'msg' => $msgArr[$result],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         echo json_encode($response);
     }
 

@@ -24,6 +24,8 @@ class NoticeController extends ComController {
         $msgArr         =       $this->msgArr;
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $dateTime =date('Y-m-d H:i:s',time());
         $catGameNoticeField = array(
             'TitleSon',
@@ -45,6 +47,7 @@ class NoticeController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 }

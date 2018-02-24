@@ -18,6 +18,8 @@ class MallExchangeController extends ComController {
         $msgArr         =       $this->msgArr;
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         //渠道信息
         $ChannelInfo = $this->channeinfo;
         if($ChannelInfo['isown'] == 2){
@@ -29,10 +31,11 @@ class MallExchangeController extends ComController {
                 $CatChannelData  = M('jy_admin_users')->where('account = "'.$ChannelInfo['CpChannel'].'"')->field('id')->find();
                 if(empty($CatChannelData)){
                     $result = 5002;
+                    $LogLevel = 'NOTICE';
                     goto  response;
+
                 }
                 $Channel = $CatChannelData['id'];
-
             }
         }
         $GoodsAll  = M('jy_goods_all as a')
@@ -50,6 +53,7 @@ class MallExchangeController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+           $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
         ;
     }

@@ -29,9 +29,12 @@ class VipInfoController extends ComController {
         $msgArr[5002] = "系统错误，请稍后再试！";
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //已入protobuf 类
@@ -63,10 +66,12 @@ class VipInfoController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -78,6 +83,7 @@ class VipInfoController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $Base       =  $PBS_UsrDataOpraterReturn->getBase();
@@ -101,6 +107,7 @@ class VipInfoController extends ComController {
                       ->select();
         if(empty($catVipInfo)){
             $result = 5002;
+            $LogLevel = 'ERROR';
             goto response;
         }
         $OrderVipInfo  = array();
@@ -157,6 +164,7 @@ class VipInfoController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 }

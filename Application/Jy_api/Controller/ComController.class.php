@@ -69,27 +69,11 @@ class ComController extends RestController{
             '27'   =>    '购买失败',
         );
 
-//        $StatusTime = 60;
-//        $Status =  session('StatusTime');
-//        file_put_contents('test.log',$Status,FILE_APPEND);
-//        if(!isset($Status)){
-//            session('StatusTime',time());
-//            $Status = time();
-//        }
-//
-//        if($Status+$StatusTime>time()){
-//            $result = 7000;
-//            goto end;
-//        }
-//
-//        if($Status+$StatusTime<time()){
-//           session('StatusTime',time());
-//        }
-
-        //设置超时时间
-        //ini_set("max_execution_time",10);
-        set_time_limit(20);
+        $ComFun = D('ComFun');
         $tagKey = '/Jy_api/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+
+        $LogLevel = 'NOTICE';
+
         //判断请求方式
         $RequestType =  $this->_method;
         $RequestTypeData =  array(
@@ -108,22 +92,12 @@ class ComController extends RestController{
         }
 
         //写入日志
-
-        $obj = new  \Common\Lib\func();
-        if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
-            $obj->record_log($dir,'access_'.date('Ymd').'.log',$DataInfo);
-        }
         $DataInfo = json_decode($DataInfo,true);
-
-        //aes验证
-
+        $ComFun->SeasLog($DataInfo,'INFO');
         //过滤参数
         foreach ($DataInfo as $k=>$v){
-            $DataInfo[$k] = $obj->safe_replace($v);
+            $DataInfo[$k] = $ComFun->safe_replace($v);
         }
-
-        //token 验证
         //渠道
         if(empty($DataInfo['channel'])){
             $result  =  4002;
@@ -180,17 +154,7 @@ class ComController extends RestController{
                      'sessionid' => $DataInfo['sessionid'],
                      'data'      => array(),
             );
-
-            $dataApiVisitLog = array(
-                'Name'=>'',
-                'Url'=>$tagKey,
-                'Msg'=>$msgArr[$result],
-                'Code'=>$result,
-                'TimeOut'=>'',
-                'AccessIP'=>$_SERVER['REMOTE_ADDR'],
-            );
-            $addApiVisitLog = M('jy_api_visit_log')
-                ->add($dataApiVisitLog);
+            $ComFun->SeasLog($end,$LogLevel);
             $this->response($end,'json');
         }else{
             $this->channelid = $ChannelInfo['id'];

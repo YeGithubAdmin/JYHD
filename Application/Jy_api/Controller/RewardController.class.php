@@ -23,9 +23,10 @@ class RewardController extends ComController {
         $msgArr         =       $this->msgArr;
         $obj = new  \Common\Lib\func();
         $result = 2001;
-
-       $ChannelID =  $this->channelid;
+        $ChannelID =  $this->channelid;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         //当前时间
         $time = date('Y-m-d H:i:s',time());
         //状态码
@@ -43,12 +44,14 @@ class RewardController extends ComController {
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result  = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $activityID = $DataInfo['activityID'];
         //判断活动是否过期或者不存在
         if(empty($activityID)){
             $result  = 4007;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //活动信息
@@ -70,6 +73,7 @@ class RewardController extends ComController {
                         ->find();
         if(empty($activityInfo)){
             $result  = 5002;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //查询充值记录   PayMax   单笔充值最大数  PapUp 累计充值
@@ -146,9 +150,11 @@ class RewardController extends ComController {
         //判断状态
         if($status == 1){
             $result  = 7002;
+            $LogLevel = 'NOTICE';
             goto response;
         }elseif ($status == 3){
             $result  = 7003;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //查询奖励
@@ -164,6 +170,7 @@ class RewardController extends ComController {
                     ->find();
         if(empty($GoodsInfo)){
             $result = 5003;
+            $LogLevel = 'ERROR';
             goto response;
         }
 
@@ -220,10 +227,12 @@ class RewardController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -233,6 +242,7 @@ class RewardController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //记录奖励
@@ -265,7 +275,7 @@ class RewardController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
-
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
 
     }

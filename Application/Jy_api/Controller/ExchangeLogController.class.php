@@ -24,10 +24,13 @@ class ExchangeLogController extends ComController {
         $num            =       $this->num;
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[4006] = "用户信息，缺失！";
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $UsersExchangeLogField = array(
@@ -51,6 +54,7 @@ class ExchangeLogController extends ComController {
                 'sessionid' =>  $DataInfo['sessionid'],
                 'data'      =>  $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
 
 

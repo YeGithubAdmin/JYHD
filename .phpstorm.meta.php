@@ -12,6 +12,7 @@
 			'WaterMargin' instanceof jy_admin\Model\WaterMarginModel,
 			'HuaWeiLogin' instanceof Jy_api\Model\HuaWeiLoginModel,
 			'SetGameValue' instanceof jy_admin\Model\SetGameValueModel,
+			'ActiveFlowingWater' instanceof Jy_statistics\Model\ActiveFlowingWaterModel,
 			'ActivityCenter' instanceof Jy_api\Model\ActivityCenterModel,
 			'OppoBack' instanceof Jy_Thirdpay\Model\OppoBackModel,
 			'LossUsers' instanceof Jy_statistics\Model\LossUsersModel,

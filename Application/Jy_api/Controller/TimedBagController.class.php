@@ -21,6 +21,8 @@ class TimedBagController extends ComController {
         $msgArr         =       $this->msgArr;
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[2001] = "获取成功！";
         $msgArr[4006] = "用户信息缺失！";
         $msgArr[4007] = "物品不存在！";
@@ -41,6 +43,7 @@ class TimedBagController extends ComController {
             ->select();
         if(empty($catData)){
             $result = 4007;
+            $LogLevel = 'ERROR';
             goto  response;
         }
         foreach ($catData as $k=>$v){
@@ -108,6 +111,7 @@ class TimedBagController extends ComController {
         if($Num == 1 || !empty($LogTimedSend)){
             $Status = 1;
             $info['GoodsInfo'] = array();
+            $LogLevel = 'NOTICE';
             goto response;
         }
          $info['GoodsInfo'] = $catData[0];
@@ -120,6 +124,7 @@ class TimedBagController extends ComController {
                 'sessionid' => $DataInfo['sessionid'],
                 'data'      => $info,
             );
+        $ComFun->SeasLog($response,$LogLevel);
        $this->response($response,'json');
     }
 }

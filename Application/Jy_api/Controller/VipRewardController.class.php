@@ -34,9 +34,12 @@ class VipRewardController extends ComController {
         $msgArr[7002] = "今天奖励已领取，请明天再来！";
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //已入protobuf 类
@@ -73,10 +76,12 @@ class VipRewardController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
 
         if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $LogLevel = 'CRITICAL';
             $result = 3003;
             goto response;
         }
         if($PBS_UsrDataOpraterRespond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
@@ -88,6 +93,7 @@ class VipRewardController extends ComController {
 
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -95,6 +101,7 @@ class VipRewardController extends ComController {
         //vip 等级
         $VipLevel   =  $Base->getVip();
         if($VipLevel<=0){
+            $LogLevel = 'NOTICE';
             $result = 7001;
             goto response;
         }
@@ -110,6 +117,7 @@ class VipRewardController extends ComController {
                             ->field($catVipRewardlogField)
                             ->find();
         if(!empty($catVipRewardlog)){
+            $LogLevel = 'ERROR';
             $result = 7002;
             goto response;
         }
@@ -128,6 +136,7 @@ class VipRewardController extends ComController {
                         ->field($catVipReward)
                         ->select();
         if(empty($catVipReward)){
+            $LogLevel = 'ERROR';
             $result = 5002;
             goto response;
         }
@@ -167,10 +176,12 @@ class VipRewardController extends ComController {
         );
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $LogLevel = 'CRITICAL';
             $result = 3004;
             goto response;
         }
         if($PBS_UsrDataOpraterRespond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3005;
             goto response;
         }
@@ -181,6 +192,7 @@ class VipRewardController extends ComController {
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -203,6 +215,7 @@ class VipRewardController extends ComController {
                            ->addAll($dataVipRewardLog);
         if(!$addVipRewardLog){
             $result = 4007;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $info = $infoData;
@@ -213,6 +226,7 @@ class VipRewardController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
     //vip 奖励信息
@@ -226,6 +240,8 @@ class VipRewardController extends ComController {
         $msgArr[5002] = "系统错误，请稍后再试！";
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
@@ -261,10 +277,12 @@ class VipRewardController extends ComController {
 
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -276,6 +294,7 @@ class VipRewardController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $Base       =  $PBS_UsrDataOpraterReturn->getBase();
@@ -297,6 +316,7 @@ class VipRewardController extends ComController {
             ->select();
         if(empty($catVipInfo)){
             $result = 5002;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //查询奖励
@@ -317,6 +337,7 @@ class VipRewardController extends ComController {
             ->select();
         if(empty($catVipReward)){
             $result = 5002;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //判断是否已经领取 1-否  2-是
@@ -345,6 +366,7 @@ class VipRewardController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
 }

@@ -29,6 +29,11 @@ class CdkExchangeController extends ComController {
         $Model = new Model();
         $result = 2001;
         $info   =  array();
+
+
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
+
         $msgArr[2001] = '兑换成功，已发放到邮件';
         $msgArr[3002] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
         $msgArr[3003] = "抱歉，礼包兑换失败，请联系客服同学进行核实处理！";
@@ -64,16 +69,20 @@ class CdkExchangeController extends ComController {
                   ->find();
         if(empty($CatCdk)){
             $result =  5002;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $StartTime = strtotime($CatCdk['StartTime']);
         $EndTime   = strtotime($CatCdk['EndTime']);
         if($EndTime < time() || $StartTime > time()){
             $result =  5003;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         if($CatCdk['Status'] == 2){
+
             $result = 5004;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //查询物品
@@ -86,6 +95,7 @@ class CdkExchangeController extends ComController {
                           ->find();
         if(empty($CatGoods) || empty($CatGoods['GiveInfo'])){
               $result = 5005;
+              $LogLevel = 'ERROR';
               goto  response;
         }
         $GoodsID  = array();
@@ -95,6 +105,7 @@ class CdkExchangeController extends ComController {
         }
         $GoodsID   = implode(',',$GoodsID);
         if(empty($GoodsID)){
+            $LogLevel = 'ERROR';
             $result = 5006;
             goto  response;
         }
@@ -112,6 +123,7 @@ class CdkExchangeController extends ComController {
                      ->select();
 
         if(empty($GoodsInfo)){
+            $LogLevel = 'ERROR';
             $result = 5007;
             goto  response;
         }
@@ -156,16 +168,19 @@ class CdkExchangeController extends ComController {
         $Respond        = $ObjFun->ProtobufSend($Header,$String);
         $ProtoFun->UsrDataOpraterReturn->parseFromString($Respond);
         if($Respond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
         if(strlen($Respond)==0){
+            $LogLevel = 'CRITICAL';
             $result = 3003;
             goto response;
         }
         $ReplyCode      = $ProtoFun->UsrDataOpraterReturn->getCode();
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //修改CDK值
@@ -179,6 +194,7 @@ class CdkExchangeController extends ComController {
                    ->where('CDK = "'.$CDK.'"')
                    ->save($DataCdk);
         if($DataCdk === false){
+            $LogLevel = 'CRITICAL';
             $result = 3004;
             goto response;
         }
@@ -189,6 +205,7 @@ class CdkExchangeController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
 }

@@ -30,6 +30,8 @@ class ThirdPartyLoginController extends ComController {
         $msgArr[5002] = "系统错误，请稍后再试！";
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $uid = $DataInfo['uid'];
         if(empty($uid)){
             $result  = 4006;
@@ -39,6 +41,7 @@ class ThirdPartyLoginController extends ComController {
         $LoginCode = $DataInfo['LoginCode'];
         if(empty($LoginCode)){
             $result  = 4007;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $Channel = $DataInfo['channel'];
@@ -50,6 +53,7 @@ class ThirdPartyLoginController extends ComController {
         $VerificationSession = $miapi->VerificationSession($appid,$key,$uid,$LoginCode);
 
         if($VerificationSession == 504){
+            $LogLevel = 'NOTICE';
             $result  = 3001;
             goto response;
         }
@@ -58,6 +62,7 @@ class ThirdPartyLoginController extends ComController {
         if($VerificationSession['errcode'] != 200){
             $result = $VerificationSession['errcode'];
             $msgArr[$result] = $VerificationSession['errMsg'];
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //游戏服务器
@@ -82,10 +87,12 @@ class ThirdPartyLoginController extends ComController {
         $Respond =  $obj->ProtobufSend($Header,$prcoto);
         if($Respond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($Respond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
 
@@ -94,6 +101,7 @@ class ThirdPartyLoginController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         response:
@@ -103,6 +111,7 @@ class ThirdPartyLoginController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 

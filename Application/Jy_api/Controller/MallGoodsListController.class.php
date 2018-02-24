@@ -23,14 +23,18 @@ class MallGoodsListController extends ComController {
         $msgArr[5001]  = '渠道信息错误。';
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $CateGory       =       $DataInfo['CateGory'];  //类别 1-金币 2-砖石 3-道具
         $ShowType       =       $DataInfo['ShowType'];  //展示方式 1-商城
         if(!isset($CateGory)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         if(!isset($ShowType)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
 
@@ -38,6 +42,7 @@ class MallGoodsListController extends ComController {
 
         if(empty($playerid)){
             $result = 4008;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $GoodsAllField = array(
@@ -69,6 +74,7 @@ class MallGoodsListController extends ComController {
                 $CatChannelData  = M('jy_admin_users')->where('account = "'.$ChannelInfo['CpChannel'].'"')->field('id')->find();
                 if(empty($CatChannelData)){
                     $result = 5002;
+                    $LogLevel = 'NOTICE';
                     goto  response;
                 }
                 $Channel = $CatChannelData['id'];
@@ -112,6 +118,7 @@ class MallGoodsListController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
         ;
     }

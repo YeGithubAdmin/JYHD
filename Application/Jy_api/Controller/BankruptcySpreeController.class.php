@@ -26,13 +26,10 @@ class BankruptcySpreeController extends ComController {
         $msgArr[4007] = "物品不存在！";
         $msgArr[4008] = "物品不存在！";
         $playerid = $DataInfo['playerid'];
-        $obj = new  \Common\Lib\func();
-        if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
-            $obj->record_log($dir,'BankruptcySpree.log',json_encode($DataInfo));
-        }
 
         $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
+
         $Status = 2;
         //物品概率
         $Rate =  array(
@@ -63,6 +60,7 @@ class BankruptcySpreeController extends ComController {
             ->select();
         if(empty($catData)){
             $result = 4007;
+            $LogLevel = 'ERROR';
             goto  response;
         }
         $NewData = array();
@@ -189,6 +187,7 @@ class BankruptcySpreeController extends ComController {
             $RateInfo =  $NewData[$GoodsCode];
             if(empty($RateInfo)){
                 $result = 4007;
+                $LogLevel = 'ERROR';
                 goto  response;
             }
             $BankruptcybagReta = array(
@@ -199,6 +198,7 @@ class BankruptcySpreeController extends ComController {
             $addBankruptcybagReta = M('log_bankruptcybag_reta')->add($BankruptcybagReta);
             if(!$addBankruptcybagReta){
                 $result = 3002;
+                $LogLevel = 'CRITICAL';
                 goto  response;
             }
         }
@@ -216,10 +216,7 @@ class BankruptcySpreeController extends ComController {
                 'sessionid' => $DataInfo['sessionid'],
                 'data'      => $info,
             );
-        if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
-            $obj->record_log($dir,'BankruptcySpree.log',json_encode($response));
-        }
-       $this->response($response,'json');
+        $ComFun->SeasLog($response,$LogLevel);
+        $this->response($response,'json');
     }
 }

@@ -32,23 +32,20 @@ class MiniGameSwitchController extends ComController {
         $msgArr[5002] = "系统错误，请稍后再试！";
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid = $DataInfo['playerid'];
-
-
-        if(C('ACCESS_lOGS')){
-            $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
-            $obj->record_log($dir,'MiniGameSwitch.log',json_encode($DataInfo));
-        }
-
 
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $MiniGameSwitch = D('MiniGameSwitch');
         $UserGameInfo = $MiniGameSwitch->getUserInfo($playerid,$obj,$DataInfo['version']);
         if(!$UserGameInfo){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto  response;
         }
         //vip 等级
@@ -78,11 +75,13 @@ class MiniGameSwitchController extends ComController {
         if(empty($MiniGameWwitch)){
             $info['Status'] = 1;
             $info['Game']   = array();
+            $LogLevel = 'CRITICAL';
             goto  response;
         }
         //状态
         if($MiniGameWwitch['Status'] == 1){
             $info['Status'] = 1;
+            $LogLevel = 'NOTICE';
             $info['Game']   = array();
             goto  response;
         }
@@ -90,6 +89,7 @@ class MiniGameSwitchController extends ComController {
         if($VipLevel<$MiniGameWwitch['VipLevel'] || $GameLevel<$MiniGameWwitch['GameLevel']) {
             $info['Status'] = 1;
             $info['Game']   = array();
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         $info['Status'] = 2;
@@ -101,10 +101,7 @@ class MiniGameSwitchController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
-            if(C('ACCESS_lOGS')){
-                $dir = C('YQ_ROOT').'Log/api/'.date('Y').'/'.date('m').'/'.date('d').'/';
-                $obj->record_log($dir,'MiniGameSwitch.log',json_encode($response));
-            }
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 }

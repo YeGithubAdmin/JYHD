@@ -21,6 +21,8 @@ class TimedSendController extends ComController {
         $msgArr         =       $this->msgArr;
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[2001] = "请求成功！";
         $msgArr[3001] = "网络错误请稍后再试！";
         $msgArr[4006] = "用户信息缺失！";
@@ -28,6 +30,7 @@ class TimedSendController extends ComController {
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         $Data = array(
@@ -37,6 +40,7 @@ class TimedSendController extends ComController {
         $LogTimedSend = M('log_timed_send')->add($Data);
         if(!$LogTimedSend){
             $result = 3001;
+            $LogLevel = 'CRITICAL';
             goto  response;
         }
         response:
@@ -47,6 +51,7 @@ class TimedSendController extends ComController {
                 'sessionid' => $DataInfo['sessionid'],
                 'data'      => $info,
             );
+        $ComFun->SeasLog($response,$LogLevel);
        $this->response($response,'json');
     }
 }

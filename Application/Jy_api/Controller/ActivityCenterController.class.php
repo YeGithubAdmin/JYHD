@@ -19,12 +19,16 @@ class ActivityCenterController extends ComController {
         $msgArr         =       $this->msgArr;
         $result = 2001;
         $info   =  array();
+
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         //状态码
         $msgArr[4006] = "用户信息缺失！";
         $Channel        =      $DataInfo['channel'];
         $playerid       =      $DataInfo['playerid'];
         if(empty($playerid)){
-             $result  = 4006;
+             $result   = 4006;
+             $LogLevel = "NOTICE";
              goto response;
         }
         $ActivityCenter = D('ActivityCenter');
@@ -44,6 +48,7 @@ class ActivityCenterController extends ComController {
             $DoubleGunInfo = $ActivityCenter->DoubleGunInfo($playerid,$DataInfo['version'],strtotime($StyleData[1]['ShowStartTime']),strtotime($StyleData[1]['ShowEndTime']));
             if($DoubleGunInfo === false){
                 $result = 3002;
+                $LogLevel = "CRITICAL";
                 goto response;
             }
         }
@@ -139,13 +144,9 @@ class ActivityCenterController extends ComController {
                     $ActivityListSort[$v['Id']]['ShowStartTime']    = $ShowStartTime;
                     $ActivityListSort[$v['Id']]['ShowEndTime']      = $ShowEndTime;
                     $ActivityListSort[$v['Id']]['DataSon'][]        = $DataSon ;
-
                     if($Status == 2){
                         $ActivityListSort[$v['Id']]['DataStatus'][]        = $v['SonId'] ;
                     }
-
-
-
                     break;
                 //渔场
                 case 2:
@@ -200,10 +201,6 @@ class ActivityCenterController extends ComController {
                     $Status          = 1;
                     $LuckdrawInfoNum = 0;
                     if($v['TypeCode'] == 4001){
-
-
-
-
 
                         $LuckdrawInfoNum =  (floor($DUserPayPrice/$v['Schedule'])-$DNum)<0?0:(floor($DUserPayPrice/$v['Schedule'])-$DNum);
                         if($LuckdrawInfoNum != 0){
@@ -296,6 +293,7 @@ class ActivityCenterController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
     //领取奖励
@@ -303,6 +301,8 @@ class ActivityCenterController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
         $result = 2001;
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $info   =  array();
         $msgArr[3001] = "网络错误，请稍后子再试！";
         $msgArr[3002] = "与游戏服务器断开，请稍后子再试！";
@@ -322,16 +322,19 @@ class ActivityCenterController extends ComController {
 
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         if(empty($ActivityId)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //查询活动信息
         $SingleActivityInfo = $ActivityCenter->SingleActivityInfo($ActivityId,$DataInfo['channel']);
         if(empty($SingleActivityInfo)){
             $result = 5002;
+            $LogLevel = 'WARNING';
             goto response;
         }
         //判断活动类型
@@ -344,12 +347,14 @@ class ActivityCenterController extends ComController {
                 $DoubleGunInfo = $ActivityCenter->DoubleGunInfo($playerid,$DataInfo['version'],strtotime($SingleActivityInfo['ShowStartTime']),strtotime($SingleActivityInfo['ShowEndTime']));
                 if(!$DoubleGunInfo){
                     $result = 3004;
+                    $LogLevel = 'WARNING';
                     goto response;
                 }
                 //查询领奖情况
                 $DReceiveStatus  = $ActivityCenter->ReceiveStatus($playerid,$SingleActivityInfo['ShowStartTime'],$SingleActivityInfo['ShowEndTime']);
                 if(empty($DoubleGunInfo[$SingleActivityInfo['Schedule']])){
                      $result = 7004;
+                     $LogLevel = 'WARNING';
                      goto response;
                 }
 
@@ -357,6 +362,7 @@ class ActivityCenterController extends ComController {
 
                 if($DReceiveStatusNum > 0){
                      $result = 7005;
+                     $LogLevel = 'CRITICAL';
                      goto response;
                 }
                 break;
@@ -369,19 +375,19 @@ class ActivityCenterController extends ComController {
                 $StartTime      = date('Y-m-d H:i:s',$Time);
                 $EndTime        = date('Y-m-d H:i:s',$Time+24*60*60);
                 //查询领取奖励想
-
                     //查看充值
                     $UsersPay   =$ActivityCenter->UsersPay($playerid,$StartTime,$EndTime);
                     $UserPayPrice   = $UsersPay[0]['Price']?$UsersPay[0]['Price']:0;
                     if($UserPayPrice < $Schedule){
+                        $LogLevel = 'NOTICE';
                         $result = 7002;
                         goto response;
                     }
                     //当天领奖情况
                     $ReceiveStatus  = $ActivityCenter->SameReceiveStatus($playerid);
-
                     $ReceiveNum     = $ReceiveStatus[$ActivityId]['Num'] ?$ReceiveStatus[$ActivityId]['Num']:0 ;
                     if($ReceiveNum >0 ){
+                        $LogLevel = 'NOTICE';
                         $result = 7003;
                         goto response;
                     }
@@ -389,10 +395,12 @@ class ActivityCenterController extends ComController {
                 break;
             default:
                 $result = 5003;
+                $LogLevel = 'WARNING';
                 goto  response;
         }
         $GiveInfo = json_decode($SingleActivityInfo['GiveInfo'],true);
         if(!$GiveInfo || empty($GiveInfo)){
+            $LogLevel = 'WARNING';
             $result = 5004;
             goto response;
         }
@@ -430,6 +438,7 @@ class ActivityCenterController extends ComController {
         }
         $AddUsersGoodsLog= $Model->table('log_users_activity_goods')->addAll($DataUsersGoodsLog);
         if(!$AddUsersLog || !$AddUsersGoodsLog){
+                $LogLevel = 'CRITICAL';
                 $Model->rollback();
                 $result = 3001;
                 goto response;
@@ -438,6 +447,7 @@ class ActivityCenterController extends ComController {
         $UserGoodsAdd = $ActivityCenter->UserGoodsAdd($playerid,$DataInfo['version'],$Success);
         if(!$UserGoodsAdd){
             $Model->rollback();
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
@@ -451,6 +461,7 @@ class ActivityCenterController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
     //抽奖
@@ -458,6 +469,8 @@ class ActivityCenterController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
         $result = 2001;
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $info   =  array();
         $msgArr[3001] = "网络错误，请稍后子再试！";
         $msgArr[3002] = "与游戏服务器断开，请稍后子再试！";
@@ -474,16 +487,19 @@ class ActivityCenterController extends ComController {
         $ActivityCenter =      D('ActivityCenter');
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         if(empty($ActivityId)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //查询活动信息
         $SingleActivityInfo = $ActivityCenter->SingleActivityInfo($ActivityId,$DataInfo['channel']);
         if(empty($SingleActivityInfo)){
             $result = 5002;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //判断活动类型
@@ -492,6 +508,7 @@ class ActivityCenterController extends ComController {
         $Schedule  = $SingleActivityInfo['Schedule'];
         if($Style != 4){
             $result = 5003;
+            $LogLevel = 'ERROR';
             goto  response;
         }
         //当天领奖情况
@@ -503,6 +520,7 @@ class ActivityCenterController extends ComController {
         $LuckdrawInfoNum =  floor($UserPayPrice/$Schedule)-$ReceiveNum;
         if($LuckdrawInfoNum <= 0){
             $result = 7002;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         $GiveSort           =  array_values(json_decode($SingleActivityInfo['GiveInfo'],true));
@@ -512,6 +530,7 @@ class ActivityCenterController extends ComController {
         $LuckdrawInfo =  $GiveSort ;
         if(empty($LuckdrawInfo)){
             $result = 5004;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //抽奖
@@ -519,6 +538,7 @@ class ActivityCenterController extends ComController {
         $GetLuckDraw = $LuckdrawInfo[$Index];
         if(empty($GetLuckDraw)){
             $result = 5005;
+            $LogLevel = 'ERROR';
             goto response;
         }
         $Model = new  Model();
@@ -556,6 +576,7 @@ class ActivityCenterController extends ComController {
         $AddUsersGoodsLog= $Model->table('log_users_activity_goods')->add($DataUsersGoodsLog);
         if(!$AddUsersLog || !$AddUsersGoodsLog){
             $Model->rollback();
+            $LogLevel = 'CRITICAL';
             $result = 3001;
             goto response;
         }
@@ -577,6 +598,7 @@ class ActivityCenterController extends ComController {
         if(!$UserProto){
             $Model->rollback();
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }else{
             $info['Index']  = $Index ;
@@ -595,6 +617,7 @@ class ActivityCenterController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
 
     }
@@ -602,6 +625,8 @@ class ActivityCenterController extends ComController {
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
         $result = 2001;
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $info   =  array();
         $msgArr[3001] = "网络错误，请稍后子再试！";
         $msgArr[4006] = "用户信息缺失！";
@@ -610,11 +635,13 @@ class ActivityCenterController extends ComController {
         $FatherID       =      $DataInfo['FatherID'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
 
         if(empty($FatherID)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto response;
         }
 
@@ -631,6 +658,7 @@ class ActivityCenterController extends ComController {
         }
         if(!$addDta){
             $result = 3001;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         response:
@@ -640,6 +668,7 @@ class ActivityCenterController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
 
     }

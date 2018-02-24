@@ -30,6 +30,8 @@ class ThirtyDaySignController extends ComController {
         $msgArr[5001]  = '系统错误，请稍后在试。';
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid  = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
@@ -63,10 +65,12 @@ class ThirtyDaySignController extends ComController {
         //发送请求
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if(strlen($PBS_UsrDataOpraterRespond)==0){
+            $LogLevel = 'CRITICAL';
             $result = 3003;
             goto response;
         }
         if($PBS_UsrDataOpraterRespond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
@@ -76,6 +80,7 @@ class ThirtyDaySignController extends ComController {
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -280,6 +285,7 @@ class ThirtyDaySignController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 
@@ -296,6 +302,8 @@ class ThirtyDaySignController extends ComController {
         $msgArr[7001]  = '当天已签到，请勿重复签到。';
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid  = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
@@ -337,10 +345,12 @@ class ThirtyDaySignController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -351,6 +361,7 @@ class ThirtyDaySignController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //获得结果
@@ -376,6 +387,7 @@ class ThirtyDaySignController extends ComController {
         //已签到
         if($isSign == 2){
             $result  = 7001;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //判断奖励配置
@@ -412,6 +424,7 @@ class ThirtyDaySignController extends ComController {
                         ->select();
         if(empty($catSignGoods)){
             $result =  5001;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //签到情况信息
@@ -452,6 +465,7 @@ class ThirtyDaySignController extends ComController {
 
         if(empty($ThirtydayContinuity)){
                $result = 5002;
+               $LogLevel = 'ERROR';
                goto  response;
         }
         //判断是否已经达到最大奖励
@@ -494,11 +508,13 @@ class ThirtyDaySignController extends ComController {
         }
         if(!$UpLogThirtydaySign){
             $result = 3001;
+            $LogLevel = 'CRITICAL';
             $model->rollback();
             goto  response;
         }
         if(!$addThirtydaySign){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             $model->rollback();
             goto  response;
         }
@@ -554,6 +570,7 @@ class ThirtyDaySignController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
@@ -564,6 +581,7 @@ class ThirtyDaySignController extends ComController {
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $model->rollback();
             $result = $ReplyCode;
             goto response;
@@ -581,6 +599,7 @@ class ThirtyDaySignController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
     public function continuity(){
@@ -598,14 +617,18 @@ class ThirtyDaySignController extends ComController {
         $msgArr[7002]  = '已经领取过。';
         $result = 2001;
         $info      =  array();
+        $ComFun    = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid  = $DataInfo['playerid'];
         $Day       = $DataInfo['Continuity'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         if(empty($Day)){
             $result = 4008;
+            $LogLevel = 'NOTICE';
             goto response;
         }
 
@@ -627,6 +650,7 @@ class ThirtyDaySignController extends ComController {
 
         if(empty($thirtydaySign)){
             $result =  4007;
+            $LogLevel = 'ERROR';
             goto response;
         }
         $Primary    = $thirtydaySign['Primary'];
@@ -639,6 +663,7 @@ class ThirtyDaySignController extends ComController {
         }
         if($Continuity<$Day){
             $result =  7001;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //查看连续奖励记录
@@ -652,6 +677,7 @@ class ThirtyDaySignController extends ComController {
                                   ->find();
         if(!empty($LogThirtydayContinuity)){
             $result =  7002;
+            $LogLevel = 'ERROR';
             goto response;
         }
         $model = new  Model();
@@ -669,6 +695,7 @@ class ThirtyDaySignController extends ComController {
                                     ->select();
         if(empty($ThirtydayContinuityGoods)){
             $result =  5001;
+            $LogLevel = 'ERROR';
             goto response;
         }
 
@@ -685,6 +712,7 @@ class ThirtyDaySignController extends ComController {
         if(!$addThirtydayContinuity){
             $model->rollback();
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
 
@@ -751,10 +779,12 @@ class ThirtyDaySignController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3005;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $PBS_UsrDataOpraterReturn->parseFromString($PBS_UsrDataOpraterRespond);
@@ -764,6 +794,7 @@ class ThirtyDaySignController extends ComController {
 
         if($ReplyCode != 1){
             $model->rollback();
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -779,6 +810,7 @@ class ThirtyDaySignController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
 }

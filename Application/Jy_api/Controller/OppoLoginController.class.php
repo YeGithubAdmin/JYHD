@@ -34,27 +34,34 @@ class OppoLoginController extends ComController {
 
         $Oppo = D('Oppo');
 
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
+
         $Ssoid     =  $DataInfo['Ssoid'];
         $Token     =  $DataInfo['Token'];
         $LoginCode = $obj->RandomNumber();
         if(empty($Ssoid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
 
         if(empty($Token)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         $Channel = $DataInfo['channel'];
         $Response = $Oppo->Login($Ssoid,$Token);
         if(!$Response){
             $result = 3002;
+            $LogLevel = 'NOTICE';
             goto response;
         }
 
         if($Response['resultCode'] != 200){
             $result = 7001;
+            $LogLevel = 'NOTICE';
             goto response;
         }
 
@@ -79,16 +86,19 @@ class OppoLoginController extends ComController {
         $Respond =  $obj->ProtobufSend($Header,$prcoto);
         if($Respond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($Respond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $PBS_ThirdPartyLoginReturn->parseFromString($Respond);
         $ReplyCode = $PBS_ThirdPartyLoginReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -102,6 +112,7 @@ class OppoLoginController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 

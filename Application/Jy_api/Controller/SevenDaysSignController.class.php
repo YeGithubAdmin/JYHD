@@ -32,9 +32,12 @@ class SevenDaysSignController extends ComController {
         $msgArr[5001]  = '系统错误，请稍后在试。';
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $playerid  = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //已入protobuf 类
@@ -68,10 +71,12 @@ class SevenDaysSignController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -80,6 +85,7 @@ class SevenDaysSignController extends ComController {
         $ReplyCode = $PBS_UsrDataOpraterReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -193,6 +199,7 @@ class SevenDaysSignController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
 
 

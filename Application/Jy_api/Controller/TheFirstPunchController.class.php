@@ -19,9 +19,10 @@ class TheFirstPunchController extends ComController {
     public function index(){
         $DataInfo       =       $this->DataInfo;
         $msgArr         =       $this->msgArr;
-        $obj    = new \Common\Lib\func();
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[2001] = "获取成功！";
         $msgArr[4006] = "用户信息缺失！";
         $playerid = $DataInfo['playerid'];
@@ -46,6 +47,7 @@ class TheFirstPunchController extends ComController {
         if(!empty($catUsersPackageShopLog)){
             $Isfirst = 2;
             $info['Isfirst'] = $Isfirst;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         //查询首冲物品
@@ -100,6 +102,7 @@ class TheFirstPunchController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
 
 

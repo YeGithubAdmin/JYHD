@@ -26,12 +26,15 @@ class LogClientController extends ComController {
         $msgArr[3001] = "网络错误";
         $result = 2001;
         $info = array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $Data = array(
             'Key'=>$DataInfo['Key'],
             'Value'=>$DataInfo['Value'],
         );
         $add =  M('log_client')->add($Data);
         if(!$add){
+            $LogLevel = 'CRITICAL';
             $result = 3001;
         }
         response:
@@ -41,6 +44,7 @@ class LogClientController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 }

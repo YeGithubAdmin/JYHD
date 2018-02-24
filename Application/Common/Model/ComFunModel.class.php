@@ -222,6 +222,29 @@ class ComFunModel extends Model{
         curl_close($ch);
         return $response;
     }
+
+    /**
+     * 安全过滤函数
+     * @param $string
+     * @return string
+     */
+    public function safe_replace($string) {
+        $string = str_replace('%20','',$string);
+        $string = str_replace('%27','',$string);
+        $string = str_replace('%2527','',$string);
+        $string = str_replace('*','',$string);
+        $string = str_replace('"','&quot;',$string);
+        $string = str_replace("'",'',$string);
+        $string = str_replace('"','',$string);
+        $string = str_replace(';','',$string);
+        $string = str_replace('<','&lt;',$string);
+        $string = str_replace('>','&gt;',$string);
+        $string = str_replace("{",'',$string);
+        $string = str_replace('}','',$string);
+        $string = str_replace('\\','',$string);
+        return $string;
+    }
+
     /***
      * protobuf发送请求
      * @param $PBName    string       包名
@@ -240,6 +263,41 @@ class ComFunModel extends Model{
         }
         return $Respond;
     }
+
+    /**
+     * 获取当前页面完整URL地址
+     * return string URL
+     */
+    public function get_url() {
+        $sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+        $php_self = $_SERVER['PHP_SELF'] ? $this->safe_replace($_SERVER['PHP_SELF']) : $this->safe_replace($_SERVER['SCRIPT_NAME']);
+        $path_info = isset($_SERVER['PATH_INFO']) ? $this->safe_replace($_SERVER['PATH_INFO']) : '';
+        $relate_url = isset($_SERVER['REQUEST_URI']) ? $this->safe_replace($_SERVER['REQUEST_URI']) : $php_self.(isset($_SERVER['QUERY_STRING']) ? '?'.$this->safe_replace($_SERVER['QUERY_STRING']) : $path_info);
+        return $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').$relate_url;
+    }
+
+    /**
+    * 日志
+    * @param $level  日志等级
+    * @parm
+    */
+    public function  SeasLog($info,$level ="INFO",$default=''){
+        if($default != ''){
+             \SeasLog::setLogger($default);
+        }
+        $InfoJson    = json_encode($info);
+        $InfoExport =  var_export($info,true);
+        $data = "\nTime:".date('Y-m-d H:i:s')
+            ."\nIP:".$_SERVER['REMOTE_ADDR']
+            ."\nUrl:" .$this->get_url()
+            ."\n".$InfoJson
+            ."\n".$InfoExport
+            ."\n--------------------------------------------------------------------------------------------------------";
+        \SeasLog::log($level,$data);
+    }
+
+
+
 
 
 

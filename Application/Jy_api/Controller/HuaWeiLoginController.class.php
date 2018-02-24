@@ -32,6 +32,8 @@ class HuaWeiLoginController extends ComController {
         $msgArr[7001] = "非法登陆！";
         $result = 2001;
         $info              =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $GameAuthSign      =  $DataInfo['GameAuthSign'];
         $LoginPlayerId     =  $DataInfo['LoginPlayerId'];
         $IsAuth            =  $DataInfo['IsAuth'];
@@ -40,9 +42,11 @@ class HuaWeiLoginController extends ComController {
         $LoginCode = $obj->RandomNumber(); ;
         if(empty($LoginPlayerId)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         if($IsAuth == null){
+            $LogLevel = 'NOTICE';
             $result = 4007;
             goto  response;
         }
@@ -63,6 +67,7 @@ class HuaWeiLoginController extends ComController {
 
             if($LoginVerification['rtnCode'] != 0){
                 $result = 7001;
+                $LogLevel = 'CRITICAL';
                 goto response;
             }
         }
@@ -88,16 +93,19 @@ class HuaWeiLoginController extends ComController {
         $Respond =  $obj->ProtobufSend($Header,$prcoto);
         if($Respond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($Respond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         $PBS_ThirdPartyLoginReturn->parseFromString($Respond);
         $ReplyCode = $PBS_ThirdPartyLoginReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = $ReplyCode;
             goto response;
         }
@@ -111,6 +119,7 @@ class HuaWeiLoginController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 

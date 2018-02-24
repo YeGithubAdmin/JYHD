@@ -25,6 +25,8 @@ class CardReceiveRewardsController extends ComController {
         $MonthCard      =       D('MonthCard');
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[3003] = "网络错误，请稍后再试！";
         $msgArr[3003] = "与游戏服务器断开，请稍后再试！";
         $msgArr[4006] = "用户信息缺失！";
@@ -40,17 +42,20 @@ class CardReceiveRewardsController extends ComController {
         $UserInfo = $MonthCard->UserInfo($playerid);
         if(!$UserInfo){
             $result = 7002;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //判断今天是否已经领取过  false 未领取过  true 领取过
         $IsReceive = $MonthCard->IsReceive($playerid);
         if($IsReceive){
             $result = 7004;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //判断是否月卡
         if(!$UserInfo['IsMc']){
             $result = 7002;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //查询奖励
@@ -64,16 +69,19 @@ class CardReceiveRewardsController extends ComController {
                      ->where('Code = 7  and IsDel = 1')
                      ->find();
         if(empty($GoodsAll)){
+            $LogLevel = 'ERROR';
             $result = 5003;
         }
         $CardGoodsInfo = $MonthCard->GoodsList($GoodsAll);
         if(empty($CardGoodsInfo)){
+            $LogLevel = 'ERROR';
             $result = 5005;
             goto  response;
         }
         $GoodsAdd = $MonthCard->AddGoods($CardGoodsInfo,$playerid);
         if(!$GoodsAdd){
             $result = 3003;
+            $LogLevel = 'ERROR';
             goto  response;
         }
         //记录
@@ -102,6 +110,7 @@ class CardReceiveRewardsController extends ComController {
             ->addAll($dataUsersCardReceiveLog);
         if(!$addUsersCardReceiveLog){
             $result = 3002;
+            $LogLevel = 'CRITICAL';
             $info = array();
             goto  response;
         }
@@ -113,6 +122,7 @@ class CardReceiveRewardsController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 }

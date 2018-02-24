@@ -23,6 +23,8 @@ class NovicePackController extends ComController {
         $msgArr         =       $this->msgArr;
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         //状态码
         $msgArr[4006] = "新手礼包不存在！";
         //查询信息
@@ -33,6 +35,7 @@ class NovicePackController extends ComController {
             ->find();
         if(empty($GoodsAll)){
             $result = 4006;
+            $LogLevel = 'ERROR';
             goto response;
         }
         $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
@@ -74,6 +77,7 @@ class NovicePackController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
     }
     //领取
@@ -84,6 +88,8 @@ class NovicePackController extends ComController {
 
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         //状态码
         $msgArr[2001] = "领取成功！";
         $msgArr[3001] = "网络错误请稍后在试！";
@@ -97,6 +103,7 @@ class NovicePackController extends ComController {
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
                 $result = 4006;
+                $LogLevel = 'NOTICE';
                 goto response;
         }
         //查询记录
@@ -117,6 +124,7 @@ class NovicePackController extends ComController {
             ->find();
         if(empty($GoodsAll)){
             $result = 4007;
+            $LogLevel = 'ERROR';
             goto response;
         }
         $GiveInfo           = json_decode($GoodsAll['GiveInfo'],true);
@@ -150,6 +158,7 @@ class NovicePackController extends ComController {
         }
         if(empty($CardGoodsInfo)){
             $result = 4008;
+            $LogLevel = 'ERROR';
             goto response;
         }
         //添加奖励
@@ -211,10 +220,12 @@ class NovicePackController extends ComController {
         $PBS_UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$PBSUsrDataOpraterString);
         if($PBS_UsrDataOpraterRespond  == 504){
             $result = 3003;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         if(strlen($PBS_UsrDataOpraterRespond)==0){
             $result = 3004;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //接受回应
@@ -224,6 +235,7 @@ class NovicePackController extends ComController {
         //判断结果
         if($ReplyCode != 1){
             $result = $ReplyCode;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         //添加记录
@@ -240,6 +252,7 @@ class NovicePackController extends ComController {
 
         if(!$addNovicePackLog){
             $result = 3001;
+            $LogLevel = 'CRITICAL';
             goto response;
         }
         response:
@@ -249,6 +262,7 @@ class NovicePackController extends ComController {
             'sessionid'=>$DataInfo['sessionid'],
             'data' => $info,
         );
+        $ComFun->SeasLog($response,$LogLevel);
         $this->response($response,'json');
 
     }

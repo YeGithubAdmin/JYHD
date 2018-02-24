@@ -42,6 +42,8 @@ class PlaceOrderController extends ComController {
         $msgArr[7004] = "支付功能，暂时停止！";
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $time = time();
         $model = new Model();
         $playerid       =  $DataInfo['playerid'];
@@ -51,18 +53,22 @@ class PlaceOrderController extends ComController {
         $PlatformType   =  $DataInfo['PlatformType'];          //支付平台  1 支付宝 2-微信 3-爱贝 4-金立
         if(empty($playerid)){
             $result = 4006;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         if(empty($Type)){
             $result = 4007;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         if(empty($GoodsID)){
             $result = 4008;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         if(empty($PlatformType)){
             $result = 4009;
+            $LogLevel = 'NOTICE';
             goto response;
         }
         //支付是否已停止
@@ -75,6 +81,7 @@ class PlaceOrderController extends ComController {
         foreach ($catGameConfig as $k=>$v){
             if($v['StopPay'] == 2){
                 $result = 7004;
+                $LogLevel = 'NOTICE';
                 goto response;
             }
         }
@@ -99,6 +106,7 @@ class PlaceOrderController extends ComController {
             ->find();
         if(empty($catGoodsAll)){
             $result = 5002;
+            $LogLevel = 'ERROR';
             goto  response;
         }
         if($catGoodsAll['LimitShop'] > 1 && $Type == 1){
@@ -165,10 +173,12 @@ class PlaceOrderController extends ComController {
         );
         $UsrDataOpraterRespond =  $obj->ProtobufSend($Header,$String);
         if(strlen($UsrDataOpraterRespond)==0){
+            $LogLevel = 'CRITICAL';
             $result = 3001;
             goto response;
         }
         if($UsrDataOpraterRespond  == 504){
+            $LogLevel = 'CRITICAL';
             $result = 3002;
             goto response;
         }
@@ -177,6 +187,7 @@ class PlaceOrderController extends ComController {
         $ReplyCode = $UsrDataOpraterReturn->getCode();
         //判断结果
         if($ReplyCode != 1){
+            $LogLevel = 'CRITICAL';
             $result = 3003;
             goto response;
         }
@@ -375,6 +386,7 @@ class PlaceOrderController extends ComController {
                     $info['transid'] = $transid;
                 }else{
                     $result = 40010;
+                    $LogLevel = 'ERROR';
                     goto  response;
                 }
                 $PayInfo['paytype'] = 1;
@@ -457,6 +469,7 @@ class PlaceOrderController extends ComController {
                     $info['transid'] = $transid;
                 }else{
                     $result = 40010;
+                    $LogLevel = 'ERROR';
                     goto  response;
                 }
                 $PayInfo['paytype'] = 1;
@@ -487,10 +500,12 @@ class PlaceOrderController extends ComController {
                 $ResData = $PayCom->VivoPayOrder($param,$AppKey);
                 if(!$PayCom){
                     $result = 40012;
+                    $LogLevel = 'CRITICAL';
                     goto  response;
                 }
                 if($ResData['respCode'] != 200){
                     $result = 40011;
+                    $LogLevel = 'CRITICAL';
                     goto  response;
                 }
                 $info = array(
@@ -519,6 +534,7 @@ class PlaceOrderController extends ComController {
         }
         if($Payment == false){
             $result = 5004;
+            $LogLevel = 'NOTICE';
             goto  response;
         }
         $model->startTrans();
@@ -534,6 +550,7 @@ class PlaceOrderController extends ComController {
         }else{
             $model->rollback();
             $result = 3004;
+            $LogLevel = 'ERROR';
             goto response;
         }
         response:
@@ -543,6 +560,7 @@ class PlaceOrderController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
     }
 }

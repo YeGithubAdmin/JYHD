@@ -22,6 +22,8 @@ class CardInfoController extends ComController {
         $MonthCard      =       D('MonthCard');
         $result = 2001;
         $info   =  array();
+        $ComFun = D('ComFun');
+        $LogLevel = 'INFO';
         $msgArr[3001] = '与游戏服务器断开！';
         $msgArr[4006] = '用户信息缺失！';
         $playerid = $DataInfo['playerid'];
@@ -47,6 +49,7 @@ class CardInfoController extends ComController {
         $UserInfo      = $MonthCard->UserInfo($playerid,$DataInfo);
         if(!$UserInfo){
             $result = 3001;
+            $LogLevel = "CRITICAL";
             goto  response;
         }
         $ShopCard = $UserInfo['IsMc']?2:1;  //是否购买过月卡      1 否  2 是
@@ -75,6 +78,7 @@ class CardInfoController extends ComController {
                 'sessionid'=>$DataInfo['sessionid'],
                 'data' => $info,
             );
+            $ComFun->SeasLog($response,$LogLevel);
             $this->response($response,'json');
 
 
