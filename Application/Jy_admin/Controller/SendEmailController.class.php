@@ -44,14 +44,15 @@ class SendEmailController extends ComController {
     }
 
     public  function  send(){
-
         $Com = D('Com');
         $obj = $Com->ObjFun;
+        $UserInfo = $this->userInfo;
         $msgArr = array(
             2001=>'更新成功！',
             3002=>'与游戏服务器断开，请稍后再试！',
             3003=>'与游戏服务器断开，请稍后再试！',
             4001=>'审核状态不明确',
+            4003=>'玩家不存在',
             4002=>'非法操作。',
             5002=>'系统错误，请稍后再试！',
             0=> "占位符",
@@ -84,28 +85,42 @@ class SendEmailController extends ComController {
                 goto response;
             }
             //用户ID
-            $playerid = I('param.playerid',0,'intval');
+            $playerid     = I('param.playerid',0,'intval');
             //标题
-            $Title    = I('param.Title','','trim');
+            $Title        = I('param.Title','','trim');
             //正文
-            $Content  = I('param.Content','','trim');
+            $Content      = I('param.Content','','trim');
             //砖石
-            $Diamond  = I('param.Diamond',0,'intval');
+            $Diamond      = I('param.Diamond',0,'intval');
             //金币
-            $Gold     = I('param.Gold',0,'intval');
+            $Gold         = I('param.Gold',0,'intval');
             //道具
-            $Prop = I('param.Prop','','trim');
+            $Prop         = I('param.Prop','','trim');
             //卡号
-            $CardNum  = I('param.CardNum','','trim');
+            $CardNum      = I('param.CardNum','','trim');
             //卡密
-            $CardPwd  = I('param.CardPwd','','trim');
+            $CardPwd      = I('param.CardPwd','','trim');
             //版本号
-            $Version  = I('param.Version','','trim');
+            $Version      = I('param.Version','','trim');
             //是否添加道具
-            $IsGive  = I('param.IsGive',1,'intval');
+            $IsGive       = I('param.IsGive',1,'intval');
             //渠道或个人
+            $Channel      = I('param.Channel','','trim');
+            //卡类名称
+            $CardName     = I('param.CardName','','trim');
 
-            $Channel  = I('param.Channel','','trim');
+
+
+            if($Channel == 1){
+                $CatGameVer =  $Com->CatGameVer($playerid);
+                if(!$CatGameVer){
+                    $result = 4003;
+                    goto response;
+                }
+
+                $Version = $CatGameVer;
+            }
+
 
             if($playerid<=0 && $Channel == 1){
                 $result =  4002;
@@ -127,6 +142,14 @@ class SendEmailController extends ComController {
                 'PB_Item.php',
             ));
             //实话对象
+
+            if($Channel == 1){
+                $Source = 3;
+            }elseif ($Channel == 2){
+                $Source = 1;
+            }else{
+                $Source = 2;
+            }
             if($Channel == 1){
                 $UsrData        =   new  PBS_UsrDataOprater();
                 $UsrDataReturn  =   new  PBS_UsrDataOpraterReturn();
@@ -148,27 +171,102 @@ class SendEmailController extends ComController {
             $PB_Email->setTitle($Title);
             //正文
             $PB_Email->setData($Content);
+
             if($Type == 1){
                 //卡密邮件
                 $PB_Email->setType($EmailType::EmailType_Card);
                 $PB_Email->setCardNum($CardNum);
                 $PB_Email->setCardPwd($CardPwd);
+
+                $dataMailGrant[0]['playerid']   =   $playerid;
+                $dataMailGrant[0]['Style']      =   $Type;
+                $dataMailGrant[0]['Type']       =   2;
+                $dataMailGrant[0]['Code']       =   15;
+                $dataMailGrant[0]['GoodsName']  =   $CardName;
+                $dataMailGrant[0]['Number']     =   1;
+                $dataMailGrant[0]['Source']     =   $Source;
+                $dataMailGrant[0]['Channel']    =   $Channel;
+                $dataMailGrant[0]['Version']    =   $Version;
+                $dataMailGrant[0]['CardNum']    =   $CardNum;
+                $dataMailGrant[0]['CardMi']     =   $CardPwd;
+                $dataMailGrant[0]['Aid']        =   $UserInfo['id'];
+                $dataMailGrant[0]['Aname']      =   $UserInfo['name'];
+
             }elseif ($Type == 2){
                 //金币砖石道具
 
                 if($Diamond != 0){
                     $PB_Email->setDiamond($Diamond);
+                    $dataMailGrant[0]['playerid']   =   $playerid;
+                    $dataMailGrant[0]['Style']      =   $Type;
+                    $dataMailGrant[0]['Type']       =   2;
+                    $dataMailGrant[0]['Code']       =   9;
+                    $dataMailGrant[0]['Source']     =   $Source;
+                    $dataMailGrant[0]['GoodsName']  =   "钻石";
+                    $dataMailGrant[0]['Number']     =   $Diamond;
+                    $dataMailGrant[0]['Channel']    =   $Channel;
+                    $dataMailGrant[0]['Version']    =   $Version;
+                    $dataMailGrant[0]['CardNum']    =   '';
+                    $dataMailGrant[0]['CardMi']     =   '';
+                    $dataMailGrant[0]['Aid']        =   $UserInfo['id'];
+                    $dataMailGrant[0]['Aname']      =   $UserInfo['name'];
                 }
                 if($Gold != 0){
                     $PB_Email->setGold($Gold);
+                    $dataMailGrant[1]['playerid']   =   $playerid;
+                    $dataMailGrant[1]['Style']      =   $Type;
+                    $dataMailGrant[1]['Type']       =   1;
+                    $dataMailGrant[1]['Code']       =   8;
+                    $dataMailGrant[1]['Source']     =   $Source;
+                    $dataMailGrant[1]['GoodsName']  =   "金币";
+                    $dataMailGrant[1]['Number']     =   $Gold;
+                    $dataMailGrant[1]['Channel']    =   $Channel;
+                    $dataMailGrant[1]['Version']    =   $Version;
+                    $dataMailGrant[1]['CardNum']    =   '';
+                    $dataMailGrant[1]['CardMi']     =   '';
+                    $dataMailGrant[1]['Aid']        =   $UserInfo['id'];
+                    $dataMailGrant[1]['Aname']      =   $UserInfo['name'];
                 }
                 if($IsGive == 2){
                     if(!empty($Prop)){
+                        $PropCode  = array();
+                        $PropSort = array();
                         foreach ($Prop as $k=>$v){
                             $Item  =  new \PB_Item();
                             $Item->setNum($v['Num']);
                             $Item->setId($v['Id']);
                             $PB_Email->appendItems($Item);
+                            $PropCode[]         = $v['Id'];
+                            $PropSort[$v['Id']] = $v;
+                        }
+                        $PropCode = implode(',',$PropCode);
+                        $catPropList = M('jy_prop_list')
+                                       ->where('Code in ('.$PropCode.')')
+                                       ->field(array(
+                                           'Name',
+                                           'Code',
+                                       ))
+                                       ->select();
+                        $dataProp = array();
+                        foreach ($catPropList as $k=>$v){
+                            $dataProp[$k]['playerid']   =   $playerid;
+                            $dataProp[$k]['Style']      =   $Type;
+                            $dataProp[$k]['Type']       =   3;
+                            $dataProp[$k]['Source']     =   $Source;
+                            $dataProp[$k]['Code']       =   $v['Code'];
+                            $dataProp[$k]['GoodsName']  =   $v['Name'];
+                            $dataProp[$k]['Number']     =   $PropSort[$v['Code']]['Num'];
+                            $dataProp[$k]['Channel']    =   $Channel;
+                            $dataProp[$k]['Version']    =   $Version;
+                            $dataProp[$k]['CardNum']    =   '';
+                            $dataProp[$k]['CardMi']     =   '';
+                            $dataProp[$k]['Aid']        =   $UserInfo['id'];
+                            $dataProp[$k]['Aname']      =   $UserInfo['name'];
+                        }
+                        if(empty($dataMailGrant)){
+                            $dataMailGrant =$dataProp;
+                        }else{
+                            $dataMailGrant   = array_merge($dataProp,$dataMailGrant);
                         }
                     }
                 }
@@ -185,9 +283,6 @@ class SendEmailController extends ComController {
                 //序列化
                 $UsrDataString = $UsrData->serializeToString();
                 //发送请求
-                $Version =  $Com->CatGameVer;
-
-
                 $Header = array(
                     'PBName:'.'protos.PBS_UsrDataOprater',
                     'PBSize:'.strlen($UsrDataString),
@@ -254,6 +349,11 @@ class SendEmailController extends ComController {
                 }
 
             }
+            //添加记录
+            if($Type < 3){
+               $addProp = M('log_mail_grant')->addAll(array_values($dataMailGrant));
+            }
+
             response:
             $response =array(
                 'code'=>$result,

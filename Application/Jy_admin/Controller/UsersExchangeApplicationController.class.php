@@ -55,6 +55,7 @@ class UsersExchangeApplicationController extends ComController {
             'StockNum',
             'CaMi',
             'CaNum',
+            'Phone',
             'GoodsID',
             'UpTime',
             'UpName',

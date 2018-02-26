@@ -30,7 +30,8 @@ class ComModel extends Model{
 
    public function CatGameVer($playerid){
         $field = array(
-            'game_ver'
+            'game_ver',
+            'game_ver',
         );
         $CatData = M('game_account')
                    ->where('playerid = '.$playerid)

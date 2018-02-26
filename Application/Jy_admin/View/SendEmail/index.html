@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="pd-20">
-	<form action="" method="post" onsubmit="return false" class="form form-horizontal" id="form-SendEmail">
+	<form action="" method="post"  onsubmit=" return false"  class="form form-horizontal" id="form-SendEmail">
 		<div class="row cl">
 			<label class="form-label col-1"><span class="c-red">*</span>渠道：</label>
 			<div class="formControls col-1">
@@ -105,6 +105,13 @@
 
 
 		<div class="row cl TypeOne" style="display: none;">
+			<label class="form-label col-1"><span class="c-red">*</span>卡号名称(50元话费)：</label>
+			<div class="formControls col-2">
+				<input type="text" class="input-text" value="" placeholder=""
+					   name="CardName" nullmsg="">
+			</div>
+		</div>
+		<div class="row cl TypeOne" style="display: none;">
 			<label class="form-label col-1"><span class="c-red">*</span>卡号：</label>
 			<div class="formControls col-4">
 				<input type="text" class="input-text" value="" placeholder="请输入卡号"
@@ -176,7 +183,7 @@
 
 		<div class="row cl">
 			<div class="col-5 col-offset-6">
-				<input class="btn btn-primary radius"  onclick="UsersAttribute()" type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius"   type="submit" name="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 			</div>
 		</div>
 	</form>
@@ -203,20 +210,12 @@
                 radioClass : 'iradio-blue',
                 increaseArea : '20%'
             });
-
             $("#form-SendEmail").Validform({
                 tiptype : 2,
-
                 callback : function(form) {
-                    console.log(form);
-                    form[0].submit();
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.$('.btn-refresh').click();
-                    parent.layer.close(index);
+                    UsersAttribute();
                 }
             });
-
-
         });
 
         function isJSON(str) {
@@ -345,7 +344,13 @@
             var  child  = document.getElementById('child');
             var  GiveInfo = document.getElementsByClassName('GiveInfo');
             var  del      = document.getElementById('del');
-            child.innerHTML +=  parent.innerHTML;
+
+
+
+
+            var div = document.createElement("div");
+            div.innerHTML = parent.innerHTML;
+            child.appendChild(div);
 
             if(GiveInfo.length == 2){
                 del.style.display = "block";
@@ -355,9 +360,6 @@
             var Length			=  Num.length;
             Itemid[Length-1].setAttribute('name','Prop['+Length+'][Id]');
             Num[Length-1].setAttribute('name','Prop['+Length+'][Num]');
-
-
-
         }
         //赠送 减少
         function GiveInfoDel() {
@@ -366,9 +368,8 @@
             var  del      = document.getElementById('del');
             var length	  = GiveInfo.length;
             if(length>1){
-                child.removeChild(GiveInfo[length-1])
+                child.removeChild(GiveInfo[length-1].parentNode)
             }
-
             if(length == 2){
                 del.style.display = "none";
             }
