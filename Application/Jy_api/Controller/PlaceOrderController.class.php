@@ -245,6 +245,7 @@ class PlaceOrderController extends ComController {
             8,
             9,
             10,
+            11,
         );
         if(!in_array($PlatformType,$dataType)){
             //查询支付信息
@@ -528,6 +529,43 @@ class PlaceOrderController extends ComController {
                 $info['productName']    =    $catGoodsAll['Name'];
                 //商品描述
                 $info['callbackUrl']    =    SERVER_DOMAIN_NAME.'Jy_Thirdpay/OppoBack/index';
+                break;
+                //应用宝
+            case 11:
+                   $AppliedTreasure = D('AppliedTreasure');
+                   $Openid      = $DataInfo['openid'];
+                   $Openkey     = $DataInfo['Openkey'];
+                   $Pf          = $DataInfo['Pf'];
+                   $Pfkey       = $DataInfo['pfkey'];
+                   $CurrencyNum = $catGoodsAll['CurrencyNum']*100;
+                   $server_name ='';
+                   $pay_appkey  ='';
+                   $accout_type ='';
+                   $PayParam = array(
+                        'openid'     =>     $Openid,
+                        'openkey'    =>     $Openkey,
+                        'appid'      =>     '',
+                        'ts'         =>     time(),
+                        'payitem'    =>     '1*'.$CurrencyNum.'*1',
+                        'goodsmeta'  =>     '',
+                        'goodsurl'   =>     '',
+                        'pf'         =>     $Pf,
+                        'pfkey'      =>     $Pfkey,
+                        'zoneid'     =>     1,
+                   );
+                   $ATPlaceAnOrder = $AppliedTreasure->ATPlaceAnOrder($PayParam,$server_name,$accout_type,$pay_appkey);
+                   if($ATPlaceAnOrder == false){
+                       $result = 40012;
+                       $LogLevel = 'CRITICAL';
+                       goto  response;
+                   }
+                   if($ATPlaceAnOrder['ret'] != 0 ){
+                       $result = 40012;
+                       $LogLevel = 'CRITICAL';
+                       goto  response;
+                   }
+                   $dataUsersOrderInfo['ATtoken'] =  $ATPlaceAnOrder['url_params']['token_id'];
+                   $info = $ATPlaceAnOrder['url_params'];
                 break;
             default:
                 break;

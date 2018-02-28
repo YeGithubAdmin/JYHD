@@ -199,4 +199,39 @@ class PayComModel extends Model {
     }
 
 
+
+    /***
+     *  查询订单 腾讯应用宝
+     *  @param string  $PlatformOrder 订单号
+     *  @param string  $playerid      用户ID
+     */
+    public function AtCatOrder($ATtoken,$playerid){
+        if(empty($OrderID)){
+            return false;
+        }
+        $Field = array(
+            'VipLevel',
+            'VipExp',
+            'playerid',
+            'appuserid',
+            'Price',
+            'Status',
+            'PayID',
+            'Form',
+            'PlatformOrder',
+            'Version',
+        );
+        if(!empty($playerid)){
+            $where = 'playerid = '.$playerid.' ATtoken = "'.$ATtoken.'"';
+        }else{
+            $where = ' PlatformOrder = "'.$OrderID.'"';
+        }
+        $CatData = M('jy_users_order_info')
+            ->where($where)
+            ->field($Field)
+            ->find();
+        return $CatData;
+    }
+
+
 }

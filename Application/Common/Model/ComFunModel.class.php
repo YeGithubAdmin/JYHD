@@ -296,18 +296,216 @@ class ComFunModel extends Model{
         \SeasLog::log($level,$data);
     }
 
+    /**
+    * 应用宝登录验证
+    * @param $data   array  请求数据
+    */
+    public function ATCheckCoken($data,$server_name,$script_name){
+        if(empty($data)){
+            return false;
+        }
+        $data['version'] = 'PHP YSDK v1.0.0';
+        $url =    $server_name.$script_name.'?'.$this->MosaicUrl($data);
+        $makeRequest = $this->Tocurl($url);
+        if($makeRequest == 504){
+            return false;
+        }
+        return  json_decode($makeRequest,true);
+    }
+
+    /***
+    *  应用宝下单
+    *
+    */
+    public function  ATPlaceAnOrder($data,$server_name,$script_name,$accout_type,$pay_appkey,$method){
+        $cookie["org_loc"] = urlencode($script_name);
 
 
 
+        if( $accout_type == 1) {
+            $cookie["session_id"] = "openid";
+            $cookie["session_type"] = "kp_actoken";
+        }else if( $accout_type == "wx" ){
+            $cookie["session_id"] = "hy_gameid";
+            $cookie["session_type"] = "wc_actoken";
+        }
+        $secret = $pay_appkey.'&';
+        $script_sig_name="/v3/r".$script_name;
+        $data['sign'] = $this->ATmakeSign($method, $script_sig_name, $data, $secret);;
+        $url = $server_name . $script_name;
+        // 发起请求
+        $ret = $this->makeRequest($url, $data, $cookie, $method, 'https');
+        if (false === $ret['result']){
+           return false;
+        }else{
+            $result_array = json_decode($ret['msg'], true);
+            // 远程返回的不是 json 格式, 说明返回包有问题
+            if (is_null($result_array)) {
+               return false;
+            }
+        }
+        return json_decode($ret, true);
+    }
 
 
+    public function makeRequest($url, $params, $cookie, $method='post', $protocol='http')
+    {
+        $query_string = $this->makeQueryString($params);
+        $cookie_string = $this->makeCookieString($cookie);
+        $ch = curl_init();
+        if ('get' == $method){
+            curl_setopt($ch, CURLOPT_URL, "$url?$query_string");
+        }
+        else{
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $query_string);
+        }
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        // disable 100-continue
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
+        if (!empty($cookie_string)){
+            curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
+        }
+        if ('https' == $protocol){
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        }
+        $ret = curl_exec($ch);
+        $err = curl_error($ch);
+        if (false === $ret || !empty($err)){
+            $errno = curl_errno($ch);
+            $info = curl_getinfo($ch);
+            curl_close($ch);
 
+            return array(
+                'result' => false,
+                'errno' => $errno,
+                'msg' => $err,
+                'info' => $info,
+            );
+        }
+        curl_close($ch);
+        return array(
+            'result' => true,
+            'msg' => $ret,
+        );
+    }
 
+    private function makeQueryString($params){
+        if (is_string($params))
+            return $params;
+        $query_string = array();
+        foreach ($params as $key => $value){
+            array_push($query_string, rawurlencode($key) . '=' . rawurlencode($value));
+        }
+        $query_string = join('&', $query_string);
+        return $query_string;
+    }
+    private function makeCookieString($params){
+        if (is_string($params))
+            return $params;
+        $cookie_string = array();
+        foreach ($params as $key => $value){
+            array_push($cookie_string, $key . '=' . $value);
+        }
+        $cookie_string = join('; ', $cookie_string);
+        return $cookie_string;
+    }
+    /***
+     * 随机数
+     * @param   $num    int     位数
+     * @param   $digit  bool    是否转成16进行
+     */
+    public  function  RandomNumber($number=4,$Letter=4){
+        $numberArr = array(
+            0,1,2,3,4,5,6,7,8,9
+        );
+        $LetterArr = array(
+            'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L',
+            'Z','X','C','V','B','N','M',
+            'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l',
+            'z','x','c','v','b','n','m'
+        );
+        $numberCount  =  count($numberArr);
+        $LetterCount  =  count($LetterArr);
+        $string = '';
+        for ($i=0;$i<$Letter;$i++){
+            $key  = mt_rand(0,$LetterCount-1);
+            $string .= $LetterArr[$key] ;
+        }
+        for ($i=0;$i<$number;$i++){
+            $key  = mt_rand(0,$numberCount-1);
 
-
-
-
-
-
+            $string .= $numberArr[$key] ;
+        }
+        return  $string;
+    }
+    /**
+     * 生成签名
+     *
+     * @param string 	$method 请求方法 "get" or "post"
+     * @param string 	$url_path
+     * @param array 	$params 表单参数
+     * @param string 	$secret 密钥
+     */
+    public  function  ATmakeSign($method, $url_path, $params, $secret){
+        $mk = $this->makeSource($method, $url_path, $params);
+        $my_sign = hash_hmac("sha1", $mk, strtr($secret, '-_', '+/'), true);
+        $my_sign = base64_encode($my_sign);
+        return $my_sign;
+    }
+    private function makeSource($method, $url_path, $params){
+        $strs = strtoupper($method) . '&' . rawurlencode($url_path) . '&';
+        ksort($params);
+        $query_string = array();
+        foreach ($params as $key => $val ){
+            array_push($query_string, $key . '=' . $val);
+        }
+        $query_string = join('&', $query_string);
+        return $strs . str_replace('~', '%7E', rawurlencode($query_string));
+    }
+    /**
+     * 验证回调发货URL的签名 (注意和普通的OpenAPI签名算法不一样，详见@refer的说明)
+     * @param string 	$method 请求方法 "get" or "post"
+     * @param string 	$url_path
+     * @param array 	$params 腾讯调用发货回调URL携带的请求参数
+     * @param string 	$secret 密钥
+     * @param string 	$sig 腾讯调用发货回调URL时传递的签名
+     *
+     * @refer
+     *  http://wiki.open.qq.com/wiki/%E5%9B%9E%E8%B0%83%E5%8F%91%E8%B4%A7URL%E7%9A%84%E5%8D%8F%E8%AE%AE%E8%AF%B4%E6%98%8E_V3
+     */
+    public function ATverifySig($method, $url_path, $params, $secret, $sig){
+        unset($params['sig']);
+        // 先使用专用的编码规则对value编码
+        foreach ($params as $k => $v) {
+            $params[$k] = $this->encodeValue($v);
+        }
+        // 再计算签名
+        $sig_new = $this->ATmakeSign($method, $url_path, $params, $secret);
+        return $sig_new == $sig;
+    }
+    /**
+     * 回调发货URL专用的编码算法
+     *  编码规则为：除了 0~9 a~z A~Z !*()之外其他字符按其ASCII码的十六进制加%进行表示，例如"-"编码为"%2D"
+     * @refer
+     *  http://wiki.open.qq.com/wiki/%E5%9B%9E%E8%B0%83%E5%8F%91%E8%B4%A7URL%E7%9A%84%E5%8D%8F%E8%AE%AE%E8%AF%B4%E6%98%8E_V3
+     */
+    private function encodeValue($value){
+        $rst = '';
+        $len = strlen($value);
+        for ($i=0; $i<$len; $i++){
+            $c = $value[$i];
+            if (preg_match ("/[a-zA-Z0-9!\(\)*]{1,1}/", $c)) {
+                $rst .= $c;
+            }else{
+                $rst .= ("%" . sprintf("%02X", ord($c)));
+            }
+        }
+        return $rst;
+    }
 
 }
