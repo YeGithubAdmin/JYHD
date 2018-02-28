@@ -113,7 +113,9 @@ class AppliedTreasureLoginController extends ComController {
             goto  response;
         }
         $ThirdLoginData = array(
-            ''
+            'Channel'   => $DataInfo['channel'],
+            'Uid'       => $Openid,
+            'LoginCode' => $LoginCode,
         );
         $ThirdLogin = $Protobuf->ThirdLogin($ThirdLoginData);
         if($ThirdLogin == false){

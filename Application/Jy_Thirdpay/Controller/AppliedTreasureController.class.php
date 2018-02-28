@@ -86,7 +86,7 @@ class AppliedTreasureController extends Controller {
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['Playerid']){
+        if($dataThirdpay['playerid']){
             $result   = 4006;
             $LogLevel = 'NOTICE';
             goto  response;
@@ -97,7 +97,7 @@ class AppliedTreasureController extends Controller {
             goto  response;
         }
         //查询订单
-        $AtCatOrder = $PayCom->AtCatOrder($dataThirdpay['pay_token'],$dataThirdpay['playerid']);
+        $AtCatOrder = $PayCom->AtCatOrder($dataThirdpay['PayToken'],$dataThirdpay['playerid']);
         if(empty($AtCatOrder) || $AtCatOrder == false){
             $result   = 4007;
             $LogLevel = 'NOTICE';
