@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,menu-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{$responseAdmin}/lib/html5.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/respond.min.js"></script>
+<script type="text/javascript" src="{$responseAdmin}/lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="{$responseAdmin}/css/H-ui.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/css/H-ui.admin.css" rel="stylesheet"
+	type="text/css" />
+<link href="{$responseAdmin}/lib/Hui-iconfont/1.0.1/iconfont.css"
+	rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>物品流水</title>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 统计 <span class="c-gray en">&gt;</span>
+		游戏数值 <span class="c-gray en">&gt;</span>场次数据 <a
+			class="btn btn-success radius r mr-20"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="pd-20">
+		<!--搜索 -->
+		<form action="" method="get">
+			<div class="text-c">
+				时间范围： <input type="text"
+					onfocus="<literal>WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})</literal>"
+					id="datemin" value="{$search['datemin']}" name="datemin"
+					class="input-text Wdate" style="width: 120px;">  <input
+					type="text"
+					onfocus="<literal>WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
+					id="datemax" value="{$search['datemax']}" name="datemax"
+					class="input-text Wdate" style="width: 120px;display: none;">
+				<span style="width: 100px;" class="select-box">
+                <select size="1" name="Prop" class="select">
+					     <option   value="">道具</option>
+						 <option  <eq name = "search['Prop']" value ="1">selected = "true"</eq>   value="1">冰封</option>
+						 <option  <eq name = "search['Prop']" value ="2">selected = "true"</eq>   value="2">锁定</option>
+						 <option  <eq name = "search['Prop']" value ="3">selected = "true"</eq>   value="3">蓝色核弹</option>
+						 <option  <eq name = "search['Prop']" value ="4">selected = "true"</eq>   value="4">红色核弹</option>
+						 <option  <eq name = "search['Prop']" value ="5">selected = "true"</eq>   value="5">紫色核弹</option>
+						 <option  <eq name = "search['Prop']" value ="6">selected = "true"</eq>   value="6">渔劵</option>
+						 <option  <eq name = "search['Prop']" value ="8">selected = "true"</eq>   value="8">金币</option>
+						 <option  <eq name = "search['Prop']" value ="9">selected = "true"</eq>   value="9">钻石</option>
+				</select>
+				</span>
+				<span style="width: 100px;" class="select-box">
+                <select size="1" name="Reason" class="select">
+					     <option   value="">来源</option>
+						 <option  <eq name = "search['Reason']" value ="1">selected = "true"</eq>   value="1">不明原因</option>
+						 <option  <eq name = "search['Reason']" value ="2">selected = "true"</eq>   value="2">购买月卡</option>
+						 <option  <eq name = "search['Reason']" value ="3">selected = "true"</eq>   value="3">领取月卡</option>
+						 <option  <eq name = "search['Reason']" value ="4">selected = "true"</eq>   value="4">使用道具</option>
+						 <option  <eq name = "search['Reason']" value ="5">selected = "true"</eq>   value="5">购买金币</option>
+						 <option  <eq name = "search['Reason']" value ="6">selected = "true"</eq>   value="6">兑换</option>
+						 <option  <eq name = "search['Reason']" value ="7">selected = "true"</eq>   value="7">vip奖励</option>
+						 <option  <eq name = "search['Reason']" value ="8">selected = "true"</eq>   value="8">签到</option>
+						 <option  <eq name = "search['Reason']" value ="9">selected = "true"</eq>   value="9">签到</option>
+						 <option  <eq name = "search['Reason']" value ="11">selected = "true"</eq>  value="11">商城</option>
+						 <option  <eq name = "search['Reason']" value ="12">selected = "true"</eq>  value="12">礼物包</option>
+						 <option  <eq name = "search['Reason']" value ="13">selected = "true"</eq>  value="13">后台</option>
+						 <option  <eq name = "search['Reason']" value ="14">selected = "true"</eq>  value="14">玩家升级</option>
+						 <option  <eq name = "search['Reason']" value ="15">selected = "true"</eq>  value="15">击杀鱼</option>
+						 <option  <eq name = "search['Reason']" value ="16">selected = "true"</eq>  value="16">炮升级</option>
+						 <option  <eq name = "search['Reason']" value ="17">selected = "true"</eq>  value="17">通过邮件领取</option>
+						 <option  <eq name = "search['Reason']" value ="18">selected = "true"</eq>  value="18">赠送礼物</option>
+						 <option  <eq name = "search['Reason']" value ="19">selected = "true"</eq>  value="19">抽奖</option>
+						 <option  <eq name = "search['Reason']" value ="20">selected = "true"</eq>  value="20">启航礼包</option>
+						 <option  <eq name = "search['Reason']" value ="21">selected = "true"</eq>  value="21">在线奖励</option>
+						 <option  <eq name = "search['Reason']" value ="22">selected = "true"</eq>  value="22">破产奖励</option>
+						 <option  <eq name = "search['Reason']" value ="23">selected = "true"</eq>  value="23">CDK</option>
+						 <option  <eq name = "search['Reason']" value ="24">selected = "true"</eq>  value="24">黑红梅芳</option>
+						 <option  <eq name = "search['Reason']" value ="25">selected = "true"</eq>  value="25">水浒传</option>
+				</select>
+					</span>
+				<span style="width: 100px;" class="select-box">
+                <select size="1" name="Num" class="select">
+					     <option   value="">条数</option>
+					     <option  <eq name = "search['Num']" value ="30">selected = "true"</eq>   value="30">30</option>
+					     <option  <eq name = "search['Num']" value ="60">selected = "true"</eq>   value="60">60</option>
+					     <option  <eq name = "search['Num']" value ="90">selected = "true"</eq>   value="90">90</option>
+					     <option  <eq name = "search['Num']" value ="120">selected = "true"</eq>   value="120">120</option>
+
+				</select>
+				</span>
+
+
+
+				<button type="submit" class="btn btn-success" id="" name="">
+					<i class="Hui-iconfont">&#xe665;</i> 搜索
+				</button>
+			</div>
+		</form>
+		<table
+			class="table mt-15 table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="60">日期</th>
+					<th width="60">物品</th>
+					<th width="60">增加量</th>
+					<th width="60">当前量</th>
+					<th width="60">原因</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name='info' id = 'val'>
+					<tr class="text-c">
+						<th width="60">{$val['opt_time']}</th>
+						<th width="60">
+
+							<switch name = "val['itemid']" >
+								<case value = "1">
+									冰封
+								</case>
+								<case value = "2">
+									锁定
+								</case>
+								<case value = "3">
+									蓝色核弹
+								</case>
+								<case value = "4">
+									红色核弹
+								</case>
+								<case value = "5">
+									紫色核弹
+								</case>
+								<case value = "6">
+									渔劵
+								</case>
+								<case value = "8">
+									金币
+								</case>
+								<case value = "9">
+									钻石
+								</case>
+								<default/>
+								...
+							</switch>
+							({$val['itemid']})
+						</th>
+						<th width="60">{$val['add_num']}</th>
+						<th width="60">{$val['cur_num']}</th>
+						<th width="60">
+
+							<switch name = "val['reason']" >
+								<case value = "2">
+									购买月卡
+								</case>
+								<case value = "3">
+									领取月卡
+								</case>
+								<case value = "4">
+									使用道具
+								</case>
+								<case value = "5">
+									购买金币
+								</case>
+								<case value = "6">
+									兑换
+								</case>
+								<case value = "7">
+									vip奖励
+								</case>
+								<case value = "8">
+									签到
+								</case>
+								<case value = "9">
+									活动
+								</case>
+								<case value = "11">
+									商城
+								</case>
+								<case value = "12">
+									礼物包
+								</case>
+								<case value = "13">
+									后台
+								</case>
+								<case value = "14">
+									玩家升级
+								</case>
+								<case value = "15">
+									击杀鱼
+								</case>
+								<case value = "16">
+									炮升级
+								</case>
+								<case value = "17">
+									通过邮件领取
+								</case>
+								<case value = "18">
+									赠送礼物
+								</case>
+								<case value = "19">
+									抽奖
+								</case>
+								<case value = "20">
+									启航礼包
+								</case>
+								<case value = "21">
+									在线奖励
+								</case>
+								<case value = "22">
+									破产奖励
+								</case>
+								<case value = "23">
+									CDK
+								</case>
+
+								<case value = "24">
+									黑红梅芳
+								</case>
+								<case value = "25">
+									水浒传
+								</case>
+								<default/>
+								...
+							</switch>
+							({$val['reason']})
+
+
+						</th>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+	<div class = "cl">
+		<div style="padding-right: 20px;float: right;" 　id="DataTables_Table_0_paginate"
+			 class="dataTables_paginate paging_simple_numbers">{$page}</div>
+	</div>
+
+	<script type="text/javascript" src="{$responseAdmin}/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="{$responseAdmin}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+</body>
+</html>
+<literal>
+<script>
+
+
+
+
+
+
+function CatInfo(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+</script>
+</literal>

@@ -261,6 +261,8 @@
 				<td width="40">{$catGamePlayerNumerical['key_fish_rate']}</td>
 				<th width="40">积分</th>
 				<td width="40">{$catGamePlayerNumerical['score']}</td>
+				<th width="40">物品流水</th>
+				<td width="40"><a  style="color:red" onclick="UsersOrder_authority('物品列表','/Jy_statistics/GameReschangeAction/index/playerid/{$catGamePlayer['playerid']}')">查看</a></td>
 			</tr>
 
 			</thead>
@@ -304,6 +306,15 @@
 
         });
 
+
+        function UsersOrder_authority(title,url,id,w,h){
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
 	</script>
 
 </literal>
