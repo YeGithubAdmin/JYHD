@@ -532,8 +532,7 @@ class ThirtyDaySignController extends ComController {
         $infoData = array();
         foreach ($catSignGoods as $k=>$v){
               $num =  $v['Number'];
-
-              if($VipLevel>0 && $v['Type'] == 1){
+              if($VipLevel>0){
                  $num =  $num*2;
               }
               if($v['Type']> 0 &&  $v['Type']<=3 ){

@@ -56,17 +56,24 @@ class AppliedTreasureLoginController extends ComController {
             $LogLevel = 'NOTICE';
             goto  response;
         }
+        $AccessToken = $DataInfo['AccessToken'];
         if(empty($AccessToken)){
             $result = 4010;
             $LogLevel = 'NOTICE';
             goto  response;
         }
+        $ServerType = $DataInfo['ServerType'];
+        if($ServerType == 1 && SERVER_TYPE == 1){
+            $ServerName = 'ysdktest.qq.com';
+        }else{
+            $ServerName = 'ysdk.qq.com';
+        }
         $LoginCode = $ComFun->RandomNumber(); ;
-        $ServerName = '';
-        $Appid  = '';
-        $Appkey = '';
 
-        if($Type = 2){
+        $Appid  = '1106745978';
+        $Appkey = 'UCRzuSY38B5SmTGL';
+
+        if($Type == 2){
             //请求参数
             $Params = array(
                 'appid' =>$Appid,
@@ -95,6 +102,8 @@ class AppliedTreasureLoginController extends ComController {
         if($ATCheckCoken === false ){
             $result   = 3001;
             $LogLevel =  'CRITICAL';
+
+
             goto  response;
         }
         if($ATCheckCoken['ret'] !== 0){

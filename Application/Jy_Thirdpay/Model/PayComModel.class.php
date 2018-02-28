@@ -215,6 +215,7 @@ class PayComModel extends Model {
             'playerid',
             'appuserid',
             'Price',
+            'PayType',
             'Status',
             'PayID',
             'Form',

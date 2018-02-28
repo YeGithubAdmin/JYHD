@@ -46,6 +46,12 @@ define('PROTOC_PATH', JY_ROOT.'protoPhp/');
 
 //游戏服务器请求地址
 define('SERVER_PROTO', 'http://192.168.0.151:80');
+//服务器类型  1- 测试 2-正式
+define('SERVER_TYPE', 1);
+
+
+
+
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';
 

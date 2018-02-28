@@ -500,12 +500,12 @@ class PlaceOrderController extends ComController {
                 );
                 $ResData = $PayCom->VivoPayOrder($param,$AppKey);
                 if(!$PayCom){
-                    $result = 40012;
+                    $result = 4012;
                     $LogLevel = 'CRITICAL';
                     goto  response;
                 }
                 if($ResData['respCode'] != 200){
-                    $result = 40011;
+                    $result = 4011;
                     $LogLevel = 'CRITICAL';
                     goto  response;
                 }
@@ -533,18 +533,57 @@ class PlaceOrderController extends ComController {
                 //应用宝
             case 11:
                    $AppliedTreasure = D('AppliedTreasure');
-                   $Openid      = $DataInfo['openid'];
+                   $Openid      = $DataInfo['Openid'];
+                   $AtType      = $DataInfo['AtType'];
                    $Openkey     = $DataInfo['Openkey'];
                    $Pf          = $DataInfo['Pf'];
-                   $Pfkey       = $DataInfo['pfkey'];
-                   $CurrencyNum = $catGoodsAll['CurrencyNum']*100;
-                   $server_name ='';
-                   $pay_appkey  ='';
-                   $accout_type ='';
+                   $Pfkey       = $DataInfo['Pfkey'];
+                   $CurrencyNum = $catGoodsAll['CurrencyNum'];
+                   $ServerType  = $DataInfo['ServerType'];
+                   if(empty($Openid)){
+                       $result = 4013;
+                       $LogLevel = 'NOTICE';
+                       goto  response;
+                   }
+                   if(empty($AtType)){
+                       $result = 4014;
+                       $LogLevel = 'NOTICE';
+                       goto  response;
+                   }
+                   if(empty($Openkey)){
+                       $result = 4015;
+                       $LogLevel = 'NOTICE';
+                       goto  response;
+                   }
+                   if(empty($Pf)){
+                       $result = 40016;
+                       $LogLevel = 'NOTICE';
+                       goto  response;
+                   }
+                   if(empty($Pfkey)){
+                       $result = 4017;
+                       $LogLevel = 'NOTICE';
+                       goto  response;
+                   }
+                   if($ServerType == 1 && SERVER_TYPE == 1){
+                      $server_name = 'ysdktest.qq.com';
+                   }else{
+                      $server_name = 'ysdk.qq.com';
+                   }
+                   if($AtType == 1){
+                       $accout_type ='qq';
+                   }elseif ($AtType == 2){
+                       $accout_type ='wx';
+                   }
+
+
+
+                   $appid       = '1106745978';
+                   $pay_appkey  = 'UCRzuSY38B5SmTGL';
                    $PayParam = array(
                         'openid'     =>     $Openid,
                         'openkey'    =>     $Openkey,
-                        'appid'      =>     '',
+                        'appid'      =>     $appid,
                         'ts'         =>     time(),
                         'payitem'    =>     '1*'.$CurrencyNum.'*1',
                         'goodsmeta'  =>     '',
@@ -565,6 +604,7 @@ class PlaceOrderController extends ComController {
                        goto  response;
                    }
                    $dataUsersOrderInfo['ATtoken'] =  $ATPlaceAnOrder['url_params']['token_id'];
+                   $dataUsersOrderInfo['PayType'] =  $AtType;
                    $info = $ATPlaceAnOrder['url_params'];
                 break;
             default:

@@ -66,37 +66,32 @@ class AppliedTreasureController extends Controller {
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['pf']){
+        if($dataThirdpay['Pf']){
             $result   = 4002;
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['pfkey']){
+        if($dataThirdpay['Pfkey']){
             $result   = 4003;
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['openid']){
+        if($dataThirdpay['Openid']){
             $result   = 4004;
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['openkey']){
+        if($dataThirdpay['Openkey']){
             $result   = 4005;
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['playerid']){
+        if($dataThirdpay['Playerid']){
             $result   = 4006;
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        if($dataThirdpay['pay_token']){
-            $result   = 4007;
-            $LogLevel = 'NOTICE';
-            goto  response;
-        }
-        if($dataThirdpay['openid']){
+        if($dataThirdpay['PayToken']){
             $result   = 4007;
             $LogLevel = 'NOTICE';
             goto  response;
@@ -111,17 +106,27 @@ class AppliedTreasureController extends Controller {
         $PlatformOrder = $AtCatOrder['PlatformOrder'];
         $Price         = $AtCatOrder['Price'];
         //校验支付
-        $appid = '';
-        $accout_type = '';
-        $server_name = '';
-        $pay_appkey  = '';
+
+        $ServerType    = $dataThirdpay['ServerType'];
+        if($ServerType == 1 && SERVER_TYPE == 1){
+            $server_name = 'ysdktest.qq.com';
+        }else{
+            $server_name = 'ysdk.qq.com';
+        }
+        if($AtCatOrder['PayType'] == 1){
+            $accout_type ='qq';
+        }elseif ($AtCatOrder['PayType'] == 2){
+            $accout_type ='wx';
+        }
+        $appid = '1106745978';
+        $pay_appkey  = 'UCRzuSY38B5SmTGL';
         $VerParam = array(
-            'openid'    =>  $dataThirdpay['openid'],
-            'openkey'   =>  $dataThirdpay['openkey'],
+            'openid'    =>  $dataThirdpay['Openid'],
+            'openkey'   =>  $dataThirdpay['Openkey'],
             'appid'     =>  $appid,
             'ts'        =>  time(),
-            'pf'        =>  $dataThirdpay['pf'],
-            'pfkey'     =>  $dataThirdpay['pfkey'],
+            'pf'        =>  $dataThirdpay['Pf'],
+            'pfkey'     =>  $dataThirdpay['Pfkey'],
             'zoneid'    =>  1,
             'amt'       =>  $Price,
             'billno'    =>  $PlatformOrder,
