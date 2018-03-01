@@ -44,12 +44,6 @@ class AppliedTreasureLoginController extends ComController {
             $LogLevel = 'NOTICE';
             goto  response;
         }
-        $Openkey = $DataInfo['Openkey'];
-        if(empty($Openkey)){
-            $result = 4007;
-            $LogLevel = 'NOTICE';
-            goto  response;
-        }
         $Type = $DataInfo['Type'];
         if(empty($Type)){
             $result = 4009;

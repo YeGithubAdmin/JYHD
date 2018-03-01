@@ -97,7 +97,7 @@ class ProtobufModel extends Model{
             'PBUrl:'.CONTROLLER_NAME.ACTION_NAME,
             'Version:'.$data['Version'],
         );
-        $Respond  = $this->ObjFun->ProtobufSend($Header,$String);
+        $Respond  = $this->ProtobufSend($Header,$String);
         if($Respond == 504){
             return false;
         }
@@ -105,5 +105,14 @@ class ProtobufModel extends Model{
         $ReplyCode = $PBS_ThirdPartyLoginReturn->getCode();
         return $ReplyCode;
     }
+
+
+    /**
+    *
+    */
+    public function PayBacak(){
+
+    }
+
 
 }
