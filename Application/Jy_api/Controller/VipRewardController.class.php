@@ -261,8 +261,10 @@ class VipRewardController extends ComController {
         $PBS_UsrDataOprater = new PBS_UsrDataOprater();
         $UsrDataOpt         = new UsrDataOpt();
         $OptSrc             = new OptSrc();
+        $OptReason          = new \OptReason();
         $PBS_UsrDataOprater->setPlayerid($playerid);
         $PBS_UsrDataOprater->setOpt($UsrDataOpt::Request_Player);
+        $PBS_UsrDataOprater->setReason($OptReason::vip_reward);
         $PBS_UsrDataOprater->setSrc($OptSrc::Src_PHP);
         $PBSUsrDataOpraterString = $PBS_UsrDataOprater->serializeToString();
         //发送请求
