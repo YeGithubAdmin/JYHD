@@ -18,6 +18,8 @@ class UsersExchangeApplicationController extends ComController {
         $search['datemin']      =      I('param.datemin','','trim');
         $search['Order']        =      I('param.Order','','trim');
         $search['playerid']     =      I('param.playerid','','trim');
+        $search['SortType']     =      I('param.SortType','','trim');
+        $search['Sort']         =      I('param.Sort','','trim');
         $search['Status']       =      I('param.Status',1,'intval');
         $search['Type']         =      I('param.Type',0,'intval');
         $where = '1';
@@ -43,6 +45,18 @@ class UsersExchangeApplicationController extends ComController {
                 $where .= ' and `Type`=' . $search['Type'];
             }
         }
+        if($search['SortType'] != ''){
+            $Order = $search['SortType'];
+
+            if($search['Sort'] != ''){
+                $Order =$Order.' '.$search['Sort'];
+            }else{
+                $Order =$Order.' desc';
+            }
+        }else{
+            $Order = 'DateTime desc';
+        }
+        print_r($Order);
         $count  = M('jy_users_exchange_log')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
@@ -65,7 +79,7 @@ class UsersExchangeApplicationController extends ComController {
         $UsersExchangeLog = M('jy_users_exchange_log')
             ->where($where)
             ->limit($page*$num,$num)
-            ->order('DateTime desc')
+            ->order($Order)
             ->field($UsersExchangeLogField)
             ->select();
         $this->assign('page',$show);

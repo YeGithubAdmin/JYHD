@@ -100,7 +100,7 @@ class AppliedTreasureLoginController extends ComController {
 
             goto  response;
         }
-        if($ATCheckCoken['ret'] !== 0){
+        if($ATCheckCoken['result'] !== true){
             $result   = 3002;
             $LogLevel =  'CRITICAL';
             $info = $ATCheckCoken;

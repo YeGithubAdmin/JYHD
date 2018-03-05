@@ -48,8 +48,8 @@
 					onfocus="<literal>WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}',maxDate:''})</literal>"
 					id="datemax" value="{$search['datemax']}" name="datemax"
 					class="input-text Wdate" style="width: 170px;">
-				<input type="text" class="input-text" style="width: 250px" placeholder="请输入用户ID" id="" value="{$search['playerid']}" name="playerid">
-				<input type="text" class="input-text" style="width: 250px" placeholder="请输入兑换单号" id="" value="{$search['Order']}" name="Order">
+				<input type="text" class="input-text" style="width: 150px" placeholder="请输入用户ID" id="" value="{$search['playerid']}" name="playerid">
+				<input type="text" class="input-text" style="width: 150px" placeholder="请输入兑换单号" id="" value="{$search['Order']}" name="Order">
 				<span style="width: 150px" class="select-box">
 				<select size="1" name="Type"
 						class="select">
@@ -58,6 +58,22 @@
 					    <option value="2"<if condition="$search['Type'] eq '2'" >selected</if>>砖石</option>
 					    <option value="3"<if condition="$search['Type'] eq '3'" >selected</if>>道具</option>
 					   <option value="4"<if condition="$search['Type'] eq '4'" >selected</if>>卡类</option>
+				</select>
+					</span>
+				<span style="width: 150px" class="select-box">
+				<select size="1" name="SortType"
+						class="select">
+						<option value="">排序</option>
+						<option value="DateTime"<if  condition= "$search['SortType'] eq 'DateTime'">selected</if>>申请时间</option>
+					<option value="UpTime"<if condition="$search['SortType'] eq 'UpTime'" >selected</if>>操作时间</option>
+					<option value="Status"<if condition="$search['SortType'] eq 'Status'" >selected</if>>状态</option>
+					<option value="StockNum"<if condition="$search['SortType'] eq 'StockNum'" >selected</if>>渔劵数</option>
+				</select>
+				</span>
+				<span style="width: 150px" class="select-box">
+				<select size="1" name="Sort" class="select">
+					<option value="desc" <if  condition= "$search['Sort'] eq 'desc'">selected</if>>降序</option>
+					<option value="asc"  <if  condition= "$search['Sort'] eq 'asc'">selected</if>>升序</option>
 				</select>
 				</span>
 				<span style="width: 150px" class="select-box">
