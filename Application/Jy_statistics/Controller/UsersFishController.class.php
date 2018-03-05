@@ -11,28 +11,29 @@ class UsersFishController extends ComController {
     public  function  index(){
 
          $Data = M('game_player as a')
+                ->join('game_item as b on a.playerid = b.playerid')
                 ->join('game_account as c on a.playerid = c.playerid')
-                ->where('a.rmb > 1')
+                ->where('a.rmb >= 1')
                 ->field(array(
                     'c.reg_channel as Channel',
-                    'count(a.playerid) Num',
-                    'elt(interval(a.`rmb`,1, 50,100,200,300,500,1000,2000,)
+                    'sum(b.item6_num) as Num',
+                    'elt(interval(a.`rmb`,1,50,100,200,300,500,1000,2000)
                               ,
                               "less0",
                               "50to100",
                               "100to200",
+                              "200to300",
+                              "300to500",
+                              "500to1000",
                               "1000to2000",
-                              "2000to3000",
-                              "3000to4000",
-                              "4000to5000",
-                              "more5000") as Section'
+                              "more2000") as Section'
                 ))
                 ->group('Channel,Section')
                 ->select();
+
+
+
            //查询渠道
-
-
-
           $catChannel = M('jy_admin_users')
                         ->field(array(
                             'account',
@@ -43,19 +44,17 @@ class UsersFishController extends ComController {
           foreach ($Data as $k=>$v) {
               $DataSort[$v['Channel'].$v['Section']] = $v;
           }
-
           $info = array();
           foreach ($catChannel as $k=>$v){
-              $catChannel[$k]['less0']       = 0;
-              $catChannel[$k]['1to100']      = 0;
-              $catChannel[$k]['100to1000']   = 0;
-              $catChannel[$k]['1000to2000']  = 0;
-              $catChannel[$k]['2000to3000']  = 0;
-              $catChannel[$k]['3000to4000']  = 0;
-              $catChannel[$k]['4000to5000']  = 0;
-              $catChannel[$k]['more5000']    = 0;
-          }
-
+              $catChannel[$k]['less0']        = 0;
+              $catChannel[$k]['50to100']      = 0;
+              $catChannel[$k]['100to200']     = 0;
+              $catChannel[$k]['200to300']     = 0;
+              $catChannel[$k]['300to500']     = 0;
+              $catChannel[$k]['500to1000']    = 0;
+              $catChannel[$k]['1000to2000']   = 0;
+              $catChannel[$k]['more2000']     = 0;
+         }
          foreach ($catChannel as $k=>$v){
                 foreach ($v as $key=>$val){
                     if($DataSort[$v['account'].$key]){
@@ -63,29 +62,21 @@ class UsersFishController extends ComController {
                     }
                 }
          }
-        print_r($catChannel);die;
-        $ComFun = D('ComFun');
-
-
-        $expTitle = "数据表";
-        $expCellName = array(
+         $ComFun = D('ComFun');
+         $expTitle = "付费渔劵总数";
+         $expCellName = array(
             '渠道号',
             '渠道',
-            '0',
-            '1到100',
-            '100到1000',
+            '50一下',
+            '50到100',
+            '100到200',
+            '200到300',
+            '300到500',
+            '500到1000',
             '1000到2000',
-            '2000到3000',
-            '3000到4000',
-            '4000到5000',
-            '大于5000',
-        );
-
-        $ComFun->exportExcel($expTitle,$expCellName,$catChannel);
-
-
-
-
+            '大于2000',
+         );
+         $ComFun->exportExcel($expTitle,$expCellName,$catChannel);
     }
 
     public function UsersNumExcel(){

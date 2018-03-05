@@ -106,13 +106,4 @@ class ProtobufModel extends Model{
         return $ReplyCode;
     }
 
-
-    /**
-    *
-    */
-    public function PayBacak(){
-
-    }
-
-
 }

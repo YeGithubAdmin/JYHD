@@ -605,7 +605,7 @@ class PlaceOrderController extends ComController {
                    }
                    $dataUsersOrderInfo['ATtoken'] =  $ATPlaceAnOrder['url_params']['token_id'];
                    $dataUsersOrderInfo['PayType'] =  $AtType;
-                   $info = $ATPlaceAnOrder['url_params'];
+                   $info = $ATPlaceAnOrder['ATtoken']['token_id'];
                 break;
             default:
                 break;

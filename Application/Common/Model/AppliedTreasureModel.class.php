@@ -85,6 +85,7 @@ class AppliedTreasureModel extends Model{
         }
         $ret = curl_exec($ch);
         $err = curl_error($ch);
+
         if (false === $ret || !empty($err)){
             $errno = curl_errno($ch);
             $info = curl_getinfo($ch);
@@ -179,7 +180,7 @@ class AppliedTreasureModel extends Model{
      *
      *
      */
-    public function wx_check_token($server_name,$params){
+    public function wx_check_token($params,$server_name){
         $method = 'get';
         $script_name = '/auth/wx_check_token';
         return $this->api_ysdk($script_name, $params,$server_name,$method);
