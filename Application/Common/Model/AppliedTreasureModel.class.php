@@ -56,7 +56,7 @@ class AppliedTreasureModel extends Model{
         if (is_null($result_array)) {
             return false;
         }
-        return $ret;
+        return $result_array;
     }
 
     public function makeRequest($url, $params, $cookie, $method='post', $protocol='http'){

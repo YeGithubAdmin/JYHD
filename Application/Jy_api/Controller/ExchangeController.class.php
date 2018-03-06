@@ -42,6 +42,8 @@ class ExchangeController extends ComController {
         $msgArr[4011] = "收货地址为空！";
         $msgArr[4012] = "QQ为空！";
         $msgArr[5002] = "物品信息，缺失！";
+        $msgArr[7001] = "库存不足！";
+        $msgArr[7002] = "超过兑换限制！";
         $playerid = $DataInfo['playerid'];
         if(empty($playerid)){
             $result = 4006;
@@ -62,7 +64,10 @@ class ExchangeController extends ComController {
             'Code',
             'CurrencyType',
             'CurrencyNum',
+            'ExchangeType',
+            'ExchangeNum',
             'IssueType',
+            'IssueNum',
             'FaceValue',
             'GetNum',
             'Type',
@@ -71,11 +76,47 @@ class ExchangeController extends ComController {
                        ->where('Id ='.$GoodsID.' and IsDel = 1')
                        ->field($catGoodsAllFile)
                        ->find();
+
+
+
+
         if(empty($catGoodsAll)){
             $LogLevel = 'ERROR';
             $result = 5002;
             goto response;
         }
+
+        //查询是否限制库存
+        if($catGoodsAll['IssueType'] == 2){
+            if($catGoodsAll['IssueNum'] == 0){
+                $LogLevel = 'NOTICE';
+                $result = 7001;
+                goto response;
+            }
+        }
+
+        //是限制兑换
+
+        if($catGoodsAll['ExchangeType'] == 2){
+            //查询兑换记录
+            $catExchangeLog = M('jy_users_exchange_log')
+                              ->where('playerid = '.$playerid.' and  GoodsID ='.$GoodsID)
+                              ->field(array(
+                                    'GoodsID',
+                                    'count(Id) as Num',
+                              ))
+                              ->group('GoodsID')
+                              ->select();
+            if($catExchangeLog[0]['Num'] >= $catGoodsAll['ExchangeNum']){
+                $LogLevel = 'NOTICE';
+                $result = 7002;
+                goto response;
+            }
+        }
+
+
+
+
 
         if($catGoodsAll['Type'] > 3){
             if(empty($DataInfo['UserName'])){
@@ -286,6 +327,20 @@ class ExchangeController extends ComController {
             $LogLevel = 'CRITICAL';
             goto response;
         }
+
+        $model = new  Model();
+        //开启事物
+        $model->startTrans();
+        //查询是否限制库存
+        $addGoodsAll = true;
+        if($catGoodsAll['IssueType'] == 2){
+            $GoodsAll = array(
+                'IssueNum'=>$catGoodsAll['IssueNum']-1,
+            );
+            $addGoodsAll = M('jy_goods_all')
+                            ->where('Id = '.$GoodsID)
+                            ->save($GoodsAll);
+        }
         //增加兑换记录
         $dataUsersExchangeLog = array(
             'Number'        =>      $Number,
@@ -303,12 +358,15 @@ class ExchangeController extends ComController {
             'Address'       =>      $DataInfo['Address'],
             'Status'        =>      $Status,
         );
-        $addUsersExchangeLog = M('jy_users_exchange_log')
+        $addUsersExchangeLog = $model->table('jy_users_exchange_log')
                               ->add($dataUsersExchangeLog);
-        if(!$addUsersExchangeLog){
+        if(!$addUsersExchangeLog || !$addGoodsAll){
             $result = 3006;
             $LogLevel = 'CRITICAL';
+            $model->rollback();
             goto response;
+        }else{
+            $model->commit();
         }
         $info['Type'] =  $catGoodsAll['Type'];
         $info['Code'] =  $GoodsCode;

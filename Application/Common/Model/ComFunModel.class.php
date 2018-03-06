@@ -508,4 +508,18 @@ class ComFunModel extends Model{
         return $rst;
     }
 
+    /**
+     * 检查手机格式
+     * @param string $phone
+     * @return boolean
+     */
+    public function checkPhone($phone=''){
+        if(!preg_match('/^1[34578]\d{9}$/', $phone)){
+            //手机号码格式不正确
+            return false;
+        }
+        return true;
+    }
+
+
 }

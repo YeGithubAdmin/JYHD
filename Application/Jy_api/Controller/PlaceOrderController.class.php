@@ -532,10 +532,11 @@ class PlaceOrderController extends ComController {
                 break;
                 //应用宝
             case 11:
+                   $Payment = true;
                    $AppliedTreasure = D('AppliedTreasure');
                    $Openid      = $DataInfo['Openid'];
                    $AtType      = $DataInfo['AtType'];
-                   $Openkey     = $DataInfo['Openkey'];
+                   $Openkey     = $DataInfo['OpenKey'];
                    $Pf          = $DataInfo['Pf'];
                    $Pfkey       = $DataInfo['Pfkey'];
                    $CurrencyNum = $catGoodsAll['CurrencyNum'];
@@ -593,14 +594,17 @@ class PlaceOrderController extends ComController {
                         'zoneid'     =>     1,
                    );
                    $ATPlaceAnOrder = $AppliedTreasure->ATPlaceAnOrder($PayParam,$server_name,$accout_type,$pay_appkey);
+
                    if($ATPlaceAnOrder == false){
                        $result = 40012;
                        $LogLevel = 'CRITICAL';
+                       $info = $ATPlaceAnOrder;
                        goto  response;
                    }
                    if($ATPlaceAnOrder['ret'] != 0 ){
                        $result = 40012;
                        $LogLevel = 'CRITICAL';
+                       $info = $ATPlaceAnOrder;
                        goto  response;
                    }
                    $dataUsersOrderInfo['ATtoken'] =  $ATPlaceAnOrder['url_params']['token_id'];

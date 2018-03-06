@@ -20,6 +20,14 @@ class MallExchangeController extends ComController {
         $info   =  array();
         $ComFun = D('ComFun');
         $LogLevel = 'INFO';
+
+
+        $playerid = $DataInfo['playerid'];
+        if(empty($playerid)){
+            $result   =  4006;
+            $LogLevel = 'NOTICE';
+            goto  response;
+        }
         //渠道信息
         $ChannelInfo = $this->channeinfo;
         if($ChannelInfo['isown'] == 2){
@@ -41,11 +49,52 @@ class MallExchangeController extends ComController {
         $GoodsAll  = M('jy_goods_all as a')
             ->join('jy_channel_goods as b on a.Id = b.goodsID')
             ->where('b.adminUserID = '.$Channel.' and  a.Status in(1,3)  and   a.ShowType = 4 and a.IsDel = 1')
-            ->field('a.Id,a.Name,a.CurrencyNum,a.Code,a.Type,a.GetNum,a.ImgCode,a.Describe')
+            ->field('a.Id,a.Name,a.CurrencyNum,a.IssueType,a.IssueNum,a.ExchangeType,a.ExchangeNum,a.Code,a.Type,a.GetNum,a.ImgCode,a.Describe')
             ->order('a.Sort asc')
             ->select();
+        //查询兑换记录
+        $GoodsID = array();
+        foreach ($GoodsAll as $k=>$v){
+            if($v['ExchangeType'] == 2){
+                $GoodsID[] = $v['Id'];
+            }
+        }
 
-        $info = $GoodsAll;
+        $ExchangeSortLog = array();
+
+        if(!empty($GoodsID)){
+            $GoodsID = implode(',',$GoodsID);
+            $ExchangeLog = M('jy_users_exchange_log')
+                ->where('playerid   =  '.$playerid.'  and  GoodsID in ('.$GoodsID.')')
+                ->field(
+                    array(
+                        'GoodsID',
+                        'count(Id) as Num'
+                    )
+                )
+                ->group('GoodsID')
+                ->select();
+            foreach ($ExchangeLog as $k=>$v) $ExchangeSortLog[$v['GoodsID']] = $v;
+        }
+        foreach ($GoodsAll as $k=>$v){
+               if($ExchangeSortLog[$v['Id']]){
+
+                      if($v['ExchangeType'] == 2 && $v['ExchangeNum'] <= $ExchangeSortLog[$v['Id']]['Num']){
+                                 unset($GoodsAll[$k]);
+                      }
+                      if($v['ExchangeType'] == 2 && $v['ExchangeNum'] > $ExchangeSortLog[$v['Id']]['Num']){
+                          $GoodsAll[$k]['ExchangeNumed'] = $ExchangeSortLog[$v['Id']]['Num']?$ExchangeSortLog[$v['GoodsID']]['Num']:0;
+                      }
+               }else{
+                      $GoodsAll[$k]['ExchangeNumed'] = 0;
+               }
+        }
+
+
+
+
+
+        $info = array_values($GoodsAll);
         response:
             $response = array(
                 'result' => $result,
