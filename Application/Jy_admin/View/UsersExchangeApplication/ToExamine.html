@@ -91,8 +91,7 @@
 				<div class="col-4"></div>
 			</div>
 
-
-			<neq name = "info['Type']" value = "6">
+			<in name="info['Type']" value = "4,5">
 			<div class="row cl ToExamineType">
 				<label class="form-label col-2"><span class="c-red">*</span>卡号：</label>
 				<div class="formControls col-2">
@@ -107,7 +106,7 @@
 				</div>
 				<div class="col-1"></div>
 			</div>
-			</neq>
+			</in>
 			<eq name = "info['Type']" value = "6">
 			<div class="row cl ToExamineType" >
 				<label class="form-label col-2"><span class="c-red">*</span>快递名：</label>
@@ -178,19 +177,35 @@
 			var ToExamineType = document.getElementsByClassName('ToExamineType');
 			var StatusValue   = my.value;
 			var MessAge		  = document.getElementById('MessAge');
-			console.log(ToExamineType);
-			if(StatusValue == 2){
-                for(var i=0;i<StatusValue.length;i++){
-                    console.log(i);
-                    ToExamineType[i].style.display = "block";
-                    MessAge.style.display = "none";
+
+
+
+			if(ToExamineType[0] != null){
+                if(StatusValue == 2){
+                    for(var i=0;i<StatusValue.length;i++){
+                        console.log(i);
+                        ToExamineType[i].style.display = "block";
+                        MessAge.style.display = "none";
+                    }
+                }else{
+                    for(var i=0;i<StatusValue.length;i++){
+                        MessAge.style.display = "block";
+                        ToExamineType[i].style.display = "none";
+                    }
                 }
 			}else{
-			   for(var i=0;i<StatusValue.length;i++){
-                   MessAge.style.display = "block";
-                   ToExamineType[i].style.display = "none";
-			   }
+                if(StatusValue == 2){
+                    for(var i=0;i<StatusValue.length;i++){
+                        MessAge.style.display = "none";
+                    }
+                }else{
+                    for(var i=0;i<StatusValue.length;i++){
+                        MessAge.style.display = "block";
+
+                    }
+                }
 			}
+
         }
 	</script>
 	</literal>

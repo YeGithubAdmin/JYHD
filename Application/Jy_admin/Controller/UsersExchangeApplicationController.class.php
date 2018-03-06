@@ -56,7 +56,6 @@ class UsersExchangeApplicationController extends ComController {
         }else{
             $Order = 'DateTime desc';
         }
-        print_r($Order);
         $count  = M('jy_users_exchange_log')->where($where)->count();
         $Page       = new \Common\Lib\Page($count,$num);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();// 分页显示输出
@@ -161,6 +160,33 @@ class UsersExchangeApplicationController extends ComController {
             $ExpressOrder    =      I('param.ExpressOrder','','trim');  //快递名称
             $MessAge         =      I('param.MessAge','','trim');       //失败通知
             $Remark          =      I('param.Remark','','trim');       //失败通知
+
+
+
+            if($Type == 7 &&  $Status ==2){
+                //修改信息
+                $dataUsersExchangeLog = array(
+                    'MessAge'=>$MessAge,
+                    'Status'=>$Status,
+                    'UpName'=>$UserInfo['name'],
+                    'CaMi'=>$cardPwd,
+                    'CaNum'=>$cardNum,
+                    'Remark'=>$Remark,
+                    'UpTime'=>date('Y-m-d H:i:s',time())
+                );
+                $upUsersExchangeLog = M('jy_users_exchange_log')
+                    ->where('Id = '.$Id)
+                    ->save($dataUsersExchangeLog);
+                if(!$upUsersExchangeLog){
+                    $result = 5002;
+                    goto  response;
+                }else{
+                    $ReplyCode = 1;
+                    $result = 2001;
+                    goto  response;
+                }
+            }
+
 
             if($Status<=1){
                 $result = 4001;

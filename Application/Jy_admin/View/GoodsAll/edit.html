@@ -107,6 +107,7 @@
 								 <option value="3"  <eq name="info['Type']" value = "3">selected="selected"</eq>>道具</option>
 								 <option value="4"  <eq name="info['Type']" value = "4">selected="selected"</eq>>话费卡</option>
 								 <option value="5"  <eq name="info['Type']" value = "5">selected="selected"</eq>>京东卡</option>
+								 <option value="7"  <eq name="info['Type']" value = "7">selected="selected"</eq>>流量</option>
 								 <option value="6"  <eq name="info['Type']" value = "6">selected="selected"</eq>>实物</option>
 								 <option value="0"  <eq name="info['Type']" value = "0">selected="selected"</eq>>其他</option>
                             </select>
@@ -114,7 +115,7 @@
 				</div>
 			</div>
 			<div class="formControls col-1 "    >
-				<input type="text"   class="input-text" id = "FaceValue"  <in name="info['Type']" value = "4,5,6"><else/>style="display:none;"</in> value="{$info['FaceValue']}" placeholder="请输入面值"
+				<input type="text"   class="input-text" id = "FaceValue"  <in name="info['Type']" value = "4,5,6,7"><else/>style="display:none;"</in> value="{$info['FaceValue']}" placeholder="请输入面值"
 					   name="FaceValue"  nullmsg="">
 			</div>
 
